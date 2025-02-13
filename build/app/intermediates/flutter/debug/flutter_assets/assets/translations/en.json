@@ -1,0 +1,35 @@
+{
+
+  "somethingWentWrong": "Something went wrong",
+  "badGateway": "Bad Gateway",
+  "internalServerError": "Internal Server Error",
+  "notFound": "Not Found",
+  "forbidden": "Forbidden",
+  "unauthorized": "Unauthorized",
+  "badRequest": "Bad Request",
+  "sendTimeout": "Send Timeout",
+  "receiveTimeout": "Receive Timeout",
+  "connectionTimeout": "Connection Timeout",
+  "requestCancelled": "Request Cancelled",
+  "noInternet": "No Internet Connection",
+
+  "realEstate": "Real Estate",
+  "cars": "Cars",
+  "halls": "Halls",
+  "hotels": "Hotels",
+  "addYourRealState": "Add Your Property",
+
+  "authenticateToAccessTheApp" : "Please authenticate to access the app",
+
+  "home": "Home",
+  "myBookings": "My Bookings",
+  "favorites": "Favorites",
+  "myProfile": "My Profile",
+
+  "chooseYourIdealPropertyEasily" : "Choose your ideal property easily",
+
+  "forSale": "For Sale",
+  "forRent": "For Rent"
+
+
+}
