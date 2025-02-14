@@ -1,5 +1,6 @@
 import 'package:enmaa/features/authentication_module/presentation/screens/bio_metric_screen.dart';
 import 'package:enmaa/features/authentication_module/presentation/screens/login_screen.dart';
+import 'package:enmaa/features/authentication_module/presentation/screens/otp_screen.dart';
 import 'package:enmaa/features/authentication_module/presentation/screens/sign_up_screen.dart';
 import 'package:enmaa/features/home_module/presentation/controller/home_bloc.dart';
 import 'package:enmaa/features/home_module/presentation/screens/home_screen.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/services/service_locator.dart';
 import '../../features/add_new_real_estate/presentation/screens/add_new_real_estate_screen.dart';
+import '../../features/authentication_module/authentication_flow_navigator.dart';
 import '../../features/authentication_module/presentation/controller/biometric_bloc.dart';
 import '../../features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import 'route_names.dart';
@@ -67,19 +69,10 @@ class AppRouters {
           settings: RouteSettings(name: RoutersNames.onBoardingScreen),
           builder: (_) => const OnBoardingScreen(),
         );
-      case RoutersNames.loginScreen:
+      case RoutersNames.authenticationFlow:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RoutersNames.loginScreen),
-          builder: (_) => BlocProvider(
-            create: (context) =>
-                ServiceLocator.getIt<RemoteAuthenticationCubit>(),
-            child: LoginScreen(),
-          ),
-        );
-      case RoutersNames.signUpScreen:
-        return MaterialPageRoute(
-          settings: RouteSettings(name: RoutersNames.signUpScreen),
-          builder: (_) => SignUpScreen(),
+          settings: RouteSettings(name: RoutersNames.authenticationFlow),
+          builder: (_) => const AuthenticationNavigator(),
         );
       default:
         return MaterialPageRoute(

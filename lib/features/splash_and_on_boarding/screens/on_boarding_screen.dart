@@ -42,7 +42,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   ];
 
   void _navigateToNextPage() {
-    Navigator.pushReplacementNamed(context, RoutersNames.loginScreen);
+    Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
   }
 
   @override

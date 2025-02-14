@@ -11,7 +11,7 @@ class GuestButtonComponent extends StatelessWidget {
   const GuestButtonComponent({super.key});
 
   void _onGuestLogin(BuildContext context) {
-    Navigator.pushNamed(context, RoutersNames.layoutScreen);
+    Navigator.of(context, rootNavigator: true).pushNamed( RoutersNames.layoutScreen);
   }
 
   @override

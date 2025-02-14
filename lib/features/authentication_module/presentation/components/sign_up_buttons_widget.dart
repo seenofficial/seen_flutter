@@ -1,11 +1,16 @@
+import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/button_app_component.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/routers/route_names.dart';
+import '../../../../core/components/custom_snack_bar.dart';
+import '../../../../core/utils/enums.dart';
 import '../../domain/entities/sign_up_request_entity.dart';
+import '../controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import 'guest_button_component.dart';
 
 class SignUpButtonsWidget extends StatelessWidget {
@@ -22,6 +27,7 @@ class SignUpButtonsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+
         /// sign up button sends otp to the number
         _SignUpButton(formKey: formKey, signUpRequestBody: signUpRequestBody),
         SizedBox(height: context.scale(16)),
@@ -45,29 +51,58 @@ class _SignUpButton extends StatelessWidget {
 
   void _signUp(BuildContext context) {
     if (formKey.currentState?.validate() ?? false) {
-
+      context.read<RemoteAuthenticationCubit>().sendOtp(
+          signUpRequestBody.phone);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ButtonAppComponent(
-      width: double.infinity,
-      padding: EdgeInsets.zero,
-      buttonContent: Center(
-        child: Text(
-          'التالي',
-          style: getBoldStyle(
-            color: ColorManager.whiteColor,
-            fontSize: FontSize.s14,
-          ),
-        ),
-      ),
-      decoration: BoxDecoration(
-        color: ColorManager.primaryColor,
-        borderRadius: BorderRadius.circular(context.scale(20)),
-      ),
-      onTap: () => _signUp(context),
+    return BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
+      buildWhen: (previous, current) {
+        if(previous.sendOtpRequestState != current.sendOtpRequestState){
+          if(current.sendOtpRequestState == RequestState.loaded){
+            Navigator.pushNamed(
+              context,
+              RoutersNames.otpScreen,
+            );
+          }
+        }
+        return previous.sendOtpRequestState != current.sendOtpRequestState;
+      },
+      builder: (context, state) {
+        if(state.sendOtpRequestState == RequestState.loading){
+          return CircularProgressIndicator();
+        }
+        else  {
+          if(state.sendOtpRequestState == RequestState.error){
+            CustomSnackBar.show(
+              context: context,
+              message: state.sendOtpErrorMessage,
+              type: SnackBarType.error,
+            );
+          }
+          return ButtonAppComponent(
+            width: double.infinity,
+            padding: EdgeInsets.zero,
+            buttonContent: Center(
+              child: Text(
+                'التالي',
+                style: getBoldStyle(
+                  color: ColorManager.whiteColor,
+                  fontSize: FontSize.s14,
+                ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              color: ColorManager.primaryColor,
+              borderRadius: BorderRadius.circular(context.scale(20)),
+            ),
+            onTap: () => _signUp(context),
+          );
+        }
+
+      },
     );
   }
 }

@@ -33,6 +33,22 @@ class AuthenticationRepository extends BaseAuthenticationRepository {
     });
   }
 
+  @override
+  Future<Either<Failure, String>> sendOtp(String phoneNumber)async {
+    return await HandleRequestService.handleApiCall<String>(() async {
+      final result = await baseAuthenticationRemoteDataSource.sendOtp(phoneNumber);
+      return result;
+    });
+  }
+
+  @override
+  Future<Either<Failure, bool>> verifyOtp(String otp)async {
+    return await HandleRequestService.handleApiCall<bool>(() async {
+      final result = await baseAuthenticationRemoteDataSource.verifyOtp(otp);
+      return result;
+    });
+  }
+
 
 
 
