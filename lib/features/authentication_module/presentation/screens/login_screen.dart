@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
-
+  bool navigateToNextScreen = true ;
   String? _validatePhone(String? value) {
     if (value == null || value.isEmpty) {
       return 'رقم الموبايل مطلوب';
@@ -64,8 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
           /// handle login state
           if(previous.loginRequestState != current.loginRequestState && current.loginRequestState != RequestState.loading) {
-            if (current.loginRequestState == RequestState.loaded) {
-              Navigator.pushReplacementNamed(context, RoutersNames.layoutScreen);
+            if (current.loginRequestState == RequestState.loaded && navigateToNextScreen) {
+              navigateToNextScreen = false;
+              Navigator.of(context, rootNavigator: true).pushReplacementNamed(RoutersNames.layoutScreen);
             }
             else {
               CustomSnackBar.show(
