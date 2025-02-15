@@ -12,7 +12,7 @@ class CustomSnackBar {
     required SnackBarType type,
   }) {
     final Color iconColor = type == SnackBarType.success
-        ? ColorManager.greenColor
+        ? ColorManager.primaryColor
         : ColorManager.redColor;
     final IconData icon = type == SnackBarType.success
         ? Icons.check_circle

@@ -24,6 +24,12 @@ class AppAssets {
   static const String folderIcon = '${baseIconFolder}folder_icon.svg';
   static const String closeIcon = '${baseIconFolder}close_icon.svg';
 
+  /// preview property icons
+  static const String clockIcon = '${baseIconFolder}clock_icon.svg';
+  static const String calendarIcon = '${baseIconFolder}calendar_icon.svg';
+  static const String warningIcon = '${baseIconFolder}warning_icon.svg';
+
+
   /// Real Estate Filters Icons
   static const String realEstateFilterFolder = '${baseIconFolder}real_estate_filter/';
 

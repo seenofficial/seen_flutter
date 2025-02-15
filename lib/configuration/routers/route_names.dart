@@ -6,6 +6,8 @@ class RoutersNames {
   static const String realEstateDetailsScreen = "/real-estate-details-screen";
   static const String addNewRealEstateScreen = "/add-new-real-estate-screen";
   static const String onBoardingScreen = "/on-boarding-screen";
+  static const String previewPropertyScreen = "/preview-property-screen";
+
 
   static const String authenticationFlow = "/authentication-flow";
   static const String loginScreen = "/login-screen";
