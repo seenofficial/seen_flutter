@@ -8,6 +8,8 @@ import 'package:enmaa/features/authentication_module/presentation/screens/login_
 import 'package:enmaa/features/authentication_module/presentation/screens/sign_up_screen.dart';
 import 'package:enmaa/features/authentication_module/presentation/screens/otp_screen.dart';
 
+import '../../core/services/navigator_observer.dart';
+
 /// use this screen to navigate between login, sign up and otp screens
 /// and to provide the authentication cubit to the screens
 /// and make it alive  during the navigation
@@ -19,30 +21,32 @@ class AuthenticationNavigator extends StatelessWidget {
     return BlocProvider(
       create: (_) => ServiceLocator.getIt<RemoteAuthenticationCubit>(),
       child: Navigator(
+        observers: [RouteObserverService()],
         initialRoute: RoutersNames.loginScreen,
+        onGenerateInitialRoutes: (_, initialRoute) {
+          return [
+            MaterialPageRoute(
+              settings: RouteSettings(name: initialRoute),
+              builder: (_) => const LoginScreen(),
+            ),
+          ];
+        },
         onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case RoutersNames.loginScreen:
-              return MaterialPageRoute(
-                builder: (_) => const LoginScreen(),
-              );
-            case RoutersNames.signUpScreen:
-              return MaterialPageRoute(
-                builder: (_) => const SignUpScreen(),
-              );
-            case RoutersNames.otpScreen:
-              return MaterialPageRoute(
-                builder: (_) => const OtpScreen(),
-              );
-              case RoutersNames.createNewPasswordScreen:
-              return MaterialPageRoute(
-                builder: (_) => const CreateNewPasswordScreen(),
-              );
-            default:
-              return MaterialPageRoute(
-                builder: (_) => const LoginScreen(),
-              );
-          }
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (_) {
+              switch (settings.name) {
+                case RoutersNames.signUpScreen:
+                  return const SignUpScreen();
+                case RoutersNames.otpScreen:
+                  return const OtpScreen();
+                case RoutersNames.createNewPasswordScreen:
+                  return const CreateNewPasswordScreen();
+                default:
+                  return const LoginScreen();
+              }
+            },
+          );
         },
       ),
     );
