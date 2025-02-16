@@ -116,7 +116,7 @@ class _PasswordField extends StatelessWidget {
               validator: validator,
               suffixIcon: IconButton(
                 icon: Icon(
-                  showPassword ? Icons.visibility_off : Icons.visibility,
+                  !showPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                   color: ColorManager.grey,
                 ),
                 onPressed: (){

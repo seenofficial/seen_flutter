@@ -53,6 +53,10 @@ class _SignUpButton extends StatelessWidget {
     if (formKey.currentState?.validate() ?? false) {
       context.read<RemoteAuthenticationCubit>().sendOtp(
           signUpRequestBody.phone);
+      Navigator.pushNamed(
+        context,
+        RoutersNames.otpScreen,
+      );
     }
   }
 
@@ -60,47 +64,28 @@ class _SignUpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
       buildWhen: (previous, current) {
-        if(previous.sendOtpRequestState != current.sendOtpRequestState){
-          if(current.sendOtpRequestState == RequestState.loaded){
-            Navigator.pushNamed(
-              context,
-              RoutersNames.otpScreen,
-            );
-          }
-        }
+
         return previous.sendOtpRequestState != current.sendOtpRequestState;
       },
       builder: (context, state) {
-        if(state.sendOtpRequestState == RequestState.loading){
-          return CircularProgressIndicator();
-        }
-        else  {
-          if(state.sendOtpRequestState == RequestState.error){
-            CustomSnackBar.show(
-              context: context,
-              message: state.sendOtpErrorMessage,
-              type: SnackBarType.error,
-            );
-          }
-          return ButtonAppComponent(
-            width: double.infinity,
-            padding: EdgeInsets.zero,
-            buttonContent: Center(
-              child: Text(
-                'التالي',
-                style: getBoldStyle(
-                  color: ColorManager.whiteColor,
-                  fontSize: FontSize.s14,
-                ),
+        return ButtonAppComponent(
+          width: double.infinity,
+          padding: EdgeInsets.zero,
+          buttonContent: Center(
+            child: Text(
+              'التالي',
+              style: getBoldStyle(
+                color: ColorManager.whiteColor,
+                fontSize: FontSize.s14,
               ),
             ),
-            decoration: BoxDecoration(
-              color: ColorManager.primaryColor,
-              borderRadius: BorderRadius.circular(context.scale(20)),
-            ),
-            onTap: () => _signUp(context),
-          );
-        }
+          ),
+          decoration: BoxDecoration(
+            color: ColorManager.primaryColor,
+            borderRadius: BorderRadius.circular(context.scale(20)),
+          ),
+          onTap: () => _signUp(context),
+        );
 
       },
     );

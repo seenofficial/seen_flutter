@@ -24,6 +24,12 @@ class RemoteAuthenticationCubit extends Cubit<RemoteAuthenticationState> {
   void changeLoginPasswordVisibility() {
     emit(state.copyWith(loginPasswordVisibility: !state.loginPasswordVisibility));
   }
+  void changeCreateNewPasswordVisibility1() {
+    emit(state.copyWith(createNewPasswordPasswordVisibility1: !state.createNewPasswordPasswordVisibility1));
+  }
+  void changeCreateNewPasswordVisibility2() {
+    emit(state.copyWith(createNewPasswordPasswordVisibility2: !state.createNewPasswordPasswordVisibility2));
+  }
 
   Future<void> remoteLogin(LoginRequestEntity loginBody) async {
     emit(state.copyWith(loginRequestState: RequestState.loading));

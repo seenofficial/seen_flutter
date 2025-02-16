@@ -4,6 +4,9 @@ import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 
 class CreateNewPasswordFormFieldsWidget extends StatelessWidget {
   final TextEditingController passwordController1;
@@ -15,25 +18,7 @@ class CreateNewPasswordFormFieldsWidget extends StatelessWidget {
     required this.passwordController2,
   });
 
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'كلمة المرور مطلوبة';
-    }
 
-    if (value.length < 8) {
-      return 'يجب أن تتكون من 8 أحرف على الأقل';
-    }
-
-    if (!value.contains(RegExp(r'[a-zA-Z]'))) {
-      return 'يجب أن تحتوي على حرف واحد على الأقل';
-    }
-
-    if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'يجب أن تحتوي على رقم واحد على الأقل';
-    }
-
-    return null;
-  }
 
   String? validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
@@ -54,7 +39,6 @@ class CreateNewPasswordFormFieldsWidget extends StatelessWidget {
       children: [
         _PasswordField1(
           controller: passwordController1,
-          validator: validatePassword,
         ),
         SizedBox(height: context.scale(16)),
         _PasswordField2(
@@ -68,11 +52,9 @@ class CreateNewPasswordFormFieldsWidget extends StatelessWidget {
 
 class _PasswordField1 extends StatefulWidget {
   final TextEditingController controller;
-  final String? Function(String?) validator;
 
   const _PasswordField1({
     required this.controller,
-    required this.validator,
   });
 
   @override
@@ -113,14 +95,33 @@ class _PasswordField1State extends State<_PasswordField1> {
           ),
         ),
         SizedBox(height: context.scale(16)),
-        AppTextField(
-          hintText: '',
-          borderRadius: 20,
-          backgroundColor: ColorManager.greyShade,
-          padding: EdgeInsets.zero,
-          controller: widget.controller,
-          validator: widget.validator,
-          obscureText: true,
+        BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
+          buildWhen: (previous, current) =>
+          previous.createNewPasswordPasswordVisibility1 != current.createNewPasswordPasswordVisibility1,
+          builder: (context, state) {
+            final bool showPassword = state.createNewPasswordPasswordVisibility1;
+            return AppTextField(
+              hintText: '',
+              borderRadius: 20,
+
+              backgroundColor: ColorManager.greyShade,
+              padding: EdgeInsets.zero,
+              controller: widget.controller,
+              obscureText: showPassword,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  !showPassword ? Icons.visibility_off_outlined : Icons
+                      .visibility_outlined,
+                  color: ColorManager.grey,
+                ),
+                onPressed: () {
+                  context.read<RemoteAuthenticationCubit>()
+                      .changeCreateNewPasswordVisibility1();
+                },
+              ),
+
+            );
+          },
         ),
         SizedBox(height: context.scale(8)),
         Row(
@@ -203,22 +204,33 @@ class _PasswordField2 extends StatelessWidget {
           ),
         ),
         SizedBox(height: context.scale(16)),
-        AppTextField(
-          hintText: 'كلمة المرور',
-          keyboardType: TextInputType.text,
-          borderRadius: 20,
-          backgroundColor: ColorManager.greyShade,
-          padding: EdgeInsets.zero,
-          controller: controller,
-          obscureText: true,
-          validator: validator,
-          suffixIcon: IconButton(
-            icon: Icon(
-              true ? Icons.visibility_off : Icons.visibility,
-              color: ColorManager.grey,
-            ),
-            onPressed: () {},
-          ),
+        BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
+          buildWhen: (previous, current) =>
+          previous.createNewPasswordPasswordVisibility2 != current.createNewPasswordPasswordVisibility2,
+          builder: (context, state) {
+            final bool showPassword = state.createNewPasswordPasswordVisibility2;
+            return AppTextField(
+              hintText: 'كلمة المرور',
+              keyboardType: TextInputType.text,
+              borderRadius: 20,
+              backgroundColor: ColorManager.greyShade,
+              padding: EdgeInsets.zero,
+              controller: controller,
+              obscureText: showPassword,
+              validator: validator,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  !showPassword ? Icons.visibility_off_outlined : Icons
+                      .visibility_outlined,
+                  color: ColorManager.grey,
+                ),
+                onPressed: () {
+                  context.read<RemoteAuthenticationCubit>()
+                      .changeCreateNewPasswordVisibility2();
+                },
+              ),
+            );
+          },
         ),
       ],
     );

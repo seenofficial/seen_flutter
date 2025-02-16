@@ -14,6 +14,8 @@ class RemoteAuthenticationState extends Equatable {
     this.isOtpVerified = false,
     this.verifyOtpErrorMessage = '',
     this.currentCountryCode =  '+20',
+    this.createNewPasswordPasswordVisibility1 =  false,
+    this.createNewPasswordPasswordVisibility2 =  false,
   });
 
   final RequestState loginRequestState;
@@ -30,6 +32,8 @@ class RemoteAuthenticationState extends Equatable {
   final String verifyOtpErrorMessage;
 
   final bool loginPasswordVisibility;
+  final bool createNewPasswordPasswordVisibility1;
+  final bool createNewPasswordPasswordVisibility2;
 
   final String currentCountryCode;
 
@@ -46,6 +50,8 @@ class RemoteAuthenticationState extends Equatable {
     bool? isOtpVerified,
     String? verifyOtpErrorMessage,
     String? currentCountryCode,
+    bool? createNewPasswordPasswordVisibility1,
+    bool? createNewPasswordPasswordVisibility2,
   }) {
     return RemoteAuthenticationState(
       loginRequestState: loginRequestState ?? this.loginRequestState,
@@ -61,6 +67,8 @@ class RemoteAuthenticationState extends Equatable {
       isOtpVerified: isOtpVerified ?? this.isOtpVerified,
       verifyOtpErrorMessage: verifyOtpErrorMessage ?? this.verifyOtpErrorMessage,
       currentCountryCode: currentCountryCode ?? this.currentCountryCode,
+      createNewPasswordPasswordVisibility1: createNewPasswordPasswordVisibility1 ?? this.createNewPasswordPasswordVisibility1,
+      createNewPasswordPasswordVisibility2: createNewPasswordPasswordVisibility2 ?? this.createNewPasswordPasswordVisibility2,
     );
   }
 
@@ -77,6 +85,8 @@ class RemoteAuthenticationState extends Equatable {
     verifyOtpRequestState,
     isOtpVerified,
     verifyOtpErrorMessage,
-    currentCountryCode, // Add currentCountryCode to props
+    currentCountryCode,
+    createNewPasswordPasswordVisibility1,
+    createNewPasswordPasswordVisibility2,
   ];
 }

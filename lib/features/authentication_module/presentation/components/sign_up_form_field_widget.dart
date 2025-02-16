@@ -68,13 +68,20 @@ class _PhoneField extends StatelessWidget {
         ),
         SizedBox(height: context.scale(16)),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
               buildWhen: (previous, current) =>
-                  previous.currentCountryCode != current.currentCountryCode,
-
+              previous.currentCountryCode != current.currentCountryCode,
               builder: (context, state) {
-                controller.text = state.currentCountryCode;
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (controller.text != state.currentCountryCode) {
+                    controller.text = state.currentCountryCode;
+                    controller.selection = TextSelection.fromPosition(
+                      TextPosition(offset: controller.text.length),
+                    );
+                  }
+                });
 
                 return Expanded(
                   child: AppTextField(
