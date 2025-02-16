@@ -33,10 +33,12 @@ class CircularIconButton extends StatelessWidget {
           color: backgroundColor,
           shape: BoxShape.circle,
         ),
-        child: SvgImageComponent(
-          iconPath: iconPath,
-          width: iconSize,
-          height: iconSize,
+        child: Center(
+          child: SvgImageComponent(
+            iconPath: iconPath,
+            width: iconSize,
+            height: iconSize,
+          ),
         ),
       ),
     );

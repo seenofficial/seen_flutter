@@ -6,14 +6,13 @@ class PropertyListingEntity extends Equatable {
   final String price;
   final String imageUrl;
   final String operation;
-
   final String city;
   final String state;
-  final String category;
-  final String propertyType;
-
-
+  final String usageType;
+  final String status;
+  final bool isInWishlist;
   final double area;
+  final int floor;
   final int rooms;
   final int bathrooms;
 
@@ -24,12 +23,14 @@ class PropertyListingEntity extends Equatable {
     required this.imageUrl,
     required this.operation,
     required this.area,
+    required this.floor,
     required this.rooms,
     required this.bathrooms,
     required this.city,
     required this.state,
-    required this.category,
-    required this.propertyType,
+    required this.usageType,
+    required this.status,
+    required this.isInWishlist,
   });
 
   @override
@@ -40,11 +41,13 @@ class PropertyListingEntity extends Equatable {
     imageUrl,
     operation,
     area,
+    floor,
     rooms,
     bathrooms,
     city,
     state,
-    category,
-    propertyType,
+    usageType,
+    status,
+    isInWishlist,
   ];
 }

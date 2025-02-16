@@ -95,7 +95,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         containerSize: 40,
                         iconSize: 16,
                         padding: const EdgeInsets.all(8),
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true).pushNamed( RoutersNames.layoutScreen);
+                        },
                       ),
                     ),
                     PositionedDirectional(

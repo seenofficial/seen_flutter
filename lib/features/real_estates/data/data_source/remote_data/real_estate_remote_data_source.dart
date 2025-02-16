@@ -31,7 +31,7 @@ class RealEstateRemoteDataSource extends BaseRealEstateRemoteData {
     return properties ;
   }
 
-  @override
+  @override 
   Future<PropertyDetailsModel> getPropertyDetails(String propertyId) async{
     final response = await dioService.get(
       url: '${ApiConstants.properties}$propertyId',

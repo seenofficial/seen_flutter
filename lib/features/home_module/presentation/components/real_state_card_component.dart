@@ -29,8 +29,9 @@ class RealStateCardComponent extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        /// to use root navigator cause of i have two navigator in the app
-        Navigator.of(context, rootNavigator: true).pushNamed(RoutersNames.realEstateDetailsScreen);
+        Navigator.of(context, rootNavigator: true).pushNamed(
+            RoutersNames.realEstateDetailsScreen,
+            arguments: currentProperty.id);
       },
       child: Container(
         width: width,
@@ -48,7 +49,7 @@ class RealStateCardComponent extends StatelessWidget {
                 topRight: Radius.circular(context.scale(12)),
               ),
               child: CustomNetworkImage(
-                height: context.scale(isScreenWidth? 172: 128),
+                height: context.scale(isScreenWidth ? 172 : 128),
                 width: width,
                 image: currentProperty.imageUrl,
               ),
@@ -60,7 +61,8 @@ class RealStateCardComponent extends StatelessWidget {
                 children: [
                   Text(
                     currentProperty.title,
-                    style: getBoldStyle(color: ColorManager.blackColor, fontSize: FontSize.s12),
+                    style: getBoldStyle(
+                        color: ColorManager.blackColor, fontSize: FontSize.s12),
                   ),
                   SizedBox(height: context.scale(8)),
                   _buildLocationRow(context),
@@ -89,7 +91,8 @@ class RealStateCardComponent extends StatelessWidget {
         SizedBox(width: context.scale(4)),
         Text(
           '${currentProperty.state} - ${currentProperty.city}',
-          style: getLightStyle(color: ColorManager.blackColor, fontSize: FontSize.s11),
+          style: getLightStyle(
+              color: ColorManager.blackColor, fontSize: FontSize.s11),
         ),
       ],
     );
@@ -101,14 +104,17 @@ class RealStateCardComponent extends StatelessWidget {
 
     return Row(
       children: [
-        if (isScreenWidth ) _buildDetailItem(context, AppAssets.stairsIcon, 'الدور الاول'),
-        if (isScreenWidth )_buildVerticalDivider(context),
-        _buildDetailItem(context, AppAssets.areaIcon, currentProperty.area.toString()),
+        if (isScreenWidth)
+          _buildDetailItem(context, AppAssets.stairsIcon, 'الدور الاول'),
+        if (isScreenWidth) _buildVerticalDivider(context),
+        _buildDetailItem(
+            context, AppAssets.areaIcon, currentProperty.area.toString()),
         _buildVerticalDivider(context),
-        _buildDetailItem(context, AppAssets.bedIcon, currentProperty.rooms.toString()),
+        _buildDetailItem(
+            context, AppAssets.bedIcon, currentProperty.rooms.toString()),
         _buildVerticalDivider(context),
-        _buildDetailItem(context, AppAssets.bathIcon, currentProperty.bathrooms.toString()),
-
+        _buildDetailItem(
+            context, AppAssets.bathIcon, currentProperty.bathrooms.toString()),
       ],
     );
   }
@@ -124,7 +130,8 @@ class RealStateCardComponent extends StatelessWidget {
         SizedBox(width: context.scale(4)),
         Text(
           text,
-          style: getBoldStyle(color: ColorManager.blackColor, fontSize: FontSize.s10),
+          style: getBoldStyle(
+              color: ColorManager.blackColor, fontSize: FontSize.s10),
         ),
         SizedBox(width: context.scale(16)),
       ],
@@ -147,60 +154,83 @@ class RealStateCardComponent extends StatelessWidget {
 
     return isScreenWidth
         ? Row(
-      children: [
-       Row(
-         children: [
-           Container(
-             width: context.scale(8),
-             height: context.scale(8),
-             decoration: BoxDecoration(
-               color: ColorManager.yellowColor,
-               shape: BoxShape.circle,
-             ),
-
-           ),
-           SizedBox(
-             width: context.scale(4),
-           ),
-           Text(
-               'تجاريه',
-               style: getBoldStyle(color: ColorManager.yellowColor , fontSize: FontSize.s12)
-           ),
-         ],
-       ),
-        SizedBox(width: context.scale(24)),
-        Container(
-          width: context.scale(96),
-          height: context.scale(28),
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 0.50,
-                strokeAlign: BorderSide.strokeAlignOutside,
-                color: ColorManager.primaryColor,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgImageComponent(
-                iconPath: AppAssets.rentIcon,
-                width: 12,
-                height: 12,
+              Row(
+                children: [
+                  Container(
+                    width: context.scale(8),
+                    height: context.scale(8),
+                    decoration: BoxDecoration(
+                      color: ColorManager.yellowColor,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  SizedBox(
+                    width: context.scale(4),
+                  ),
+                  Text('تجاريه',
+                      style: getBoldStyle(
+                          color: ColorManager.yellowColor,
+                          fontSize: FontSize.s12)),
+                ],
               ),
-              Text(
-                currentProperty.operation,
-                style: getMediumStyle(color: ColorManager.primaryColor, fontSize: FontSize.s10),
+              SizedBox(width: context.scale(24)),
+              Container(
+                width: context.scale(96),
+                height: context.scale(28),
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 0.50,
+                      strokeAlign: BorderSide.strokeAlignOutside,
+                      color: ColorManager.primaryColor,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgImageComponent(
+                      iconPath: AppAssets.rentIcon,
+                      width: 12,
+                      height: 12,
+                    ),
+                    Text(
+                      currentProperty.operation,
+                      style: getMediumStyle(
+                          color: ColorManager.primaryColor,
+                          fontSize: FontSize.s10),
+                    ),
+                  ],
+                ),
               ),
+              SizedBox(width: context.scale(35)),
+              Expanded(
+                child: RichText(
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: ' تبدأ من  ',
+                        style: getRegularStyle(
+                            color: ColorManager.primaryColor,
+                            fontSize: FontSize.s10),
+                      ),
+                      TextSpan(
+                        text: currentProperty.price,
+                        style: getBoldStyle(
+                            color: ColorManager.primaryColor,
+                            fontSize: FontSize.s12),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
-          ),
-        ),
-        SizedBox(width: context.scale(35)),
-        Expanded(
-          child: RichText(
+          )
+        : RichText(
             overflow: TextOverflow.ellipsis,
             text: TextSpan(
               children: [
@@ -216,27 +246,6 @@ class RealStateCardComponent extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        )
-
-      ],
-    )
-        : RichText(
-      overflow: TextOverflow.ellipsis,
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: ' تبدأ من  ',
-            style: getRegularStyle(
-                color: ColorManager.primaryColor, fontSize: FontSize.s10),
-          ),
-          TextSpan(
-            text: currentProperty.price,
-            style: getBoldStyle(
-                color: ColorManager.primaryColor, fontSize: FontSize.s12),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }

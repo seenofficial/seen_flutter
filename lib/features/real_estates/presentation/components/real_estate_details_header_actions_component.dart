@@ -8,7 +8,7 @@ class RealEstateDetailsHeaderActionsComponent extends StatelessWidget {
   const RealEstateDetailsHeaderActionsComponent({super.key});
 
   final double containerSize = 32;
-  final double iconSize = 200;
+  final double iconSize = 16;
   @override
   Widget build(BuildContext context) {
 
@@ -18,7 +18,7 @@ class RealEstateDetailsHeaderActionsComponent extends StatelessWidget {
         CircularIconButton(
           iconPath: AppAssets.backIcon,
           containerSize: context.scale(containerSize),
-          iconSize: context.scale(iconSize),
+          iconSize: iconSize,
           onPressed: () {
             Navigator.of(context).pop();
           },

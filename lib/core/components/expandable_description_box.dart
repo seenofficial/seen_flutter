@@ -33,26 +33,31 @@ class _ExpandableDescriptionBoxState extends State<ExpandableDescriptionBox> {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildDescriptionText(),
           SizedBox(height: context.scale(4)),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _isExpanded = !_isExpanded;
-              });
-            },
-            child: Text(
-              _isExpanded ? 'اقرأ أقل' : 'اقرأ المزيد',
-              style: TextStyle(
-                color: ColorManager.yellowColor,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                decoration: TextDecoration.underline,
-                decorationColor: ColorManager.yellowColor,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+                child: Text(
+                  _isExpanded ? 'اقرأ أقل' : 'اقرأ المزيد',
+                  style: TextStyle(
+                    color: ColorManager.yellowColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    decoration: TextDecoration.underline,
+                    decorationColor: ColorManager.yellowColor,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

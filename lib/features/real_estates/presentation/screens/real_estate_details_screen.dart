@@ -31,8 +31,9 @@ import '../components/real_estate_details_screen_components/real_estate_details_
 import '../components/real_estate_details_screen_components/real_estate_details_specifications.dart';
 
 class RealEstateDetailsScreen extends StatefulWidget {
-  const RealEstateDetailsScreen({super.key});
+  const RealEstateDetailsScreen({super.key , required this.propertyId});
 
+  final String propertyId;
   @override
   State<RealEstateDetailsScreen> createState() =>
       _RealEstateDetailsScreenState();
@@ -45,7 +46,7 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
       backgroundColor: ColorManager.greyShade,
       body: BlocProvider.value(
         value: ServiceLocator.getIt<RealEstateCubit>()
-          ..fetchPropertyDetails('6'),
+          ..fetchPropertyDetails(widget.propertyId),
         child: BlocBuilder<RealEstateCubit, RealEstateState>(
           builder: (context, state) {
             switch (state.getPropertyDetailsState) {
@@ -86,7 +87,7 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
                                       SizedBox(height: context.scale(24)),
                                       RealEstateDetailsDescription(
                                           /// todo : send description
-                                          //description: currentProperty.description,
+                                          description: currentProperty.description,
                                           ),
                                       SizedBox(height: context.scale(24)),
                                       RealEstateDetailsSpecifications(

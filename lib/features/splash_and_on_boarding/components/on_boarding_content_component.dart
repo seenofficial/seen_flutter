@@ -1,5 +1,7 @@
+import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../configuration/managers/color_manager.dart';
 import '../../../configuration/managers/font_manager.dart';
 import '../../../configuration/managers/style_manager.dart';
@@ -88,8 +90,18 @@ class OnBoardingPageWidget extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () {
+            onTap: () async {
               /// TODO: Implement phone call feature
+
+
+              final Uri url = Uri.parse('https://github.com/AmrAbdElHamed26');
+
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url, mode: LaunchMode.externalApplication);
+              } else {
+                print('Could not launch $url');
+              }
+
             },
           ),
 

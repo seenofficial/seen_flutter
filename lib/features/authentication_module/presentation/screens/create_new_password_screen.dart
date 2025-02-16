@@ -43,7 +43,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
         buildWhen: (previous, current) {
           if (previous.signUpRequestState != current.signUpRequestState) {
              if (current.signUpRequestState.isLoaded) {
-              Navigator.of(context).pushReplacementNamed(RoutersNames.loginScreen);
+              Navigator.of(context ,rootNavigator: true).pushReplacementNamed(RoutersNames.layoutScreen);
               CustomSnackBar.show(
                 context: context,
                 message: 'تم إنشاء حسابك بنجاح',

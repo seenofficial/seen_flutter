@@ -56,9 +56,10 @@ class AppRouters {
         );
 
       case RoutersNames.realEstateDetailsScreen:
+        final args = settings.arguments as String;
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.realEstateDetailsScreen),
-          builder: (_) => const RealEstateDetailsScreen(),
+          builder: (_) => RealEstateDetailsScreen(propertyId: args),
         );
 
       case RoutersNames.addNewRealEstateScreen:
