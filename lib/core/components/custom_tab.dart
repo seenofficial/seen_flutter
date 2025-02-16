@@ -21,10 +21,15 @@ class CustomTab extends StatelessWidget {
       width: context.scale(173),
       height: context.scale(38),
       decoration: ShapeDecoration(
-        color: isSelected ? ColorManager.primaryColor2 : Colors.white,
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
+          side: BorderSide(
+            color: isSelected ? ColorManager.primaryColor : Colors.transparent,
+            width: 1,
+          ),
         ),
+
       ),
       alignment: Alignment.center,
       child: Text(

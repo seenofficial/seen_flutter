@@ -99,7 +99,11 @@ class OnBoardingPageWidget extends StatelessWidget {
               if (await canLaunchUrl(url)) {
                 await launchUrl(url, mode: LaunchMode.externalApplication);
               } else {
-                print('Could not launch $url');
+                CustomSnackBar.show(
+                  context: context,
+                  message: 'حدث خطأ أثناء فتح الرابط',
+                  type: SnackBarType.error,
+                );
               }
 
             },

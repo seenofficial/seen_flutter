@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/components/custom_bottom_sheet.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/property_operation_type_extension.dart';
@@ -17,6 +18,7 @@ import '../../../../core/components/card_listing_shimmer.dart';
 import '../../../../core/components/custom_tab.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/screens/property_empty_screen.dart';
 import '../../../../core/translation/locale_keys.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../home_module/presentation/components/real_state_card_component.dart';
@@ -76,7 +78,7 @@ class _RealStateScreenState extends State<RealStateScreen>
         body: Column(
           children: [
             AppBarComponent(
-              appBarTextMessage: LocaleKeys.chooseYourIdealPropertyEasily.tr(),
+              appBarTextMessage: 'اختر العقار المثالي لك بسهولة',
             ),
             Row(
               children: [
@@ -101,10 +103,10 @@ class _RealStateScreenState extends State<RealStateScreen>
                   buttonContent: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgImageComponent(iconPath: AppAssets.plusIcon),
+                      SvgImageComponent(iconPath: AppAssets.plusIcon , width: 16,height: 16,),
                       Text(
-                        LocaleKeys.addYourRealState.tr(),
-                        style: getMediumStyle(color: ColorManager.whiteColor),
+                        'أضف عقارك',
+                        style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s12),
                       ),
                     ],
                   ),
@@ -121,11 +123,11 @@ class _RealStateScreenState extends State<RealStateScreen>
               dividerColor: Colors.transparent,
               tabs: [
                 CustomTab(
-                  text: LocaleKeys.forSale.tr(),
+                  text: 'للبيع ',
                   isSelected: _tabController.index == 0,
                 ),
                 CustomTab(
-                  text: LocaleKeys.forRent.tr(),
+                  text: 'للإيجار ',
                   isSelected: _tabController.index == 1,
                 ),
               ],
@@ -170,20 +172,25 @@ class _RealStateScreenState extends State<RealStateScreen>
   }
 
   Widget _buildPropertyList(RealEstateState state, PropertyOperationType type) {
+    final filteredProperties = state.properties
+        .where((property) => property.operation.toOperationType() == type)
+        .toList();
+
+    if (filteredProperties.isEmpty) {
+      return PropertyEmptyScreen();
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.all(8.0),
-      itemCount: state.properties.length,
+      itemCount: filteredProperties.length,
       itemBuilder: (context, index) {
-        final property = state.properties[index];
-        return Visibility(
-          visible: property.operation.toOperationType() == type,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: RealStateCardComponent(
-              width: MediaQuery.of(context).size.width,
-              height: context.scale(290),
-              currentProperty: property,
-            ),
+        final property = filteredProperties[index];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: RealStateCardComponent(
+            width: MediaQuery.of(context).size.width,
+            height: context.scale(290),
+            currentProperty: property,
           ),
         );
       },
