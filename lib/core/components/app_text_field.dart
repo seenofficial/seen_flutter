@@ -17,6 +17,8 @@ class AppTextField extends StatelessWidget {
   final Function()? onTap;
   final int? maxLines;
   final String? Function(String?)? validator;
+  final TextDirection? textDirection;
+
   const AppTextField({
     super.key,
     this.width = double.infinity,
@@ -35,42 +37,51 @@ class AppTextField extends StatelessWidget {
     this.onTap,
     this.maxLines,
     this.validator,
+    this.textDirection,
   });
 
   @override
   Widget build(BuildContext context) {
+    bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
+
     return Padding(
       padding: padding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            controller: controller,
-            keyboardType: keyboardType,
-            obscureText: obscureText,
-            onChanged: onChanged,
-            onTap: onTap,
-            maxLines: maxLines ?? 1,
-            validator: validator,
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: textStyle ??
-                  TextStyle(
-                    color: const Color(0xFF707070),
-                    fontSize: 12,
-                    fontFamily: 'Cairo',
-                    fontWeight: FontWeight.w400,
-                    height: 1,
-                  ),
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
-              filled: true,
-              fillColor: backgroundColor,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: BorderSide.none,
+          Directionality(
+            textDirection: textDirection ?? (isArabic ? TextDirection.rtl : TextDirection.ltr),
+            child: TextFormField(
+              controller: controller,
+              keyboardType: keyboardType,
+              obscureText: obscureText,
+              onChanged: onChanged,
+              onTap: onTap,
+              maxLines: maxLines ?? 1,
+              textAlign: (textDirection == TextDirection.rtl || (textDirection == null && isArabic))
+                  ? TextAlign.right
+                  : TextAlign.left,
+              validator: validator,
+              decoration: InputDecoration(
+                hintText: hintText,
+                hintStyle: textStyle ??
+                    const TextStyle(
+                      color: Color(0xFF707070),
+                      fontSize: 12,
+                      fontFamily: 'Cairo',
+                      fontWeight: FontWeight.w400,
+                      height: 1,
+                    ),
+                prefixIcon: prefixIcon,
+                suffixIcon: suffixIcon,
+                filled: true,
+                fillColor: backgroundColor,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             ),
           ),
         ],

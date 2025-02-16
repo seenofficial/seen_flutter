@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/authentication_module/domain/use_cases/remote_login_use_case.dart';
@@ -60,5 +61,9 @@ class RemoteAuthenticationCubit extends Cubit<RemoteAuthenticationState> {
           (isVerified) => emit(state.copyWith(currentOTP: otp,
               verifyOtpRequestState: RequestState.loaded, isOtpVerified: isVerified)),
     );
+  }
+
+  Future<void> setCountryCode(String countyCode) async {
+    emit(state.copyWith(currentCountryCode: countyCode));
   }
 }

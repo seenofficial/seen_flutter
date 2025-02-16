@@ -1,4 +1,4 @@
-
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:enmaa/features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
@@ -7,6 +7,8 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/components/country_code_picker.dart';
 
 class SignUpFormFieldWidget extends StatelessWidget {
   final TextEditingController nameController;
@@ -37,7 +39,6 @@ class SignUpFormFieldWidget extends StatelessWidget {
           controller: phoneController,
           validator: validatePhone,
         ),
-
         SizedBox(height: context.scale(12)),
       ],
     );
@@ -66,14 +67,52 @@ class _PhoneField extends StatelessWidget {
           ),
         ),
         SizedBox(height: context.scale(16)),
-        AppTextField(
-          hintText: '0100000000000',
-          keyboardType: TextInputType.phone,
-          borderRadius: 20,
-          backgroundColor: ColorManager.greyShade,
-          padding: EdgeInsets.zero,
-          controller: controller,
-          validator: validator,
+        Row(
+          children: [
+            BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
+              buildWhen: (previous, current) =>
+                  previous.currentCountryCode != current.currentCountryCode,
+
+              builder: (context, state) {
+                controller.text = state.currentCountryCode;
+
+                return Expanded(
+                  child: AppTextField(
+                    textDirection: TextDirection.ltr,
+                    hintText: '0100000000000',
+                    keyboardType: TextInputType.phone,
+                    borderRadius: 20,
+                    backgroundColor: ColorManager.greyShade,
+                    padding: EdgeInsets.zero,
+                    controller: controller,
+                    validator: validator,
+                    onChanged: (value) {
+                      if (!value.startsWith(state.currentCountryCode)) {
+                        controller.clear();
+                        controller.text = state.currentCountryCode;
+                      }
+                    },
+                  ),
+                );
+              },
+            ),
+            SizedBox(width: context.scale(8)),
+
+            Container(
+                width: context.scale(88),
+                height: context.scale(44),
+                decoration: BoxDecoration(
+                  color: ColorManager.greyShade,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: CustomCountryCodePicker(
+                  onChanged: (CountryCode countryCode) {
+                    BlocProvider.of<RemoteAuthenticationCubit>(context)
+                        .setCountryCode(countryCode.dialCode!);
+                  },
+                )
+            ),
+          ],
         ),
       ],
     );
@@ -115,4 +154,3 @@ class _NameField extends StatelessWidget {
     );
   }
 }
-

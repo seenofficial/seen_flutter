@@ -13,6 +13,7 @@ class RemoteAuthenticationState extends Equatable {
     this.verifyOtpRequestState = RequestState.initial,
     this.isOtpVerified = false,
     this.verifyOtpErrorMessage = '',
+    this.currentCountryCode =  '+20',
   });
 
   final RequestState loginRequestState;
@@ -20,7 +21,7 @@ class RemoteAuthenticationState extends Equatable {
   final String loginToken;
 
   final String userPhoneNumber;
-  final String currentOTP ;
+  final String currentOTP;
   final RequestState sendOtpRequestState;
   final String sendOtpErrorMessage;
 
@@ -29,6 +30,8 @@ class RemoteAuthenticationState extends Equatable {
   final String verifyOtpErrorMessage;
 
   final bool loginPasswordVisibility;
+
+  final String currentCountryCode;
 
   RemoteAuthenticationState copyWith({
     RequestState? loginRequestState,
@@ -42,13 +45,14 @@ class RemoteAuthenticationState extends Equatable {
     RequestState? verifyOtpRequestState,
     bool? isOtpVerified,
     String? verifyOtpErrorMessage,
+    String? currentCountryCode,
   }) {
     return RemoteAuthenticationState(
       loginRequestState: loginRequestState ?? this.loginRequestState,
       loginErrorMessage: loginErrorMessage ?? this.loginErrorMessage,
       loginToken: loginToken ?? this.loginToken,
       loginPasswordVisibility:
-          loginPasswordVisibility ?? this.loginPasswordVisibility,
+      loginPasswordVisibility ?? this.loginPasswordVisibility,
       userPhoneNumber: userPhoneNumber ?? this.userPhoneNumber,
       sendOtpRequestState: sendOtpRequestState ?? this.sendOtpRequestState,
       sendOtpErrorMessage: sendOtpErrorMessage ?? this.sendOtpErrorMessage,
@@ -56,20 +60,23 @@ class RemoteAuthenticationState extends Equatable {
       verifyOtpRequestState: verifyOtpRequestState ?? this.verifyOtpRequestState,
       isOtpVerified: isOtpVerified ?? this.isOtpVerified,
       verifyOtpErrorMessage: verifyOtpErrorMessage ?? this.verifyOtpErrorMessage,
+      currentCountryCode: currentCountryCode ?? this.currentCountryCode,
     );
   }
 
   @override
   List<Object?> get props => [
-        loginRequestState,
-        loginErrorMessage,
-        loginToken,
-        loginPasswordVisibility,
-        userPhoneNumber,
-        sendOtpRequestState,
-        sendOtpErrorMessage,
+    loginRequestState,
+    loginErrorMessage,
+    loginToken,
+    loginPasswordVisibility,
+    userPhoneNumber,
+    sendOtpRequestState,
+    sendOtpErrorMessage,
     currentOTP,
     verifyOtpRequestState,
     isOtpVerified,
-      ];
+    verifyOtpErrorMessage,
+    currentCountryCode, // Add currentCountryCode to props
+  ];
 }
