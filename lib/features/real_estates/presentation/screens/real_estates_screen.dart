@@ -80,15 +80,17 @@ class _RealStateScreenState extends State<RealStateScreen>
             ),
             Row(
               children: [
-                AppTextField(
-                  onTap: _openFilterBottomSheet,
-                  width: context.scale(235),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.scale(16),
-                    vertical: context.scale(8),
+                Expanded(
+                  child: AppTextField(
+                    onTap: _openFilterBottomSheet,
+                    width: context.scale(235),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.scale(16),
+                      vertical: context.scale(8),
+                    ),
+                    hintText: 'ابحث عن كل ما تريد معرفته ...',
+                    prefixIcon: Icon(Icons.search, color: ColorManager.blackColor),
                   ),
-                  hintText: 'ابحث عن كل ما تريد معرفته ...',
-                  prefixIcon: Icon(Icons.search, color: ColorManager.blackColor),
                 ),
                 ButtonAppComponent(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
