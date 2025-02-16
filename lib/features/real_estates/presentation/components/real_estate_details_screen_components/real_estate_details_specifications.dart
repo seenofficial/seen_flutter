@@ -1,4 +1,5 @@
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../../configuration/managers/color_manager.dart';
 import '../../../../../configuration/managers/font_manager.dart';
@@ -9,8 +10,13 @@ import '../../../../home_module/home_imports.dart';
 import '../../../domain/entities/property_details_entity.dart';
 
 class RealEstateDetailsSpecifications extends StatelessWidget {
-  const RealEstateDetailsSpecifications({super.key , required this.currentProperty});
-  final PropertyDetailsEntity currentProperty ;
+  const RealEstateDetailsSpecifications({
+    super.key,
+    required this.currentProperty,
+  });
+
+  final PropertyDetailsEntity currentProperty;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,8 +25,9 @@ class RealEstateDetailsSpecifications extends StatelessWidget {
         Text(
           "بيانات العقار :",
           style: getBoldStyle(
-              color: ColorManager.blackColor,
-              fontSize: FontSize.s12),
+            color: ColorManager.blackColor,
+            fontSize: FontSize.s12,
+          ),
         ),
         SizedBox(height: context.scale(16)),
         Container(
@@ -28,12 +35,10 @@ class RealEstateDetailsSpecifications extends StatelessWidget {
           height: context.scale(106),
           decoration: BoxDecoration(
             color: ColorManager.whiteColor,
-            borderRadius:
-            BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color:
-                Colors.black.withOpacity(0.1),
+                color: Colors.black.withOpacity(0.1),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
               ),
@@ -41,173 +46,123 @@ class RealEstateDetailsSpecifications extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: 16, vertical: 12),
+              horizontal: 16,
+              vertical: 12,
+            ),
             child: Column(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // First Row of Icons and Text
-                Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.start,
+                _buildRow(
                   children: [
-                    // First Item
-                    Row(
-                      children: [
-                        SvgImageComponent(
-                            iconPath: AppAssets
-                                .villaIcon,
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 8),
-                        Text(
-                          currentProperty.category
-                        ),
-                      ],
+                    _buildItem(
+                      iconPath: AppAssets.villaIcon,
+                      text: currentProperty.category,
                     ),
-                    Spacer(), // Spacer to push elements to the right
-                    // Second Item
-                    Row(
-                      children: [
-                        SvgImageComponent(
-                            iconPath: AppAssets
-                                .independentPropertyIcon,
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 8),
-                        Text(currentProperty.propertyType),
-                      ],
+                    _buildItem(
+                      iconPath: AppAssets.independentPropertyIcon,
+                      text: currentProperty.propertyType,
                     ),
-                    Spacer(),
-                    // Third Item
-                    Row(
-                      children: [
-                        Container(
-                          width: 10,
-                          height: 10,
-                          decoration:
-                          ShapeDecoration(
-                            color: ColorManager
-                                .greenColor,
-                            shape: OvalBorder(),
-                          ),
+                    _buildItem(
+                      iconWidget: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: ShapeDecoration(
+                          color: ColorManager.greenColor,
+                          shape: OvalBorder(),
                         ),
-                        SizedBox(width: 8),
-                        /// todo : map data
-                        Text(
-                          currentProperty.usageType,
-                          style: TextStyle(
-                              color: ColorManager
-                                  .greenColor),
-                        ),
-                      ],
+                      ),
+                      text: currentProperty.usageType,
+                      textStyle: TextStyle(color: ColorManager.greenColor),
                     ),
                   ],
                 ),
-                SizedBox(
-                    height: context.scale(8)),
+                SizedBox(height: context.scale(8)),
 
                 // Second Row of Icons and Text
-                Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.start,
+                _buildRow(
                   children: [
-                    // First Item
-                    Row(
-                      children: [
-                        SvgImageComponent(
-                            iconPath: AppAssets
-                                .landIcon,
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 8),
-                        Text('${currentProperty.floor} أدوار'),
-                      ],
+                    _buildItem(
+                      iconPath: AppAssets.landIcon,
+                      text: '${currentProperty.floor} أدوار',
                     ),
-                    Spacer(),
-                    // Second Item
-                    Row(
-                      children: [
-                        SvgImageComponent(
-                          iconPath:
-                          AppAssets.rentIcon,
-                          width: 16,
-                          height: 16,
-                          color: ColorManager
-                              .primaryColor,
-                        ),
-                        SizedBox(width: 8),
-                        Text(currentProperty.operation),
-                      ],
+                    _buildItem(
+                      iconPath: AppAssets.rentIcon,
+                      text: currentProperty.operation,
+                      iconColor: ColorManager.primaryColor,
                     ),
-                    Spacer(),
-                    // Third Item
-                    Row(
-                      children: [
-                        SvgImageComponent(
-                            iconPath: AppAssets
-                                .furnishedIcon,
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 8),
-                        Text(currentProperty.furnitureIncluded ? 'مفروشة' : 'غير مفروشة'),
-                      ],
+                    _buildItem(
+                      iconPath: AppAssets.furnishedIcon,
+                      text: currentProperty.furnitureIncluded ? 'مفروشة' : 'غير مفروشة',
                     ),
                   ],
                 ),
-                SizedBox(
-                    height: context.scale(8)),
+                SizedBox(height: context.scale(8)),
 
                 // Third Row of Icons and Text
-                Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.start,
+                _buildRow(
                   children: [
-                    // First Item
-                    Row(
-                      children: [
-                        SvgImageComponent(
-                            iconPath: AppAssets
-                                .areaIcon,
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 8),
-                        Text('${currentProperty.area} م'),
-                      ],
+                    _buildItem(
+                      iconPath: AppAssets.areaIcon,
+                      text: '${currentProperty.area} م',
                     ),
-                    Spacer(),
-                    // Second Item
-                    Row(
-                      children: [
-                        SvgImageComponent(
-                          iconPath:
-                          AppAssets.bedIcon,
-                          width: 16,
-                          height: 16,
-                          color: ColorManager
-                              .primaryColor,
-                        ),
-                        SizedBox(width: 8),
-                        Text(currentProperty.rooms.toString()),
-                      ],
+                    _buildItem(
+                      iconPath: AppAssets.bedIcon,
+                      text: currentProperty.rooms.toString(),
+                      iconColor: ColorManager.primaryColor,
                     ),
-                    Spacer(),
-                    // Third Item
-                    Row(
-                      children: [
-                        SvgImageComponent(
-                            iconPath: AppAssets
-                                .bathIcon,
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 8),
-                        Text(currentProperty.bathrooms.toString()),
-                      ],
+                    _buildItem(
+                      iconPath: AppAssets.bathIcon,
+                      text: currentProperty.bathrooms.toString(),
                     ),
                   ],
                 ),
               ],
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRow({required List<Widget> children}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: children.map((child) {
+        return Flexible(
+          flex: 1,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: child,
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildItem({
+    String? iconPath,
+    Widget? iconWidget,
+    required String text,
+    Color? iconColor,
+    TextStyle? textStyle,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        iconWidget ??
+            SvgImageComponent(
+              iconPath: iconPath!,
+              width: 16,
+              height: 16,
+              color: iconColor,
+            ),
+        SizedBox(width: 8),
+        Text(
+          text,
+          style: textStyle ?? getRegularStyle(
+            color: ColorManager.blackColor,
+            fontSize: FontSize.s10,
           ),
         ),
       ],
