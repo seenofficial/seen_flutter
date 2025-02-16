@@ -137,11 +137,13 @@ class _RealStateScreenState extends State<RealStateScreen>
                 switch (state.getPropertiesState) {
                   case RequestState.loading:
                   case RequestState.initial:
-                  return CardShimmerList(
-                    scrollDirection: Axis.vertical,
-                    cardHeight: context.scale(282),
-                    cardWidth: context.screenWidth,
-                    numberOfCards: 3,
+                  return Expanded(
+                    child: CardShimmerList(
+                      scrollDirection: Axis.vertical,
+                      cardHeight: context.scale(282),
+                      cardWidth: context.screenWidth,
+                      numberOfCards: 3,
+                    ),
                   );
                   case RequestState.loaded:
 

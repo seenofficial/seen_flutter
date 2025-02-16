@@ -130,11 +130,29 @@ class _LayoutScreenState extends State<LayoutScreen> {
         BlocProvider(
           create: (context) => MyBookingCubit(),
         ),
+
         BlocProvider(
-          create: (context) {
-            RealEstatesDi().setup();
-            return ServiceLocator.getIt<RealEstateCubit>()..fetchProperties();
-          },
+            create: (context) {
+              RealEstatesDi().setup();
+
+              if (ServiceLocator.getIt.isRegistered<RealEstateCubit>()) {
+                final cubit = ServiceLocator.getIt<RealEstateCubit>();
+                if (cubit.isClosed) {
+                  ServiceLocator.getIt.unregister<RealEstateCubit>();
+                }
+              }
+
+              if (!ServiceLocator.getIt.isRegistered<RealEstateCubit>()) {
+                ServiceLocator.getIt.registerLazySingleton<RealEstateCubit>(
+                      () => RealEstateCubit(
+                        ServiceLocator.getIt(),
+                        ServiceLocator.getIt(),
+                  ),
+                );
+              }
+
+              return ServiceLocator.getIt<RealEstateCubit>()..fetchProperties();
+            }
         ),
       ],
       child: PopScope(
@@ -155,7 +173,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
             child: PageView.builder(
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 4,
+              itemCount: items.length,
               itemBuilder: (context, index) => _buildScreen(index),
               onPageChanged: (index) {
                 setState(() {

@@ -32,7 +32,6 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
 
     final token = response.data['access'];
 
-    print("loginnnn is $token");
 
     // Store token in SharedPreferences
     final prefs = await SharedPreferences.getInstance();
@@ -81,6 +80,9 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
         url: ApiConstants.signUp,
         data: signUpBody.toJson()
     );
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('access_token', response.data['access_token']);
 
     return response.data['access_token'];
   }

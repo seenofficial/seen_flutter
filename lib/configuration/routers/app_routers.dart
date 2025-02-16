@@ -39,11 +39,30 @@ class AppRouters {
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.layoutScreen),
           builder: (_) => BlocProvider(
-            create: (context) => ServiceLocator.getIt<HomeBloc>()
-              ..add(FetchBanners())
-              ..add(FetchAppServices()),
+            create: (context) {
+              if (ServiceLocator.getIt.isRegistered<HomeBloc>()) {
+                final bloc = ServiceLocator.getIt<HomeBloc>();
+                if (bloc.isClosed) {
+                  ServiceLocator.getIt.unregister<HomeBloc>();
+                }
+              }
+
+              if (!ServiceLocator.getIt.isRegistered<HomeBloc>()) {
+                ServiceLocator.getIt.registerLazySingleton<HomeBloc>(
+                      () => HomeBloc(
+                        ServiceLocator.getIt(),
+                        ServiceLocator.getIt(),
+                  ),
+                );
+              }
+
+              return ServiceLocator.getIt<HomeBloc>()
+                ..add(FetchBanners())
+                ..add(FetchAppServices());
+            },
             child: const LayoutScreen(initialIndex: 0),
           ),
+
         );
 
       case RoutersNames.biometricScreen:

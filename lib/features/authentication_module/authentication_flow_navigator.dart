@@ -19,7 +19,12 @@ class AuthenticationNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ServiceLocator.getIt<RemoteAuthenticationCubit>(),
+      create: (_) => RemoteAuthenticationCubit(
+        ServiceLocator.getIt(),
+        ServiceLocator.getIt(),
+        ServiceLocator.getIt(),
+        ServiceLocator.getIt(),
+      ),
       child: Navigator(
         observers: [RouteObserverService()],
         initialRoute: RoutersNames.loginScreen,
