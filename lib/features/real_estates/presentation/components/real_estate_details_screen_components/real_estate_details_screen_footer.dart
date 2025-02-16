@@ -1,9 +1,11 @@
+import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 
 import '../../../../../configuration/managers/color_manager.dart';
 import '../../../../../configuration/managers/font_manager.dart';
 import '../../../../../configuration/managers/style_manager.dart';
 import '../../../../../core/components/button_app_component.dart';
+import '../../../../../core/components/custom_snack_bar.dart';
 import '../../../../home_module/home_imports.dart';
 
 class RealEstateDetailsScreenFooter extends StatelessWidget {
@@ -36,7 +38,19 @@ class RealEstateDetailsScreenFooter extends StatelessWidget {
               ),
             ),
           ),
-          onTap: () {},
+          onTap: () async {
+            final result = await Navigator.of(context).pushNamed(
+              RoutersNames.previewPropertyScreen,
+            );
+
+            if (result == true) {
+              CustomSnackBar.show(
+                context: context,
+                message: 'تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.',
+                type: SnackBarType.success,
+              );
+            }
+            },
         ),
         ButtonAppComponent(
           width: 171,

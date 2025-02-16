@@ -13,19 +13,19 @@ import 'guest_button_component.dart';
 
 class LoginButtons extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final LoginRequestEntity loginRequestBody;
+  final VoidCallback onLoginPressed;
 
   const LoginButtons({
     super.key,
     required this.formKey,
-    required this.loginRequestBody,
+    required this.onLoginPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _LoginButton(formKey: formKey, loginRequestBody: loginRequestBody),
+        _LoginButton(formKey: formKey, onLoginPressed: onLoginPressed),
         SizedBox(height: context.scale(16)),
         GuestButtonComponent(),
         SizedBox(height: context.scale(24)),
@@ -37,18 +37,14 @@ class LoginButtons extends StatelessWidget {
 
 class _LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final LoginRequestEntity loginRequestBody;
+  final VoidCallback onLoginPressed;
 
   const _LoginButton({
     required this.formKey,
-    required this.loginRequestBody,
+    required this.onLoginPressed,
   });
 
-  void _login(BuildContext context) {
-    if (formKey.currentState?.validate() ?? false) {
-      context.read<RemoteAuthenticationCubit>().remoteLogin(loginRequestBody);
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +64,9 @@ class _LoginButton extends StatelessWidget {
         color: ColorManager.primaryColor,
         borderRadius: BorderRadius.circular(context.scale(20)),
       ),
-      onTap: () => _login(context),
+      onTap: (){
+        onLoginPressed();
+      },
     );
   }
 }

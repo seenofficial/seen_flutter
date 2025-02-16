@@ -65,7 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
           /// handle login state
           if(previous.loginRequestState != current.loginRequestState && current.loginRequestState != RequestState.loading) {
             if (current.loginRequestState == RequestState.loaded && navigateToNextScreen) {
-              navigateToNextScreen = false;
               Navigator.of(context, rootNavigator: true).pushReplacementNamed(RoutersNames.layoutScreen);
             }
             else {
@@ -121,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginContent() {
+
     return Form(
       key: _formKey,
       child: Column(
@@ -141,10 +141,16 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(height: context.scale(24)),
           LoginButtons(
             formKey: _formKey,
-            loginRequestBody: LoginRequestEntity(
-              phone: _phoneController.text,
-              password: _passwordController.text,
-            ),
+            onLoginPressed: (){
+              if (_formKey.currentState!.validate()) {
+                final loginRequestBody = LoginRequestEntity(
+                  phone: _phoneController.text.trim(),
+                  password: _passwordController.text.trim(),
+                );
+
+                context.read<RemoteAuthenticationCubit>().remoteLogin(loginRequestBody);
+              }
+            },
           ),
         ],
       ),

@@ -4,6 +4,8 @@ import 'package:enmaa/features/authentication_module/presentation/screens/otp_sc
 import 'package:enmaa/features/authentication_module/presentation/screens/sign_up_screen.dart';
 import 'package:enmaa/features/home_module/presentation/controller/home_bloc.dart';
 import 'package:enmaa/features/home_module/presentation/screens/home_screen.dart';
+import 'package:enmaa/features/preview_property/presentation/screens/preview_property_screen.dart';
+import 'package:enmaa/features/preview_property/preview_property_DI.dart';
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_details_screen.dart';
 import 'package:enmaa/features/splash_and_on_boarding/screens/on_boarding_screen.dart';
 import 'package:enmaa/layout_screen.dart';
@@ -15,6 +17,7 @@ import '../../features/add_new_real_estate/presentation/screens/add_new_real_est
 import '../../features/authentication_module/authentication_flow_navigator.dart';
 import '../../features/authentication_module/presentation/controller/biometric_bloc.dart';
 import '../../features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
+import '../../features/preview_property/presentation/controller/preview_property_cubit.dart';
 import 'route_names.dart';
 import '../../core/screens/splash_screen.dart';
 
@@ -73,6 +76,14 @@ class AppRouters {
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.authenticationFlow),
           builder: (_) => const AuthenticationNavigator(),
+        );
+      case RoutersNames.previewPropertyScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.previewPropertyScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => PreviewPropertyCubit(),
+            child: PreviewPropertyScreen(),
+          ),
         );
       default:
         return MaterialPageRoute(
