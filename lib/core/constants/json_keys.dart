@@ -30,5 +30,14 @@ class JsonKeys {
 
   static const String phone = 'phone';
   static const String password = 'password';
+  static const String passwordConfirm = 'password_confirm';
+  static const String fullName = 'full_name';
+
+
+  static const String phoneNumber = 'phone_number';
+  static const String expiresAt = 'expires_at';
+  static const String code = 'code';
+
+
 
 }

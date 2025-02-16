@@ -15,21 +15,20 @@ import 'guest_button_component.dart';
 
 class SignUpButtonsWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final SignUpRequestEntity signUpRequestBody;
+  final Function() signUpOnTap;
 
   const SignUpButtonsWidget({
     super.key,
     required this.formKey,
-    required this.signUpRequestBody,
+    required this.signUpOnTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-
         /// sign up button sends otp to the number
-        _SignUpButton(formKey: formKey, signUpRequestBody: signUpRequestBody),
+        _SignUpButton(formKey: formKey, signUpOnTap:signUpOnTap),
         SizedBox(height: context.scale(16)),
         GuestButtonComponent(),
         SizedBox(height: context.scale(24)),
@@ -42,29 +41,17 @@ class SignUpButtonsWidget extends StatelessWidget {
 /// sends otp
 class _SignUpButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final SignUpRequestEntity signUpRequestBody;
-
+  final Function() signUpOnTap ;
   const _SignUpButton({
     required this.formKey,
-    required this.signUpRequestBody,
+    required this.signUpOnTap,
   });
 
-  void _signUp(BuildContext context) {
-    if (formKey.currentState?.validate() ?? false) {
-      context.read<RemoteAuthenticationCubit>().sendOtp(
-          signUpRequestBody.phone);
-      Navigator.pushNamed(
-        context,
-        RoutersNames.otpScreen,
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
       buildWhen: (previous, current) {
-
         return previous.sendOtpRequestState != current.sendOtpRequestState;
       },
       builder: (context, state) {
@@ -84,14 +71,14 @@ class _SignUpButton extends StatelessWidget {
             color: ColorManager.primaryColor,
             borderRadius: BorderRadius.circular(context.scale(20)),
           ),
-          onTap: () => _signUp(context),
+          onTap: (){
+            signUpOnTap();
+          },
         );
-
       },
     );
   }
 }
-
 
 class _LoginSection extends StatelessWidget {
   const _LoginSection();

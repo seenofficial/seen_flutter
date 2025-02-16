@@ -19,7 +19,6 @@ import '../../../home_module/home_imports.dart';
 import 'dart:ui' as ui;
 import 'dart:io' show Platform;
 
-
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
 
@@ -75,7 +74,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void handleResendCode() {
     if (_canResend) {
-      final phoneNumber = context.read<RemoteAuthenticationCubit>().state.userPhoneNumber;
+      final phoneNumber =
+          context.read<RemoteAuthenticationCubit>().state.userPhoneNumber;
       context.read<RemoteAuthenticationCubit>().sendOtp(phoneNumber);
       startTimer();
     }
@@ -89,8 +89,11 @@ class _OtpScreenState extends State<OtpScreen> {
         buildWhen: (previous, current) {
           if (previous.verifyOtpRequestState != current.verifyOtpRequestState &&
               current.verifyOtpRequestState != RequestState.loading) {
-            if (current.verifyOtpRequestState == RequestState.loaded && current.isOtpVerified && navigateToHome) {
-              Navigator.pushReplacementNamed(context ,RoutersNames.createNewPasswordScreen);
+            if (current.verifyOtpRequestState == RequestState.loaded &&
+                current.isOtpVerified &&
+                navigateToHome) {
+              Navigator.pushReplacementNamed(
+                  context, RoutersNames.createNewPasswordScreen);
             } else {
               otpController.clear();
               CustomSnackBar.show(
@@ -100,153 +103,178 @@ class _OtpScreenState extends State<OtpScreen> {
               );
             }
           }
-          return previous.verifyOtpRequestState != current.verifyOtpRequestState;
+          return previous.verifyOtpRequestState !=
+              current.verifyOtpRequestState;
         },
-  builder: (context, state) {
-    return Stack(
-        children: [
-          SafeArea(
-            child: Stack(
-              children: [
-                PositionedDirectional(
-                  top: context.scale(24),
-                  start: context.scale(16),
-                  child: CircularIconButton(
-                    iconPath: AppAssets.backIcon,
-                    backgroundColor: ColorManager.greyShade,
-                    containerSize: 40,
-                    iconSize: 16,
-                    padding: const EdgeInsets.all(8),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-                PositionedDirectional(
-                  top: context.scale(24 + 40 + 24),
-                  end: 0,
-                  start: 0,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.scale(16)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'أدخل رمز الأمان المرسل إلى هاتفك',
-                          style: getBoldStyle(color: ColorManager.blackColor),
-                        ),
-                        SizedBox(height: context.scale(8)),
-                        BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
-                          builder: (context, state) {
-                            final String userPhoneNumber = state.userPhoneNumber;
-                            return Text.rich(TextSpan(
+        builder: (context, state) {
+          return Stack(
+            children: [
+              SafeArea(
+                child: Stack(
+                  children: [
+                    PositionedDirectional(
+                      top: context.scale(24),
+                      start: context.scale(16),
+                      child: CircularIconButton(
+                        iconPath: AppAssets.backIcon,
+                        backgroundColor: ColorManager.greyShade,
+                        containerSize: 40,
+                        iconSize: 16,
+                        padding: const EdgeInsets.all(8),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                    PositionedDirectional(
+                      top: context.scale(24 + 40 + 24),
+                      end: 0,
+                      start: 0,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: context.scale(16)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'أدخل رمز الأمان المرسل إلى هاتفك',
+                              style:
+                                  getBoldStyle(color: ColorManager.blackColor),
+                            ),
+                            SizedBox(height: context.scale(8)),
+                            BlocBuilder<RemoteAuthenticationCubit,
+                                RemoteAuthenticationState>(
+                              builder: (context, state) {
+                                final String userPhoneNumber =
+                                    state.userPhoneNumber;
+                                return Text.rich(TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'تم إرسال الكود إلى رقمك المسجل ',
+                                      style: getMediumStyle(
+                                        color: ColorManager.blackColor,
+                                        fontSize: FontSize.s12,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: userPhoneNumber,
+                                      style: getMediumStyle(
+                                        color: ColorManager.blackColor,
+                                        fontSize: FontSize.s12,
+                                      ),
+                                    ),
+                                  ],
+                                ));
+                              },
+                            ),
+                            SizedBox(height: context.scale(24)),
+                            Center(
+                              child: Directionality(
+                                textDirection: ui.TextDirection.ltr,
+                                child: Pinput(
+                                  smsRetriever: smsRetriever,
+                                  controller: otpController,
+                                  length: 6,
+                                  defaultPinTheme: PinTheme(
+                                    width: context.scale(48),
+                                    height: context.scale(44),
+                                    decoration: BoxDecoration(
+                                      color: ColorManager.greyShade,
+                                      borderRadius: BorderRadius.circular(
+                                          context.scale(4)),
+                                    ),
+                                  ),
+                                  focusedPinTheme: PinTheme(
+                                    width: context.scale(58),
+                                    height: context.scale(54),
+                                    decoration: BoxDecoration(
+                                      color: ColorManager.greyShade,
+                                      borderRadius: BorderRadius.circular(
+                                          context.scale(4)),
+                                    ),
+                                  ),
+                                  submittedPinTheme: PinTheme(
+                                    width: context.screenWidth * .15,
+                                    height: context.screenWidth * .15,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: ColorManager.primaryColor
+                                            .withOpacity(0.5),
+                                      ),
+                                    ),
+                                  ),
+                                  showCursor: true,
+                                  keyboardType: TextInputType.number,
+                                  onCompleted: (verificationCode) {
+                                    context
+                                        .read<RemoteAuthenticationCubit>()
+                                        .verifyOtp(verificationCode);
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: context.scale(12)),
+                            Row(
                               children: [
-                                TextSpan(
-                                  text: 'تم إرسال الكود إلى رقمك المسجل ',
-                                  style: getMediumStyle(
+                                Text(
+                                  formatTime(),
+                                  style: getBoldStyle(
                                     color: ColorManager.blackColor,
-                                    fontSize: FontSize.s12,
                                   ),
                                 ),
-                                TextSpan(
-                                  text: userPhoneNumber,
+                                Spacer(),
+                                Text(
+                                  '  لم تستلم الرمز؟  ',
                                   style: getMediumStyle(
-                                    color: ColorManager.blackColor,
                                     fontSize: FontSize.s12,
+                                    color: ColorManager.grey,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: _canResend ? handleResendCode : null,
+                                  child: Text(
+                                    'إعادة الإرسال',
+                                    style: getUnderlineBoldStyle(
+                                      color: _canResend
+                                          ? ColorManager.primaryColor
+                                          : ColorManager.primaryColor
+                                              .withOpacity(0.5),
+                                      fontSize: FontSize.s12,
+                                    ),
                                   ),
                                 ),
                               ],
-                            ));
-                          },
-                        ),
-                        SizedBox(height: context.scale(24)),
-                        Center(
-                          child: Directionality(
-                            textDirection: ui.TextDirection.ltr,
-                            child: Pinput(
-                              smsRetriever: smsRetriever,
-                              controller: otpController,
-                              length: 6,
-                              defaultPinTheme: PinTheme(
-                                width: context.scale(48),
-                                height: context.scale(44),
-                                decoration: BoxDecoration(
-                                  color: ColorManager.greyShade,
-                                  borderRadius: BorderRadius.circular(context.scale(4)),
-                                ),
-                              ),
-                              focusedPinTheme: PinTheme(
-                                width: context.scale(58),
-                                height: context.scale(54),
-                                decoration: BoxDecoration(
-                                  color: ColorManager.greyShade,
-                                  borderRadius: BorderRadius.circular(context.scale(4)),
-                                ),
-                              ),
-                              submittedPinTheme: PinTheme(
-                                width: context.screenWidth * .15,
-                                height: context.screenWidth * .15,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: ColorManager.primaryColor.withOpacity(0.5),
-                                  ),
-                                ),
-                              ),
-                              showCursor: true,
-                              keyboardType: TextInputType.number,
-                              onCompleted: (verificationCode) {
-                                context.read<RemoteAuthenticationCubit>().verifyOtp(verificationCode);
+                            ),
+
+                            //todo remove this
+                            BlocBuilder<RemoteAuthenticationCubit,
+                                RemoteAuthenticationState>(
+                              builder: (context, state) {
+                                if (state.currentOTP == null)
+                                  return const SizedBox();
+                                return Text(
+                                  'enter this code ${state.currentOTP!.otpCode}',
+                                  style: getBoldStyle(
+                                      color: ColorManager.blackColor,
+                                      fontSize: FontSize.s20),
+                                );
                               },
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: context.scale(12)),
-                        Row(
-                          children: [
-                            Text(
-                              formatTime(),
-                              style: getBoldStyle(
-                                color: ColorManager.blackColor,
-                              ),
-                            ),
-                            Spacer(),
-                            Text(
-                              '  لم تستلم الرمز؟  ',
-                              style: getMediumStyle(
-                                fontSize: FontSize.s12,
-                                color: ColorManager.grey,
-                              ),
-                            ),
-                            InkWell(
-                              onTap: _canResend ? handleResendCode : null,
-                              child: Text(
-                              'إعادة الإرسال',
-                                style: getUnderlineBoldStyle(
-                                  color: _canResend
-                                      ? ColorManager.primaryColor
-                                      : ColorManager.primaryColor.withOpacity(0.5),
-                                  fontSize: FontSize.s12,
-                                ),
-                              ),
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          if (state.verifyOtpRequestState == RequestState.loading)
-            const LoadingOverlayComponent(),
-        ],
-      );
-  },
-),
+              ),
+              if (state.verifyOtpRequestState == RequestState.loading)
+                const LoadingOverlayComponent(),
+            ],
+          );
+        },
+      ),
     );
   }
 }
-
 
 class SmsRetrieverImpl implements SmsRetriever {
   const SmsRetrieverImpl(this.smartAuth);

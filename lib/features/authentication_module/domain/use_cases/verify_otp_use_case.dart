@@ -8,6 +8,6 @@ class VerifyOtpUseCase {
 
   VerifyOtpUseCase(this._baseAuthenticationRepository);
 
-  Future<Either<Failure, bool>> call(String otp) =>
-      _baseAuthenticationRepository.verifyOtp(otp);
+  Future<Either<Failure, bool>> call(String otp, String phoneNumber) =>
+      _baseAuthenticationRepository.verifyOtp(otp , phoneNumber);
 }

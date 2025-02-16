@@ -74,14 +74,6 @@ class _PhoneField extends StatelessWidget {
               buildWhen: (previous, current) =>
               previous.currentCountryCode != current.currentCountryCode,
               builder: (context, state) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (controller.text != state.currentCountryCode) {
-                    controller.text = state.currentCountryCode;
-                    controller.selection = TextSelection.fromPosition(
-                      TextPosition(offset: controller.text.length),
-                    );
-                  }
-                });
 
                 return Expanded(
                   child: AppTextField(
@@ -114,6 +106,8 @@ class _PhoneField extends StatelessWidget {
                 ),
                 child: CustomCountryCodePicker(
                   onChanged: (CountryCode countryCode) {
+                    controller.clear();
+                    controller.text = countryCode.dialCode!;
                     BlocProvider.of<RemoteAuthenticationCubit>(context)
                         .setCountryCode(countryCode.dialCode!);
                   },

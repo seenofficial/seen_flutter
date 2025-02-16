@@ -16,6 +16,7 @@ import 'package:enmaa/features/authentication_module/presentation/controller/rem
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/custom_snack_bar.dart';
 import '../../../../core/services/service_locator.dart';
+import '../../data/models/login_request_model.dart';
 import '../components/login_buttons_widget.dart';
 import '../components/login_form_fields_widget.dart';
 
@@ -143,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
             formKey: _formKey,
             onLoginPressed: (){
               if (_formKey.currentState!.validate()) {
-                final loginRequestBody = LoginRequestEntity(
+                final loginRequestBody = LoginRequestModel(
                   phone: _phoneController.text.trim(),
                   password: _passwordController.text.trim(),
                 );

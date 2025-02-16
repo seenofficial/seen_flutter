@@ -2,14 +2,14 @@ import 'package:enmaa/features/authentication_module/domain/entities/sign_up_req
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
-import 'package:enmaa/configuration/managers/font_manager.dart';
-import 'package:enmaa/core/components/button_app_component.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/circular_icon_button.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../components/sign_up_buttons_widget.dart';
 import '../components/sign_up_form_field_widget.dart';
+import '../controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -19,9 +19,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController(text: '+20');
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -50,8 +49,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: ColorManager.whiteColor,
       body: Stack(
@@ -76,8 +73,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   end: 0,
                   start: 0,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: context.scale(16)),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: context.scale(16)),
                     child: Form(
                       key: formKey,
                       child: Column(
@@ -90,27 +87,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           SizedBox(height: context.scale(24)),
                           SignUpFormFieldWidget(
-                            phoneController:phoneController ,
+                            phoneController: phoneController,
                             validatePhone: _validatePhone,
-                            nameController: nameController , validateName: _validateName,
+                            nameController: nameController,
+                            validateName: _validateName,
                           ),
                           SizedBox(height: context.scale(24)),
                           SignUpButtonsWidget(
                             formKey: formKey,
-                            signUpRequestBody: SignUpRequestEntity(phone: phoneController.text, name: nameController.text),
+                            signUpOnTap: () {
+                              if (formKey.currentState?.validate() ?? false) {
+                                final authenticationCubit =
+                                    context.read<RemoteAuthenticationCubit>();
 
+                                authenticationCubit
+                                    .sendOtp(phoneController.text);
+                                authenticationCubit
+                                    .changeUserName(nameController.text);
+                                Navigator.pushNamed(
+                                  context,
+                                  RoutersNames.otpScreen,
+                                );
+                              }
+                            },
                           ),
-
                         ],
                       ),
-
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );

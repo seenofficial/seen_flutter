@@ -7,6 +7,10 @@ import 'package:enmaa/features/authentication_module/domain/repository/base_auth
 
 import '../../../../core/errors/failure.dart';
 import '../../../../core/services/handle_api_request_service.dart';
+import '../../domain/entities/sign_up_request_entity.dart';
+import '../models/login_request_model.dart';
+import '../models/otp_response_model.dart';
+import '../models/sign_up_request_model.dart';
 
 
 
@@ -26,7 +30,7 @@ class AuthenticationRepository extends BaseAuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, String>> remoteLogin(LoginRequestEntity loginBody) async{
+  Future<Either<Failure, String>> remoteLogin(LoginRequestModel loginBody) async{
     return await HandleRequestService.handleApiCall<String>(() async {
       final result = await baseAuthenticationRemoteDataSource.remoteLogin(loginBody);
       return result;
@@ -34,17 +38,25 @@ class AuthenticationRepository extends BaseAuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, String>> sendOtp(String phoneNumber)async {
-    return await HandleRequestService.handleApiCall<String>(() async {
+  Future<Either<Failure, OTPResponseModel>> sendOtp(String phoneNumber)async {
+    return await HandleRequestService.handleApiCall<OTPResponseModel>(() async {
       final result = await baseAuthenticationRemoteDataSource.sendOtp(phoneNumber);
       return result;
     });
   }
 
   @override
-  Future<Either<Failure, bool>> verifyOtp(String otp)async {
+  Future<Either<Failure, bool>> verifyOtp(String otp , String phoneNumber)async {
     return await HandleRequestService.handleApiCall<bool>(() async {
-      final result = await baseAuthenticationRemoteDataSource.verifyOtp(otp);
+      final result = await baseAuthenticationRemoteDataSource.verifyOtp(otp , phoneNumber);
+      return result;
+    });
+  }
+
+  @override
+  Future<Either<Failure, String>> signUp(SignUpRequestModel signUpBody) async{
+    return await HandleRequestService.handleApiCall<String>(() async {
+      final result = await baseAuthenticationRemoteDataSource.signUp(signUpBody);
       return result;
     });
   }

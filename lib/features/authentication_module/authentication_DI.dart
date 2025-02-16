@@ -2,6 +2,7 @@ import 'package:enmaa/features/authentication_module/data/data_source/local_data
 import 'package:enmaa/features/authentication_module/domain/repository/base_authentication_repository.dart';
 import 'package:enmaa/features/authentication_module/domain/use_cases/remote_login_use_case.dart';
 import 'package:enmaa/features/authentication_module/domain/use_cases/send_otp_use_case.dart';
+import 'package:enmaa/features/authentication_module/domain/use_cases/sign_up_use_case.dart';
 import 'package:enmaa/features/authentication_module/domain/use_cases/verify_otp_use_case.dart';
 import 'package:enmaa/features/authentication_module/presentation/controller/biometric_bloc.dart';
 import 'package:enmaa/features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
@@ -56,6 +57,9 @@ class AuthenticationDi {
     sl.registerLazySingleton(
           () => VerifyOtpUseCase(sl()),
     );
+    sl.registerLazySingleton(
+          () => SignUpUseCase(sl()),
+    );
   }
   void _registerBlocs() {
 
@@ -70,6 +74,7 @@ class AuthenticationDi {
         sl<RemoteLoginUseCase>(),
         sl<SendOtpUseCase>(),
         sl<VerifyOtpUseCase>(),
+        sl<SignUpUseCase>(),
       ),
     );
 

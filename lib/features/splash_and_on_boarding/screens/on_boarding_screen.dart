@@ -2,6 +2,7 @@ import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../configuration/managers/font_manager.dart';
 import '../../../configuration/managers/style_manager.dart';
 import '../../../configuration/routers/route_names.dart';
@@ -41,8 +42,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     ),
   ];
 
-  void _navigateToNextPage() {
-    Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
+  void _navigateToNextPage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+
+    if (token != null && token.isNotEmpty) {
+      Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
+    } else {
+      Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
+    }
   }
 
   @override

@@ -11,7 +11,7 @@ class LoginRequestModel extends LoginRequestEntity {
   Map<String, dynamic> toJson() {
     return {
       JsonKeys.password: password,
-      JsonKeys.phone: phone,
+      JsonKeys.phoneNumber: phone,
     };
   }
 }

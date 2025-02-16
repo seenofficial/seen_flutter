@@ -9,21 +9,28 @@ class RemoteAuthenticationState extends Equatable {
     this.userPhoneNumber = '',
     this.sendOtpRequestState = RequestState.initial,
     this.sendOtpErrorMessage = '',
-    this.currentOTP = '',
+    this.currentOTP ,
     this.verifyOtpRequestState = RequestState.initial,
     this.isOtpVerified = false,
     this.verifyOtpErrorMessage = '',
     this.currentCountryCode =  '+20',
     this.createNewPasswordPasswordVisibility1 =  false,
     this.createNewPasswordPasswordVisibility2 =  false,
+    this.userName =  '',
+    this.signUpRequestState = RequestState.initial,
+    this.signUpErrorMessage = '',
+
   });
 
   final RequestState loginRequestState;
   final String loginErrorMessage;
   final String loginToken;
 
+  final RequestState signUpRequestState;
+  final String signUpErrorMessage;
+
   final String userPhoneNumber;
-  final String currentOTP;
+  final OTPResponseEntity? currentOTP;
   final RequestState sendOtpRequestState;
   final String sendOtpErrorMessage;
 
@@ -36,6 +43,7 @@ class RemoteAuthenticationState extends Equatable {
   final bool createNewPasswordPasswordVisibility2;
 
   final String currentCountryCode;
+  final String userName;
 
   RemoteAuthenticationState copyWith({
     RequestState? loginRequestState,
@@ -45,13 +53,16 @@ class RemoteAuthenticationState extends Equatable {
     String? userPhoneNumber,
     RequestState? sendOtpRequestState,
     String? sendOtpErrorMessage,
-    String? currentOTP,
+    OTPResponseEntity? currentOTP,
     RequestState? verifyOtpRequestState,
     bool? isOtpVerified,
     String? verifyOtpErrorMessage,
     String? currentCountryCode,
     bool? createNewPasswordPasswordVisibility1,
     bool? createNewPasswordPasswordVisibility2,
+    String? userName,
+    RequestState? signUpRequestState,
+    String? signUpErrorMessage,
   }) {
     return RemoteAuthenticationState(
       loginRequestState: loginRequestState ?? this.loginRequestState,
@@ -69,6 +80,9 @@ class RemoteAuthenticationState extends Equatable {
       currentCountryCode: currentCountryCode ?? this.currentCountryCode,
       createNewPasswordPasswordVisibility1: createNewPasswordPasswordVisibility1 ?? this.createNewPasswordPasswordVisibility1,
       createNewPasswordPasswordVisibility2: createNewPasswordPasswordVisibility2 ?? this.createNewPasswordPasswordVisibility2,
+      userName: userName ?? this.userName,
+      signUpRequestState: signUpRequestState ?? this.signUpRequestState,
+      signUpErrorMessage: signUpErrorMessage ?? this.signUpErrorMessage,
     );
   }
 
@@ -88,5 +102,8 @@ class RemoteAuthenticationState extends Equatable {
     currentCountryCode,
     createNewPasswordPasswordVisibility1,
     createNewPasswordPasswordVisibility2,
+    userName,
+    signUpRequestState,
+    signUpErrorMessage,
   ];
 }

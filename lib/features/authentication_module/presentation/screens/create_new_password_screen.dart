@@ -1,11 +1,17 @@
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/extensions/request_states_extension.dart';
+import 'package:enmaa/features/authentication_module/data/models/sign_up_request_model.dart';
+import 'package:enmaa/features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/button_app_component.dart';
 import '../../../../core/components/circular_icon_button.dart';
+import '../../../../core/components/custom_snack_bar.dart';
+import '../../../../core/components/loading_overlay_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../home_module/home_imports.dart';
 import '../components/create_new_password_form_fields_widget.dart';
@@ -33,7 +39,30 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.whiteColor,
-      body: Stack(
+      body: BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
+        buildWhen: (previous, current) {
+          if (previous.signUpRequestState != current.signUpRequestState) {
+             if (current.signUpRequestState.isLoaded) {
+              Navigator.of(context).pushReplacementNamed(RoutersNames.loginScreen);
+              CustomSnackBar.show(
+                context: context,
+                message: 'تم إنشاء حسابك بنجاح',
+                type: SnackBarType.success,
+              );
+            } else if (current.signUpRequestState.isError) {
+              CustomSnackBar.show(
+                context: context,
+                message: current.signUpErrorMessage,
+                type: SnackBarType.error,
+              );
+            }
+          }
+
+          // Rebuild only when signUpRequestState changes
+          return previous.signUpRequestState != current.signUpRequestState;
+        },
+        builder: (context, state) {
+      return Stack(
         children: [
           SafeArea(
             child: Stack(
@@ -103,8 +132,15 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                                 ),
                                 onTap: (){
                                   if (_formKey.currentState?.validate() ?? false) {
-                                    Navigator.of(context, rootNavigator: true).pushReplacementNamed(RoutersNames.layoutScreen);
+                                    final authBloc = context.read<RemoteAuthenticationCubit>();
+                                    SignUpRequestModel signUpRequestModel = SignUpRequestModel(
+                                      password: _passwordController1.text, 
+                                      name: authBloc.state.userName, 
+                                      phone: authBloc.state.userPhoneNumber,
+                                    );
+                                    authBloc.signUp(signUpRequestModel);
                                   }
+                                  
                                 },
                               )
 
@@ -118,9 +154,12 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               ],
             ),
           ),
-
+          if (state.signUpRequestState.isLoading)
+            const LoadingOverlayComponent(),
         ],
-      )
+      );
+  },
+)
 
     );
   }
