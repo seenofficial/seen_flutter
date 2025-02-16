@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/routers/app_routers.dart';
+import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/features/favorites/favorites_screen.dart';
 import 'package:enmaa/features/my_booking/my_booking_cubit.dart';
 import 'package:enmaa/features/my_booking/my_booking_screen.dart';
@@ -14,10 +14,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'configuration/managers/color_manager.dart';
 import 'core/components/floating_nav_bar.dart';
 import 'core/services/service_locator.dart';
-import 'core/translation/locale_keys.dart';
 import 'features/home_module/home_imports.dart';
-import 'features/home_module/presentation/controller/home_bloc.dart';
 import 'features/home_module/presentation/screens/home_screen.dart';
+import 'features/wallet/wallet_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key, required this.initialIndex, this.arguments});
@@ -60,6 +59,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 2:
         return const FavoritesScreen();
       case 3:
+        return const WalletScreen();
+      case 4:
         return const ProfileScreen();
       default:
         return const SizedBox.shrink();
@@ -89,14 +90,17 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   List<FloatingNavBarItem> get items =>
       [
-        FloatingNavBarItem(icon: Icons.home, text: LocaleKeys.home.tr()),
+        FloatingNavBarItem(icon: AppAssets.homeIcon, text: 'الرئيسيه'),
         FloatingNavBarItem(
-            icon: Icons.local_grocery_store, text: LocaleKeys.myBookings.tr()),
+            icon: AppAssets.bookingIcon, text: 'حجوزاتي'),
         FloatingNavBarItem(
-            icon: Icons.star_border_purple500_rounded,
-            text: LocaleKeys.favorites.tr()),
+            icon: AppAssets.heartIcon,
+            text: 'المفضله'),
         FloatingNavBarItem(
-            icon: Icons.sticky_note_2_sharp, text: LocaleKeys.myProfile.tr()),
+            icon: AppAssets.walletIcon,
+            text: 'محفظتي'),
+        FloatingNavBarItem(
+            icon: AppAssets.personIcon, text: 'حسابي'),
       ];
 
   Widget _buildBottomNavBar() {

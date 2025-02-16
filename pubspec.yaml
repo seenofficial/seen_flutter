@@ -89,6 +89,7 @@ flutter:
     - assets/translations/
     - assets/icons/
     - assets/icons/real_estate_filter/
+    - assets/icons/bottom_nav_bar/
     - assets/images/
 
   fonts:

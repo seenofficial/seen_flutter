@@ -1,3 +1,6 @@
+import 'package:enmaa/configuration/managers/font_manager.dart';
+import 'package:enmaa/configuration/managers/style_manager.dart';
+import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../configuration/managers/color_manager.dart';
@@ -64,18 +67,13 @@ class _FloatingBottomNavBarState extends State<FloatingBottomNavBar> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                item.icon,
-                color: isSelected ? ColorManager.primaryColor : Colors.grey,
-              ),
+              SvgImageComponent(iconPath: item.icon, width: context.scale(isSelected ? 20 : 16), height: context.scale(isSelected?20: 16),
+                color: isSelected ? ColorManager.primaryColor : ColorManager.grey,),
               SizedBox(height: 3.h),
               Text(
                 item.text,
-                style: TextStyle(
-                  color: isSelected ? ColorManager.primaryColor : Colors.grey,
-                  fontSize: 12.h,
+                style:isSelected ? getBoldStyle(color: ColorManager.primaryColor , fontSize: FontSize.s12) : getRegularStyle(color: ColorManager.grey, fontSize: FontSize.s12),
                 ),
-              ),
             ],
           ),
 
@@ -86,7 +84,7 @@ class _FloatingBottomNavBarState extends State<FloatingBottomNavBar> {
 }
 
 class FloatingNavBarItem {
-  final IconData icon;
+  final String icon;
   final String text;
 
   FloatingNavBarItem({

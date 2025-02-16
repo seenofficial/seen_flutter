@@ -57,5 +57,14 @@ class AppAssets {
   static const String onBoarding2 = '${baseImagesFolder}on_boarding2.svg';
   static const String onBoarding3 = '${baseImagesFolder}on_boarding3.svg';
 
+  /// bottom navigation bar icons
+  static const String bottomNavBarFolder = '${baseIconFolder}bottom_nav_bar/';
+
+  static const String homeIcon = '${bottomNavBarFolder}home_icon.svg';
+  static const String bookingIcon = '${bottomNavBarFolder}booking_icon.svg';
+  static const String personIcon = '${bottomNavBarFolder}person_icon.svg';
+  static const String walletIcon = '${bottomNavBarFolder}wallet_icon.svg';
+
+
 
 }
