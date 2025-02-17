@@ -1,4 +1,6 @@
+import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/components/custom_image.dart';
+import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 
 import '../../../../configuration/managers/color_manager.dart';
@@ -29,12 +31,17 @@ class ServiceComponent extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Center(
-                  child: CustomNetworkImage(
+                  child:SvgImageComponent(
+                      iconPath: category.image,
+                      width: context.scale(24),
+                      height: context.scale(24),
+                  )
+                  /*CustomNetworkImage(
                     image: category.image,
                     fit: BoxFit.cover,
                     width: context.scale(64),
                     height: context.scale(64),
-                  ),
+                  )*/,
                 ),
               ),
             ),
@@ -42,7 +49,7 @@ class ServiceComponent extends StatelessWidget {
           SizedBox(height: context.scale(8)),
           Text(
             category.text,
-            style: getBoldStyle(color: ColorManager.blackColor),
+            style: getSemiBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s14),
           ),
         ],
       ),

@@ -88,7 +88,7 @@ class RealEstateDetailsSpecifications extends StatelessWidget {
                     ),
                     _buildItem(
                       iconPath: AppAssets.rentIcon,
-                      text: currentProperty.operation,
+                      text:currentProperty.operation == 'for_sale'?'للبيع':'للايجار',
                       iconColor: ColorManager.primaryColor,
                     ),
                     _buildItem(

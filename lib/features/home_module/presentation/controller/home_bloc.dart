@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/entites/image_entity.dart';
 import 'package:enmaa/features/home_module/domain/use_cases/get_app_services_use_case.dart';
 import 'package:equatable/equatable.dart';
@@ -64,22 +65,34 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ));
       },
           (appServices) {
-        // Assuming appServices is of type List<AppServiceEntity>
-        List<AppServiceEntity> appServicess = List.from(appServices); // Ensure you clone the list
 
-        // Create a new AppServiceEntity for "عقارات"
-        AppServiceEntity aqarService = AppServiceEntity(
-          text: 'عقارات',
-          image: 'https://www.princehotels.com/wp-content/uploads/2019/05/hotel3.jpg',
-        );
 
+
+        List<AppServiceEntity> appServicessList = [
+          AppServiceEntity(
+            text: 'عقارات',
+            image: AppAssets.aqarIcon,
+          ),
+          AppServiceEntity(
+            text: 'السيارات',
+            image: AppAssets.carIcon,
+          ),
+          AppServiceEntity(
+            text: 'القاعات',
+            image: AppAssets.hallIcon,
+          ),
+          AppServiceEntity(
+            text: ' الفنادق',
+            image: AppAssets.hotelIcon,
+          ),
+
+        ];
         // Add the new entity to the list
-        appServicess.add(aqarService);
 
         // Emit the new state
         emit(state.copyWith(
           appServicesState: RequestState.loaded,
-          appServices: appServicess,
+          appServices: appServicessList,
         ));
       },
     );

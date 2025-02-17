@@ -1,3 +1,4 @@
+import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,12 +61,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               );
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      'Screen not found for category: $serviceName'),
-                                ),
-                              );
+                              CustomSnackBar.show(context: context, message: '$serviceName غير متاحه الان ويتم العمل عليها', type: SnackBarType.error);
                             }
                           },
                         ),

@@ -5,6 +5,7 @@ import 'package:enmaa/core/extensions/context_extension.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
+import '../../../../core/components/circular_icon_button.dart';
 import '../../../../core/components/custom_image.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
@@ -27,54 +28,69 @@ class RealStateCardComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isScreenWidth = width == MediaQuery.of(context).size.width;
 
-    return InkWell(
-      onTap: () {
-        Navigator.of(context, rootNavigator: true).pushNamed(
-            RoutersNames.realEstateDetailsScreen,
-            arguments: currentProperty.id);
-      },
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: ColorManager.whiteColor,
-          borderRadius: BorderRadius.circular(context.scale(12)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(context.scale(12)),
-                topRight: Radius.circular(context.scale(12)),
-              ),
-              child: CustomNetworkImage(
-                height: context.scale(isScreenWidth ? 172 : 128),
-                width: width,
-                image: currentProperty.imageUrl,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(context.scale(8)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    currentProperty.title,
-                    style: getBoldStyle(
-                        color: ColorManager.blackColor, fontSize: FontSize.s12),
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: ColorManager.whiteColor,
+        borderRadius: BorderRadius.circular(context.scale(12)),
+      ),
+      child: Stack(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.of(context, rootNavigator: true).pushNamed(
+                RoutersNames.realEstateDetailsScreen,
+                arguments: currentProperty.id,
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(context.scale(12)),
+                    topRight: Radius.circular(context.scale(12)),
                   ),
-                  SizedBox(height: context.scale(8)),
-                  _buildLocationRow(context),
-                  SizedBox(height: context.scale(8)),
-                  _buildDetailsRow(context),
-                  SizedBox(height: context.scale(8)),
-                  _buildPriceRow(context),
-                ],
-              ),
+                  child: CustomNetworkImage(
+                    height: context.scale(isScreenWidth ? 172 : 128),
+                    width: width,
+                    image: currentProperty.imageUrl,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(context.scale(8)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        currentProperty.title,
+                        style: getBoldStyle(
+                          color: ColorManager.blackColor,
+                          fontSize: FontSize.s12,
+                        ),
+                      ),
+                      SizedBox(height: context.scale(8)),
+                      _buildLocationRow(context),
+                      SizedBox(height: context.scale(8)),
+                      _buildDetailsRow(context),
+                      SizedBox(height: context.scale(8)),
+                      _buildPriceRow(context),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          PositionedDirectional(
+              top: context.scale(8),
+              end: context.scale(8),
+              child: CircularIconButton(
+                iconPath: AppAssets.heartIcon,
+                onPressed: () {},
+              ),
+          ),
+        ],
       ),
     );
   }
@@ -198,7 +214,9 @@ class RealStateCardComponent extends StatelessWidget {
                       height: 12,
                     ),
                     Text(
-                      currentProperty.operation,
+                      currentProperty.operation == 'for_sale'
+                          ? 'للبيع'
+                          : 'للايجار',
                       style: getMediumStyle(
                           color: ColorManager.primaryColor,
                           fontSize: FontSize.s10),
