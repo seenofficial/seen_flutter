@@ -24,6 +24,17 @@ class AppAssets {
   static const String folderIcon = '${baseIconFolder}folder_icon.svg';
   static const String closeIcon = '${baseIconFolder}close_icon.svg';
 
+  /// building sub types icons
+  static const String residentialBuildingIcon2 = '${baseIconFolder}commercial_building_icon.svg';
+  static const String commercialBuildingIcon = '${baseIconFolder}residential_building_icon.svg';
+  static const String mixedUseBuildingIcon = '${baseIconFolder}mixed_use_building_icon.svg';
+
+  /// land sub types icons
+  static const String freeholdLandIcon = '${baseIconFolder}freehold_land_icon.svg';
+  static const String agricultureLandIcon = '${baseIconFolder}agriculture_land_icon.svg';
+  static const String industrialLandIcon = '${baseIconFolder}industrial_land_icon.svg';
+
+
   /// preview property icons
   static const String clockIcon = '${baseIconFolder}clock_icon.svg';
   static const String calendarIcon = '${baseIconFolder}calendar_icon.svg';

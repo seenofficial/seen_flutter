@@ -1,9 +1,11 @@
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/features/add_new_real_estate/presentation/controller/add_new_real_estate_cubit.dart';
 import 'package:enmaa/features/add_new_real_estate/presentation/screens/add_new_real_estate_main_information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/core/components/app_bar_component.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import 'add_new_real_estate_location_screen.dart';
 import 'add_new_real_estate_price_screen.dart';
@@ -28,36 +30,39 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.greyShade,
-      body: Column(
-        children: [
-          AppBarComponent(
-            appBarTextMessage: 'إضافة عقار',
-            showNotificationIcon: false,
-            showLocationIcon: false,
-            showBackIcon: true,
-            centerText: true,
-          ),
-          _buildPageIndicator(),
-          Expanded(
-            child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              children: [
-                AddNewRealEstateMainInformationScreen(),
-                AddNewRealEstatePriceScreen(),
-                AddNewRealEstateLocationScreen(),
-              ],
+    return BlocProvider(
+      create: (context) => AddNewRealEstateCubit(),
+      child: Scaffold(
+        backgroundColor: ColorManager.greyShade,
+        body: Column(
+          children: [
+            AppBarComponent(
+              appBarTextMessage: 'إضافة عقار',
+              showNotificationIcon: false,
+              showLocationIcon: false,
+              showBackIcon: true,
+              centerText: true,
             ),
-          ),
-          _buildNavigationButtons(),
-        ],
+            _buildPageIndicator(),
+            Expanded(
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                children: [
+                  AddNewRealEstateMainInformationScreen(),
+                  AddNewRealEstatePriceScreen(),
+                  AddNewRealEstateLocationScreen(),
+                ],
+              ),
+            ),
+            _buildNavigationButtons(),
+          ],
+        ),
       ),
     );
   }
@@ -82,7 +87,8 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                     ? 'السعر والوصف'
                     : 'الموقع والمميزات',
                 style: getBoldStyle(
-                  color: isActive ? ColorManager.primaryColor : ColorManager.blackColor,
+                  color: isActive ? ColorManager.primaryColor : ColorManager
+                      .blackColor,
                   fontSize: FontSize.s11,
                 ),
               ),
@@ -93,7 +99,8 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                 width: context.scale(115.33),
                 height: context.scale(4),
                 decoration: BoxDecoration(
-                  color: isActive ? ColorManager.primaryColor : Color(0xFFD9D9D9),
+                  color: isActive ? ColorManager.primaryColor : Color(
+                      0xFFD9D9D9),
                   borderRadius: BorderRadius.circular(2.0),
                 ),
               ),

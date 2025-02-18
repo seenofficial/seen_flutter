@@ -85,6 +85,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             text: ' الفنادق',
             image: AppAssets.hotelIcon,
           ),
+          AppServiceEntity(
+            text: ' الفنادق',
+            image: AppAssets.hotelIcon,
+          ),
 
         ];
         // Add the new entity to the list
