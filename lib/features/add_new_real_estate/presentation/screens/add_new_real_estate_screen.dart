@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:enmaa/core/components/app_bar_component.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/managers/color_manager.dart';
+import '../components/add_new_real_estate_buttons.dart';
 import 'add_new_real_estate_location_screen.dart';
 import 'add_new_real_estate_price_screen.dart';
 
@@ -60,7 +61,11 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                 ],
               ),
             ),
-            _buildNavigationButtons(),
+            AddNewRealEstateButtons(
+              pageController: _pageController,
+              currentPage: _currentPage,
+              animationTime: const Duration(milliseconds: 500),
+            ),
           ],
         ),
       ),
@@ -111,99 +116,6 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
     );
   }
 
-  Widget _buildNavigationButtons() {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 16.0,
-        right: 16.0,
-        bottom: 32.0,
-        top: 16.0,
-      ),
-      child: AnimatedSwitcher(
-        duration: animationTime,
-        transitionBuilder: (Widget child, Animation<double> animation) {
-          return FadeTransition(
-            opacity: animation,
-            child: SizeTransition(
-              sizeFactor: animation,
-              axis: Axis.horizontal,
-              child: child,
-            ),
-          );
-        },
-        child: _currentPage == 0
-            ? SizedBox(
-          key: const ValueKey<int>(0),
-          width: double.infinity,
-          height: context.scale(48),
-          child: ElevatedButton(
-            onPressed: () {
-              _pageController.nextPage(
-                duration: animationTime,
-                curve: Curves.easeIn,
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: ColorManager.primaryColor,
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('التالي'),
-          ),
-        )
-            : Row(
-          key: const ValueKey<int>(1),
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: context.scale(175),
-              height: context.scale(48),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_currentPage > 0) {
-                    _pageController.previousPage(
-                      duration: Duration(milliseconds: 1),
-                      curve: Curves.easeInOutSine,
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFD6D8DB),
-                  foregroundColor: Color(0xFFD6D8DB),
-                ),
-                child: Text(
-                  'السابق',
-                  style: TextStyle(color: ColorManager.blackColor),
-                ),
-              ),
-            ),
-            AnimatedSize(
-              duration: animationTime,
-              curve: Curves.easeInOut,
-              child: SizedBox(
-                width: context.scale(175),
-                height: context.scale(48),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_currentPage < 2) {
-                      _pageController.nextPage(
-                        duration: animationTime,
-                        curve: Curves.easeIn,
-                      );
-                    } else {
-                      // Submit action here
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorManager.primaryColor,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: Text(_currentPage == 2 ? 'إرسال' : 'التالي'),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
 }
+

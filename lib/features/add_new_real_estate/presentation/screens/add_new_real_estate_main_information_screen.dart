@@ -173,14 +173,18 @@ class AddNewRealEstateMainInformationScreen extends StatelessWidget {
                   break;
               }
 
-              return ZoomIn(
-                duration: Duration(milliseconds: 500),
-                key: ValueKey(currentPropertyType),
-                child: Column(
-                  children: [
-                    ...propertyFields.getFields(
-                        context, addNewRealEstateCubit.formController),
-                  ],
+              return Form(
+                key: addNewRealEstateCubit.formKey,
+
+                child: ZoomIn(
+                  duration: Duration(milliseconds: 500),
+                  key: ValueKey(currentPropertyType),
+                  child: Column(
+                    children: [
+                      ...propertyFields.getFields(
+                          context, addNewRealEstateCubit.formController),
+                    ],
+                  ),
                 ),
               );
             },

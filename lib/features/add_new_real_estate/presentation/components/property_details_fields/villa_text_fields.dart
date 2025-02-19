@@ -6,6 +6,7 @@ import '../../../../../core/constants/app_assets.dart';
 import '../../../../home_module/home_imports.dart';
 import '../form_widget_component.dart';
 import '../property_fields.dart';
+import '../../../../../core/utils/form_validator.dart';
 
 class VillaTextFields implements PropertyFields {
   @override
@@ -17,6 +18,7 @@ class VillaTextFields implements PropertyFields {
         keyboardType: TextInputType.number,
         iconPath: AppAssets.areaIcon,
         controller: controller.getController('villa_area'),
+        validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'المساحة'),
       ),
       GenericFormField(
         label: 'عدد الطوابق',
@@ -24,13 +26,15 @@ class VillaTextFields implements PropertyFields {
         keyboardType: TextInputType.number,
         iconPath: AppAssets.landIcon,
         controller: controller.getController('villa_floors'),
+        validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الطوابق'),
       ),
       GenericFormField(
         label: 'عدد الغرف',
-        hintText: 'أدخل عدد الغرف', 
+        hintText: 'أدخل عدد الغرف',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.bedIcon,
         controller: controller.getController('villa_rooms'),
+        validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الغرف'),
       ),
     ];
   }

@@ -8,6 +8,7 @@ class AddNewRealEstateState extends Equatable {
     this.currentVillaType = VillaType.standalone,
     this.currentBuildingType = BuildingType.residential,
     this.currentLandType = LandType.freehold,
+    this.availableForRenewal = true,
   });
 
   final PropertyOperationType currentPropertyOperationType;
@@ -20,6 +21,8 @@ class AddNewRealEstateState extends Equatable {
   final BuildingType currentBuildingType ;
   final LandType currentLandType ;
 
+  final bool availableForRenewal;
+
   AddNewRealEstateState copyWith({
     PropertyOperationType? currentPropertyOperationType,
     PropertyType? currentPropertyType,
@@ -27,6 +30,7 @@ class AddNewRealEstateState extends Equatable {
     VillaType? currentVillaType,
     BuildingType? currentBuildingType,
     LandType? currentLandType,
+    bool ? availableForRenewal ,
   }) {
     return AddNewRealEstateState(
       currentPropertyOperationType:
@@ -36,6 +40,7 @@ class AddNewRealEstateState extends Equatable {
       currentVillaType: currentVillaType ?? this.currentVillaType,
       currentBuildingType: currentBuildingType ?? this.currentBuildingType,
       currentLandType: currentLandType ?? this.currentLandType,
+      availableForRenewal: availableForRenewal ?? this.availableForRenewal,
     );
   }
 
@@ -47,5 +52,6 @@ class AddNewRealEstateState extends Equatable {
         currentVillaType,
         currentBuildingType,
         currentLandType,
+        availableForRenewal,
       ];
 }

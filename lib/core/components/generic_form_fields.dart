@@ -9,7 +9,7 @@ class GenericFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final String iconPath;
   final TextEditingController controller;
-
+  final String? Function(String?)? validator ;
   const GenericFormField({
     super.key,
     required this.label,
@@ -17,6 +17,7 @@ class GenericFormField extends StatelessWidget {
     required this.keyboardType,
     required this.iconPath,
     required this.controller,
+    this.validator,
   });
 
   @override
@@ -29,6 +30,7 @@ class GenericFormField extends StatelessWidget {
         keyboardType: keyboardType,
         backgroundColor: Colors.white,
         borderRadius: 20,
+        validator: validator,
         padding: EdgeInsets.zero,
         prefixIcon: Padding(
           padding: const EdgeInsets.only(left: 8, right: 12, top: 12, bottom: 12),

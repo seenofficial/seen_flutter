@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/components/property_form_controller.dart';
 import '../../../../core/utils/enums.dart';
+import '../../../home_module/home_imports.dart';
 
 part 'add_new_real_estate_state.dart';
 
@@ -10,6 +11,9 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   AddNewRealEstateCubit() : super(AddNewRealEstateState());
 
   final PropertyFormController formController = PropertyFormController();
+  final formKey = GlobalKey<FormState>();
+  final priceForm = GlobalKey<FormState>();
+  final locationForm = GlobalKey<FormState>();
 
   void changePropertyOperationType(PropertyOperationType propertyOperationType) {
     emit(state.copyWith(currentPropertyOperationType: propertyOperationType));
@@ -34,7 +38,9 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
 
   void changeLandType(LandType landType) {
     emit(state.copyWith(currentLandType: landType));
-    formController.getFormData();
+  }
+  void changeAvailabilityForRenewal() {
+    emit(state.copyWith(availableForRenewal: !state.availableForRenewal));
   }
 
 

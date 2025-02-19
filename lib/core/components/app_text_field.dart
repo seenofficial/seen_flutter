@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppTextField extends StatelessWidget {
+class AppTextField extends StatefulWidget {
   final double width;
   final double height;
   final EdgeInsetsGeometry padding;
@@ -41,30 +41,53 @@ class AppTextField extends StatelessWidget {
   });
 
   @override
+  _AppTextFieldState createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  bool _hasError = false;
+
+  @override
   Widget build(BuildContext context) {
     bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     return Padding(
-      padding: padding,
+      padding: widget.padding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Directionality(
-            textDirection: textDirection ?? (isArabic ? TextDirection.rtl : TextDirection.ltr),
+            textDirection:
+            widget.textDirection ?? (isArabic ? TextDirection.rtl : TextDirection.ltr),
             child: TextFormField(
-              controller: controller,
-              keyboardType: keyboardType,
-              obscureText: obscureText,
-              onChanged: onChanged,
-              onTap: onTap,
-              maxLines: maxLines ?? 1,
-              textAlign: (textDirection == TextDirection.rtl || (textDirection == null && isArabic))
+              controller: widget.controller,
+              keyboardType: widget.keyboardType,
+              obscureText: widget.obscureText,
+              onChanged: (value) {
+                if (widget.onChanged != null) {
+                  widget.onChanged!(value);
+                }
+                setState(() {
+                  String trimmedValue = value.trim();
+                  _hasError = trimmedValue.isNotEmpty && widget.validator != null && widget.validator!(trimmedValue) != null;
+                });
+              },
+              onTap: widget.onTap,
+              maxLines: widget.maxLines ?? 1,
+              textAlign: (widget.textDirection == TextDirection.rtl ||
+                  (widget.textDirection == null && isArabic))
                   ? TextAlign.right
                   : TextAlign.left,
-              validator: validator,
+              validator: (value) {
+                final validationMessage = widget.validator?.call(value);
+                setState(() {
+                  _hasError = validationMessage != null;
+                });
+                return validationMessage;
+              },
               decoration: InputDecoration(
-                hintText: hintText,
-                hintStyle: textStyle ??
+                hintText: widget.hintText,
+                hintStyle: widget.textStyle ??
                     const TextStyle(
                       color: Color(0xFF707070),
                       fontSize: 12,
@@ -72,13 +95,17 @@ class AppTextField extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       height: 1,
                     ),
-                prefixIcon: prefixIcon,
-                suffixIcon: suffixIcon,
+                prefixIcon: widget.prefixIcon,
+                suffixIcon: _hasError
+                    ? const Icon(Icons.error_outline, color: Colors.red)
+                    : widget.suffixIcon,
                 filled: true,
-                fillColor: backgroundColor,
+                fillColor: _hasError ? Colors.red.shade50 : widget.backgroundColor,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(borderRadius),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderSide: _hasError
+                      ? const BorderSide(color: Colors.red, width: 1)
+                      : BorderSide.none,
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               ),
