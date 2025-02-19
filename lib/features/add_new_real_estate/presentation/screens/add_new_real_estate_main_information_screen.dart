@@ -36,7 +36,7 @@ class AddNewRealEstateMainInformationScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          NumberedTextHeaderComponent(
+          const NumberedTextHeaderComponent(
             number: '1',
             text: 'المعلومات الرئيسية',
           ),

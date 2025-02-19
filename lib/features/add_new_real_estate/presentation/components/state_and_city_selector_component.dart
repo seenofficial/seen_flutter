@@ -1,0 +1,85 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
+
+import '../../../../../configuration/managers/color_manager.dart';
+import '../../../../../configuration/managers/font_manager.dart';
+import '../../../../../configuration/managers/style_manager.dart';
+import '../../../../../core/components/custom_app_drop_down.dart';
+import '../../../../configuration/managers/drop_down_style_manager.dart';
+import 'form_widget_component.dart';
+
+class StateCitySelectorComponent extends StatelessWidget {
+  const StateCitySelectorComponent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FormWidgetComponent(
+      label: 'اختر المحافظة والمدينة ',
+      content: Row(
+        children: [
+          // State Selector
+          BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
+            buildWhen: (previous, current) =>
+            previous.getStatesState != current.getStatesState ||
+                previous.selectedState != current.selectedState,
+            builder: (context, state) {
+              return Expanded(
+                child: CustomDropdown<String>(
+                  items: state.states.map((e) => e.name).toList(),
+                  value: state.selectedState?.name,
+                  onChanged: (value) {
+                    context
+                        .read<SelectLocationServiceCubit>()
+                        .changeSelectedState(value!);
+                  },
+                  itemToString: (item) => item,
+                  hint: Text(' المحافظة', style: TextStyle(fontSize: FontSize.s12)),
+                  icon: Icon(Icons.keyboard_arrow_down, color: ColorManager.greyShade),
+                  decoration: DropdownStyles.getDropdownDecoration(),
+                  dropdownColor: ColorManager.whiteColor,
+                  menuMaxHeight: 200,
+                  style: getMediumStyle(
+                    color: ColorManager.blackColor,
+                    fontSize: FontSize.s14,
+                  ),
+                ),
+              );
+            },
+          ),
+          SizedBox(width: 10),
+          // City Selector
+          BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
+            buildWhen: (previous, current) =>
+            previous.getCitiesState != current.getCitiesState ||
+                previous.selectedCity != current.selectedCity,
+            builder: (context, state) {
+              return Expanded(
+                child: CustomDropdown<String>(
+                  items: state.cities.map((e) => e.name).toList(),
+                  value: state.selectedCity?.name,
+                  onChanged: (value) {
+                    context
+                        .read<SelectLocationServiceCubit>()
+                        .changeSelectedCity(value!);
+                  },
+                  itemToString: (item) => item,
+                  hint: Text('المدينة', style: TextStyle(fontSize: FontSize.s12)),
+                  icon: Icon(Icons.keyboard_arrow_down, color: ColorManager.greyShade),
+                  decoration: DropdownStyles.getDropdownDecoration(),
+                  dropdownColor: ColorManager.whiteColor,
+                  menuMaxHeight: 200,
+                  style: getMediumStyle(
+                    color: ColorManager.blackColor,
+                    fontSize: FontSize.s14,
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+}

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:enmaa/core/components/app_bar_component.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/managers/color_manager.dart';
+import '../../../../core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import '../components/add_new_real_estate_buttons.dart';
 import 'add_new_real_estate_location_screen.dart';
 import 'add_new_real_estate_price_screen.dart';
@@ -57,7 +58,12 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                 children: [
                   AddNewRealEstateMainInformationScreen(),
                   AddNewRealEstatePriceScreen(),
-                  AddNewRealEstateLocationScreen(),
+                  BlocProvider(
+                    create: (context) {
+                      return SelectLocationServiceCubit.getOrCreate()..getCountries();
+                    } ,
+                    child: AddNewRealEstateLocationScreen(),
+                  ),
                 ],
               ),
             ),
