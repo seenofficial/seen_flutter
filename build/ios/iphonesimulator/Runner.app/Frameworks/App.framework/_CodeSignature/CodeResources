@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		1eSpT+Wubzc2XwayU63J2qc/0oA=
+		r3ylWyj+qyP4Gdpjj5czOreB8AI=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		abhDDJM7o/3+nPy0nEEJsTj2du0=
+		yQgolFgHTewwGVPMJMuRp0NBTu0=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -36,6 +36,10 @@
 		<data>
 		1jCEzaYYCHOTgATbQ1vS4Mv/8PE=
 		</data>
+		<key>flutter_assets/assets/icons/agriculture_land_icon.svg</key>
+		<data>
+		PX0iiDA8hCMoSImF3xtfkEC2nQA=
+		</data>
 		<key>flutter_assets/assets/icons/aqar_icon.svg</key>
 		<data>
 		C/lo/bSfy1NEwF8EGi2Embofvyk=
@@ -56,6 +60,22 @@
 		<data>
 		A+s7bZJ7kWm7gwH6pCh/zV+NsM4=
 		</data>
+		<key>flutter_assets/assets/icons/bottom_nav_bar/booking_icon.svg</key>
+		<data>
+		dPwizRinMDeEo8zg+a2emCbezQg=
+		</data>
+		<key>flutter_assets/assets/icons/bottom_nav_bar/home_icon.svg</key>
+		<data>
+		eLaaWP0bAq9kV6odEzbzAxsJl+A=
+		</data>
+		<key>flutter_assets/assets/icons/bottom_nav_bar/person_icon.svg</key>
+		<data>
+		fP2mmsrYzWpb2M2gwoguzgfpU6M=
+		</data>
+		<key>flutter_assets/assets/icons/bottom_nav_bar/wallet_icon.svg</key>
+		<data>
+		eMFx6i7N58tcadNmqJ5O07sU7AQ=
+		</data>
 		<key>flutter_assets/assets/icons/calendar_icon.svg</key>
 		<data>
 		EDQ1ugHnRosZVILuu7jwrUtn3kA=
@@ -72,9 +92,17 @@
 		<data>
 		UulCaadxatIhOSUJ0nEVQ8/91E8=
 		</data>
+		<key>flutter_assets/assets/icons/commercial_building_icon.svg</key>
+		<data>
+		h+nRlgXDYaMLz4DtT8tk+W4oxn8=
+		</data>
 		<key>flutter_assets/assets/icons/folder_icon.svg</key>
 		<data>
 		AYTB/TYcv5oq7Nv3UuIirEChH4M=
+		</data>
+		<key>flutter_assets/assets/icons/freehold_land_icon.svg</key>
+		<data>
+		tHFUJXav+e+B/pT4b7WWvrUKuYQ=
 		</data>
 		<key>flutter_assets/assets/icons/hall_icon.svg</key>
 		<data>
@@ -88,9 +116,17 @@
 		<data>
 		JjGFtiIfshpDGOcqGv1hpmwrBt8=
 		</data>
+		<key>flutter_assets/assets/icons/industrial_land_icon.svg</key>
+		<data>
+		Bv6q+NHERPkD1AJqFvjnsciJik8=
+		</data>
 		<key>flutter_assets/assets/icons/location_icon.svg</key>
 		<data>
 		NXCo+e4Fa2rRh2yR6nKBlixesX8=
+		</data>
+		<key>flutter_assets/assets/icons/mixed_use_building_icon.svg</key>
+		<data>
+		rv+RSBV4Jxl1bsXRg6arqTnoaEk=
 		</data>
 		<key>flutter_assets/assets/icons/notification_icon.svg</key>
 		<data>
@@ -148,6 +184,10 @@
 		<data>
 		CATUs1uYKbBtkbQDn8qFsflSU3o=
 		</data>
+		<key>flutter_assets/assets/icons/residential_building_icon.svg</key>
+		<data>
+		KkVUDcPuwjevH7iwmHv/0KnBITI=
+		</data>
 		<key>flutter_assets/assets/icons/share_icon.svg</key>
 		<data>
 		XyqY3yRjm0R3vLY9NHWYTpFwPhY=
@@ -176,6 +216,10 @@
 		<data>
 		GzTwgVFKKQzOPkBkIl2PQjdZGOk=
 		</data>
+		<key>flutter_assets/assets/images/property_empty_image.svg</key>
+		<data>
+		4ZW+kjK+DmL6+cwNFYMdqCGf0y0=
+		</data>
 		<key>flutter_assets/assets/translations/ar.json</key>
 		<data>
 		qTAlRLIaerDNo2cCTSmShUwcrOo=
@@ -194,7 +238,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		QHpYplWLL20bMolq09t7eKtnF2A=
+		ZGCBb1KffXV4PBfvLXcGMGZlpss=
 		</data>
 		<key>flutter_assets/packages/country_code_picker/flags/ad.png</key>
 		<data>
@@ -1523,14 +1567,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ezlbPhpHGnfspXxXrYPxfo+41TjByWqvvAXAwXNhWaE=
+			bpXqnIt0bGSyWmW8n3G+VVpXKncaGeoB6niywizvkfA=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xhWI5LHyGXDfREcoOFz+vs/N0CwP0LdAxW0/i/hWOYg=
+			lMplZ5gIi46+Viv5sye3U6PREMbmAPJ719yXGc3HvJU=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -1568,6 +1612,13 @@
 			3h9sXiVwVw9ifX61T69X+zbjFzT3C4/G74uC0YsUAa8=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/agriculture_land_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			GXPcylPXj29qeaZSjA5oG7JaRRC0V7UKtnGAOujDcx4=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/aqar_icon.svg</key>
 		<dict>
 			<key>hash2</key>
@@ -1603,6 +1654,34 @@
 			rXKbzf8XjFH9b3MWv8gZZ63MmxRbGx2r3d4ddoaMtf4=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/bottom_nav_bar/booking_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			hl6ffEqbzEAm2iUu0LOJrsOXgzoVAO7W6ik7vVL759I=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/bottom_nav_bar/home_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			A0l0Dhoi3kgFolNwYDx/98GQL3cnGHgvXgqsErn+0M4=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/bottom_nav_bar/person_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			mLUdtHm8Jqd6IZkTtoeFap5r9aeosyW6q2tmLOQSvYw=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/bottom_nav_bar/wallet_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			PnhVM9HLemDPTbBaL2anOBjjgCNf8hXn06d5gr6qlKE=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/calendar_icon.svg</key>
 		<dict>
 			<key>hash2</key>
@@ -1631,11 +1710,25 @@
 			/YxZfx3ODmBpCdQDRAAoc6+cVa3vnVVhzF2xKhGPOko=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/commercial_building_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			aD83OYCKmVu0saz7H+XSKRzs5Cl1GB3uFZJ/Iv2Dxh4=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/folder_icon.svg</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			rviWYiNssYqKZRTinda47KuT6EagfOe696rTG+dio54=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/freehold_land_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			N3MNXEBcDobBCfxp5fIgUknI0zdi+XoZfaD2EK0/c+s=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/hall_icon.svg</key>
@@ -1659,11 +1752,25 @@
 			ukxLPETHWmk+t5F2YjwLOZeYDnLgvU53VetDjTQB3co=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/industrial_land_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			MB87LDJyDsM7Q6ZG2TA7hvz+J917skjTtMDXBd79xNg=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/location_icon.svg</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			frJYxVy7pLI+6BZGXGiraD9XL7BIXGh9eFngIP9YkzQ=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/mixed_use_building_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5ptl8oQ04Sti3Wc05vXqeAzW/HW2J6M3bBwGRev+Ctw=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/notification_icon.svg</key>
@@ -1764,6 +1871,13 @@
 			FlN8/m7h1e3uhqRBaCx99eloSxKPt8jM4wmbEEPuP9c=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/residential_building_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QQe08x40PWZZ0bqLbhIlNhOEM5uEytphUiTU/FjRywc=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/share_icon.svg</key>
 		<dict>
 			<key>hash2</key>
@@ -1813,6 +1927,13 @@
 			bPLB2gAr2RbqXUBqUbPDbnihsIhRKra36LuJnuyy1Sk=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/images/property_empty_image.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5Ua2beYgcgzDRDOol1KySoDj7VWvYrlMlqmniLO0QCo=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/translations/ar.json</key>
 		<dict>
 			<key>hash2</key>
@@ -1845,7 +1966,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2SgHvZaN28PmgQ00Wjis3dgVB/9SeqR2I1Q3TM18utw=
+			yclRbQjbxqsahOuJODDqBtX6LGn8duhlCrlMJqZpSnY=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/country_code_picker/flags/ad.png</key>

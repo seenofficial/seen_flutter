@@ -1,3 +1,6 @@
+import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
+import 'package:enmaa/core/services/service_locator.dart';
+import 'package:enmaa/features/add_new_real_estate/data/models/apartment_request_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/managers/color_manager.dart';
@@ -92,7 +95,13 @@ class AddNewRealEstateButtons extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (currentPage < 2) {
-                      if (context.read<AddNewRealEstateCubit>().priceForm.currentState!.validate()) {
+                      /// validate that user select images if not change the
+                      /// border color of the container to red
+                      var addNewRealEstateCubit = context.read<AddNewRealEstateCubit>();
+                      ;
+
+                      if (context.read<AddNewRealEstateCubit>().priceForm.currentState!.validate()
+                          && addNewRealEstateCubit.validateImages()) {
                         pageController.nextPage(
                           duration: animationTime,
                           curve: Curves.easeIn,
@@ -103,6 +112,9 @@ class AddNewRealEstateButtons extends StatelessWidget {
 
                           /// send request to add new real estate
 
+                        final addNewRealEstateCubit = context.read<AddNewRealEstateCubit>();
+
+                        addNewRealEstateCubit.addNewApartment(ServiceLocator.getIt<SelectLocationServiceCubit>().state);
 
                       }
                     }

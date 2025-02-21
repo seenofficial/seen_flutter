@@ -9,6 +9,12 @@ class AddNewRealEstateState extends Equatable {
     this.currentBuildingType = BuildingType.residential,
     this.currentLandType = LandType.freehold,
     this.availableForRenewal = true,
+    this.currentFurnishingStatus = FurnishingStatus.furnished,
+    this.addNewApartmentErrorMessage = '',
+    this.addNewApartmentState = RequestState.initial,
+    this.selectedImages = const [],
+    this.selectImagesState = RequestState.initial,
+    this.validateImages = true,
   });
 
   final PropertyOperationType currentPropertyOperationType;
@@ -16,12 +22,20 @@ class AddNewRealEstateState extends Equatable {
   final PropertyType currentPropertyType;
 
   /// current states for sub types
-  final ApartmentType currentApartmentType ;
-  final VillaType currentVillaType ;
-  final BuildingType currentBuildingType ;
-  final LandType currentLandType ;
+  final ApartmentType currentApartmentType;
+  final VillaType currentVillaType;
+  final BuildingType currentBuildingType;
+  final LandType currentLandType;
 
   final bool availableForRenewal;
+  final FurnishingStatus currentFurnishingStatus;
+
+  final RequestState addNewApartmentState;
+  final String addNewApartmentErrorMessage;
+
+  final List<File> selectedImages;
+  final RequestState selectImagesState;
+  final bool validateImages;
 
   AddNewRealEstateState copyWith({
     PropertyOperationType? currentPropertyOperationType,
@@ -30,7 +44,13 @@ class AddNewRealEstateState extends Equatable {
     VillaType? currentVillaType,
     BuildingType? currentBuildingType,
     LandType? currentLandType,
-    bool ? availableForRenewal ,
+    bool? availableForRenewal,
+    FurnishingStatus? currentFurnishingStatus,
+    RequestState? addNewApartmentState,
+    String? addNewApartmentErrorMessage,
+    List<File>? selectedImages,
+    RequestState? selectImagesState,
+    bool? validateImages,
   }) {
     return AddNewRealEstateState(
       currentPropertyOperationType:
@@ -41,6 +61,14 @@ class AddNewRealEstateState extends Equatable {
       currentBuildingType: currentBuildingType ?? this.currentBuildingType,
       currentLandType: currentLandType ?? this.currentLandType,
       availableForRenewal: availableForRenewal ?? this.availableForRenewal,
+      currentFurnishingStatus:
+          currentFurnishingStatus ?? this.currentFurnishingStatus,
+      addNewApartmentState: addNewApartmentState ?? this.addNewApartmentState,
+      addNewApartmentErrorMessage:
+          addNewApartmentErrorMessage ?? this.addNewApartmentErrorMessage,
+      selectedImages: selectedImages ?? this.selectedImages,
+      selectImagesState: selectImagesState ?? this.selectImagesState,
+      validateImages: validateImages ?? this.validateImages,
     );
   }
 
@@ -53,5 +81,11 @@ class AddNewRealEstateState extends Equatable {
         currentBuildingType,
         currentLandType,
         availableForRenewal,
+        currentFurnishingStatus,
+        addNewApartmentState,
+        addNewApartmentErrorMessage,
+        selectedImages,
+        selectImagesState,
+        validateImages
       ];
 }

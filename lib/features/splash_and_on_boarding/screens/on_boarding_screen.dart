@@ -49,7 +49,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     if (token != null && token.isNotEmpty) {
       Navigator.pushReplacementNamed(context, RoutersNames.layoutScreen);
     } else {
-      Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
+      Navigator.pushReplacementNamed(context, RoutersNames.layoutScreen);
     }
   }
 

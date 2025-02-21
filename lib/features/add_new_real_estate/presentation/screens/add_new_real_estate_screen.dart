@@ -1,6 +1,8 @@
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/services/service_locator.dart';
+import 'package:enmaa/features/add_new_real_estate/add_new_real_estate_DI.dart';
 import 'package:enmaa/features/add_new_real_estate/presentation/controller/add_new_real_estate_cubit.dart';
 import 'package:enmaa/features/add_new_real_estate/presentation/screens/add_new_real_estate_main_information_screen.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,12 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddNewRealEstateCubit(),
+      create: (context) {
+        AddNewRealEstateDi().setup();
+        return AddNewRealEstateCubit(
+          ServiceLocator.getIt(),
+        ) ;
+      },
       child: Scaffold(
         backgroundColor: ColorManager.greyShade,
         body: Column(

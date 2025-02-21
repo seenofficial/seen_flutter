@@ -8,11 +8,13 @@ class DottedBorderContainer extends StatelessWidget {
     required this.width,
     required this.height,
     this.borderRadius = 12.0,
+    this.borderColor = Colors.black,
     required this.child,
   });
 
   final double width, height;
   final double borderRadius;
+  final Color borderColor;
   final Widget child;
 
   @override
@@ -21,7 +23,10 @@ class DottedBorderContainer extends StatelessWidget {
       width: context.scale(width),
       height: context.scale(height),
       child: CustomPaint(
-        painter: DottedBorderPainter(borderRadius: borderRadius),
+        painter: DottedBorderPainter(
+          borderRadius: borderRadius,
+          borderColor: borderColor,
+        ),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -37,13 +42,14 @@ class DottedBorderContainer extends StatelessWidget {
 
 class DottedBorderPainter extends CustomPainter {
   final double borderRadius;
+  final Color borderColor;
 
-  DottedBorderPainter({required this.borderRadius});
+  DottedBorderPainter({required this.borderRadius, required this.borderColor});
 
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = Colors.black
+      ..color = borderColor
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 

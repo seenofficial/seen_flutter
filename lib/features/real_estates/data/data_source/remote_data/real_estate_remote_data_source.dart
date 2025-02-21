@@ -19,7 +19,7 @@ class RealEstateRemoteDataSource extends BaseRealEstateRemoteData {
   @override
   Future<List<PropertyListingModel>> getProperties() async{
     final response = await dioService.get(
-      url: ApiConstants.properties,
+      url: ApiConstants.apartments,
     );
 
     List<dynamic> jsonResponse = response.data ?? [];
@@ -34,7 +34,7 @@ class RealEstateRemoteDataSource extends BaseRealEstateRemoteData {
   @override 
   Future<PropertyDetailsModel> getPropertyDetails(String propertyId) async{
     final response = await dioService.get(
-      url: '${ApiConstants.properties}$propertyId',
+      url: '${ApiConstants.apartments}$propertyId',
     );
 
     dynamic jsonResponse = response.data ?? {};

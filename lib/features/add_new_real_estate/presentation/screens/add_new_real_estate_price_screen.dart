@@ -27,23 +27,9 @@ class AddNewRealEstatePriceScreen extends StatefulWidget {
 
 class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScreen> {
 
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _rentController = TextEditingController();
-  final TextEditingController _rentDurationController = TextEditingController();
 
- @override
-  void dispose() {
 
-    _addressController.dispose();
-    _descriptionController.dispose();
-    _priceController.dispose();
-    _rentController.dispose();
-    _rentDurationController.dispose();
 
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +52,7 @@ class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScree
             FormWidgetComponent(
               label: 'العنوان ',
               content: AppTextField(
-                controller: _addressController,
+                controller: addNewRealEstateCubit.addressController,
                 height: 40,
                 hintText: 'أدخل عنوانًا مختصرًا للعقار.',
                 keyboardType: TextInputType.text,
@@ -81,7 +67,7 @@ class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScree
             FormWidgetComponent(
               label: 'الوصف',
               content: AppTextField(
-                controller: _descriptionController,
+                controller: addNewRealEstateCubit.descriptionController,
                 height: 90,
                 hintText: 'أدخل وصفًا تفصيليًا للعقار ...',
                 keyboardType: TextInputType.multiline,
@@ -101,7 +87,7 @@ class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScree
                   return FormWidgetComponent(
                     label: 'السعر',
                     content: AppTextField(
-                      controller: _priceController,
+                      controller: addNewRealEstateCubit.priceController,
                       height: 40,
                       hintText: 'أدخل سعر العقار',
                       keyboardType: TextInputType.number,
@@ -119,7 +105,7 @@ class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScree
                     FormWidgetComponent(
                       label: 'الإيجار الشهري',
                       content: AppTextField(
-                        controller: _rentController,
+                        controller: addNewRealEstateCubit.rentController,
                         height: 40,
                         hintText: '',
                         keyboardType: TextInputType.number,
@@ -132,7 +118,7 @@ class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScree
                     FormWidgetComponent(
                       label: 'مدة الإيجار بالشهور',
                       content: AppTextField(
-                        controller: _rentDurationController,
+                        controller: addNewRealEstateCubit.rentDurationController,
                         height: 40,
                         hintText: '',
                         keyboardType: TextInputType.number,

@@ -28,3 +28,10 @@ enum LandType {
   agricultural, // زراعي
   industrial,  // صناعي
 }
+
+/// Enum for Furnishing Status
+enum FurnishingStatus {
+  furnished,
+  notFurnished,
+}
+
