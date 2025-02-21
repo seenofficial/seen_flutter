@@ -175,7 +175,7 @@ class _RealStateScreenState extends State<RealStateScreen>
 
   Widget _buildPropertyList(RealEstateState state, PropertyOperationType type) {
     final filteredProperties = state.properties
-        .where((property) => property.operation.toOperationType() == type)
+        .where((property) => property.operation.toOperationTypeProperty() == type)
         .toList();
 
     if (filteredProperties.isEmpty) {

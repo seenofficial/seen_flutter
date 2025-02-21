@@ -1,5 +1,9 @@
 
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/configuration/managers/color_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,10 +56,19 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
-        locale: Locale('ar'),
+        locale: const Locale('ar'),
         theme: ThemeData(
-        fontFamily:
-            context.locale == const Locale('en') ? 'Cairo' : 'Cairo'
+          fontFamily: context.locale == const Locale('en') ? 'Cairo' : 'Cairo',
+          visualDensity: Platform.isIOS ? VisualDensity.standard : VisualDensity.adaptivePlatformDensity, // Adjust for iOS
+          pageTransitionsTheme: PageTransitionsTheme(
+            builders: {
+              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(), // iOS-style transition
+              TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(), // Android default
+            },
+          ),
+          cupertinoOverrideTheme:  CupertinoThemeData(
+            primaryColor: ColorManager.primaryColor, // Customize iOS theme if needed
+          ),
         ),
         onGenerateRoute: AppRouters().generateRoute,
         initialRoute: RoutersNames.biometricScreen,

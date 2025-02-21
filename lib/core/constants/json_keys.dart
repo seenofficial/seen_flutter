@@ -10,6 +10,7 @@ class JsonKeys {
   static const String images = 'images';
   static const String category = 'category';
   static const String propertyType = 'property_type';
+  static const String propertySubType = 'property_sub_type';
   static const String operation = 'operation';
   static const String price = 'price';
   static const String area = 'area';
@@ -38,6 +39,12 @@ class JsonKeys {
   static const String expiresAt = 'expires_at';
   static const String code = 'code';
 
+
+
+  /// add properties
+
+  static const String country = 'country';
+  static const String isFurnitured = 'is_furnitured';
 
 
 }
