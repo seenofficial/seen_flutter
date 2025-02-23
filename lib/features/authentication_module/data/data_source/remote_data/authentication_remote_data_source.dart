@@ -67,7 +67,7 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
     );
 
     /// todo change it
-    if('OTP verified successfully' == response.data['message']){
+    if('OTP verified successfully.' == response.data['message']){
       return true;
     }
 

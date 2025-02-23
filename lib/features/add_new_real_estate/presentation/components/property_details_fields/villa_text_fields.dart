@@ -21,8 +21,8 @@ class VillaTextFields implements PropertyFields {
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'المساحة'),
       ),
       GenericFormField(
-        label: 'عدد الطوابق',
-        hintText: 'أدخل عدد الطوابق',
+        label: ' الطوابق',
+        hintText: 'حدد عدد الطوابق',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.landIcon,
         controller: controller.getController('villa_floors'),
@@ -30,11 +30,19 @@ class VillaTextFields implements PropertyFields {
       ),
       GenericFormField(
         label: 'عدد الغرف',
-        hintText: 'أدخل عدد الغرف',
+        hintText: 'حدد عدد الغرف',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.bedIcon,
         controller: controller.getController('villa_rooms'),
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الغرف'),
+      ),
+      GenericFormField(
+        label: 'عدد الحمامات',
+        hintText: 'أدخل عدد الحمامات',
+        keyboardType: TextInputType.number,
+        iconPath: AppAssets.bedIcon,
+        controller: controller.getController('villa_bathrooms'),
+        validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الحمامات'),
       ),
     ];
   }

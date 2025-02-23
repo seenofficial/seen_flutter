@@ -107,7 +107,7 @@ class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScree
                       content: AppTextField(
                         controller: addNewRealEstateCubit.rentController,
                         height: 40,
-                        hintText: '',
+                        hintText: 'حدد الإيجار الشهري',
                         keyboardType: TextInputType.number,
                         backgroundColor: Colors.white,
                         borderRadius: 20,
@@ -120,7 +120,7 @@ class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScree
                       content: AppTextField(
                         controller: addNewRealEstateCubit.rentDurationController,
                         height: 40,
-                        hintText: '',
+                        hintText: 'حدد مدة الإيجار بالشهور',
                         keyboardType: TextInputType.number,
                         backgroundColor: Colors.white,
                         borderRadius: 20,

@@ -19,6 +19,7 @@ class CustomSnackBar {
         : Icons.error;
 
     final snackBar = SnackBar(
+      margin: EdgeInsets.zero,
       backgroundColor: Colors.transparent,
       elevation: 0,
       behavior: SnackBarBehavior.floating,

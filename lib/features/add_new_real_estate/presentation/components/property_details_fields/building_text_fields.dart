@@ -22,7 +22,7 @@ class BuildingTextFields implements PropertyFields {
       ),
       GenericFormField(
         label: 'عدد الطوابق',
-        hintText: 'أدخل عدد الطوابق',
+        hintText: 'حدد عدد الطوابق',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.landIcon,
         controller: controller.getController('building_floors'),
@@ -30,7 +30,7 @@ class BuildingTextFields implements PropertyFields {
       ),
       GenericFormField(
         label: 'عدد الشقق في كل طابق',
-        hintText: 'أدخل عدد الغرف',
+        hintText: 'حدد عدد الغرف',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.apartmentIcon,
         controller: controller.getController('number_of_apartments_per_floor'),

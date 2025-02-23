@@ -100,12 +100,22 @@ class _AppTextFieldState extends State<AppTextField> {
                     ? const Icon(Icons.error_outline, color: Colors.red)
                     : widget.suffixIcon,
                 filled: true,
-                fillColor: _hasError ? Colors.red.shade50 : widget.backgroundColor,
+                fillColor: widget.backgroundColor,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius),
                   borderSide: _hasError
                       ? const BorderSide(color: Colors.red, width: 1)
                       : BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderSide: _hasError
+                      ? const BorderSide(color: Colors.red, width: 1)
+                      : BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderSide: BorderSide.none,
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               ),
