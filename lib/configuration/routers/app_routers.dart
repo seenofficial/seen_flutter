@@ -75,7 +75,7 @@ class AppRouters {
         );
 
       case RoutersNames.realEstateDetailsScreen:
-        final args = settings.arguments as String;
+        final args = (settings.arguments as int).toString() ;
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.realEstateDetailsScreen),
           builder: (_) => RealEstateDetailsScreen(propertyId: args),

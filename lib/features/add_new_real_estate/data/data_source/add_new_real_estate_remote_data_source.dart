@@ -26,7 +26,7 @@ class AddNewRealEstateRemoteDataSource extends BaseAddNewRealEstateDataSource {
     final formData = await apartment.toFormData();
 
     await dioService.post(
-      url: ApiConstants.apartments,
+      url: ApiConstants.properties,
       data: formData,
       options: Options(contentType: 'multipart/form-data'),
     );

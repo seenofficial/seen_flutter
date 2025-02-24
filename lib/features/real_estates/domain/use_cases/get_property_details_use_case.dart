@@ -8,6 +8,6 @@ class GetPropertyDetailsUseCase {
 
   GetPropertyDetailsUseCase(this._baseRealEstateRepository);
 
-  Future<Either<Failure, PropertyDetailsEntity>> call(String propertyId ) =>
+  Future<Either<Failure, BasePropertyDetailsEntity>> call(String propertyId ) =>
       _baseRealEstateRepository.getPropertyDetails(propertyId);
 }

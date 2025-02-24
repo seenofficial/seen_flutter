@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		r3ylWyj+qyP4Gdpjj5czOreB8AI=
+		XUsAba3SdZRc6vijUWLn/+oeN4c=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		yQgolFgHTewwGVPMJMuRp0NBTu0=
+		wD9ik/FgwlVHkz1aMfLtGkiOcN8=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		iTf+rPSvU3xtJR349ObYz+Mols0=
+		jcDKzW+57hnH8lnZ3dMR4LIBGw0=
 		</data>
 		<key>flutter_assets/assets/fonts/cairo/Cairo-Bold.ttf</key>
 		<data>
@@ -140,6 +140,10 @@
 		<data>
 		hzgxSQtBNVFd92RsQzhtbXxlqDE=
 		</data>
+		<key>flutter_assets/assets/icons/ready_for_building.svg</key>
+		<data>
+		/Yk63iql7dgyROssNGvFEhLeonw=
+		</data>
 		<key>flutter_assets/assets/icons/real_estate_filter/apartment_icon.svg</key>
 		<data>
 		rjrcPRs9QjigH+ejPiHD25NS/UQ=
@@ -183,6 +187,10 @@
 		<key>flutter_assets/assets/icons/rent_key_icon.svg</key>
 		<data>
 		CATUs1uYKbBtkbQDn8qFsflSU3o=
+		</data>
+		<key>flutter_assets/assets/icons/reserved_icon.svg</key>
+		<data>
+		9uhADwkrf+jfLNKlbZmVFr+dbaE=
 		</data>
 		<key>flutter_assets/assets/icons/residential_building_icon.svg</key>
 		<data>
@@ -238,7 +246,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		ZGCBb1KffXV4PBfvLXcGMGZlpss=
+		P2XLdDk2NbZ83Pgiizg1PoA6GT4=
 		</data>
 		<key>flutter_assets/packages/country_code_picker/flags/ad.png</key>
 		<data>
@@ -1567,14 +1575,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			bpXqnIt0bGSyWmW8n3G+VVpXKncaGeoB6niywizvkfA=
+			juO6y57zRqd0dF5TyjzaUt3sSN94BI9Xel5yeFEESOo=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lMplZ5gIi46+Viv5sye3U6PREMbmAPJ719yXGc3HvJU=
+			Mo7M6MqT2fFE+hwbDVdHMhcKThlykkXW3qqfFzNmsLk=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -1588,7 +1596,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4Hdp6KLMu+90eRE9gNFvL2plIV5kz7NljucivH0ovPg=
+			JD4lUsRnAmhUFqHRYCFekHW77jUy/SP54MAU0IjNvRY=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/fonts/cairo/Cairo-Bold.ttf</key>
@@ -1794,6 +1802,13 @@
 			o9fRU/6JlY2bX4d7eb8AXaJ4WBY0CUOM6RHUaniAZuw=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/ready_for_building.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			+cqUi/gH366zaBq2hTqxJG8MgFBITQYiCTdrytNWVp4=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/real_estate_filter/apartment_icon.svg</key>
 		<dict>
 			<key>hash2</key>
@@ -1869,6 +1884,13 @@
 			<key>hash2</key>
 			<data>
 			FlN8/m7h1e3uhqRBaCx99eloSxKPt8jM4wmbEEPuP9c=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/reserved_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ONv1NJrwFFejslUjEBTTf1Z0AuJiuAtNjDmbXJucaNY=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/residential_building_icon.svg</key>
@@ -1966,7 +1988,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			yclRbQjbxqsahOuJODDqBtX6LGn8duhlCrlMJqZpSnY=
+			8Sk8tRPTC9CFenCd6ps+d+n3UUJvBLm6QCtWUxY/qAQ=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/country_code_picker/flags/ad.png</key>

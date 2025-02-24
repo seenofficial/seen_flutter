@@ -2,6 +2,7 @@ import 'package:enmaa/core/components/custom_map.dart';
 import 'package:enmaa/core/entites/image_entity.dart';
 import 'package:enmaa/core/screens/error_app_screen.dart';
 import 'package:enmaa/core/utils/enums.dart';
+import 'package:enmaa/features/real_estates/domain/entities/villa_entity.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_details_loading_screen.dart';
@@ -54,8 +55,10 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
               case RequestState.loading:
               return RealEstateDetailsLoadingScreen () ;
               case RequestState.loaded:
+                print("sososso");
 
-                PropertyDetailsEntity currentProperty = state.propertyDetails!;
+                BasePropertyDetailsEntity currentProperty = state.propertyDetails!;
+                print("sososso ${currentProperty.images}");
                 List<ImageEntity> banners = List.from(currentProperty.images)
                   ..sort((a, b) => b.isMain ? 1 : -1);
                 return Stack(
@@ -78,9 +81,9 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
                                     children: [
                                       RealEstateDetailsHeader(
                                         realEstateDetailsTitle:
-                                            currentProperty.title,
+                                        currentProperty.title,
                                         realEstateDetailsPrice:
-                                            currentProperty.price,
+                                        currentProperty.price.toString(),
                                         realEstateDetailsLocation:
                                             '${currentProperty.city}, ${currentProperty.state}',
                                       ),
@@ -91,8 +94,8 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
                                           ),
                                       SizedBox(height: context.scale(24)),
                                       RealEstateDetailsSpecifications(
-                                        currentProperty: currentProperty,
-                                      ),
+                                        currentProperty: currentProperty ,
+                                       ),
                                       SizedBox(height: context.scale(20)),
                                       Text(
                                         "الموقع والمناطق القريبة :",

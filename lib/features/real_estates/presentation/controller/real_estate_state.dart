@@ -12,20 +12,20 @@ class RealEstateState extends Equatable {
 
   // Properties list
   final RequestState getPropertiesState;
-  final List<PropertyListingEntity> properties;
+  final List<PropertyEntity> properties;
   final String getPropertiesError;
 
   // Property details
   final RequestState getPropertyDetailsState;
-  final PropertyDetailsEntity? propertyDetails;
+  final BasePropertyDetailsEntity? propertyDetails;
   final String getPropertyDetailsError;
 
   RealEstateState copyWith({
     RequestState? getPropertiesState,
-    List<PropertyListingEntity>? properties,
+    List<PropertyEntity>? properties,
     String? getPropertiesError,
     RequestState? getPropertyDetailsState,
-    PropertyDetailsEntity? propertyDetails,
+    BasePropertyDetailsEntity? propertyDetails,
     String? getPropertyDetailsError,
   }) {
     return RealEstateState(

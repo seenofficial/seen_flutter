@@ -1,13 +1,15 @@
+import 'package:enmaa/features/real_estates/data/models/apartment_model.dart';
 import 'package:enmaa/features/real_estates/data/models/property_details_model.dart';
-import 'package:enmaa/features/real_estates/data/models/property_listing_model.dart';
+import 'package:enmaa/features/real_estates/data/models/property_model.dart';
+import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
 
 import '../../../../../core/constants/api_constants.dart';
 import '../../../../../core/services/dio_service.dart';
+import '../../../domain/entities/property_details_entity.dart';
 
 abstract class BaseRealEstateRemoteData {
-  Future<List<PropertyListingModel>> getProperties();
-  Future<PropertyDetailsModel> getPropertyDetails(String propertyId);
-
+  Future<List<PropertyEntity>> getProperties();
+  Future<BasePropertyDetailsEntity> getPropertyDetails(String propertyId);
 }
 
 class RealEstateRemoteDataSource extends BaseRealEstateRemoteData {
@@ -17,28 +19,29 @@ class RealEstateRemoteDataSource extends BaseRealEstateRemoteData {
 
 
   @override
-  Future<List<PropertyListingModel>> getProperties() async{
+  Future<List<PropertyEntity>> getProperties() async {
     final response = await dioService.get(
-      url: ApiConstants.apartments,
+        url: ApiConstants.properties
     );
+    // Extract the list from the "results" key
+    List<dynamic> jsonResponse = response.data['results'] ?? [];
 
-    List<dynamic> jsonResponse = response.data ?? [];
-
-    List<PropertyListingModel> properties = jsonResponse.map((banner) {
-      return PropertyListingModel.fromJson(banner);
+    List<PropertyEntity> properties = jsonResponse.map((jsonItem) {
+      return PropertyModel.fromJson(jsonItem);
     }).toList();
 
-    return properties ;
+    print("properties: ${properties.length}");
+    return properties;
   }
 
-  @override 
-  Future<PropertyDetailsModel> getPropertyDetails(String propertyId) async{
+
+  @override
+  Future<BasePropertyDetailsEntity> getPropertyDetails(String propertyId) async{
     final response = await dioService.get(
-      url: '${ApiConstants.apartments}$propertyId',
+      url: '${ApiConstants.properties}$propertyId',
     );
 
-    dynamic jsonResponse = response.data ?? {};
-    return PropertyDetailsModel.fromJson(jsonResponse);
+    return PropertyDetailsModel.fromJson(response.data);
   }
 
 }

@@ -35,3 +35,9 @@ enum FurnishingStatus {
   notFurnished,
 }
 
+/// enum for land licence status
+enum LandLicenseStatus {
+  licensed,
+  notLicensed,
+}
+

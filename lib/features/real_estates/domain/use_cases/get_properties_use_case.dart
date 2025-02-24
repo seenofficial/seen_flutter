@@ -1,13 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:enmaa/features/real_estates/domain/entities/property_listing_entity.dart';
+import 'package:enmaa/core/errors/failure.dart';
+import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
 import 'package:enmaa/features/real_estates/domain/repository/base_real_estate_repository.dart';
-import '../../../../core/errors/failure.dart';
 
 class GetPropertiesUseCase {
-  final BaseRealEstateRepository _baseRealEstateRepository;
+  final BaseRealEstateRepository repository;
 
-  GetPropertiesUseCase(this._baseRealEstateRepository);
+  GetPropertiesUseCase(this.repository);
 
-  Future<Either<Failure, List<PropertyListingEntity>>> call( ) =>
-      _baseRealEstateRepository.getProperties();
+  Future<Either<Failure, List<PropertyEntity>>> call() async {
+    return await repository.getProperties();
+  }
 }

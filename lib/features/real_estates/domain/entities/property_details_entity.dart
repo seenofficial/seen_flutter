@@ -1,79 +1,62 @@
 import 'package:enmaa/core/entites/amenity_entity.dart';
 import 'package:enmaa/core/entites/image_entity.dart';
+import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
 import 'package:equatable/equatable.dart';
 
-class PropertyDetailsEntity extends Equatable {
+abstract class BasePropertyDetailsEntity extends Equatable {
   final int id;
   final String title;
-  final List<ImageEntity> images;
-  final String category;
-  final String propertyType;
   final String operation;
   final String price;
   final double area;
-  final bool furnitureIncluded;
-  final int floor;
-  final int rooms;
-  final int bathrooms;
-  final String usageType;
+  final String propertySubType;
+  final String status;
+  final List<ImageEntity> images;
   final List<AmenityEntity> amenities;
   final String description;
-  final int yearBuilt;
-  final String city;
-  final String state;
-  final String status;
   final double latitude;
   final double longitude;
+  final String city;
+  final String state;
+  final String country;
+  final bool isInWishlist;
 
-  const PropertyDetailsEntity({
+  const BasePropertyDetailsEntity({
     required this.id,
     required this.title,
-    required this.images,
-    required this.category,
-    required this.propertyType,
     required this.operation,
     required this.price,
     required this.area,
-    required this.furnitureIncluded,
-    required this.floor,
-    required this.rooms,
-    required this.bathrooms,
-    required this.usageType,
+    required this.propertySubType,
+    required this.status,
+    required this.images,
     required this.amenities,
     required this.description,
-    required this.yearBuilt,
-    required this.city,
-    required this.state,
-    required this.status,
     required this.latitude,
     required this.longitude,
+    required this.city,
+    required this.state,
+    required this.country,
+    required this.isInWishlist,
   });
 
   @override
   List<Object?> get props => [
     id,
-    images,
-    category,
-    propertyType,
+    title,
     operation,
     price,
     area,
-    furnitureIncluded,
-    floor,
-    rooms,
-    bathrooms,
-    usageType,
+    propertySubType,
+    status,
+    images,
     amenities,
     description,
-    yearBuilt,
-    city,
-    state,
-    status,
     latitude,
     longitude,
+    city,
+    state,
+    country,
+    isInWishlist,
   ];
 }
-
-
-
-

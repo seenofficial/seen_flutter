@@ -6,7 +6,7 @@ import 'package:enmaa/features/real_estates/domain/entities/property_details_ent
 import 'package:enmaa/features/real_estates/domain/use_cases/get_property_details_use_case.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../domain/entities/property_listing_entity.dart';
+import '../../domain/entities/base_property_entity.dart';
 import '../../domain/use_cases/get_properties_use_case.dart';
 
 part 'real_estate_state.dart';
@@ -20,8 +20,9 @@ class RealEstateCubit extends Cubit<RealEstateState> {
   Future<void> fetchProperties() async {
     emit(state.copyWith(getPropertiesState: RequestState.loading));
 
-    final Either<Failure, List<PropertyListingEntity>> result = await _getPropertiesUseCase();
+    final Either<Failure, List<PropertyEntity>> result = await _getPropertiesUseCase();
 
+    print("ejejejej ${result}");
     result.fold(
           (failure) => emit(state.copyWith(
         getPropertiesState: RequestState.error,
@@ -37,7 +38,7 @@ class RealEstateCubit extends Cubit<RealEstateState> {
   Future<void> fetchPropertyDetails(String propertyID) async {
     emit(state.copyWith(getPropertyDetailsState: RequestState.loading));
 
-    final Either<Failure, PropertyDetailsEntity> result = await _getPropertyDetailsUseCase(propertyID);
+    final Either<Failure, BasePropertyDetailsEntity> result = await _getPropertyDetailsUseCase(propertyID);
 
 
     result.fold(

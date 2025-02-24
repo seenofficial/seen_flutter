@@ -23,6 +23,8 @@ class AppAssets {
   static const String phoneCallIcon = '${baseIconFolder}phone_call_icon.svg';
   static const String folderIcon = '${baseIconFolder}folder_icon.svg';
   static const String closeIcon = '${baseIconFolder}close_icon.svg';
+  static const String readyForBuilding = '${baseIconFolder}ready_for_building.svg';
+  static const String reservedIcon = '${baseIconFolder}reserved_icon.svg';
 
   /// building sub types icons
   static const String residentialBuildingIcon2 = '${baseIconFolder}commercial_building_icon.svg';

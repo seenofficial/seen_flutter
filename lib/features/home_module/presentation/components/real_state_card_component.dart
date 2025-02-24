@@ -1,4 +1,8 @@
-import 'package:enmaa/features/real_estates/domain/entities/property_listing_entity.dart';
+import 'package:enmaa/core/extensions/furnished_status_extension.dart';
+import 'package:enmaa/core/extensions/land_license_status_extension.dart';
+import 'package:enmaa/features/real_estates/domain/entities/apartment_entity.dart';
+import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
+import 'package:enmaa/features/real_estates/domain/entities/villa_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
@@ -9,13 +13,16 @@ import '../../../../core/components/circular_icon_button.dart';
 import '../../../../core/components/custom_image.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/utils/enums.dart';
+import '../../../real_estates/domain/entities/building_entity.dart';
+import '../../../real_estates/domain/entities/land_entity.dart';
 import '../../home_imports.dart';
 
 class RealStateCardComponent extends StatelessWidget {
   final double width;
   final double height;
 
-  final PropertyListingEntity currentProperty;
+  final PropertyEntity currentProperty;
 
   const RealStateCardComponent({
     super.key,
@@ -55,7 +62,7 @@ class RealStateCardComponent extends StatelessWidget {
                   child: CustomNetworkImage(
                     height: context.scale(isScreenWidth ? 172 : 128),
                     width: width,
-                    image: currentProperty.imageUrl,
+                    image: currentProperty.image,
                   ),
                 ),
                 Padding(
@@ -63,12 +70,55 @@ class RealStateCardComponent extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        currentProperty.title,
-                        style: getBoldStyle(
-                          color: ColorManager.blackColor,
-                          fontSize: FontSize.s12,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            currentProperty.title,
+                            style: getBoldStyle(
+                              color: ColorManager.blackColor,
+                              fontSize: FontSize.s12,
+                            ),
+                          ),
+                          if(isScreenWidth)
+                          Visibility(
+                            visible: currentProperty.status != 'available',
+                            child: Container(
+                              width: context.scale(80),
+                              height: context.scale(28),
+
+                              decoration: BoxDecoration(
+                                color: ColorManager.primaryColor2,
+                                borderRadius: BorderRadius.circular(context.scale(24)),
+                              ),
+
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                  SvgImageComponent(
+                                      iconPath: AppAssets.reservedIcon,
+                                    width: 12,
+                                    height: 12,
+                                  ) ,
+
+                                  SizedBox(
+                                    width: context.scale(4),
+                                  ),
+
+                                  Text(
+                                    'محجوز',
+                                    style: getSemiBoldStyle(
+                                      color: ColorManager.blackColor,
+                                      fontSize: FontSize.s10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(height: context.scale(8)),
                       _buildLocationRow(context),
@@ -106,7 +156,7 @@ class RealStateCardComponent extends StatelessWidget {
         ),
         SizedBox(width: context.scale(4)),
         Text(
-          '${currentProperty.state} - ${currentProperty.city}',
+          '${currentProperty.state.name} - ${currentProperty.city.name}',
           style: getLightStyle(
               color: ColorManager.blackColor, fontSize: FontSize.s11),
         ),
@@ -118,21 +168,112 @@ class RealStateCardComponent extends StatelessWidget {
   Widget _buildDetailsRow(BuildContext context) {
     bool isScreenWidth = width == MediaQuery.of(context).size.width;
 
-    return Row(
-      children: [
-        if (isScreenWidth)
-          _buildDetailItem(context, AppAssets.stairsIcon, 'الدور الاول'),
-        if (isScreenWidth) _buildVerticalDivider(context),
-        _buildDetailItem(
-            context, AppAssets.areaIcon, currentProperty.area.toString()),
-        _buildVerticalDivider(context),
-        _buildDetailItem(
-            context, AppAssets.bedIcon, currentProperty.rooms.toString()),
-        _buildVerticalDivider(context),
-        _buildDetailItem(
-            context, AppAssets.bathIcon, currentProperty.bathrooms.toString()),
-      ],
-    );
+
+    if(currentProperty.propertyType == 'apartment'){
+      var floor = (currentProperty as ApartmentEntity).floor;
+      var rooms = (currentProperty as ApartmentEntity).rooms;
+      var bathrooms = (currentProperty as ApartmentEntity).bathrooms;
+      FurnishingStatus isFurnishing = (currentProperty as ApartmentEntity).isFurnished == true ? FurnishingStatus.furnished : FurnishingStatus.notFurnished;
+
+      return Row(
+        children: [
+          _buildDetailItem(
+              context, AppAssets.areaIcon, currentProperty.area.toString()),
+          _buildVerticalDivider(context),
+
+          if (isScreenWidth)
+            _buildDetailItem(context, isFurnishing.isFurnished? AppAssets.furnishedIcon : AppAssets.emptyIcon, isFurnishing.toArabic),
+          if (isScreenWidth) _buildVerticalDivider(context),
+
+
+          if(isScreenWidth)
+            _buildDetailItem(
+                context, AppAssets.landIcon, 'الدور $floor'),
+
+          if (isScreenWidth) _buildVerticalDivider(context),
+
+          _buildDetailItem(
+              context, AppAssets.bedIcon, rooms.toString()),
+          _buildVerticalDivider(context),
+          _buildDetailItem(
+              context, AppAssets.bathIcon,  bathrooms.toString()),
+        ],
+      );
+
+    }
+    else if(currentProperty.propertyType == 'land'){
+
+      LandLicenseStatus landLicenseStatus = (currentProperty as LandEntity).isLicensed == true ? LandLicenseStatus.licensed : LandLicenseStatus.notLicensed;
+      return Row(
+        children: [
+          _buildDetailItem(
+              context, AppAssets.areaIcon, currentProperty.area.toString()),
+          _buildVerticalDivider(context),
+
+
+
+          _buildDetailItem(
+              context, AppAssets.readyForBuilding, landLicenseStatus.toArabic),
+
+
+        ],
+      );
+
+    }
+    if(currentProperty.propertyType == 'villa'){
+      var floor = (currentProperty as VillaEntity).floors;
+      var rooms = (currentProperty as VillaEntity).rooms;
+      var bathrooms = (currentProperty as VillaEntity).bathrooms;
+      FurnishingStatus isFurnishing = (currentProperty as VillaEntity).isFurnished == true ? FurnishingStatus.furnished : FurnishingStatus.notFurnished;
+
+      return Row(
+        children: [
+          _buildDetailItem(
+              context, AppAssets.areaIcon, currentProperty.area.toString()),
+          _buildVerticalDivider(context),
+
+          if (isScreenWidth)
+            _buildDetailItem(context, isFurnishing.isFurnished? AppAssets.furnishedIcon : AppAssets.emptyIcon, isFurnishing.toArabic),
+          if (isScreenWidth) _buildVerticalDivider(context),
+
+
+          if(isScreenWidth)
+            _buildDetailItem(
+                context, AppAssets.landIcon, 'طوابق $floor'),
+
+          if (isScreenWidth) _buildVerticalDivider(context),
+
+          _buildDetailItem(
+              context, AppAssets.bedIcon, rooms.toString()),
+          _buildVerticalDivider(context),
+          _buildDetailItem(
+              context, AppAssets.bathIcon,  bathrooms.toString()),
+        ],
+      );
+
+    }
+    else {
+      var numberOfFloors = (currentProperty as BuildingEntity).totalFloors;
+      var apartmentPerFloor = (currentProperty as BuildingEntity).apartmentPerFloor;
+      return Row(
+        children: [
+          _buildDetailItem(
+              context, AppAssets.areaIcon, currentProperty.area.toString()),
+          _buildVerticalDivider(context),
+
+          if (isScreenWidth)
+            _buildDetailItem(context, AppAssets.landIcon, ' $numberOfFloors طوابق '),
+          if (isScreenWidth) _buildVerticalDivider(context),
+
+          _buildDetailItem(
+              context, AppAssets.apartmentIcon, ' $apartmentPerFloor  / طابق '),
+
+        ],
+      );
+
+    }
+
+
   }
 
   Widget _buildDetailItem(BuildContext context, String iconPath, String text) {
@@ -149,7 +290,7 @@ class RealStateCardComponent extends StatelessWidget {
           style: getBoldStyle(
               color: ColorManager.blackColor, fontSize: FontSize.s10),
         ),
-        SizedBox(width: context.scale(16)),
+        SizedBox(width: context.scale(5)),
       ],
     );
   }
@@ -170,6 +311,7 @@ class RealStateCardComponent extends StatelessWidget {
 
     return isScreenWidth
         ? Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
@@ -184,66 +326,31 @@ class RealStateCardComponent extends StatelessWidget {
                   SizedBox(
                     width: context.scale(4),
                   ),
-                  Text('تجاريه',
+                  Text(
+                      currentProperty.propertySubType,
                       style: getBoldStyle(
                           color: ColorManager.yellowColor,
                           fontSize: FontSize.s12)),
                 ],
               ),
-              SizedBox(width: context.scale(24)),
-              Container(
-                width: context.scale(96),
-                height: context.scale(28),
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      width: 0.50,
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                      color: ColorManager.primaryColor,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+
+              RichText(
+                overflow: TextOverflow.ellipsis,
+                text: TextSpan(
                   children: [
-                    SvgImageComponent(
-                      iconPath: AppAssets.rentIcon,
-                      width: 12,
-                      height: 12,
-                    ),
-                    Text(
-                      currentProperty.operation == 'for_sale'
-                          ? 'للبيع'
-                          : 'للايجار',
-                      style: getMediumStyle(
+                    TextSpan(
+                      text: ' تبدأ من  ',
+                      style: getRegularStyle(
                           color: ColorManager.primaryColor,
                           fontSize: FontSize.s10),
                     ),
+                    TextSpan(
+                      text: currentProperty.price,
+                      style: getBoldStyle(
+                          color: ColorManager.primaryColor,
+                          fontSize: FontSize.s12),
+                    ),
                   ],
-                ),
-              ),
-              SizedBox(width: context.scale(35)),
-              Expanded(
-                child: RichText(
-                  overflow: TextOverflow.ellipsis,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: ' تبدأ من  ',
-                        style: getRegularStyle(
-                            color: ColorManager.primaryColor,
-                            fontSize: FontSize.s10),
-                      ),
-                      TextSpan(
-                        text: currentProperty.price,
-                        style: getBoldStyle(
-                            color: ColorManager.primaryColor,
-                            fontSize: FontSize.s12),
-                      ),
-                    ],
-                  ),
                 ),
               )
             ],
