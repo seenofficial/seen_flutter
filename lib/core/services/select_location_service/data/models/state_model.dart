@@ -10,7 +10,7 @@ class StateModel extends StateEntity {
   factory StateModel.fromJson(Map<String, dynamic> json) {
     return StateModel(
       name: json['name'],
-      id: json['id'],
+      id: json['id'].toString(),
     );
   }
 

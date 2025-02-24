@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
+import 'package:enmaa/core/constants/api_constants.dart';
 import 'package:enmaa/core/services/dio_service.dart';
 import 'package:enmaa/core/services/select_location_service/data/models/city_model.dart';
 import 'package:enmaa/core/services/select_location_service/data/models/country_model.dart';
 import 'package:enmaa/core/services/select_location_service/data/models/state_model.dart';
+import 'package:enmaa/core/services/select_location_service/domain/entities/country_entity.dart';
 
 abstract class BaseSelectLocationRemoteDataSource {
   Future<List<CountryModel>> getCountries();
@@ -17,56 +20,48 @@ class SelectLocationRemoteDataSource extends BaseSelectLocationRemoteDataSource 
 
   @override
   Future<List<CountryModel>> getCountries() async {
-    await Future.delayed(Duration(seconds: 1)); // Simulate network delay
+    final response = await dioService.get(url: ApiConstants.countries);
+    final List<dynamic> results = response.data['results'] ?? [];
 
-    return [
-      CountryModel(id: '1', name: "Egypt"),
-      CountryModel(id: '2', name: "United States"),
-      CountryModel(id: '3', name: "United Kingdom"),
-    ];
+    List<CountryModel> countries =  results.map((json) {
+      return CountryModel.fromJson(json);
+    }).toList();
+
+   return countries;
   }
 
   @override
   Future<List<StateModel>> getStates(String countryId) async {
-    await Future.delayed(Duration(seconds: 1)); // Simulate network delay
+    final formData = FormData.fromMap({
+      'country': countryId,
+    });
 
-    if (countryId == '1') {
-      return [
-        StateModel(id: '11', name: "Cairo"),
-        StateModel(id: '12', name: "Giza"),
-      ];
-    } else if (countryId == '2') {
-      return [
-        StateModel(id: '21', name: "California"),
-        StateModel(id: '22', name: "Texas"),
-      ];
-    } else {
-      return [
-        StateModel(id: '31', name: "London"),
-        StateModel(id: '32', name: "Manchester"),
-      ];
-    }
+    final response = await dioService.get(
+      url: ApiConstants.states,
+      body: formData,
+      options: Options(contentType: 'multipart/form-data'),
+    );
+    final List<dynamic> results = response.data['results'] ?? [];
+    List<StateModel> states = results.map((json) {
+      return StateModel.fromJson(json);
+    }).toList();
+    return states;
   }
 
   @override
   Future<List<CityModel>> getCities(String stateId) async {
-    await Future.delayed(Duration(seconds: 1)); // Simulate network delay
-
-    if (stateId == '11') {
-      return [
-        CityModel(id: '111', name: "Nasr City"),
-        CityModel(id: '112', name: "Heliopolis"),
-      ];
-    } else if (stateId == '21') {
-      return [
-        CityModel(id: '211', name: "Los Angeles"),
-        CityModel(id: '212', name: "San Francisco"),
-      ];
-    } else {
-      return [
-        CityModel(id: '311', name: "Camden"),
-        CityModel(id: '312', name: "Westminster"),
-      ];
-    }
+    final formData = FormData.fromMap({
+      'state': stateId,
+    });
+    final response = await dioService.get(
+      url: ApiConstants.cities,
+      body: formData,
+      options: Options(contentType: 'multipart/form-data'),
+    );
+    final List<dynamic> results = response.data['results'] ?? [];
+    List<CityModel> cities = results.map((json) {
+      return CityModel.fromJson(json);
+    }).toList();
+    return cities;
   }
 }

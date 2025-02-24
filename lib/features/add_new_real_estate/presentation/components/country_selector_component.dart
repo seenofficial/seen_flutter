@@ -20,7 +20,7 @@ class CountrySelectorComponent extends StatelessWidget {
           previous.selectedCountry != current.selectedCountry,
       builder: (context, state) {
         return FormWidgetComponent(
-          label: 'حدد الموقع ',
+          label: 'حدد الدولة ',
           content: Row(
             children: [
               Expanded(
@@ -33,7 +33,7 @@ class CountrySelectorComponent extends StatelessWidget {
                         .changeSelectedCountry(value!);
                   },
                   itemToString: (item) => item,
-                  hint: Text(' المحافظة', style: TextStyle(fontSize: FontSize.s12)),
+                  hint: Text(' المدينة', style: TextStyle(fontSize: FontSize.s12)),
                   icon: Icon(Icons.keyboard_arrow_down, color: ColorManager.greyShade),
                   decoration: DropdownStyles.getDropdownDecoration(),
                   dropdownColor: ColorManager.whiteColor,

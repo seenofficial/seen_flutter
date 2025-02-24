@@ -16,4 +16,12 @@ class ApiConstants {
   static const String verifyOTP= "${baseUrl}auth/verify-otp/";
 
 
+  /// location
+
+  static const String countries= "${baseUrl}countries/";
+  static const String states= "${baseUrl}states/";
+  static const String cities= "${baseUrl}cities/";
+
+
+
 }

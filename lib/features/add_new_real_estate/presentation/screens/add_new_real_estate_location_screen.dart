@@ -1,4 +1,3 @@
-// Main Screen Component
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';

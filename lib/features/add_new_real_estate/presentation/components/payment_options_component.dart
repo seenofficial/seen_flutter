@@ -17,10 +17,11 @@ class PaymentOptionsComponent extends StatelessWidget {
         children: [
           Expanded(
             child: CustomDropdown<String>(
-              items: ['caaa', 'ssafsafas'],
+              items: ['كاش', 'محفظه'],
+              value: 'كاش',
               onChanged: (value) {},
               itemToString: (item) => item,
-              hint: Text(' ', style: TextStyle(fontSize: FontSize.s12)),
+              hint: Text('اختر وسيله الدفع', style: TextStyle(fontSize: FontSize.s12)),
               icon: Icon(Icons.keyboard_arrow_down, color: ColorManager.greyShade),
               decoration: DropdownStyles.getDropdownDecoration(),
               dropdownColor: ColorManager.whiteColor,
