@@ -30,6 +30,7 @@ class AddNewRealEstateState extends Equatable {
   final bool availableForRenewal;
   final FurnishingStatus currentFurnishingStatus;
 
+  /// property
   final RequestState addNewApartmentState;
   final String addNewApartmentErrorMessage;
 

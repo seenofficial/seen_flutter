@@ -39,6 +39,9 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
         AddNewRealEstateDi().setup();
         return AddNewRealEstateCubit(
           ServiceLocator.getIt(),
+          ServiceLocator.getIt(),
+          ServiceLocator.getIt(),
+          ServiceLocator.getIt(),
         ) ;
       },
       child: Scaffold(

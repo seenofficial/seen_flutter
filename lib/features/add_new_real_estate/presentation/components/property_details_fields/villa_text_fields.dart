@@ -3,6 +3,7 @@ import '../../../../../core/components/generic_form_fields.dart';
 import '../../../../../core/components/property_form_controller.dart';
 import '../../../../../core/components/svg_image_component.dart';
 import '../../../../../core/constants/app_assets.dart';
+import '../../../../../core/constants/local_keys.dart';
 import '../../../../home_module/home_imports.dart';
 import '../form_widget_component.dart';
 import '../property_fields.dart';
@@ -17,7 +18,7 @@ class VillaTextFields implements PropertyFields {
         hintText: 'أدخل المساحة بالمتر المربع',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.areaIcon,
-        controller: controller.getController('villa_area'),
+        controller: controller.getController(LocalKeys.villaAreaController),
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'المساحة'),
       ),
       GenericFormField(
@@ -25,7 +26,7 @@ class VillaTextFields implements PropertyFields {
         hintText: 'حدد عدد الطوابق',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.landIcon,
-        controller: controller.getController('villa_floors'),
+        controller: controller.getController(LocalKeys.villaFloorsController),
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الطوابق'),
       ),
       GenericFormField(
@@ -33,7 +34,7 @@ class VillaTextFields implements PropertyFields {
         hintText: 'حدد عدد الغرف',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.bedIcon,
-        controller: controller.getController('villa_rooms'),
+        controller: controller.getController(LocalKeys.villaRoomsController),
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الغرف'),
       ),
       GenericFormField(
@@ -41,7 +42,7 @@ class VillaTextFields implements PropertyFields {
         hintText: 'أدخل عدد الحمامات',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.bedIcon,
-        controller: controller.getController('villa_bathrooms'),
+        controller: controller.getController(LocalKeys.villaBathRoomsController),
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الحمامات'),
       ),
     ];

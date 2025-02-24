@@ -3,6 +3,7 @@ import '../../../../../core/components/generic_form_fields.dart';
 import '../../../../../core/components/property_form_controller.dart';
 import '../../../../../core/components/svg_image_component.dart';
 import '../../../../../core/constants/app_assets.dart';
+import '../../../../../core/constants/local_keys.dart';
 import '../../../../home_module/home_imports.dart';
 import '../form_widget_component.dart';
 import '../property_fields.dart';
@@ -17,7 +18,7 @@ class BuildingTextFields implements PropertyFields {
         hintText: 'أدخل المساحة بالمتر المربع',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.areaIcon,
-        controller: controller.getController('building_area'),
+        controller: controller.getController(LocalKeys.buildingAreaController),
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'المساحة'),
       ),
       GenericFormField(
@@ -25,7 +26,7 @@ class BuildingTextFields implements PropertyFields {
         hintText: 'حدد عدد الطوابق',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.landIcon,
-        controller: controller.getController('building_floors'),
+        controller: controller.getController(LocalKeys.buildingFloorsController),
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الطوابق'),
       ),
       GenericFormField(
@@ -33,7 +34,7 @@ class BuildingTextFields implements PropertyFields {
         hintText: 'حدد عدد الغرف',
         keyboardType: TextInputType.number,
         iconPath: AppAssets.apartmentIcon,
-        controller: controller.getController('number_of_apartments_per_floor'),
+        controller: controller.getController(LocalKeys.buildingApartmentsPerFloorController),
         validator: (value) => FormValidator.validatePositiveNumber(value, fieldName: 'عدد الشقق في كل طابق'),
       ),
     ];

@@ -1,3 +1,4 @@
+import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import 'package:enmaa/core/services/service_locator.dart';
 import 'package:enmaa/features/add_new_real_estate/data/models/apartment_request_model.dart';
@@ -98,7 +99,7 @@ class AddNewRealEstateButtons extends StatelessWidget {
                       /// validate that user select images if not change the
                       /// border color of the container to red
                       var addNewRealEstateCubit = context.read<AddNewRealEstateCubit>();
-                      ;
+
 
                       if (context.read<AddNewRealEstateCubit>().priceForm.currentState!.validate()
                           && addNewRealEstateCubit.validateImages()) {
@@ -114,7 +115,25 @@ class AddNewRealEstateButtons extends StatelessWidget {
 
                         final addNewRealEstateCubit = context.read<AddNewRealEstateCubit>();
 
-                        addNewRealEstateCubit.addNewApartment(ServiceLocator.getIt<SelectLocationServiceCubit>().state);
+                        if(addNewRealEstateCubit.state.currentPropertyType.isApartment){
+                          addNewRealEstateCubit.addNewApartment(ServiceLocator.getIt<SelectLocationServiceCubit>().state);
+
+                        }
+                        else if(addNewRealEstateCubit.state.currentPropertyType.isVilla) {
+                          addNewRealEstateCubit.addNewVilla(ServiceLocator
+                              .getIt<SelectLocationServiceCubit>()
+                              .state);
+                        }
+                        else if(addNewRealEstateCubit.state.currentPropertyType.isBuilding) {
+                          addNewRealEstateCubit.addNewBuilding(ServiceLocator
+                              .getIt<SelectLocationServiceCubit>()
+                              .state);
+                        }
+                        else if(addNewRealEstateCubit.state.currentPropertyType.isLand) {
+                          addNewRealEstateCubit.addNewLand(ServiceLocator
+                              .getIt<SelectLocationServiceCubit>()
+                              .state);
+                        }
 
                       }
                     }

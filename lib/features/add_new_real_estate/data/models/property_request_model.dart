@@ -3,6 +3,7 @@ import '../../../../core/constants/json_keys.dart';
 
 abstract class PropertyRequestModel {
   final String currentPropertyOperationType;
+  final String propertySubType;
   final String title;
   final String description;
   final double price;
@@ -14,8 +15,14 @@ abstract class PropertyRequestModel {
   final String longitude;
   final List<String> amenities;
 
-  PropertyRequestModel({
+  // Common fields for all properties
+  final int? monthlyRentPeriod;
+  final bool? isRenewable;
+  final String? paymentMethod;
+
+  PropertyRequestModel( {
     required this.currentPropertyOperationType,
+    required this.propertySubType,
     required this.title,
     required this.description,
     required this.price,
@@ -26,6 +33,9 @@ abstract class PropertyRequestModel {
     required this.latitude,
     required this.longitude,
     required this.amenities,
+    this.monthlyRentPeriod,
+    this.isRenewable,
+    this.paymentMethod,
   });
 
   /// Converts this model into a FormData object for a multipart/form-data request.
@@ -42,10 +52,19 @@ abstract class PropertyRequestModel {
       JsonKeys.latitude: latitude,
       JsonKeys.longitude: longitude,
       JsonKeys.amenities: amenities,
+      JsonKeys.propertySubType : propertySubType,
     };
 
-    // Add any additional fields from subclasses by overriding this method (via super)
-    // if needed.
+    // Add common fields if they are not null
+    if (monthlyRentPeriod != null) {
+      data[JsonKeys.monthlyRentPeriod] = monthlyRentPeriod;
+    }
+    if (isRenewable != null) {
+      data[JsonKeys.isRenewable] = isRenewable;
+    }
+    if (paymentMethod != null) {
+      data[JsonKeys.paymentMethod] = paymentMethod;
+    }
 
     // Start building FormData.
     final formData = FormData.fromMap(data);

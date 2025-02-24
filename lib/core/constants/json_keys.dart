@@ -45,6 +45,13 @@ class JsonKeys {
 
   static const String country = 'country';
   static const String isFurnitured = 'is_furnitured';
+  static const String numberOfFloors = 'number_of_floors';
+
+  static const String monthlyRentPeriod = 'monthly_rent_period';
+  static const String isRenewable = 'is_renewable';
+  static const String paymentMethod = 'payment_method';
+  static const String numberOfApartments = 'number_of_apartments';
+  static const String isLicensed = 'is_licensed';
 
 
 }
