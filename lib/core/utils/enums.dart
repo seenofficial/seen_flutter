@@ -1,5 +1,7 @@
 enum RequestState { initial, loading, loaded, error }
 
+enum Language { ar, en , fr }
+
 /// Enum for property operation type
 enum PropertyOperationType { forSale, forRent }
 

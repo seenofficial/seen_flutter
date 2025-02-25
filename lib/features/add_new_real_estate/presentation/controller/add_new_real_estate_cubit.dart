@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:enmaa/core/constants/local_keys.dart';
+import 'package:enmaa/core/entites/amenity_entity.dart';
 import 'package:enmaa/core/extensions/furnished_status_extension.dart';
 import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
 import 'package:enmaa/core/extensions/property_sub_types/villa_type_extension.dart';
@@ -16,6 +17,7 @@ import 'package:enmaa/features/add_new_real_estate/data/models/villa_request_mod
 import 'package:enmaa/features/add_new_real_estate/domain/use_cases/add_new_apartment_use_case.dart';
 import 'package:enmaa/features/add_new_real_estate/domain/use_cases/add_new_building_use_case.dart';
 import 'package:enmaa/features/add_new_real_estate/domain/use_cases/add_new_land_use_case.dart';
+import 'package:enmaa/features/add_new_real_estate/domain/use_cases/get_property_amenities_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -35,6 +37,7 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       this._addVillaUseCase,
       this._addNewBuildingUseCase,
       this._addNewLandUseCase ,
+      this._getPropertyAmenitiesUseCase ,
       ) : super(AddNewRealEstateState());
 
   final PropertyFormController formController = PropertyFormController();
@@ -110,6 +113,17 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   }
 
   void changePropertyType(PropertyType propertyType) {
+    String propertyTypeID = '1' ;
+    if(propertyType == PropertyType.apartment) {
+      propertyTypeID = '1';
+    } else if(propertyType == PropertyType.villa) {
+      propertyTypeID = '2';
+    } else if(propertyType == PropertyType.building) {
+      propertyTypeID = '3';
+    } else if(propertyType == PropertyType.land) {
+      propertyTypeID = '4';
+    }
+    getAmenities(propertyTypeID);
     emit(state.copyWith(currentPropertyType: propertyType));
   }
 
@@ -141,6 +155,7 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   final AddVillaUseCase _addVillaUseCase;
   final AddNewBuildingUseCase _addNewBuildingUseCase;
   final AddNewLandUseCase _addNewLandUseCase;
+  final GetPropertyAmenitiesUseCase _getPropertyAmenitiesUseCase ;
 
 
   Future<List<PropertyImage>> _processImages() async {
@@ -368,6 +383,36 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   }
 
 
+  /// get amenities
+
+
+  void getAmenities(String propertyType)async {
+    emit(state.copyWith(getAmenitiesState: RequestState.loading , selectedAmenities: []));
+
+    final Either<Failure, List<AmenityEntity>> result = await _getPropertyAmenitiesUseCase(propertyType);
+
+    result.fold(
+          (failure) => emit(state.copyWith(getAmenitiesState: RequestState.error)),
+          (amenities) {
+        emit(state.copyWith(
+          getAmenitiesState: RequestState.loaded,
+          currentAmenities: amenities,
+        ));
+      },
+    );
+  }
+
+  void selectAmenity(String amenityId) {
+    final updatedSelectedAmenities = List<String>.from(state.selectedAmenities);
+    updatedSelectedAmenities.add(amenityId);
+    emit(state.copyWith(selectedAmenities: updatedSelectedAmenities));
+  }
+
+  void unSelectAmenity(String amenityId) {
+    final updatedSelectedAmenities = List<String>.from(state.selectedAmenities)
+      ..remove(amenityId);
+    emit(state.copyWith(selectedAmenities: updatedSelectedAmenities));
+  }
 
   @override
   Future<void> close() {

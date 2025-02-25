@@ -39,12 +39,14 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
     return BlocProvider(
       create: (context) {
         AddNewRealEstateDi().setup();
+        /// todo : send the property type to the cubit
         return AddNewRealEstateCubit(
           ServiceLocator.getIt(),
           ServiceLocator.getIt(),
           ServiceLocator.getIt(),
           ServiceLocator.getIt(),
-        );
+          ServiceLocator.getIt(),
+        )..getAmenities('1');
       },
       child: Scaffold(
         backgroundColor: ColorManager.greyShade,

@@ -6,6 +6,7 @@ import 'package:enmaa/features/add_new_real_estate/data/models/land_request_mode
 import 'package:enmaa/features/add_new_real_estate/data/models/villa_request_model.dart';
 import 'package:enmaa/features/add_new_real_estate/domain/repository/base_add_new_real_estate_repository.dart';
 
+import '../../../../core/entites/amenity_entity.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/services/handle_api_request_service.dart';
 
@@ -40,6 +41,13 @@ class AddNewRealEstateRepository extends BaseAddNewRealEstateRepository {
   Future<Either<Failure, void>> addNewLand(LandRequestModel land)async {
     return await HandleRequestService.handleApiCall<void>(() async {
       await baseAddNewRealEstateDataSource.addLand(land);
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<AmenityEntity>>> getPropertyAmenities(String propertyType)async {
+    return await HandleRequestService.handleApiCall<List<AmenityEntity>>(() async {
+      return await baseAddNewRealEstateDataSource.getPropertyAmenities(propertyType);
     });
   }
 }

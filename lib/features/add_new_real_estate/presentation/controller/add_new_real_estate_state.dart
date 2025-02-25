@@ -15,6 +15,10 @@ class AddNewRealEstateState extends Equatable {
     this.selectedImages = const [],
     this.selectImagesState = RequestState.initial,
     this.validateImages = true,
+
+     this.currentAmenities = const [],
+    this.getAmenitiesState = RequestState.initial,
+    this.selectedAmenities = const [],
   });
 
   final PropertyOperationType currentPropertyOperationType;
@@ -38,6 +42,14 @@ class AddNewRealEstateState extends Equatable {
   final RequestState selectImagesState;
   final bool validateImages;
 
+  /// amenities
+
+  final List<AmenityEntity> currentAmenities ;
+  final RequestState getAmenitiesState;
+  final List<String> selectedAmenities ;
+
+
+
   AddNewRealEstateState copyWith({
     PropertyOperationType? currentPropertyOperationType,
     PropertyType? currentPropertyType,
@@ -52,6 +64,9 @@ class AddNewRealEstateState extends Equatable {
     List<File>? selectedImages,
     RequestState? selectImagesState,
     bool? validateImages,
+    List<AmenityEntity>? currentAmenities,
+    RequestState? getAmenitiesState,
+    List<String>? selectedAmenities,
   }) {
     return AddNewRealEstateState(
       currentPropertyOperationType:
@@ -70,6 +85,10 @@ class AddNewRealEstateState extends Equatable {
       selectedImages: selectedImages ?? this.selectedImages,
       selectImagesState: selectImagesState ?? this.selectImagesState,
       validateImages: validateImages ?? this.validateImages,
+      currentAmenities: currentAmenities ?? this.currentAmenities,
+      getAmenitiesState: getAmenitiesState ?? this.getAmenitiesState,
+      selectedAmenities: selectedAmenities ?? this.selectedAmenities,
+
     );
   }
 
@@ -87,6 +106,10 @@ class AddNewRealEstateState extends Equatable {
         addNewApartmentErrorMessage,
         selectedImages,
         selectImagesState,
-        validateImages
+        validateImages,
+        currentAmenities,
+        getAmenitiesState,
+        selectedAmenities,
+
       ];
 }

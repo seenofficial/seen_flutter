@@ -5,6 +5,7 @@ import 'package:enmaa/features/add_new_real_estate/domain/use_cases/add_new_apar
 import 'package:enmaa/features/add_new_real_estate/domain/use_cases/add_new_building_use_case.dart';
 import 'package:enmaa/features/add_new_real_estate/domain/use_cases/add_new_land_use_case.dart';
 import 'package:enmaa/features/add_new_real_estate/domain/use_cases/add_villa_use_case.dart';
+import 'package:enmaa/features/add_new_real_estate/domain/use_cases/get_property_amenities_use_case.dart';
 
 import '../../core/services/service_locator.dart';
 
@@ -54,6 +55,9 @@ class AddNewRealEstateDi {
     );
     sl.registerLazySingleton(
           () => AddNewLandUseCase (sl()),
+    );
+    sl.registerLazySingleton(
+          () => GetPropertyAmenitiesUseCase (sl()),
     );
 
 
