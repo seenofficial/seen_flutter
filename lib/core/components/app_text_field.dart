@@ -18,6 +18,7 @@ class AppTextField extends StatefulWidget {
   final int? maxLines;
   final String? Function(String?)? validator;
   final TextDirection? textDirection;
+  final String ? initialValue;
 
   const AppTextField({
     super.key,
@@ -38,6 +39,7 @@ class AppTextField extends StatefulWidget {
     this.maxLines,
     this.validator,
     this.textDirection,
+    this.initialValue,
   });
 
   @override
@@ -60,6 +62,7 @@ class _AppTextFieldState extends State<AppTextField> {
             textDirection:
             widget.textDirection ?? (isArabic ? TextDirection.rtl : TextDirection.ltr),
             child: TextFormField(
+              initialValue: widget.initialValue,
               controller: widget.controller,
               keyboardType: widget.keyboardType,
               obscureText: widget.obscureText,

@@ -15,7 +15,7 @@ import '../../../home_module/home_imports.dart';
 import '../components/dashed_border_container.dart';
 import '../components/form_widget_component.dart';
 import '../components/numbered_text_header_component.dart';
-import '../components/reusable_type_selector_component.dart';
+import '../../../../core/components/reusable_type_selector_component.dart';
 import '../components/select_images_component.dart';
 
 class AddNewRealEstatePriceScreen extends StatefulWidget {

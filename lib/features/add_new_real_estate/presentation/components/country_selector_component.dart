@@ -33,7 +33,7 @@ class CountrySelectorComponent extends StatelessWidget {
                         .changeSelectedCountry(value!);
                   },
                   itemToString: (item) => item,
-                  hint: Text(' المدينة', style: TextStyle(fontSize: FontSize.s12)),
+                  hint: Text(' الدولة', style: TextStyle(fontSize: FontSize.s12)),
                   icon: Icon(Icons.keyboard_arrow_down, color: ColorManager.greyShade),
                   decoration: DropdownStyles.getDropdownDecoration(),
                   dropdownColor: ColorManager.whiteColor,

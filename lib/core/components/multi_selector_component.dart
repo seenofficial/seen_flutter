@@ -1,27 +1,25 @@
-
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/selected_item_text_style.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../configuration/managers/color_manager.dart';
-import '../../../../../core/components/button_app_component.dart';
-import '../../../../../core/components/svg_image_component.dart';
+import '../../../configuration/managers/color_manager.dart';
+import '../../../core/components/button_app_component.dart';
+import '../../../core/components/svg_image_component.dart';
 
-
-class TypeSelectorComponent<T> extends StatelessWidget {
+class MultiSelectTypeSelectorComponent<T> extends StatelessWidget {
   final List<T> values;
-  final T currentType;
-  final ValueChanged<T> onTap;
+  final List<T> selectedTypes;
+  final ValueChanged<T> onToggle;
   final String Function(T)? getIcon;
   final String Function(T) getLabel;
 
   final double selectorWidth, selectorHeight;
 
-  const TypeSelectorComponent({
+  const MultiSelectTypeSelectorComponent({
     super.key,
     required this.values,
-    required this.currentType,
-    required this.onTap,
+    required this.selectedTypes,
+    required this.onToggle,
     required this.getLabel,
     required this.selectorWidth,
     this.getIcon,
@@ -30,16 +28,18 @@ class TypeSelectorComponent<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      alignment: WrapAlignment.spaceBetween,
       children: values.map(
             (type) => _buildTypeButton(
           width: selectorWidth,
           height: selectorHeight,
           context: context,
           type: type,
-          isSelected: currentType == type,
-          onTap: () => onTap(type),
+          isSelected: selectedTypes.contains(type),
+          onTap: () => onToggle(type),
         ),
       ).toList(),
     );
@@ -58,7 +58,7 @@ class TypeSelectorComponent<T> extends StatelessWidget {
       height: height,
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: ColorManager.whiteColor,
+        color: isSelected ? ColorManager.primaryColor.withOpacity(0.1) : ColorManager.whiteColor,
         borderRadius: BorderRadius.circular(context.scale(24)),
         border: Border.all(
           color: isSelected ? ColorManager.primaryColor : Colors.transparent,
@@ -74,6 +74,7 @@ class TypeSelectorComponent<T> extends StatelessWidget {
               iconPath: getIcon!(type),
               width: context.scale(16),
               height: context.scale(16),
+              color: isSelected ? ColorManager.primaryColor : null,
             ),
           if (getIcon != null) SizedBox(width: context.scale(6)),
           Text(

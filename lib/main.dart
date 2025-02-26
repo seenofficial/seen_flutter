@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
+import 'package:enmaa/features/real_estates/presentation/controller/filter_properties_controller/filter_property_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,7 +52,9 @@ class MyApp extends StatelessWidget {
 
     return ScreenUtilInit(
       designSize: const Size(390, 844),
-      child: MaterialApp(
+      child: BlocProvider(
+  create: (context) => FilterPropertyCubit(),
+  child: MaterialApp(
         navigatorObservers: [RouteObserverService()],
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
@@ -73,6 +76,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: AppRouters().generateRoute,
         initialRoute: RoutersNames.biometricScreen,
       ),
+),
     );
   }
 }

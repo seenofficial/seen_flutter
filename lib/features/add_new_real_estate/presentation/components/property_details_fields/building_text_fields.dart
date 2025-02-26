@@ -10,10 +10,14 @@ import '../property_fields.dart';
 import '../../../../../core/utils/form_validator.dart';
 
 class BuildingTextFields implements PropertyFields {
+
+  const BuildingTextFields({this.fromFilter = false});
+  final bool fromFilter ;
   @override
   List<Widget> getFields(BuildContext context, PropertyFormController controller) {
     return [
-      GenericFormField(
+      if(!fromFilter)
+        GenericFormField(
         label: 'المساحة ',
         hintText: 'أدخل المساحة بالمتر المربع',
         keyboardType: TextInputType.number,

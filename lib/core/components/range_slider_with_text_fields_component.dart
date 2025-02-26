@@ -9,6 +9,7 @@ class RangeSliderWithFields extends StatefulWidget {
   final double initialMinValue;
   final double initialMaxValue;
   final String unit;
+  final void Function(double, double)? onRangeChanged;
 
   const RangeSliderWithFields({
     super.key,
@@ -17,6 +18,7 @@ class RangeSliderWithFields extends StatefulWidget {
     required this.initialMinValue,
     required this.initialMaxValue,
     this.unit = '',
+    this.onRangeChanged,
   });
 
   @override
@@ -75,6 +77,8 @@ class _RangeSliderWithFieldsState extends State<RangeSliderWithFields> {
     setState(() {
       _currentRangeValues = RangeValues(minValue, maxValue);
     });
+
+    widget.onRangeChanged?.call(minValue, maxValue);
   }
 
   @override
@@ -83,7 +87,7 @@ class _RangeSliderWithFieldsState extends State<RangeSliderWithFields> {
       children: [
         SliderTheme(
           data: SliderThemeData(
-            trackHeight: 2,
+            trackHeight: 1,
             thumbColor: ColorManager.primaryColor,
             activeTrackColor: ColorManager.primaryColor,
             inactiveTrackColor: Color(0xFFD6D6D6),
@@ -103,6 +107,8 @@ class _RangeSliderWithFieldsState extends State<RangeSliderWithFields> {
                 _minController.text = '${values.start.toStringAsFixed(1)} ${widget.unit}';
                 _maxController.text = '${values.end.toStringAsFixed(1)} ${widget.unit}';
               });
+
+              widget.onRangeChanged?.call(values.start, values.end);
             },
           ),
         ),

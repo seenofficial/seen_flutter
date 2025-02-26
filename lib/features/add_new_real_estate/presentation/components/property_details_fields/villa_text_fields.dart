@@ -10,10 +10,15 @@ import '../property_fields.dart';
 import '../../../../../core/utils/form_validator.dart';
 
 class VillaTextFields implements PropertyFields {
+
+  const VillaTextFields({this.fromFilter = false});
+
+  final bool fromFilter;
   @override
   List<Widget> getFields(BuildContext context, PropertyFormController controller) {
     return [
-      GenericFormField(
+      if(!fromFilter)
+        GenericFormField(
         label: 'المساحة',
         hintText: 'أدخل المساحة بالمتر المربع',
         keyboardType: TextInputType.number,

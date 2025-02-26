@@ -4,6 +4,7 @@ import 'package:enmaa/core/components/custom_bottom_sheet.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/property_operation_type_extension.dart';
 import 'package:enmaa/core/services/service_locator.dart';
+import 'package:enmaa/features/real_estates/presentation/controller/filter_properties_controller/filter_property_cubit.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_filter_screen.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,12 @@ class _RealStateScreenState extends State<RealStateScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(() => setState(() {}));
+    _tabController.addListener(() => setState(() {
+      context.read<FilterPropertyCubit>().changePropertyOperationType(
+          _tabController.index == 0
+              ? PropertyOperationType.forSale
+              : PropertyOperationType.forRent);
+    }));
   }
 
   @override
@@ -147,30 +153,30 @@ class _RealStateScreenState extends State<RealStateScreen>
                   );
                   case RequestState.loaded:
 
-                    return Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          _buildPropertyList(state, PropertyOperationType.forSale),
-                          _buildPropertyList(state, PropertyOperationType.forRent),
-                        ],
-                      ),
-                    );
+                      return Expanded(
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            _buildPropertyList(state, PropertyOperationType.forSale),
+                            _buildPropertyList(state, PropertyOperationType.forRent),
+                          ],
+                        ),
+                      );
 
-                  case RequestState.error:
-                    return Center(
-                      child: Text(
-                        state.getPropertiesError,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    );
-                }
-              },
-            ),
-          ],
+                    case RequestState.error:
+                      return Center(
+                        child: Text(
+                          state.getPropertiesError,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildPropertyList(RealEstateState state, PropertyOperationType type) {

@@ -21,7 +21,7 @@ import '../components/property_details_fields/building_text_fields.dart';
 import '../components/property_details_fields/land_text_fields.dart';
 import '../components/property_details_fields/villa_text_fields.dart';
 import '../components/property_fields.dart';
-import '../components/reusable_type_selector_component.dart';
+import '../../../../core/components/reusable_type_selector_component.dart';
 
 class AddNewRealEstateMainInformationScreen extends StatelessWidget {
   const AddNewRealEstateMainInformationScreen({super.key});

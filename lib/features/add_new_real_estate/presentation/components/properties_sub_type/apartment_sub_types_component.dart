@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/constants/app_assets.dart';
 import '../../../../../core/utils/enums.dart';
 import '../form_widget_component.dart';
-import '../reusable_type_selector_component.dart';
+import '../../../../../core/components/reusable_type_selector_component.dart';
 
 class ApartmentSubTypesComponent extends StatelessWidget {
   const ApartmentSubTypesComponent({super.key});
