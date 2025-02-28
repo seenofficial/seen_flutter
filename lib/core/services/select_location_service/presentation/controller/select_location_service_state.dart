@@ -60,6 +60,7 @@ class SelectLocationServiceState extends Equatable {
     // Add these flags to explicitly set null values
     bool clearSelectedState = false,
     bool clearSelectedCity = false,
+    bool clearSelectedCountry = false,
   }) {
     return SelectLocationServiceState(
       countries: countries ?? this.countries,
@@ -71,7 +72,6 @@ class SelectLocationServiceState extends Equatable {
       getCountriesError: getCountriesError ?? this.getCountriesError,
       getStatesError: getStatesError ?? this.getStatesError,
       getCitiesError: getCitiesError ?? this.getCitiesError,
-      selectedCountry: selectedCountry ?? this.selectedCountry,
 
       cachedCountries: cachedCountries ?? this.cachedCountries,
       cachedStates: cachedStates ?? this.cachedStates,
@@ -81,6 +81,8 @@ class SelectLocationServiceState extends Equatable {
       // Use the flag to explicitly set to null
       selectedState: clearSelectedState ? null : (selectedState ?? this.selectedState),
       selectedCity: clearSelectedCity ? null : (selectedCity ?? this.selectedCity),
+      selectedCountry: clearSelectedCountry ? null : (selectedCountry ?? this.selectedCountry),
+
     );
   }
 

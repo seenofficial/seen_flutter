@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:enmaa/features/real_estates/data/models/apartment_model.dart';
 import 'package:enmaa/features/real_estates/data/models/property_details_model.dart';
 import 'package:enmaa/features/real_estates/data/models/property_model.dart';
@@ -8,7 +9,7 @@ import '../../../../../core/services/dio_service.dart';
 import '../../../domain/entities/property_details_entity.dart';
 
 abstract class BaseRealEstateRemoteData {
-  Future<List<PropertyEntity>> getProperties();
+  Future<List<PropertyEntity>> getProperties({Map<String, dynamic>? filters});
   Future<BasePropertyDetailsEntity> getPropertyDetails(String propertyId);
 }
 
@@ -19,21 +20,21 @@ class RealEstateRemoteDataSource extends BaseRealEstateRemoteData {
 
 
   @override
-  Future<List<PropertyEntity>> getProperties() async {
+   Future<List<PropertyEntity>> getProperties({Map<String, dynamic>? filters}) async {
     final response = await dioService.get(
-        url: ApiConstants.properties
+      url: ApiConstants.properties,
+      queryParameters: filters,
+      options: Options(contentType: 'multipart/form-data'),
     );
-    // Extract the list from the "results" key
+
     List<dynamic> jsonResponse = response.data['results'] ?? [];
 
     List<PropertyEntity> properties = jsonResponse.map((jsonItem) {
       return PropertyModel.fromJson(jsonItem);
     }).toList();
 
-    print("properties: ${properties.length}");
     return properties;
   }
-
 
   @override
   Future<BasePropertyDetailsEntity> getPropertyDetails(String propertyId) async{

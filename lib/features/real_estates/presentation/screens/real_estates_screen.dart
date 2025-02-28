@@ -26,8 +26,6 @@ import '../../../home_module/presentation/components/real_state_card_component.d
 import '../../../home_module/presentation/components/services_list_shimmer.dart';
 import '../../../main_services_layout/main_service_layout_screen.dart';
 
-
-
 class RealStateScreen extends StatefulWidget {
   const RealStateScreen({super.key});
 
@@ -44,11 +42,11 @@ class _RealStateScreenState extends State<RealStateScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() => setState(() {
-      context.read<FilterPropertyCubit>().changePropertyOperationType(
-          _tabController.index == 0
-              ? PropertyOperationType.forSale
-              : PropertyOperationType.forRent);
-    }));
+          context.read<FilterPropertyCubit>().changePropertyOperationType(
+              _tabController.index == 0
+                  ? PropertyOperationType.forSale
+                  : PropertyOperationType.forRent);
+        }));
   }
 
   @override
@@ -67,8 +65,11 @@ class _RealStateScreenState extends State<RealStateScreen>
         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       builder: (context) {
-        return const CustomBottomSheet(
-          widget: RealEstateFilterScreen(),
+        return CustomBottomSheet(
+          widget: BlocProvider.value(
+            value: ServiceLocator.getIt<RealEstateCubit>(),
+            child: RealEstateFilterScreen(),
+          ),
           headerText: "التصفية",
         );
       },
@@ -97,22 +98,30 @@ class _RealStateScreenState extends State<RealStateScreen>
                       vertical: context.scale(8),
                     ),
                     hintText: 'ابحث عن كل ما تريد معرفته ...',
-                    prefixIcon: Icon(Icons.search, color: ColorManager.blackColor),
+                    prefixIcon:
+                        Icon(Icons.search, color: ColorManager.blackColor),
                   ),
                 ),
                 ButtonAppComponent(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   width: context.scale(111),
                   onTap: () {
-                    Navigator.of(context, rootNavigator: true).pushNamed(RoutersNames.addNewRealEstateScreen);
+                    Navigator.of(context, rootNavigator: true)
+                        .pushNamed(RoutersNames.addNewRealEstateScreen);
                   },
                   buttonContent: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgImageComponent(iconPath: AppAssets.plusIcon , width: 16,height: 16,),
+                      SvgImageComponent(
+                        iconPath: AppAssets.plusIcon,
+                        width: 16,
+                        height: 16,
+                      ),
                       Text(
                         'أضف عقارك',
-                        style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s12),
+                        style: getBoldStyle(
+                            color: ColorManager.whiteColor,
+                            fontSize: FontSize.s12),
                       ),
                     ],
                   ),
@@ -143,45 +152,47 @@ class _RealStateScreenState extends State<RealStateScreen>
                 switch (state.getPropertiesState) {
                   case RequestState.loading:
                   case RequestState.initial:
-                  return Expanded(
-                    child: CardShimmerList(
-                      scrollDirection: Axis.vertical,
-                      cardHeight: context.scale(282),
-                      cardWidth: context.screenWidth,
-                      numberOfCards: 3,
-                    ),
-                  );
+                    return Expanded(
+                      child: CardShimmerList(
+                        scrollDirection: Axis.vertical,
+                        cardHeight: context.scale(282),
+                        cardWidth: context.screenWidth,
+                        numberOfCards: 3,
+                      ),
+                    );
                   case RequestState.loaded:
+                    return Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          _buildPropertyList(
+                              state, PropertyOperationType.forSale),
+                          _buildPropertyList(
+                              state, PropertyOperationType.forRent),
+                        ],
+                      ),
+                    );
 
-                      return Expanded(
-                        child: TabBarView(
-                          controller: _tabController,
-                          children: [
-                            _buildPropertyList(state, PropertyOperationType.forSale),
-                            _buildPropertyList(state, PropertyOperationType.forRent),
-                          ],
-                        ),
-                      );
-
-                    case RequestState.error:
-                      return Center(
-                        child: Text(
-                          state.getPropertiesError,
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      );
-                  }
-                },
-              ),
-            ],
-          ),
+                  case RequestState.error:
+                    return Center(
+                      child: Text(
+                        state.getPropertiesError,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    );
+                }
+              },
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 
   Widget _buildPropertyList(RealEstateState state, PropertyOperationType type) {
     final filteredProperties = state.properties
-        .where((property) => property.operation.toOperationTypeProperty() == type)
+        .where(
+            (property) => property.operation.toOperationTypeProperty() == type)
         .toList();
 
     if (filteredProperties.isEmpty) {

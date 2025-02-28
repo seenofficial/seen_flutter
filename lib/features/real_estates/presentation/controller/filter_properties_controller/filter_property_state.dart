@@ -16,6 +16,7 @@ class FilterPropertyState extends Equatable {
     this.maxAreaValue = '1000',
     this.minNumberOfMonths = '0',
     this.maxNumberOfMonths = '12',
+    this.selectedLandLicenseStatuses = const [], // New property
   });
 
   final PropertyOperationType currentPropertyOperationType;
@@ -34,6 +35,8 @@ class FilterPropertyState extends Equatable {
   final String minPriceValue, maxPriceValue;
   final String minAreaValue, maxAreaValue;
 
+  final List<LandLicenseStatus> selectedLandLicenseStatuses; // New property
+
   FilterPropertyState copyWith({
     PropertyOperationType? currentPropertyOperationType,
     PropertyType? currentPropertyType,
@@ -50,6 +53,7 @@ class FilterPropertyState extends Equatable {
     String? maxAreaValue,
     String? minNumberOfMonths,
     String? maxNumberOfMonths,
+    List<LandLicenseStatus>? selectedLandLicenseStatuses, // Updated property
   }) {
     return FilterPropertyState(
       currentPropertyOperationType:
@@ -70,6 +74,7 @@ class FilterPropertyState extends Equatable {
       maxAreaValue: maxAreaValue ?? this.maxAreaValue,
       minNumberOfMonths: minNumberOfMonths ?? this.minNumberOfMonths,
       maxNumberOfMonths: maxNumberOfMonths ?? this.maxNumberOfMonths,
+      selectedLandLicenseStatuses: selectedLandLicenseStatuses ?? this.selectedLandLicenseStatuses, // Updated property
     );
   }
 
@@ -89,5 +94,6 @@ class FilterPropertyState extends Equatable {
     maxAreaValue,
     minNumberOfMonths,
     maxNumberOfMonths,
+    selectedLandLicenseStatuses,
   ];
 }

@@ -196,6 +196,18 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
     emit(state.copyWith(selectedCity: currentCity));
   }
 
+  void removeSelectedData() {
+    emit(state.copyWith(
+      selectedCountry: null,
+      selectedState: null,
+      selectedCity: null,
+      clearSelectedState: true,
+      states: [],
+      cities: [],
+      clearSelectedCity: true,
+      clearSelectedCountry: true,
+    ));
+  }
   @override
   Future<void> close() {
     _lastState = state;

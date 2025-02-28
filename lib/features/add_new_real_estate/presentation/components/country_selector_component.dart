@@ -17,7 +17,7 @@ class CountrySelectorComponent extends StatelessWidget {
     return BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
       buildWhen: (previous, current) =>
       previous.getCountriesState != current.getCountriesState ||
-          previous.selectedCountry != current.selectedCountry,
+          previous.selectedCountry != current.selectedCountry ,
       builder: (context, state) {
         return FormWidgetComponent(
           label: 'حدد الدولة ',

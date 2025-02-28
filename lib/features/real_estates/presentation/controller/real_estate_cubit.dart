@@ -17,12 +17,11 @@ class RealEstateCubit extends Cubit<RealEstateState> {
 
   RealEstateCubit(this._getPropertiesUseCase , this._getPropertyDetailsUseCase) : super(const RealEstateState());
 
-  Future<void> fetchProperties() async {
+  Future<void> fetchProperties({Map<String, dynamic>? filters}) async {
     emit(state.copyWith(getPropertiesState: RequestState.loading));
 
-    final Either<Failure, List<PropertyEntity>> result = await _getPropertiesUseCase();
+    final Either<Failure, List<PropertyEntity>> result = await _getPropertiesUseCase(filters: filters);
 
-    print("ejejejej ${result}");
     result.fold(
           (failure) => emit(state.copyWith(
         getPropertiesState: RequestState.error,

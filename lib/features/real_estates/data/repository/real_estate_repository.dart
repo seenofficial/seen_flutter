@@ -9,16 +9,17 @@ import '../../../../core/errors/failure.dart';
 import '../../../../core/services/handle_api_request_service.dart';
 
 
-class RealEstateRepository extends BaseRealEstateRepository{
+class RealEstateRepository extends BaseRealEstateRepository {
   final BaseRealEstateRemoteData baseRealEstateRemoteData;
 
-  RealEstateRepository({ required this.baseRealEstateRemoteData});
-
+  RealEstateRepository({required this.baseRealEstateRemoteData});
 
   @override
-  Future<Either<Failure, List<PropertyEntity>>> getProperties() async {
+  Future<Either<Failure, List<PropertyEntity>>> getProperties({
+    Map<String, dynamic>? filters,
+  }) async {
     return await HandleRequestService.handleApiCall<List<PropertyEntity>>(() async {
-      final result = await baseRealEstateRemoteData.getProperties();
+      final result = await baseRealEstateRemoteData.getProperties(filters: filters);
       return result;
     });
   }
@@ -30,8 +31,4 @@ class RealEstateRepository extends BaseRealEstateRepository{
       return result;
     });
   }
-
-
-
-
 }

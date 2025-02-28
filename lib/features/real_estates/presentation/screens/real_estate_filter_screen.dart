@@ -32,6 +32,7 @@ import '../components/real_estate_filteration_components/apartment_filtration_su
 import '../components/real_estate_filteration_components/building_filtration_sub_types_component.dart';
 import '../components/real_estate_filteration_components/land_filtration_sub_types_component.dart';
 import '../components/real_estate_filteration_components/villa_filtration_sub_types_component.dart';
+import '../controller/real_estate_cubit.dart';
 
 class RealEstateFilterScreen extends StatelessWidget {
   const RealEstateFilterScreen({super.key});
@@ -88,6 +89,38 @@ class RealEstateFilterScreen extends StatelessWidget {
                                       .toggleFurnishingStatus(type),
                                   getIcon: _getFurnishedIcon,
                                   getLabel: _getFurnishedLabel,
+                                  selectorWidth: 171,
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    /// show is licensed only for land
+                    ///
+
+                    BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
+                      builder: (context, state) {
+                        bool showIsLicensedState = state.currentPropertyType == PropertyType.land;
+
+                        return Visibility(
+                          visible: showIsLicensedState,
+                          child: FormWidgetComponent(
+                            label: 'حالة الرخصة',
+                            content: BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
+                              buildWhen: (previous, current) =>
+                              previous.selectedLandLicenseStatuses != current.selectedLandLicenseStatuses,
+                              builder: (context, state) {
+                                final selectedLandLicensed = state.selectedLandLicenseStatuses;
+
+                                return MultiSelectTypeSelectorComponent<LandLicenseStatus>(
+                                  values: LandLicenseStatus.values,
+                                  selectedTypes: selectedLandLicensed,
+                                  onToggle: (type) => context.read<FilterPropertyCubit>().toggleLandLicenseStatus(type),
+                                  getIcon: _getLandLicenseStatusIcon,
+                                  getLabel: _getLandLicenseStatusLabel,
                                   selectorWidth: 171,
                                 );
                               },
@@ -274,6 +307,14 @@ class RealEstateFilterScreen extends StatelessWidget {
         return AppAssets.emptyIcon;
     }
   }
+  String _getLandLicenseStatusIcon(LandLicenseStatus type) {
+    switch (type) {
+      case LandLicenseStatus.licensed:
+        return AppAssets.furnishedIcon;
+      case LandLicenseStatus.notLicensed:
+        return AppAssets.emptyIcon;
+    }
+  }
 
   String _getFurnishedLabel(FurnishingStatus type) {
     switch (type) {
@@ -281,6 +322,14 @@ class RealEstateFilterScreen extends StatelessWidget {
         return 'مفروش';
       case FurnishingStatus.notFurnished:
         return 'غير مفروش';
+    }
+  }
+  String _getLandLicenseStatusLabel(LandLicenseStatus type) {
+    switch (type) {
+      case LandLicenseStatus.licensed:
+        return 'جاهزة للبناء';
+      case LandLicenseStatus.notLicensed:
+        return ' تحتاج إلى تصريح';
     }
   }
 
@@ -368,8 +417,8 @@ class RealEstateFilterScreen extends StatelessWidget {
 
   Widget _buildPriceRangeSlider(BuildContext context) {
     return RangeSliderWithFields(
-      minValue: double.parse(context.read<FilterPropertyCubit>().state.minPriceValue),
-      maxValue: double.parse(context.read<FilterPropertyCubit>().state.maxPriceValue),
+      minValue: 0,
+      maxValue: 1000000,
       initialMinValue: double.parse(context.read<FilterPropertyCubit>().state.minPriceValue),
       initialMaxValue: double.parse(context.read<FilterPropertyCubit>().state.maxPriceValue),
       unit: 'جنية',
@@ -381,8 +430,8 @@ class RealEstateFilterScreen extends StatelessWidget {
 
   Widget _buildAreaRangeSlider(BuildContext context) {
     return RangeSliderWithFields(
-      minValue: double.parse(context.read<FilterPropertyCubit>().state.minAreaValue),
-      maxValue: double.parse(context.read<FilterPropertyCubit>().state.maxAreaValue),
+      minValue: 0,
+      maxValue: 100000,
       initialMinValue: double.parse(context.read<FilterPropertyCubit>().state.minAreaValue),
       initialMaxValue: double.parse(context.read<FilterPropertyCubit>().state.maxAreaValue),
       unit: 'م',
@@ -419,7 +468,9 @@ class RealEstateFilterScreen extends StatelessWidget {
           height: context.scale(48),
           child: ElevatedButton(
             onPressed: () {
-              context.read<FilterPropertyCubit>().printAllData();
+              var filterData = context.read<FilterPropertyCubit>().prepareDataForApi();
+              context.read<RealEstateCubit>().fetchProperties(filters : filterData) ;
+              Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: ColorManager.primaryColor,

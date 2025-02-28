@@ -22,7 +22,7 @@ class StateCitySelectorComponent extends StatelessWidget {
           BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
             buildWhen: (previous, current) =>
             previous.getStatesState != current.getStatesState ||
-                previous.selectedState != current.selectedState,
+                previous.selectedState != current.selectedState || previous.states != current.states,
             builder: (context, state) {
               return Expanded(
                 child: CustomDropdown<String>(
@@ -52,7 +52,7 @@ class StateCitySelectorComponent extends StatelessWidget {
           BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
             buildWhen: (previous, current) =>
             previous.getCitiesState != current.getCitiesState ||
-                previous.selectedCity != current.selectedCity,
+                previous.selectedCity != current.selectedCity || previous.cities != current.cities,
             builder: (context, state) {
               return Expanded(
                 child: CustomDropdown<String>(

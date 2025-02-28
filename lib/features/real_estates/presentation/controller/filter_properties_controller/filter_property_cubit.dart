@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/components/property_form_controller.dart';
@@ -16,10 +17,10 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
   final PropertyFormController formController = PropertyFormController();
   final formKey = GlobalKey<FormState>();
 
-  void changePropertyOperationType(PropertyOperationType propertyOperationType) {
+  void changePropertyOperationType(
+      PropertyOperationType propertyOperationType) {
     emit(state.copyWith(currentPropertyOperationType: propertyOperationType));
   }
-
 
 
   void changePropertyType(PropertyType propertyType) {
@@ -30,7 +31,7 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
     }
   }
 
-   void toggleApartmentType(ApartmentType apartmentType) {
+  void toggleApartmentType(ApartmentType apartmentType) {
     List<ApartmentType> updatedTypes = List.from(state.selectedApartmentTypes);
 
     if (updatedTypes.contains(apartmentType)) {
@@ -42,7 +43,7 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
     emit(state.copyWith(selectedApartmentTypes: updatedTypes));
   }
 
-   void toggleVillaType(VillaType villaType) {
+  void toggleVillaType(VillaType villaType) {
     List<VillaType> updatedTypes = List.from(state.selectedVillaTypes);
 
     if (updatedTypes.contains(villaType)) {
@@ -54,7 +55,7 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
     emit(state.copyWith(selectedVillaTypes: updatedTypes));
   }
 
-   void toggleBuildingType(BuildingType buildingType) {
+  void toggleBuildingType(BuildingType buildingType) {
     List<BuildingType> updatedTypes = List.from(state.selectedBuildingTypes);
 
     if (updatedTypes.contains(buildingType)) {
@@ -66,7 +67,7 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
     emit(state.copyWith(selectedBuildingTypes: updatedTypes));
   }
 
-   void toggleLandType(LandType landType) {
+  void toggleLandType(LandType landType) {
     List<LandType> updatedTypes = List.from(state.selectedLandTypes);
 
     if (updatedTypes.contains(landType)) {
@@ -82,8 +83,9 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
     emit(state.copyWith(availableForRenewal: !state.availableForRenewal));
   }
 
-   void toggleFurnishingStatus(FurnishingStatus furnishingStatus) {
-    List<FurnishingStatus> updatedStatuses = List.from(state.selectedFurnishingStatuses);
+  void toggleFurnishingStatus(FurnishingStatus furnishingStatus) {
+    List<FurnishingStatus> updatedStatuses = List.from(
+        state.selectedFurnishingStatuses);
 
     if (updatedStatuses.contains(furnishingStatus)) {
       updatedStatuses.remove(furnishingStatus);
@@ -117,54 +119,133 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
     emit(state.copyWith(maxNumberOfMonths: value));
   }
 
+  void toggleLandLicenseStatus(LandLicenseStatus licenseStatus) {
+    final updatedStatuses = List<LandLicenseStatus>.from(
+        state.selectedLandLicenseStatuses);
 
-  void printAllData() {
-    print('===== Selected Filters =====');
-    print('Current Property Operation Type: ${state.currentPropertyOperationType}');
-    print('Current Property Type: ${state.currentPropertyType ?? "None"}');
+    if (updatedStatuses.contains(licenseStatus)) {
+      updatedStatuses.remove(licenseStatus);
+    } else {
+      updatedStatuses.add(licenseStatus);
+    }
 
-    print('Selected Apartment Types: ${state.selectedApartmentTypes.isEmpty ? "None" : state.selectedApartmentTypes}');
-    print('Selected Villa Types: ${state.selectedVillaTypes.isEmpty ? "None" : state.selectedVillaTypes}');
-    print('Selected Building Types: ${state.selectedBuildingTypes.isEmpty ? "None" : state.selectedBuildingTypes}');
-    print('Selected Land Types: ${state.selectedLandTypes.isEmpty ? "None" : state.selectedLandTypes}');
-
-    print('Available for Renewal: ${state.availableForRenewal}');
-    print("min number of months is ${state.minNumberOfMonths}");
-    print("max number of months is ${state.maxNumberOfMonths}");
-
-    print ("area is ${state.minAreaValue} to ${state.maxAreaValue}");
-    print ("price is ${state.minPriceValue} to ${state.maxPriceValue}");
+    emit(state.copyWith(selectedLandLicenseStatuses: updatedStatuses));
+  }
 
 
-    print("=======location =====");
-    print('Selected Furnishing Statuses: ${state.selectedFurnishingStatuses.isEmpty ? "None" : state.selectedFurnishingStatuses}');
-    print("selecte country is ${ServiceLocator.getIt<SelectLocationServiceCubit>().state.selectedCountry}");
-    print("selecte state is ${ServiceLocator.getIt<SelectLocationServiceCubit>().state.selectedState}");
-    print("selecte city is ${ServiceLocator.getIt<SelectLocationServiceCubit>().state.selectedCity}");
+  Map<String, dynamic> prepareDataForApi() {
+    final locationCubit = ServiceLocator.getIt<SelectLocationServiceCubit>();
+    final formController = this.formController;
+
+    final Map<String, dynamic> data = {
+      'operation': state.currentPropertyOperationType.isForSale
+          ? 'for_sale'
+          : 'for_rent',
+      'price_min': state.minPriceValue,
+      'price_max': state.maxPriceValue,
+      'area_min': state.minAreaValue,
+      'area_max': state.maxAreaValue,
+    };
+
+    // Add monthly rent period if operation is for rent
+    if (state.currentPropertyOperationType.isForRent) {
+      data['monthly_rent_period_min'] = state.minNumberOfMonths;
+      data['monthly_rent_period_max'] = state.maxNumberOfMonths;
+    }
+
+    // Add location data if selected
+    if (locationCubit.state.selectedCountry != null) {
+      data['country'] = locationCubit.state.selectedCountry!.id;
+    }
+    if (locationCubit.state.selectedState != null) {
+      data['state'] = locationCubit.state.selectedState!.id;
+    }
+    if (locationCubit.state.selectedCity != null) {
+      data['city'] = locationCubit.state.selectedCity!.id;
+    }
+
+    // Add property type if selected
+    if (state.currentPropertyType != null) {
+      data['property_type'] = state.currentPropertyType.toString();
+    }
+
+    // Add property-specific filters
+    if (state.currentPropertyType == PropertyType.apartment) {
+      data['apartment_rooms'] =
+          formController.getController(LocalKeys.apartmentRoomsController).text;
+      data['apartment_bath_rooms'] =
+          formController.getController(LocalKeys.apartmentBathRoomsController).text;
+
+      /// todo : floor
+      ///
+      if(state.selectedFurnishingStatuses.length == 1){
+        bool isFurnished = state.selectedFurnishingStatuses.contains(FurnishingStatus.furnished);
+        data['apartment_is_furnitured'] = isFurnished;
+      }
+    } else if (state.currentPropertyType == PropertyType.villa) {
+      data['villa_rooms'] =
+          formController.getController(LocalKeys.villaRoomsController).text;
+      data['villa_bath_rooms'] =
+          formController.getController(LocalKeys.villaBathRoomsController).text;
+      data['villa_number_of_floors'] =
+          formController.getController(LocalKeys.villaFloorsController).text;
+
+      if(state.selectedFurnishingStatuses.length == 1){
+        bool isFurnished = state.selectedFurnishingStatuses.contains(FurnishingStatus.furnished);
+        data['villa_is_furnitured'] = isFurnished;
+      }
+    } else if (state.currentPropertyType == PropertyType.building) {
+      data['building_number_of_floors'] =
+          formController.getController(LocalKeys.buildingFloorsController).text;
+      data['number_of_apartments'] =
+          formController.getController(LocalKeys.buildingApartmentsPerFloorController).text;
+    } else if (state.currentPropertyType == PropertyType.land) {
+      if (state.selectedLandLicenseStatuses.length == 1) {
+        data['is_licensed'] = state.selectedLandLicenseStatuses.contains(LandLicenseStatus.licensed);
+      }
+    }
+    else {
+      // for villa and apartment
+      if(state.selectedFurnishingStatuses.isNotEmpty){
+        if(state.selectedFurnishingStatuses.length !=2){
+          bool isFurnished = state.selectedFurnishingStatuses.contains(FurnishingStatus.furnished);
+          data['is_furnitured'] = isFurnished;
+        }
+      }
+    }
 
 
 
-    print('===== Form Controller Values for apartment =====');
-    print('apartmentBathRoomsController: ${formController.getController(LocalKeys.apartmentBathRoomsController).text}');
-    print('apartmentRoomsController ${formController.getController(LocalKeys.apartmentRoomsController).text}');
-    print('apartmentFloorsController ${formController.getController(LocalKeys.apartmentFloorsController).text}');
+    // Add selected sub-types
+    if (state.selectedApartmentTypes.isNotEmpty && state.currentPropertyType == PropertyType.apartment) {
+      data['apartment_types'] =
+          state.selectedApartmentTypes.map((type) => type.toString()).toList();
+    }
+    if (state.selectedVillaTypes.isNotEmpty && state.currentPropertyType == PropertyType.villa) {
+      data['villa_types'] =
+          state.selectedVillaTypes.map((type) => type.toString()).toList();
+    }
+    if (state.selectedBuildingTypes.isNotEmpty && state.currentPropertyType == PropertyType.building) {
+      data['building_types'] =
+          state.selectedBuildingTypes.map((type) => type.toString()).toList();
+    }
+    if (state.selectedLandTypes.isNotEmpty && state.currentPropertyType == PropertyType.land) {
+      data['land_types'] =
+          state.selectedLandTypes.map((type) => type.toString()).toList();
+    }
 
+    // Remove null or empty values
+    data.removeWhere((key, value) =>
+    value == null || value == '' || (value is List && value.isEmpty));
 
-    print('===== Form Controller Values for villa =====');
-    print('villaBathRoomsController: ${formController.getController(LocalKeys.villaBathRoomsController).text}');
-    print('villaRoomsController: ${formController.getController(LocalKeys.villaRoomsController).text}');
-    print('villaFloorsController: ${formController.getController(LocalKeys.villaFloorsController).text}');
-
-    print('===== Form Controller Values for building =====');
-    print('buildingFloorsController: ${formController.getController(LocalKeys.buildingFloorsController).text}');
-    print('buildingApartmentsPerFloorController: ${formController.getController(LocalKeys.buildingApartmentsPerFloorController).text}');
-
-
+    return data;
   }
 
 
 
-  void resetFilters () {
-    emit(FilterPropertyState());
+    void resetFilters() {
+      ServiceLocator.getIt<SelectLocationServiceCubit>().removeSelectedData();
+      emit(FilterPropertyState());
+    }
   }
-}
+
