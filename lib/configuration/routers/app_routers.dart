@@ -2,6 +2,7 @@ import 'package:enmaa/features/authentication_module/presentation/screens/bio_me
 import 'package:enmaa/features/authentication_module/presentation/screens/login_screen.dart';
 import 'package:enmaa/features/authentication_module/presentation/screens/otp_screen.dart';
 import 'package:enmaa/features/authentication_module/presentation/screens/sign_up_screen.dart';
+import 'package:enmaa/features/book_property/presentation/screens/book_property_main_screen.dart';
 import 'package:enmaa/features/home_module/presentation/controller/home_bloc.dart';
 import 'package:enmaa/features/home_module/presentation/screens/home_screen.dart';
 import 'package:enmaa/features/preview_property/presentation/screens/preview_property_screen.dart';
@@ -85,6 +86,11 @@ class AppRouters {
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.addNewRealEstateScreen),
           builder: (_) => const AddNewRealEstateScreen(),
+        );
+        case RoutersNames.bookPropertyScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.bookPropertyScreen),
+          builder: (_) => const BookPropertyMainScreen(),
         );
 
       case RoutersNames.onBoardingScreen:

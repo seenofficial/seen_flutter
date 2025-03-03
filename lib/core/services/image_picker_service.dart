@@ -24,10 +24,21 @@ class DeviceImagePickingService implements ImagePickingService {
       : _picker = picker ?? ImagePicker();
 
   @override
-  Future<Either<ImagePickingFailure, List<XFile>>> pickImages({int maxImages = 5,
-    int maxImageSizeInBytes = 5 * 1024 * 1024}) async {
+  Future<Either<ImagePickingFailure, List<XFile>>> pickImages({
+    int maxImages = 5,
+    int maxImageSizeInBytes = 5 * 1024 * 1024,
+  }) async {
     try {
-      final List<XFile> images = await _picker.pickMultiImage(limit: maxImages);
+      List<XFile> images = [];
+
+      if (maxImages == 1) {
+         final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+        if (image != null) {
+          images.add(image);
+        }
+      } else {
+         images = await _picker.pickMultiImage(limit: maxImages);
+      }
 
       if (images.isEmpty) {
         return Right([]);
@@ -37,8 +48,7 @@ class DeviceImagePickingService implements ImagePickingService {
 
       for (var image in images) {
         try {
-          // Check file size
-          final file = File(image.path);
+           final file = File(image.path);
           final fileSize = await file.length();
 
           if (fileSize > maxImageSizeInBytes) {
@@ -47,13 +57,12 @@ class DeviceImagePickingService implements ImagePickingService {
           }
 
           try {
-             await file.openRead(0, 4).first;
+            await file.openRead(0, 4).first;
             validImages.add(image);
           } catch (e) {
             print('Failed to process image ${image.path} as-is. Attempting to convert to JPEG...');
 
-            // Attempt to convert the image to JPEG
-            final convertedFile = await convertToJpg(image);
+             final convertedFile = await convertToJpg(image);
             if (convertedFile != null) {
               validImages.add(XFile(convertedFile.path));
             } else {
@@ -76,7 +85,7 @@ class DeviceImagePickingService implements ImagePickingService {
       final result = await FlutterImageCompress.compressAndGetFile(
         xFile.path,
         xFile.path + '_converted.png',
-        format: CompressFormat.png ,
+        format: CompressFormat.png,
         quality: 85,
       );
 
@@ -89,7 +98,6 @@ class DeviceImagePickingService implements ImagePickingService {
     return null;
   }
 }
-
 
 class ImagePickerHelper {
   final ImagePickingService _imagePickingService;

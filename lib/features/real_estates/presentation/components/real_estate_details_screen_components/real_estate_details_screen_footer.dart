@@ -70,7 +70,21 @@ class RealEstateDetailsScreenFooter extends StatelessWidget {
               ),
             ),
           ),
-          onTap: () {},
+          onTap: () async{
+
+            final result = await Navigator.of(context).pushNamed(
+              RoutersNames.bookPropertyScreen,
+            );
+
+            if (result == true) {
+              CustomSnackBar.show(
+                context: context,
+                message: 'تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.',
+                type: SnackBarType.success,
+              );
+            }
+
+          },
         ),
       ],
     ) ;

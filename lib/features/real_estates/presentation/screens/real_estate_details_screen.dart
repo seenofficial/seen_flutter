@@ -55,10 +55,8 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
               case RequestState.loading:
               return RealEstateDetailsLoadingScreen () ;
               case RequestState.loaded:
-                print("sososso");
 
                 BasePropertyDetailsEntity currentProperty = state.propertyDetails!;
-                print("sososso ${currentProperty.images}");
                 List<ImageEntity> banners = List.from(currentProperty.images)
                   ..sort((a, b) => b.isMain ? 1 : -1);
                 return Stack(

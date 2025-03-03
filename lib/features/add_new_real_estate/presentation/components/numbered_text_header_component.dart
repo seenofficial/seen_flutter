@@ -31,7 +31,7 @@ class NumberedTextHeaderComponent extends StatelessWidget {
               number,
               style: getBoldStyle(
                 color: ColorManager.primaryColor,
-                fontSize: FontSize.s12,
+                fontSize: FontSize.s14,
               ),
             ),
           ),
@@ -41,7 +41,7 @@ class NumberedTextHeaderComponent extends StatelessWidget {
           text,
           style: getBoldStyle(
             color: ColorManager.blackColor,
-            fontSize: FontSize.s14,
+            fontSize: FontSize.s16,
           ),
         ),
       ],

@@ -3,6 +3,7 @@ import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
+import 'package:enmaa/core/extensions/request_states_extension.dart';
 import 'package:enmaa/features/add_new_real_estate/presentation/controller/add_new_real_estate_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -143,7 +144,50 @@ class _AddNewRealEstatePriceScreenState extends State<AddNewRealEstatePriceScree
               },
             ),
 
-            SelectImagesComponent(),
+            FormWidgetComponent(
+              label: 'نوع العقار',
+              content: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SvgImageComponent(
+                        iconPath: AppAssets.warningIcon,
+                        width: 16,
+                        height: 16,
+                      ),
+                      SizedBox(width: context.scale(8)),
+                      Expanded(
+                        child: Text(
+                             'ستكون الصورة الأولى هي الصورة الرئيسية (الكفر).',
+                        maxLines: 2,
+                          style: getMediumStyle(
+                            color: ColorManager.grey,
+                            fontSize: FontSize.s12,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: context.scale(18)),
+                  BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
+                    builder: (context, state) {
+                      final cubit = context.read<AddNewRealEstateCubit>();
+                      return SelectImagesComponent(
+                        height: 108 ,
+                        selectedImages: state.selectedImages,
+                        isLoading: state.selectImagesState.isLoading,
+                        validateImages: state.validateImages,
+                       hintText:                             'قم برفع صور واضحة للعقار لإبراز مميزاته\nبحد أقصى 5MB لكل صورة',
+                        onSelectImages: cubit.selectImages,
+                        onRemoveImage: cubit.removeImage,
+                        onValidateImages: cubit.validateImages,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
 
 
           ],

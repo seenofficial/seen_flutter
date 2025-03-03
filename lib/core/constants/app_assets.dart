@@ -81,4 +81,18 @@ class AppAssets {
 
 
 
+  /// Book property icons
+  static const String bookingPropertyFolder = '${baseIconFolder}book_property_icons/';
+  static const String birthDayIcon = '${bookingPropertyFolder}birth_day_icon.svg';
+  static const String cardIdentityIcon = '${bookingPropertyFolder}card_identity_icon.svg';
+  static const String cardPhoneIdentityIcon = '${bookingPropertyFolder}card_phone_identity.svg';
+  static const String creditCardIcon = '${bookingPropertyFolder}credit_card_icon.svg';
+  static const String endTimeIcon = '${bookingPropertyFolder}end_time_icon.svg';
+  static const String pencilIcon = '${bookingPropertyFolder}pencil_icon.svg';
+  static const String phoneIcon = '${bookingPropertyFolder}phone_icon.svg';
+  static const String priceToBePaidIcon = '${bookingPropertyFolder}price_to_be_paid_icon.svg';
+
+
+
+
 }

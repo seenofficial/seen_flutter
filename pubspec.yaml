@@ -91,6 +91,7 @@ flutter:
     - assets/icons/
     - assets/icons/real_estate_filter/
     - assets/icons/bottom_nav_bar/
+    - assets/icons/book_property_icons/
     - assets/images/
 
   fonts:
