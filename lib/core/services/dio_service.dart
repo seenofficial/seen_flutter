@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class DioService {
@@ -20,6 +21,16 @@ class DioService {
       dio.interceptors.add(
         InterceptorsWrapper(
           onRequest: (options, handler) async {
+
+            final prefs = await SharedPreferences.getInstance();
+            Object accessToken =   prefs.get('access_token')?? '';
+
+            print('access token: $accessToken');
+            options.headers.addAll({
+              "Authorization": 'Bearer $accessToken',
+            });
+
+
            /* var userBox = await Hive.openBox<User>('userBox');
             var authLocalDataSource = AuthenticationLocalDataSourceImp(userBox);
             User? user = authLocalDataSource.getUser();

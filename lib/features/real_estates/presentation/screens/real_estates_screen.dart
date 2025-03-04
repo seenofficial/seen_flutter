@@ -9,6 +9,7 @@ import 'package:enmaa/features/real_estates/presentation/controller/real_estate_
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_filter_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
@@ -16,6 +17,7 @@ import '../../../../core/components/app_bar_component.dart';
 import '../../../../core/components/app_text_field.dart';
 import '../../../../core/components/button_app_component.dart';
 import '../../../../core/components/card_listing_shimmer.dart';
+import '../../../../core/components/custom_snack_bar.dart';
 import '../../../../core/components/custom_tab.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
@@ -196,7 +198,25 @@ class _RealStateScreenState extends State<RealStateScreen>
         .toList();
 
     if (filteredProperties.isEmpty) {
-      return PropertyEmptyScreen();
+      return EmptyScreen(
+        alertText1: 'لم تجد العقار المناسب؟ ',
+        alertText2:               'تواصل مع مكتب إنماء للحصول على أفضل الخيارات. سنساعدك في العثور على العقار المناسب لك!' ,
+        buttonText: 'تواصل معنا',
+        onTap: () async{
+          final Uri url = Uri.parse('https://github.com/AmrAbdElHamed26');
+
+          if (await canLaunchUrl(url)) {
+          await launchUrl(url, mode: LaunchMode.externalApplication);
+          } else {
+          CustomSnackBar.show(
+          context: context,
+          message: 'حدث خطأ أثناء فتح الرابط',
+          type: SnackBarType.error,
+          );
+          }
+        },
+
+      );
     }
 
     return ListView.builder(

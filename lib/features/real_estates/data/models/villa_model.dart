@@ -62,4 +62,39 @@ class VillaModel extends VillaEntity {
       isFurnished: propertyData['is_furnitured'] ?? false,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'type': 'villa',
+      'villa':{
+        'id': id,
+        'title': title,
+        'image': image,
+        'type': propertyType,
+        'operation': operation,
+        'price': price,
+        'area': area,
+        'property_sub_type': propertySubType,
+        'status': status,
+        'city': {
+          'id': city.id,
+          'name': city.name,
+          'state': {
+            'id': state.id,
+            'name': state.name,
+            'country': {
+              'id': country.id,
+              'name': country.name,
+            },
+          },
+        },
+        'is_in_wishlist': isInWishlist,
+        'floors': floors,
+        'rooms': rooms,
+        'bathrooms': bathrooms,
+        'has_pool': hasPool,
+        'is_furnitured': isFurnished,
+      },
+    };
+  }
 }

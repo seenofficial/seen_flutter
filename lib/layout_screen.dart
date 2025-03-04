@@ -3,12 +3,15 @@ import 'dart:io';
 
 import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
-import 'package:enmaa/features/favorites/favorites_screen.dart';
 import 'package:enmaa/features/my_booking/my_booking_cubit.dart';
 import 'package:enmaa/features/my_booking/my_booking_screen.dart';
 import 'package:enmaa/features/my_profile/my_profile_screen.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/real_estates/real_estates_DI.dart';
+import 'package:enmaa/features/wish_list/domain/use_cases/get_properties_wish_list_use_case.dart';
+import 'package:enmaa/features/wish_list/domain/use_cases/remove_property_from_wish_list_use_case.dart';
+import 'package:enmaa/features/wish_list/presentation/controller/wish_list_cubit.dart';
+import 'package:enmaa/features/wish_list/wish_list_DI.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'configuration/managers/color_manager.dart';
@@ -17,6 +20,7 @@ import 'core/services/service_locator.dart';
 import 'features/home_module/home_imports.dart';
 import 'features/home_module/presentation/screens/home_screen.dart';
 import 'features/wallet/wallet_screen.dart';
+import 'features/wish_list/presentation/screens/wish_list_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key, required this.initialIndex, this.arguments});
@@ -45,7 +49,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
   Widget _buildScreen(int index) {
     switch (index) {
       case 0:
-
         return Navigator(
           key: AppRouters.homeNavigatorKey,
           onGenerateRoute: (settings) {
@@ -57,7 +60,17 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 1:
         return const MyBookingScreen();
       case 2:
-        return const FavoritesScreen();
+        return BlocProvider(
+          create: (context) {
+
+            WishListDi().setup() ;
+            return WishListCubit(
+              ServiceLocator.getIt<GetPropertiesWishListUseCase>(),
+              ServiceLocator.getIt<RemovePropertyFromWishListUseCase>(),
+            ) ;
+    },
+          child: WishListScreen(),
+        );
       case 3:
         return const WalletScreen();
       case 4:
@@ -111,7 +124,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
         currentIndex: currentIndex,
         onItemSelected: (index) {
           if (index == 0 && currentIndex == 0) {
-            AppRouters.homeNavigatorKey.currentState?.popUntil((route) => route.isFirst);
+            AppRouters.homeNavigatorKey.currentState?.popUntil((route) =>
+            route.isFirst);
           } else {
             setState(() {
               currentIndex = index;
@@ -144,14 +158,16 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
               if (!ServiceLocator.getIt.isRegistered<RealEstateCubit>()) {
                 ServiceLocator.getIt.registerLazySingleton<RealEstateCubit>(
-                      () => RealEstateCubit(
+                      () =>
+                      RealEstateCubit(
                         ServiceLocator.getIt(),
                         ServiceLocator.getIt(),
-                  ),
+                      ),
                 );
               }
 
-              return ServiceLocator.getIt<RealEstateCubit>()..fetchProperties();
+              return ServiceLocator.getIt<RealEstateCubit>()
+                ..fetchProperties();
             }
         ),
       ],

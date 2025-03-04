@@ -23,5 +23,6 @@ class ApiConstants {
   static const String cities= "${baseUrl}cities/";
 
 
+  static const String wishList= "${baseUrl}users/wish-list/";
 
 }

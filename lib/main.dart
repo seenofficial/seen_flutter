@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'configuration/routers/app_routers.dart';
 import 'configuration/routers/route_names.dart';
@@ -32,7 +34,9 @@ void main() async{
 
   Bloc.observer = MyBlocObserver();
 
-
+   HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: HydratedStorageDirectory((await getTemporaryDirectory()).path)
+  );
 
   runApp(
     EasyLocalization(

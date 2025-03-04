@@ -11,14 +11,17 @@ import '../components/circular_icon_button.dart';
 import '../constants/app_assets.dart';
 
 class ErrorAppScreen extends StatelessWidget {
-  const ErrorAppScreen({super.key});
+  const ErrorAppScreen({super.key , this.showBackButton = true , this.showActionButton = true});
 
+  final bool showBackButton  ;
+  final bool showActionButton;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.whiteColor,
       body: Stack(
         children: [
+          if(showBackButton)
           PositionedDirectional(
             top: context.scale(50),
             start: context.scale(16),
@@ -58,6 +61,7 @@ class ErrorAppScreen extends StatelessWidget {
                       fontSize: FontSize.s12),
                 ),
                 SizedBox(height: context.scale(24)),
+                if(showActionButton)
                 ButtonAppComponent(
                   width: 324,
                   height: 48,

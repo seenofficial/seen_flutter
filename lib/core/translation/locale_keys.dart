@@ -27,7 +27,7 @@ abstract class LocaleKeys {
 
   static const home = 'home' ;
   static const myBookings = 'myBookings' ;
-  static const favorites = 'favorites' ;
+  static const favorites = 'wish_list' ;
   static const myProfile = 'myProfile' ;
 
 

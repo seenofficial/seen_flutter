@@ -62,4 +62,36 @@ class BuildingModel extends BuildingEntity {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'type':'building',
+      'building':{
+        'id': id,
+        'title': title,
+        'image': image,
+        'type': propertyType,
+        'operation': operation,
+        'price': price,
+        'area': area,
+        'property_sub_type': propertySubType,
+        'status': status,
+        'city': {
+          'id': city.id,
+          'name': city.name,
+          'state': {
+            'id': state.id,
+            'name': state.name,
+            'country': {
+              'id': country.id,
+              'name': country.name,
+            },
+          },
+        },
+        'is_in_wishlist': isInWishlist,
+        'number_of_floors': totalFloors,
+        'number_of_apartments': apartmentPerFloor,
+      },
+    };
+  }
+
 }
