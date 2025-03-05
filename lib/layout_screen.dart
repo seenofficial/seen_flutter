@@ -67,7 +67,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
             return WishListCubit(
               ServiceLocator.getIt<GetPropertiesWishListUseCase>(),
               ServiceLocator.getIt<RemovePropertyFromWishListUseCase>(),
-            ) ;
+            )..getPropertyWishList() ;
     },
           child: WishListScreen(),
         );

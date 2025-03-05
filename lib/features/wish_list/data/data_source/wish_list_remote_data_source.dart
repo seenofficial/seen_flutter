@@ -28,11 +28,15 @@ class WishListRemoteDataSource extends BaseWishListDataSource {
       url: ApiConstants.wishList,
     );
 
-    final propertyWishList = response.data['results'];
+    final propertyWishList = response.data;
 
-    return propertyWishList
-        .map<PropertyWishListModel>((e) => PropertyWishListModel.fromJson(e))
-        .toList();
+    List<PropertyWishListModel> data = [] ;
+
+    for (var item in propertyWishList) {
+      data.add(PropertyWishListModel.fromJson(item));
+    }
+
+    return data ;
   }
 
   @override

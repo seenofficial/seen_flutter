@@ -19,6 +19,7 @@ class WishListCubit extends HydratedCubit<WishListState> {
   void getPropertyWishList() async{
     emit(state.copyWith(getPropertyWishListState: RequestState.loading));
     final result = await _getPropertiesWishListUseCase();
+    print("get data ${result}");
      result.fold(
       (failure) => emit(state.copyWith(getPropertyWishListState: RequestState.error, getPropertyWishListFailureMessage: failure.message)),
       (propertyWishList) => emit(state.copyWith(getPropertyWishListState: RequestState.loaded, propertyWishList: propertyWishList)),
@@ -37,6 +38,8 @@ class WishListCubit extends HydratedCubit<WishListState> {
 
     emit(state.copyWith(getPropertyWishListState: RequestState.loading));
     final result = await _removePropertyFromWishListUseCase(propertyId);
+
+    print("remove item from is ${result}") ;
     result.fold(
           (failure) {
          emit(state.copyWith(
@@ -50,7 +53,7 @@ class WishListCubit extends HydratedCubit<WishListState> {
 
   @override
   WishListState? fromJson(Map<String, dynamic> json) {
-    try {
+   /* try {
       return WishListState(
         propertyWishList: (json['propertyWishList'] as List<dynamic>)
             .map((item) => PropertyWishListModel.fromJson(item).toEntity())
@@ -60,22 +63,22 @@ class WishListCubit extends HydratedCubit<WishListState> {
       );
     } catch (e) {
       return null;
-    }
+    }*/
   }
 
   @override
   Map<String, dynamic>? toJson(WishListState state) {
-    try {
+    /*try {
       return {
         'propertyWishList': state.propertyWishList
             .map((entity) => PropertyWishListModel.fromEntity(entity).toJson())
             .toList(),
-        'getPropertyWishListState': state.getPropertyWishListState.index,
+        'getPropertyWishListState': 2,
         'getPropertyWishListFailureMessage': state.getPropertyWishListFailureMessage,
       };
     } catch (e) {
       return null;
-    }
+    }*/
   }
 
 }

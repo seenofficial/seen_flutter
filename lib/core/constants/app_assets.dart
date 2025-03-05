@@ -20,7 +20,7 @@ class AppAssets {
   static const String backIcon = '${baseIconFolder}back_icon.svg';
   static const String shareIcon = '${baseIconFolder}share_icon.svg';
   static const String heartIcon = '${baseIconFolder}heart_icon.svg';
-  static const String selectedHeartIcon = '${baseIconFolder}share_icon.svg';
+  static const String selectedHeartIcon = '${baseIconFolder}selected_heart_icon.svg';
   static const String phoneCallIcon = '${baseIconFolder}phone_call_icon.svg';
   static const String folderIcon = '${baseIconFolder}folder_icon.svg';
   static const String closeIcon = '${baseIconFolder}close_icon.svg';
