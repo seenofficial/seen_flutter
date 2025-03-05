@@ -5,13 +5,13 @@ extension PropertyTypeExtension on PropertyType {
   String get toEnglish {
     switch (this) {
       case PropertyType.apartment:
-        return 'Apartment';
+        return 'apartment';
       case PropertyType.villa:
-        return 'Villa';
+        return 'villa';
       case PropertyType.building:
-        return 'Building';
+        return 'building';
       case PropertyType.land:
-        return 'Land';
+        return 'land';
     }
   }
 

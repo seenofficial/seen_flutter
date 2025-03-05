@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
+import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/components/property_form_controller.dart';
@@ -166,7 +167,7 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
 
     // Add property type if selected
     if (state.currentPropertyType != null) {
-      data['property_type'] = state.currentPropertyType.toString();
+      data['property_type_name'] = state.currentPropertyType?.toEnglish;
     }
 
     // Add property-specific filters
