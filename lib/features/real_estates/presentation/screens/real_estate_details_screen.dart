@@ -124,7 +124,9 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
                       bottom: context.scale(25),
                       left: context.scale(16),
                       right: context.scale(16),
-                      child: RealEstateDetailsScreenFooter(),
+                      child: RealEstateDetailsScreenFooter(
+                        propertyId: widget.propertyId,
+                      ),
                     ),
                   ],
                 );

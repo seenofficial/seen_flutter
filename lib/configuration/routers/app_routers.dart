@@ -5,7 +5,7 @@ import 'package:enmaa/features/authentication_module/presentation/screens/sign_u
 import 'package:enmaa/features/book_property/presentation/screens/book_property_main_screen.dart';
 import 'package:enmaa/features/home_module/presentation/controller/home_bloc.dart';
 import 'package:enmaa/features/home_module/presentation/screens/home_screen.dart';
-import 'package:enmaa/features/preview_property/presentation/screens/preview_property_screen.dart';
+import 'package:enmaa/features/preview_property/presentation/screens/preview_property_main_screen.dart';
 import 'package:enmaa/features/preview_property/preview_property_DI.dart';
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_details_screen.dart';
 import 'package:enmaa/features/splash_and_on_boarding/screens/on_boarding_screen.dart';
@@ -104,11 +104,20 @@ class AppRouters {
           builder: (_) => const AuthenticationNavigator(),
         );
       case RoutersNames.previewPropertyScreen:
+        final args = settings.arguments ;
+        final String propertyId = args as String ;
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.previewPropertyScreen),
           builder: (_) => BlocProvider(
-            create: (context) => PreviewPropertyCubit(),
-            child: PreviewPropertyScreen(),
+            create: (context) {
+
+              PreviewPropertyDi().setup() ;
+              return PreviewPropertyCubit(
+                ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
+              ) ;
+            },
+            child: PreviewPropertyScreen(propertyId: propertyId,),
           ),
         );
       default:

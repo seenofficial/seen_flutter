@@ -24,5 +24,8 @@ class ApiConstants {
 
 
   static const String wishList= "${baseUrl}users/wish-list/";
+  static const String propertyBusyDays= "${baseUrl}property-partner-busy-dates";
+  static const String propertyOrderDetails= "${baseUrl}property-order-detail";
+
 
 }

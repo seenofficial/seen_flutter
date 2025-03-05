@@ -9,8 +9,9 @@ import '../../../../../core/components/custom_snack_bar.dart';
 import '../../../../home_module/home_imports.dart';
 
 class RealEstateDetailsScreenFooter extends StatelessWidget {
-  const RealEstateDetailsScreenFooter({super.key});
+  const RealEstateDetailsScreenFooter({super.key ,required this.propertyId});
 
+  final String propertyId ;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -41,6 +42,7 @@ class RealEstateDetailsScreenFooter extends StatelessWidget {
           onTap: () async {
             final result = await Navigator.of(context).pushNamed(
               RoutersNames.previewPropertyScreen,
+              arguments: propertyId ,
             );
 
             if (result == true) {

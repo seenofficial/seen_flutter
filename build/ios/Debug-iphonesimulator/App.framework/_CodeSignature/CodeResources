@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		XUsAba3SdZRc6vijUWLn/+oeN4c=
+		4RmKLySmzvH8OZ+Xbr06jM6EsPA=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		wD9ik/FgwlVHkz1aMfLtGkiOcN8=
+		g/AWLETPxDwdYbh2IjFOPN5uwXM=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		jcDKzW+57hnH8lnZ3dMR4LIBGw0=
+		Tvg4+lUhCn/PBK6u2oQBeJEDx1E=
 		</data>
 		<key>flutter_assets/assets/fonts/cairo/Cairo-Bold.ttf</key>
 		<data>
@@ -59,6 +59,38 @@
 		<key>flutter_assets/assets/icons/bed_icon.svg</key>
 		<data>
 		A+s7bZJ7kWm7gwH6pCh/zV+NsM4=
+		</data>
+		<key>flutter_assets/assets/icons/book_property_icons/birth_day_icon.svg</key>
+		<data>
+		IVCghaXi6cJgw2cC6wHp5C7ENxw=
+		</data>
+		<key>flutter_assets/assets/icons/book_property_icons/card_identity_icon.svg</key>
+		<data>
+		tD0WJDx/8z44ope5XIJdbED7bXs=
+		</data>
+		<key>flutter_assets/assets/icons/book_property_icons/card_phone_identity.svg</key>
+		<data>
+		jYnW7ioUtHAURGqtXRxfv55WYRU=
+		</data>
+		<key>flutter_assets/assets/icons/book_property_icons/credit_card_icon.svg</key>
+		<data>
+		dlSDKGwfEyA9mWT6D2QmMNBYVBk=
+		</data>
+		<key>flutter_assets/assets/icons/book_property_icons/end_time_icon.svg</key>
+		<data>
+		g6Otw7jUG/vLYpBgobtoLm90WtY=
+		</data>
+		<key>flutter_assets/assets/icons/book_property_icons/pencil_icon.svg</key>
+		<data>
+		xofDW7MT2t1D4L/svgWwUHaYMlo=
+		</data>
+		<key>flutter_assets/assets/icons/book_property_icons/phone_icon.svg</key>
+		<data>
+		v0kQcZ5zzEE6seNpHGAse2B+cwk=
+		</data>
+		<key>flutter_assets/assets/icons/book_property_icons/price_to_be_paid_icon.svg</key>
+		<data>
+		JiDyPIu02p5lA0RDY+bfY4Q5yz4=
 		</data>
 		<key>flutter_assets/assets/icons/bottom_nav_bar/booking_icon.svg</key>
 		<data>
@@ -246,7 +278,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		tSrxEr7ams3q/KdaYlSWCHiCNfs=
+		gR7OxPmQvqRbpiL+xqsjhe7n93I=
 		</data>
 		<key>flutter_assets/packages/country_code_picker/flags/ad.png</key>
 		<data>
@@ -1575,14 +1607,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			juO6y57zRqd0dF5TyjzaUt3sSN94BI9Xel5yeFEESOo=
+			lBBqFSYr9/16ctby0sfXBLMvi78LuHnl+dYWPkE4l3s=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Mo7M6MqT2fFE+hwbDVdHMhcKThlykkXW3qqfFzNmsLk=
+			yoegGcP+XR9wPznvYpVjmOqPJgEwcd7NVnm+uCfmmRY=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -1596,7 +1628,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JD4lUsRnAmhUFqHRYCFekHW77jUy/SP54MAU0IjNvRY=
+			iWcdG3Fll6xLB/c2J0ESxU5KIG40oVjV7TgeNCUxRJ0=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/fonts/cairo/Cairo-Bold.ttf</key>
@@ -1660,6 +1692,62 @@
 			<key>hash2</key>
 			<data>
 			rXKbzf8XjFH9b3MWv8gZZ63MmxRbGx2r3d4ddoaMtf4=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/book_property_icons/birth_day_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nmmraMo1JZqFWuHfcmOmHVNQJ1UKtsphjAl9fVFNihs=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/book_property_icons/card_identity_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7DO0AEa0c7Ip0zznRU6Nk+Xs5vPgPAFp5bkQLGcwsjQ=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/book_property_icons/card_phone_identity.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7S3dRAmHV0ggtl6i5bh3Kw82StyW2YuBb064uZOjXRw=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/book_property_icons/credit_card_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			hnN0byi88XoMbre+KXxwEWmUEE1n7bV5Sn/lFjAgCUY=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/book_property_icons/end_time_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			V8LuUT+dgJdzdFh397bbsvlJTBt/2NVOpkQO0UpWzTc=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/book_property_icons/pencil_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ySOc3BQbAOATrBEj8BMwg8+Q4FxAzCv0VdV+5u03eTM=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/book_property_icons/phone_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			hZlqWjuCdnDTwE3H1yWpOIGkrnFuL+vO7P0zhFSICSI=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/book_property_icons/price_to_be_paid_icon.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			4zFlOQG7I2133dqGAOx1hu3qe/evw+7+2ZJjFymWPS4=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/bottom_nav_bar/booking_icon.svg</key>
@@ -1988,7 +2076,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			OOTSCRhNtZJkSzhQJDfC8boaerqe8m4BziNTxzc+OeE=
+			U2AmdJCWINgLopgEGlAGIYoaWTg8AXlUeQOC9UdAFNw=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/country_code_picker/flags/ad.png</key>

@@ -55,12 +55,7 @@ class RealEstateDetailsLoadingScreen extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            bottom: context.scale(25),
-            left: context.scale(16),
-            right: context.scale(16),
-            child: const RealEstateDetailsScreenFooter(),
-          ),
+
         ],
       ),
     );
