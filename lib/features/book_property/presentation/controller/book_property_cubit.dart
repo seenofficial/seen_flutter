@@ -1,15 +1,19 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:enmaa/features/book_property/domain/use_cases/get_property_sale_details_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/services/image_picker_service.dart';
 import '../../../../core/utils/enums.dart';
+import '../../domain/entities/property_sale_details_entity.dart';
 
 part 'book_property_state.dart';
 
 class BookPropertyCubit extends Cubit<BookPropertyState> {
-  BookPropertyCubit() : super(BookPropertyState());
+  BookPropertyCubit(
+      this._getPropertySaleDetailsUseCase
+      ) : super(BookPropertyState());
 
 
   Future<void> selectImage(int numberOfImages,  ) async {
@@ -73,5 +77,20 @@ class BookPropertyCubit extends Cubit<BookPropertyState> {
     return state.selectedImages.isNotEmpty;
   }
 
+
+  final GetPropertySaleDetailsUseCase _getPropertySaleDetailsUseCase ;
+  void getPropertySaleDetails(String propertyID){
+
+    emit(state.copyWith(getPropertySaleDetailsState: RequestState.loading));
+    _getPropertySaleDetailsUseCase.call(propertyID).then((result) {
+      print("rerer ${result}");
+      result.fold(
+              (failure) => emit(state.copyWith(getPropertySaleDetailsState: RequestState.error, getPropertySaleDetailsError: failure.message)),
+              (propertySaleDetails) => emit(state.copyWith(getPropertySaleDetailsState: RequestState.loaded, propertySaleDetailsEntity: propertySaleDetails))
+      );
+    });
+
+
+  }
 
 }

@@ -7,6 +7,7 @@ import 'package:enmaa/core/services/service_locator.dart';
 import 'package:enmaa/features/add_new_real_estate/add_new_real_estate_DI.dart';
 import 'package:enmaa/features/add_new_real_estate/presentation/controller/add_new_real_estate_cubit.dart';
 import 'package:enmaa/features/add_new_real_estate/presentation/screens/add_new_real_estate_main_information_screen.dart';
+import 'package:enmaa/features/book_property/book_property_DI.dart';
 import 'package:enmaa/features/book_property/presentation/controller/book_property_cubit.dart';
 import 'package:enmaa/features/book_property/presentation/screens/sale_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,9 @@ import 'buyer_data_screen.dart';
 import 'complete_the_purchase_screen.dart';
 
 class BookPropertyMainScreen extends StatefulWidget {
-  const BookPropertyMainScreen({super.key});
+  const BookPropertyMainScreen({super.key , required this.propertyId});
 
+  final String propertyId;
   @override
   _BookPropertyMainScreenState createState() => _BookPropertyMainScreenState();
 }
@@ -38,7 +40,12 @@ class _BookPropertyMainScreenState extends State<BookPropertyMainScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BookPropertyCubit(),
+      create: (context){
+        BookPropertyDi().setup() ;
+        return BookPropertyCubit(
+          ServiceLocator.getIt(),
+        )..getPropertySaleDetails(widget.propertyId);
+      },
       child: Scaffold(
         backgroundColor: ColorManager.greyShade,
         body: Stack(

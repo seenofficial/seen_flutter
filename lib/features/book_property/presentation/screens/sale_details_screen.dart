@@ -1,8 +1,13 @@
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
+import 'package:enmaa/core/components/shimmer_component.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/extensions/request_states_extension.dart';
+import 'package:enmaa/features/book_property/presentation/controller/book_property_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../configuration/managers/value_manager.dart';
 import '../../../../core/components/warning_message_component.dart';
@@ -39,56 +44,110 @@ class SaleDetailsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: EdgeInsets.all(AppPadding.p16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SvgImageComponent(
-                          width: 16,
-                          height: 16,
-                          iconPath: AppAssets.priceToBePaidIcon),
-                      SizedBox(width: context.scale(8)),
-                      Text(
-                        'عربون الحجز : ',
-                        style: getSemiBoldStyle(
-                          color: ColorManager.blackColor,
-                          fontSize: FontSize.s14,
+              child: BlocBuilder<BookPropertyCubit, BookPropertyState>(
+                builder: (context, state) {
+                  if (state.getPropertySaleDetailsState.isLoaded) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SvgImageComponent(
+                              width: 16,
+                              height: 16,
+                              iconPath: AppAssets.priceToBePaidIcon,
+                            ),
+                            SizedBox(width: context.scale(8)),
+                            Text(
+                              'عربون الحجز : ',
+                              style: getSemiBoldStyle(
+                                color: ColorManager.blackColor,
+                                fontSize: FontSize.s14,
+                              ),
+                            ),
+                            Text(
+                              '${state.propertySaleDetailsEntity!.bookingDeposit} جنية',
+                              style: getBoldStyle(
+                                color: ColorManager.blackColor,
+                                fontSize: FontSize.s16,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        '100.000 جنية',
-                        style: getBoldStyle(
-                          color: ColorManager.blackColor,
-                          fontSize: FontSize.s16,
+                        Row(
+                          children: [
+                            SvgImageComponent(
+                              width: 16,
+                              height: 16,
+                              iconPath: AppAssets.priceToBePaidIcon,
+                            ),
+                            SizedBox(width: context.scale(8)),
+                            Text(
+                              'السعر النهائي : ',
+                              style: getSemiBoldStyle(
+                                color: ColorManager.blackColor,
+                                fontSize: FontSize.s14,
+                              ),
+                            ),
+                            Text(
+                              '${state.propertySaleDetailsEntity!.propertyPrice} جنية',
+                              style: getBoldStyle(
+                                color: ColorManager.blackColor,
+                                fontSize: FontSize.s16,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgImageComponent(
-                          width: 16,
-                          height: 16,
-                          iconPath: AppAssets.priceToBePaidIcon),
-                      SizedBox(width: context.scale(8)),
-                      Text(
-                        'السعر النهائي : ',
-                        style: getSemiBoldStyle(
-                          color: ColorManager.blackColor,
-                          fontSize: FontSize.s14,
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SvgImageComponent(
+                              width: 16,
+                              height: 16,
+                              iconPath: AppAssets.priceToBePaidIcon,
+                            ),
+                            SizedBox(width: context.scale(8)),
+                            Text(
+                              'عربون الحجز : ',
+                              style: getSemiBoldStyle(
+                                color: ColorManager.blackColor,
+                                fontSize: FontSize.s14,
+                              ),
+                            ),
+                            ShimmerComponent(
+                                height: context.scale(10),
+                                width: context.scale(100))
+                          ],
                         ),
-                      ),
-                      Text(
-                        '5.000.000 جنية',
-                        style: getBoldStyle(
-                          color: ColorManager.blackColor,
-                          fontSize: FontSize.s16,
+                        Row(
+                          children: [
+                            SvgImageComponent(
+                              width: 16,
+                              height: 16,
+                              iconPath: AppAssets.priceToBePaidIcon,
+                            ),
+                            SizedBox(width: context.scale(8)),
+                            Text(
+                              'السعر النهائي : ',
+                              style: getSemiBoldStyle(
+                                color: ColorManager.blackColor,
+                                fontSize: FontSize.s14,
+                              ),
+                            ),
+                            ShimmerComponent(
+                                height: context.scale(10),
+                                width: context.scale(100))
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    );
+                  }
+                },
               ),
             ),
             SizedBox(height: context.scale(20)),

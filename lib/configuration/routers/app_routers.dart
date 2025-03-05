@@ -88,9 +88,13 @@ class AppRouters {
           builder: (_) => const AddNewRealEstateScreen(),
         );
         case RoutersNames.bookPropertyScreen:
+          final args = settings.arguments ;
+          final String propertyId = args as String ;
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.bookPropertyScreen),
-          builder: (_) => const BookPropertyMainScreen(),
+          builder: (_) => BookPropertyMainScreen(
+            propertyId: propertyId,
+          ),
         );
 
       case RoutersNames.onBoardingScreen:

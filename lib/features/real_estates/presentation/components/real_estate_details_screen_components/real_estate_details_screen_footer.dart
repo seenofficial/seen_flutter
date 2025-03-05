@@ -76,6 +76,7 @@ class RealEstateDetailsScreenFooter extends StatelessWidget {
 
             final result = await Navigator.of(context).pushNamed(
               RoutersNames.bookPropertyScreen,
+              arguments: propertyId ,
             );
 
             if (result == true) {
