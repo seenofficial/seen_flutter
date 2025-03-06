@@ -9,11 +9,12 @@ import '../../features/home_module/home_imports.dart';
  import '../components/button_app_component.dart';
 
 class EmptyScreen extends StatelessWidget {
-  const EmptyScreen({super.key , required this.alertText1 , required this.alertText2 , required this.buttonText , required this.onTap});
+  const EmptyScreen({super.key , required this.alertText1 , required this.alertText2 ,   this.buttonText ,   this.onTap});
 
-  final String alertText1 , alertText2,buttonText ;
+  final String alertText1 , alertText2;
+  final String ? buttonText ;
 
-   final Function onTap ;
+   final Function ? onTap ;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,7 @@ class EmptyScreen extends StatelessWidget {
             SizedBox(
               height: context.scale(24),
             ),
+            if(buttonText != null)
             ButtonAppComponent(
               width: 324,
               height: 48,
@@ -72,8 +74,9 @@ class EmptyScreen extends StatelessWidget {
                       height: 16,
                     ),
                     SizedBox(width: context.scale(8)),
+                    if(buttonText != null)
                     Text(
-                      buttonText,
+                      buttonText!,
                       style: getBoldStyle(
                         color: ColorManager.whiteColor,
                         fontSize: FontSize.s14,
@@ -83,7 +86,7 @@ class EmptyScreen extends StatelessWidget {
                 ),
               ),
               onTap: (){
-                onTap();
+                onTap!();
               } ,
             ),
           ],

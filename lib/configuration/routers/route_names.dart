@@ -8,6 +8,7 @@ class RoutersNames {
   static const String bookPropertyScreen = "book-property-screen";
   static const String onBoardingScreen = "/on-boarding-screen";
   static const String previewPropertyScreen = "/preview-property-screen";
+  static const String chargeWalletScreen = "/charge-wallet-screen";
 
 
   static const String authenticationFlow = "/authentication-flow";

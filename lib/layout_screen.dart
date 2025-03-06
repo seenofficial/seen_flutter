@@ -8,6 +8,7 @@ import 'package:enmaa/features/my_booking/my_booking_screen.dart';
 import 'package:enmaa/features/my_profile/my_profile_screen.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/real_estates/real_estates_DI.dart';
+import 'package:enmaa/features/wallet/wallet_DI.dart';
 import 'package:enmaa/features/wish_list/domain/use_cases/get_properties_wish_list_use_case.dart';
 import 'package:enmaa/features/wish_list/domain/use_cases/remove_property_from_wish_list_use_case.dart';
 import 'package:enmaa/features/wish_list/presentation/controller/wish_list_cubit.dart';
@@ -19,7 +20,8 @@ import 'core/components/floating_nav_bar.dart';
 import 'core/services/service_locator.dart';
 import 'features/home_module/home_imports.dart';
 import 'features/home_module/presentation/screens/home_screen.dart';
-import 'features/wallet/wallet_screen.dart';
+import 'features/wallet/presentation/controller/wallet_cubit.dart';
+import 'features/wallet/presentation/screens/wallet_screen.dart';
 import 'features/wish_list/presentation/screens/wish_list_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -62,17 +64,28 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 2:
         return BlocProvider(
           create: (context) {
-
-            WishListDi().setup() ;
+            WishListDi().setup();
             return WishListCubit(
               ServiceLocator.getIt<GetPropertiesWishListUseCase>(),
               ServiceLocator.getIt<RemovePropertyFromWishListUseCase>(),
-            )..getPropertyWishList() ;
-    },
+            )
+              ..getPropertyWishList();
+          },
           child: WishListScreen(),
         );
       case 3:
-        return const WalletScreen();
+        return BlocProvider(
+          create: (context) {
+            WalletDi().setup();
+
+            return WalletCubit(
+                ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
+            )
+              ..getWalletData() ..getTransactionHistoryData();
+          },
+          child: WalletScreen(),
+        );
       case 4:
         return const ProfileScreen();
       default:

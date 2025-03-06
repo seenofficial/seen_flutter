@@ -9,6 +9,7 @@ import 'package:enmaa/features/preview_property/presentation/screens/preview_pro
 import 'package:enmaa/features/preview_property/preview_property_DI.dart';
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_details_screen.dart';
 import 'package:enmaa/features/splash_and_on_boarding/screens/on_boarding_screen.dart';
+import 'package:enmaa/features/wallet/presentation/controller/wallet_cubit.dart';
 import 'package:enmaa/layout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,7 @@ import '../../features/authentication_module/authentication_flow_navigator.dart'
 import '../../features/authentication_module/presentation/controller/biometric_bloc.dart';
 import '../../features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import '../../features/preview_property/presentation/controller/preview_property_cubit.dart';
+import '../../features/wallet/presentation/screens/charge_wallet_screen.dart';
 import 'route_names.dart';
 import '../../core/screens/splash_screen.dart';
 
@@ -106,6 +108,16 @@ class AppRouters {
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.authenticationFlow),
           builder: (_) => const AuthenticationNavigator(),
+        );
+        case RoutersNames.chargeWalletScreen:
+          final args = settings.arguments ;
+          final WalletCubit walletCubit = args as WalletCubit ;
+
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.chargeWalletScreen),
+          builder: (_) =>   ChargeWalletScreen(
+            walletCubit: walletCubit,
+          ),
         );
       case RoutersNames.previewPropertyScreen:
         final args = settings.arguments ;
