@@ -7,42 +7,46 @@ import 'package:enmaa/features/home_module/presentation/components/real_state_ca
 import '../../home_imports.dart';
 
 class ServicesListingWidget extends StatelessWidget {
-  const ServicesListingWidget({super.key , required this.seeMoreAction , required this.listingWidget});
+  const ServicesListingWidget({
+    super.key,
+    required this.seeMoreAction,
+    required this.listingWidget,
+    required this.title,
+  });
 
   final Function() seeMoreAction;
-  final Widget listingWidget ;
+  final Widget listingWidget;
+  final String title;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         // header of service
-
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: context.scale(AppPadding.p16)),
+          padding: EdgeInsets.symmetric(horizontal: context.scale(AppPadding.p16)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'عقارات بالقرب منك',
+                title,
                 style: getBoldStyle(color: ColorManager.blackColor),
               ),
               InkWell(
-                  onTap: seeMoreAction,
-                  child: Text(
-                    'عرض الكل',
-                    style: getUnderlineRegularStyle(
-                        color: ColorManager.blackColor),
-                  ))
+                onTap: seeMoreAction,
+                child: Text(
+                  'عرض الكل',
+                  style: getUnderlineRegularStyle(color: ColorManager.blackColor),
+                ),
+              ),
             ],
           ),
-        ) ,
+        ),
 
         // list cards
+        SizedBox(height: context.scale(12)),
 
-        SizedBox(height: context.scale(12),),
-
-        listingWidget ,
+        listingWidget,
       ],
     );
   }
