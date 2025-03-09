@@ -15,19 +15,22 @@ class AddNewRealEstateState extends Equatable {
     this.selectedImages = const [],
     this.selectImagesState = RequestState.initial,
     this.validateImages = true,
-
-     this.currentAmenities = const [],
+    this.currentAmenities = const [],
     this.getAmenitiesState = RequestState.initial,
     this.selectedAmenities = const [],
-    this.selectedLocation ,
+    this.selectedLocation,
+    this.selectedCityId = '',
+    this.selectedCityName,
+    this.currentPaymentMethod = PaymentMethod.cash,
+    this.landLicenseStatus = LandLicenseStatus.licensed,
   });
 
   final PropertyOperationType currentPropertyOperationType;
 
   final PropertyType currentPropertyType;
 
-
   final LatLng? selectedLocation;
+
   /// current states for sub types
   final ApartmentType currentApartmentType;
   final VillaType currentVillaType;
@@ -47,11 +50,16 @@ class AddNewRealEstateState extends Equatable {
 
   /// amenities
 
-  final List<AmenityEntity> currentAmenities ;
+  final List<AmenityEntity> currentAmenities;
   final RequestState getAmenitiesState;
-  final List<String> selectedAmenities ;
+  final List<String> selectedAmenities;
 
+  final String selectedCityId;
+  final String? selectedCityName;
 
+  final PaymentMethod currentPaymentMethod;
+
+  final LandLicenseStatus landLicenseStatus;
 
   AddNewRealEstateState copyWith({
     PropertyOperationType? currentPropertyOperationType,
@@ -70,9 +78,14 @@ class AddNewRealEstateState extends Equatable {
     List<AmenityEntity>? currentAmenities,
     RequestState? getAmenitiesState,
     List<String>? selectedAmenities,
-    LatLng ? selectedLocation,
+    LatLng? selectedLocation,
+    String? selectedCityId,
+    String? selectedCityName,
+    PaymentMethod? currentPaymentMethod,
+    LandLicenseStatus? landLicenseStatus,
   }) {
     return AddNewRealEstateState(
+      selectedCityId: selectedCityId ?? this.selectedCityId,
       currentPropertyOperationType:
           currentPropertyOperationType ?? this.currentPropertyOperationType,
       currentPropertyType: currentPropertyType ?? this.currentPropertyType,
@@ -93,7 +106,9 @@ class AddNewRealEstateState extends Equatable {
       getAmenitiesState: getAmenitiesState ?? this.getAmenitiesState,
       selectedAmenities: selectedAmenities ?? this.selectedAmenities,
       selectedLocation: selectedLocation ?? this.selectedLocation,
-
+      selectedCityName: selectedCityName ?? this.selectedCityName,
+      currentPaymentMethod: currentPaymentMethod ?? this.currentPaymentMethod,
+      landLicenseStatus: landLicenseStatus ?? this.landLicenseStatus,
     );
   }
 
@@ -115,8 +130,10 @@ class AddNewRealEstateState extends Equatable {
         currentAmenities,
         getAmenitiesState,
         selectedAmenities,
-
         selectedLocation,
-
+        selectedCityId,
+        selectedCityName,
+        currentPaymentMethod,
+        landLicenseStatus,
       ];
 }

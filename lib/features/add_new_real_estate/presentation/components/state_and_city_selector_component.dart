@@ -1,3 +1,5 @@
+import 'package:enmaa/core/services/select_location_service/domain/entities/city_entity.dart';
+import 'package:enmaa/features/add_new_real_estate/presentation/controller/add_new_real_estate_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
@@ -7,6 +9,7 @@ import '../../../../../configuration/managers/font_manager.dart';
 import '../../../../../configuration/managers/style_manager.dart';
 import '../../../../../core/components/custom_app_drop_down.dart';
 import '../../../../configuration/managers/drop_down_style_manager.dart';
+import '../../../../core/services/select_location_service/data/models/city_model.dart';
 import 'form_widget_component.dart';
 
 class StateCitySelectorComponent extends StatelessWidget {
@@ -52,16 +55,22 @@ class StateCitySelectorComponent extends StatelessWidget {
           BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
             buildWhen: (previous, current) =>
             previous.getCitiesState != current.getCitiesState ||
-                previous.selectedCity != current.selectedCity || previous.cities != current.cities,
+                previous.selectedCity != current.selectedCity || previous.cities != current.cities ,
             builder: (context, state) {
               return Expanded(
                 child: CustomDropdown<String>(
                   items: state.cities.map((e) => e.name).toList(),
-                  value: state.selectedCity?.name,
+                  value: context.read<AddNewRealEstateCubit>().state.selectedCityName,
                   onChanged: (value) {
+                    final CityEntity currentCityId = state.cities.firstWhere((element) => element.name == value!);
+
+                    context.read<AddNewRealEstateCubit>().changeSelectedCity(
+
+                      currentCityId.id ,  value!);
+
                     context
                         .read<SelectLocationServiceCubit>()
-                        .changeSelectedCity(value!);
+                        .changeSelectedCity(value);
                   },
                   itemToString: (item) => item,
                   hint: Text('المدينة', style: TextStyle(fontSize: FontSize.s12)),

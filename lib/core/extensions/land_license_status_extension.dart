@@ -20,4 +20,6 @@ extension LandLicenseStatusExtension on LandLicenseStatus {
         return 'Requires permit';
     }
   }
+
+  bool get isLicensed => this == LandLicenseStatus.licensed;
 }

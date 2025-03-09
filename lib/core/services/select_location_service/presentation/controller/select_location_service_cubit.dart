@@ -192,7 +192,15 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
   }
 
   void changeSelectedCity(String cityName) {
+
     final currentCity = state.cities.firstWhere((element) => element.name == cityName);
+
+    if(state.selectedCity != null && cityName == state.selectedCity!.name){
+      emit(state.copyWith(
+        selectedCity: null,
+        clearSelectedCity: true,
+      ));
+    }
     emit(state.copyWith(selectedCity: currentCity));
   }
 

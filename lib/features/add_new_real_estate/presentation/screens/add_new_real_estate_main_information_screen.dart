@@ -78,8 +78,10 @@ class AddNewRealEstateMainInformationScreen extends StatelessWidget {
                   selectorWidth: 82,
                   values: PropertyType.values,
                   currentType: state.currentPropertyType,
-                  onTap: (type) =>
-                      addNewRealEstateCubit.changePropertyType(type),
+                  onTap: (type) {
+                      addNewRealEstateCubit.changePropertyType(type);
+                      addNewRealEstateCubit.getAmenities(type.toJsonId.toString());
+                  },
                   getIcon: (type) {
                     switch (type) {
                       case PropertyType.apartment:

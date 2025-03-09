@@ -89,11 +89,11 @@ class AddNewRealEstateLocationScreen extends StatelessWidget {
                               // Map Location
                               SearchableMapComponent(
                                 onLocationSelected: (LatLng location) {
-                                  // Handle the selected location
-                                  print('Selected Location: $location');
                                   addNewRealEstateCubit.changeSelectedLocation(location);
                                 },
                               ),
+
+                              SizedBox(height: context.scale(20)),
 
                               // Amenities
                               const FormWidgetComponent(

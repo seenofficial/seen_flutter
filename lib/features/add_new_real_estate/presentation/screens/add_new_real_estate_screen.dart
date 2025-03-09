@@ -2,8 +2,10 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:enmaa/core/extensions/request_states_extension.dart';
 import 'package:enmaa/core/services/service_locator.dart';
+import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/add_new_real_estate/add_new_real_estate_DI.dart';
 import 'package:enmaa/features/add_new_real_estate/presentation/controller/add_new_real_estate_cubit.dart';
 import 'package:enmaa/features/add_new_real_estate/presentation/screens/add_new_real_estate_main_information_screen.dart';
@@ -39,14 +41,13 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
     return BlocProvider(
       create: (context) {
         AddNewRealEstateDi().setup();
-        /// todo : send the property type to the cubit
         return AddNewRealEstateCubit(
           ServiceLocator.getIt(),
           ServiceLocator.getIt(),
           ServiceLocator.getIt(),
           ServiceLocator.getIt(),
           ServiceLocator.getIt(),
-        )..getAmenities('1');
+        )..getAmenities(PropertyType.apartment.toJsonId.toString());
       },
       child: Scaffold(
         backgroundColor: ColorManager.greyShade,

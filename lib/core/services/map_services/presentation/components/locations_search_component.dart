@@ -62,6 +62,11 @@ class _LocationsSearchComponentState extends State<LocationsSearchComponent> {
                   ),
                 ),
                 onChanged: (value) {
+
+                  /// todo need to fetch after last event of typing
+                  /// if i write for 1 minute take the last event that ends before 5 seconds to use
+
+
                   context
                       .read<MapServicesCubit>()
                       .fetchLocationSuggestions(value);

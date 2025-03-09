@@ -34,5 +34,17 @@ extension PropertyTypeExtension on PropertyType {
   bool get isBuilding => this == PropertyType.building;
   bool get isLand => this == PropertyType.land;
 
-
+  // Convert PropertyType to its corresponding ID for JSON
+  int get toJsonId {
+    switch (this) {
+      case PropertyType.apartment:
+        return 2;
+      case PropertyType.villa:
+        return 3;
+      case PropertyType.building:
+        return 1;
+      case PropertyType.land:
+        return 4;
+    }
+  }
 }

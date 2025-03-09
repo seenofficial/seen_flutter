@@ -8,8 +8,6 @@ abstract class PropertyRequestModel {
   final String description;
   final double price;
   final List<PropertyImage> images;
-  final String country;
-  final String state;
   final String city;
   final String latitude;
   final String longitude;
@@ -27,8 +25,6 @@ abstract class PropertyRequestModel {
     required this.description,
     required this.price,
     required this.images,
-    required this.country,
-    required this.state,
     required this.city,
     required this.latitude,
     required this.longitude,
@@ -46,8 +42,6 @@ abstract class PropertyRequestModel {
       JsonKeys.title: title,
       JsonKeys.description: description,
       JsonKeys.price: price,
-      JsonKeys.country: country,
-      JsonKeys.state: state,
       JsonKeys.city: city,
       JsonKeys.latitude: latitude,
       JsonKeys.longitude: longitude,

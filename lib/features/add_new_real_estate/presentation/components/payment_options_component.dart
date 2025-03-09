@@ -1,4 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/extensions/payment_methods_extension.dart';
+import 'package:enmaa/core/utils/enums.dart';
+import 'package:enmaa/features/add_new_real_estate/presentation/controller/add_new_real_estate_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../configuration/managers/color_manager.dart';
 import '../../../../../configuration/managers/font_manager.dart';
 import '../../../../../configuration/managers/style_manager.dart';
@@ -11,29 +16,44 @@ class PaymentOptionsComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormWidgetComponent(
-      label: 'خيارات الدفع  ',
-      content: Row(
-        children: [
-          Expanded(
-            child: CustomDropdown<String>(
-              items: ['كاش', 'محفظه'],
-              value: 'كاش',
-              onChanged: (value) {},
-              itemToString: (item) => item,
-              hint: Text('اختر وسيله الدفع', style: TextStyle(fontSize: FontSize.s12)),
-              icon: Icon(Icons.keyboard_arrow_down, color: ColorManager.greyShade),
-              decoration: DropdownStyles.getDropdownDecoration(),
-              dropdownColor: ColorManager.whiteColor,
-              menuMaxHeight: 200,
-              style: getMediumStyle(
-                color: ColorManager.blackColor,
-                fontSize: FontSize.s14,
+    bool isEn = context.locale == Locale('en') ;
+    return BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
+        buildWhen: (previous, current) =>
+    previous.currentPaymentMethod != current.currentPaymentMethod,
+      builder: (context, state) {
+        return FormWidgetComponent(
+          label: 'خيارات الدفع',
+          content: Row(
+            children: [
+              Expanded(
+                child: CustomDropdown<PaymentMethod>(
+                  items: PaymentMethod.values,
+                  value: context.read<AddNewRealEstateCubit>().state.currentPaymentMethod,
+                  onChanged: (value) {
+                    context.read<AddNewRealEstateCubit>().changePaymentMethod(value!);
+                  },
+                  itemToString: (item) =>isEn? item.toEnglish : item.toArabic,
+                  hint: Text(
+                    'اختر وسيلة الدفع',
+                    style: TextStyle(fontSize: FontSize.s12),
+                  ),
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: ColorManager.greyShade,
+                  ),
+                  decoration: DropdownStyles.getDropdownDecoration(),
+                  dropdownColor: ColorManager.whiteColor,
+                  menuMaxHeight: 200,
+                  style: getMediumStyle(
+                    color: ColorManager.blackColor,
+                    fontSize: FontSize.s14,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

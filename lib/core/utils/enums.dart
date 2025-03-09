@@ -43,3 +43,7 @@ enum LandLicenseStatus {
   notLicensed,
 }
 
+enum PaymentMethod {
+  cash,
+  wallet,
+}

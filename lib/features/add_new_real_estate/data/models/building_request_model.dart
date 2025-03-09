@@ -13,8 +13,6 @@ class BuildingRequestModel extends PropertyRequestModel {
     required super.description,
     required super.price,
     required super.images,
-    required super.country,
-    required super.state,
     required super.city,
     required super.latitude,
     required super.longitude,
