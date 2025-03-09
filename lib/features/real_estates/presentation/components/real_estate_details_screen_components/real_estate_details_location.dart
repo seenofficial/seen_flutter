@@ -1,16 +1,21 @@
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../../../configuration/managers/color_manager.dart';
-import '../../../../../core/components/custom_map.dart';
+import '../../../../../core/services/map_services/map_services_DI.dart';
+import '../../../../../core/services/map_services/presentation/controller /map_services_cubit.dart';
+import '../../../../../core/services/map_services/presentation/screens/base_map_screen.dart';
+import '../../../../../core/services/map_services/presentation/screens/show_lcaotion_component.dart';
+import '../../../../../core/services/service_locator.dart';
 import '../../../../home_module/home_imports.dart';
 
 
-
 class RealEstateDetailsLocation extends StatelessWidget {
-  const RealEstateDetailsLocation({super.key , required this.location});
+  const RealEstateDetailsLocation({super.key, required this.location});
 
-  final LatLng location ;
+  final LatLng location;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,39 +23,29 @@ class RealEstateDetailsLocation extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(height: context.scale(16)),
-        Container(
+        SizedBox(
           height: context.scale(205),
-          decoration: BoxDecoration(
-            borderRadius:
-            BorderRadius.circular(12),
-            border: Border.all(
-              color: ColorManager.greyShade,
-              width: 1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(
-                    0.1),
-                blurRadius: 8,
-                spreadRadius: 2,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          clipBehavior: Clip.antiAlias,
           child: Stack(
             children: [
-              Positioned.fill(
-                child: CustomMap(
-                    points: [
-                  location
-                ]),
+              BlocProvider(
+                create: (context) {
+                  MapServicesDi().setup();
+                  return MapServicesCubit(
+                    ServiceLocator.getIt(),
+                  );
+                },
+                child: Positioned.fill(
+                  child: ShowLocationScreen(
+                    height: 205,
+                      location:
+                        location
+                      ),
+                ),
               ),
             ],
           ),
         ),
       ],
     );
-
   }
 }

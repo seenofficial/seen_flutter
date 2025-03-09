@@ -87,7 +87,10 @@ class AddNewRealEstateButtons extends StatelessWidget {
                 ),
               ),
             ),
-            AnimatedSize(
+            BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
+  builder: (context, state) {
+    bool sendData = state.selectedLocation != null;
+    return AnimatedSize(
               duration: animationTime,
               curve: Curves.easeInOut,
               child: SizedBox(
@@ -109,7 +112,7 @@ class AddNewRealEstateButtons extends StatelessWidget {
                         );
                       }
                     } else {
-                      if (context.read<AddNewRealEstateCubit>().locationForm.currentState!.validate()) {
+                      if (context.read<AddNewRealEstateCubit>().locationForm.currentState!.validate() && context.read<AddNewRealEstateCubit>().state.selectedLocation != null ) {
 
                           /// send request to add new real estate
 
@@ -139,13 +142,15 @@ class AddNewRealEstateButtons extends StatelessWidget {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorManager.primaryColor,
+                    backgroundColor:sendData || currentPage != 2? ColorManager.primaryColor : ColorManager.primaryColor2 ,
                     foregroundColor: Colors.white,
                   ),
                   child: Text(currentPage == 2 ? 'إرسال' : 'التالي'),
                 ),
               ),
-            ),
+            );
+  },
+),
           ],
         ),
       ),

@@ -20,6 +20,7 @@ import 'package:enmaa/features/add_new_real_estate/domain/use_cases/add_new_land
 import 'package:enmaa/features/add_new_real_estate/domain/use_cases/get_property_amenities_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../../core/components/property_form_controller.dart';
 import '../../../../core/errors/failure.dart';
@@ -112,6 +113,12 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     emit(state.copyWith(currentPropertyOperationType: propertyOperationType));
   }
 
+  void changeSelectedLocation (LatLng location){
+
+    emit(state.copyWith(selectedLocation: location));
+
+  }
+
   void changePropertyType(PropertyType propertyType) {
     String propertyTypeID = '1' ;
     if(propertyType == PropertyType.apartment) {
@@ -180,8 +187,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     const String usageType = 'residential';
     const String status = "available";
     const String city = '1';
-    const String latitude = '12';
-    const String longitude = '32';
+      String latitude = state.selectedLocation!.latitude.toString();
+      String longitude = state.selectedLocation!.longitude.toString();
     final List<String> amenities = <String>['1', '2'];
 
     return {

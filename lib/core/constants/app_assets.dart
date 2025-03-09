@@ -10,6 +10,8 @@ class AppAssets {
   static const String hotelIcon = '${baseIconFolder}hotel_icon.svg';
   static const String plusIcon = '${baseIconFolder}plus_icon.svg';
   static const String locationIcon = '${baseIconFolder}location_icon.svg';
+  static const String locationMarkerIcon = '${baseIconFolder}location_marker_icon.svg';
+  static const String currentLocationIcon = '${baseIconFolder}current_location_icon.svg';
 
   static const String bedIcon = '${baseIconFolder}bed_icon.svg';
   static const String bathIcon = '${baseIconFolder}bath_icon.svg';

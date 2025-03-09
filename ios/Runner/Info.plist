@@ -4,6 +4,12 @@
 <dict>
 
 
+<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+<dict>
+  <key>YourPurposeKey</key>
+  <string>The example App requires temporary access to the device&apos;s precise location.</string>
+</dict>
+
     <key>NSFaceIDUsageDescription</key>
     <string>Why is my app authenticating using face id?</string>
 
@@ -15,6 +21,16 @@
         <key>NSCameraUsageDescription</key>
         <string>This app needs access to your camera to allow you to take photos and videos.</string>
 
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app needs access to location when in the background.</string>
+
+
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need your location to show it on the map.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>We need your location to show it on the map.</string>
 
 <key>LSApplicationQueriesSchemes</key>
 <array>

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 
 import '../../../../../configuration/managers/color_manager.dart';
-import '../../../../../core/components/custom_map.dart';
+import '../../../../core/services/map_services/presentation/screens/base_map_screen.dart';
 import 'form_widget_component.dart';
 
 class MapLocationComponent extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'package:enmaa/core/components/custom_map.dart';
 import 'package:enmaa/core/entites/image_entity.dart';
 import 'package:enmaa/core/screens/error_app_screen.dart';
 import 'package:enmaa/core/utils/enums.dart';

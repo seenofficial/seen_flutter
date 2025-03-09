@@ -19,12 +19,15 @@ class AddNewRealEstateState extends Equatable {
      this.currentAmenities = const [],
     this.getAmenitiesState = RequestState.initial,
     this.selectedAmenities = const [],
+    this.selectedLocation ,
   });
 
   final PropertyOperationType currentPropertyOperationType;
 
   final PropertyType currentPropertyType;
 
+
+  final LatLng? selectedLocation;
   /// current states for sub types
   final ApartmentType currentApartmentType;
   final VillaType currentVillaType;
@@ -67,6 +70,7 @@ class AddNewRealEstateState extends Equatable {
     List<AmenityEntity>? currentAmenities,
     RequestState? getAmenitiesState,
     List<String>? selectedAmenities,
+    LatLng ? selectedLocation,
   }) {
     return AddNewRealEstateState(
       currentPropertyOperationType:
@@ -88,6 +92,7 @@ class AddNewRealEstateState extends Equatable {
       currentAmenities: currentAmenities ?? this.currentAmenities,
       getAmenitiesState: getAmenitiesState ?? this.getAmenitiesState,
       selectedAmenities: selectedAmenities ?? this.selectedAmenities,
+      selectedLocation: selectedLocation ?? this.selectedLocation,
 
     );
   }
@@ -110,6 +115,8 @@ class AddNewRealEstateState extends Equatable {
         currentAmenities,
         getAmenitiesState,
         selectedAmenities,
+
+        selectedLocation,
 
       ];
 }
