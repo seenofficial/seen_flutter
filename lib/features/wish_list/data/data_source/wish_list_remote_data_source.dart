@@ -42,7 +42,11 @@ class WishListRemoteDataSource extends BaseWishListDataSource {
   @override
   Future<void> removePropertyFromWishList(String propertyId) async{
       await dioService.delete(
-      url: '${ApiConstants.wishList}$propertyId/',
+      url: '${ApiConstants.wishList}remove/',
+      queryParameters: {
+        'type': 'property',
+        'object_id': propertyId,
+      },
     );
 
   }

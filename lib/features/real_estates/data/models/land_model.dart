@@ -51,7 +51,7 @@ class LandModel extends LandEntity {
         id: countryData['id'].toString(),
         name: countryData['name'].toString(),
       ),
-      isInWishlist: propertyData['is_in_wishlist'] ?? false,
+      isInWishlist: json['is_in_wishlist'] ?? true,
       isLicensed: propertyData['is_licensed'] ?? false,
     );
   }

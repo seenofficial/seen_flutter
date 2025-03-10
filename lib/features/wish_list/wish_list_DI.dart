@@ -4,6 +4,7 @@ import '../../core/services/service_locator.dart';
 import 'data/data_source/wish_list_remote_data_source.dart';
 import 'data/repository/wish_list_repository.dart';
 import 'domain/repository/base_wish_list_repository.dart';
+import 'domain/use_cases/add_new_property_to_wish_list_use_case.dart';
 
 class WishListDi {
   final sl = ServiceLocator.getIt;
@@ -40,6 +41,9 @@ class WishListDi {
     );
     sl.registerLazySingleton(
       () => RemovePropertyFromWishListUseCase(sl()),
+    );
+    sl.registerLazySingleton(
+      () => AddNewPropertyToWishListUseCase(sl()),
     );
   }
 }

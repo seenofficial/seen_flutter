@@ -40,8 +40,6 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     final Either<Failure, BasePropertyDetailsEntity> result = await _getPropertyDetailsUseCase(propertyID);
 
 
-    print("reekekek ${result}");
-
     result.fold(
           (failure) => emit(state.copyWith(
             getPropertyDetailsState: RequestState.error,
@@ -54,4 +52,65 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     );
   }
 
+
+  void removePropertyFromWishList(String propertyID) {
+
+    final BasePropertyDetailsEntity? propertyDetails = state.propertyDetails;
+
+    if (propertyDetails != null) {
+      final BasePropertyDetailsEntity updatedPropertyDetails = propertyDetails.copyWith(isInWishlist: false);
+
+      emit(state.copyWith(propertyDetails: updatedPropertyDetails));
+    }
+
+    removeSelectedPropertyFromWishList(propertyID);
+
+  }
+
+  void addPropertyToWishList(String propertyID) {
+
+    final BasePropertyDetailsEntity? propertyDetails = state.propertyDetails;
+
+    if (propertyDetails != null) {
+      final BasePropertyDetailsEntity updatedPropertyDetails = propertyDetails.copyWith(isInWishlist: true);
+
+      emit(state.copyWith(propertyDetails: updatedPropertyDetails));
+    }
+
+    addSelectedPropertyToWishList(propertyID);
+
+  }
+
+  void removeSelectedPropertyFromWishList(String propertyID) {
+
+    emit(state.copyWith(getPropertiesState: RequestState.loading));
+    final List<PropertyEntity> properties = state.properties;
+
+    final List<PropertyEntity> updatedProperties = properties.map((property) {
+      if (property.id.toString() == propertyID) {
+        return property.copyWith(isInWishlist: false);
+      } else {
+        return property;
+      }
+    }).toList();
+
+    emit(state.copyWith(properties: updatedProperties , getPropertiesState: RequestState.loaded));
+  }
+
+  void addSelectedPropertyToWishList(String propertyID) {
+
+    emit(state.copyWith(getPropertiesState: RequestState.loading));
+
+    final List<PropertyEntity> properties = state.properties;
+
+    final List<PropertyEntity> updatedProperties = properties.map((property) {
+      if (property.id.toString() == propertyID) {
+        return property.copyWith(isInWishlist: true);
+      } else {
+        return property;
+      }
+    }).toList();
+
+    emit(state.copyWith(properties: updatedProperties, getPropertiesState: RequestState.loaded));
+  }
 }

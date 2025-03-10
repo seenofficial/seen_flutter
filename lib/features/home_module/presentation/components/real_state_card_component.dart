@@ -1,11 +1,18 @@
 import 'package:enmaa/core/extensions/furnished_status_extension.dart';
 import 'package:enmaa/core/extensions/land_license_status_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/apartment_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/building_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/land_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/villa_type_extension.dart';
+import 'package:enmaa/core/extensions/request_states_extension.dart';
+import 'package:enmaa/core/services/convert_string_to_enum.dart';
 import 'package:enmaa/features/real_estates/domain/entities/apartment_entity.dart';
 import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
 import 'package:enmaa/features/real_estates/domain/entities/villa_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
@@ -14,15 +21,20 @@ import '../../../../core/components/custom_image.dart';
 import '../../../../core/components/reserved_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/services/service_locator.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../real_estates/domain/entities/building_entity.dart';
 import '../../../real_estates/domain/entities/land_entity.dart';
+import '../../../real_estates/presentation/controller/real_estate_cubit.dart';
+import '../../../wish_list/presentation/controller/wish_list_cubit.dart';
+import '../../../wish_list/wish_list_DI.dart';
 import '../../home_imports.dart';
 
 class RealStateCardComponent extends StatelessWidget {
   final double width;
   final double height;
 
+  final Function? onTap ;
   final PropertyEntity currentProperty;
 
   const RealStateCardComponent({
@@ -30,6 +42,7 @@ class RealStateCardComponent extends StatelessWidget {
     required this.width,
     required this.height,
     required this.currentProperty,
+    this.onTap,
   });
 
   @override
@@ -103,10 +116,37 @@ class RealStateCardComponent extends StatelessWidget {
           PositionedDirectional(
               top: context.scale(8),
               end: context.scale(8),
-              child: CircularIconButton(
-                iconPath: AppAssets.heartIcon,
-                onPressed: () {},
+              child: BlocBuilder<RealEstateCubit, RealEstateState>(
+                builder: (context, state) {
+                  bool isInWishlist = currentProperty.isInWishlist;
+                  return CircularIconButton(
+                    iconPath: isInWishlist
+                        ? AppAssets.selectedHeartIcon
+                        : AppAssets.heartIcon,
+                    containerSize: context.scale(40),
+                    iconSize: context.scale(20),
+                    onPressed: () {
+
+                      if(state.getPropertiesState.isLoaded){
+                        String propertyId = currentProperty.id.toString();
+                        if(isInWishlist){
+
+                          context.read<RealEstateCubit>().removeSelectedPropertyFromWishList(propertyId);
+                          context.read<WishListCubit>().removePropertyFromWishList(propertyId);
+
+                        }
+                        else {
+
+                          context.read<RealEstateCubit>().addSelectedPropertyToWishList(propertyId);
+                          context.read<WishListCubit>().addPropertyToWishList(propertyId);
+
+                        }
+                      }
+                    },
+                  );
+                },
               ),
+
           ),
         ],
       ),
@@ -277,6 +317,21 @@ class RealStateCardComponent extends StatelessWidget {
   Widget _buildPriceRow(BuildContext context) {
     bool isScreenWidth = MediaQuery.of(context).size.width == width;
 
+    String currentSubType ='' ;
+
+    if(currentProperty.propertyType == 'apartment'){
+      currentSubType = getApartmentType(currentProperty.propertySubType).toName;
+    }
+    else if(currentProperty.propertyType == 'villa'){
+      currentSubType =  getVillaType(currentProperty.propertySubType).toName;
+    }
+    else if(currentProperty.propertyType == 'building'){
+      currentSubType =  getBuildingType(currentProperty.propertySubType).toName;
+    }
+    else if(currentProperty.propertyType == 'land'){
+      currentSubType =  getLandType(currentProperty.propertySubType).toName;
+    }
+
     return isScreenWidth
         ? Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -295,7 +350,7 @@ class RealStateCardComponent extends StatelessWidget {
                     width: context.scale(4),
                   ),
                   Text(
-                      currentProperty.propertySubType,
+                      currentSubType,
                       style: getBoldStyle(
                           color: ColorManager.yellowColor,
                           fontSize: FontSize.s12)),

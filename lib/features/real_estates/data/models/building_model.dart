@@ -56,7 +56,7 @@ class BuildingModel extends BuildingEntity {
         id: countryData['id'].toString(),
         name: countryData['name'].toString(),
       ),
-      isInWishlist: propertyData['is_in_wishlist'] ?? false,
+      isInWishlist: json['is_in_wishlist'] ?? true,
       totalFloors: propertyData['number_of_floors'],
       apartmentPerFloor: propertyData['number_of_apartments'],
     );

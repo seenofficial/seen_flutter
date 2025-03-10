@@ -28,8 +28,9 @@ class WishListRepository extends BaseWishListRepository {
   }
 
   @override
-  Future<Either<Failure, PropertyWishListEntity>> addNewPropertyToWishList(String propertyId) {
-    // TODO: implement addNewPropertyToWishList
-    throw UnimplementedError();
+  Future<Either<Failure, PropertyWishListEntity>> addNewPropertyToWishList(String propertyId) async{
+    return await HandleRequestService.handleApiCall<PropertyWishListEntity>(() async {
+      return await baseWishListDataSource.addPropertyToWishList( propertyId);
+    });
   }
 }

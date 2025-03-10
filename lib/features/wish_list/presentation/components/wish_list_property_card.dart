@@ -1,5 +1,6 @@
 import 'package:enmaa/core/extensions/furnished_status_extension.dart';
 import 'package:enmaa/core/extensions/land_license_status_extension.dart';
+import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/wish_list/presentation/controller/wish_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
@@ -93,9 +94,9 @@ class WishListPropertyCard extends StatelessWidget {
               iconSize: 20,
               iconPath: AppAssets.selectedHeartIcon,
               onPressed: () {
-                /// todo : remove property from wishlist
 
-                context.read<WishListCubit>().removePropertyFromWishList(wishListId);
+                context.read<WishListCubit>().removePropertyFromWishList(currentProperty.id.toString());
+                context.read<RealEstateCubit>().removeSelectedPropertyFromWishList(currentProperty.id.toString());
               },
             ),
           ),

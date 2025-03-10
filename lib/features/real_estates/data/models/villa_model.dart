@@ -54,7 +54,7 @@ class VillaModel extends VillaEntity {
         id: countryData['id'].toString(),
         name: countryData['name'].toString(),
       ),
-      isInWishlist: propertyData['is_in_wishlist'] ?? false,
+      isInWishlist: json['is_in_wishlist'] ?? true,
       floors: propertyData['floors'] ?? 0,
       rooms: propertyData['rooms'] ?? 0,
       bathrooms: propertyData['bathrooms'] ?? 0,

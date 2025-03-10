@@ -1,6 +1,5 @@
 import 'package:enmaa/core/entites/amenity_entity.dart';
 import 'package:enmaa/core/entites/image_entity.dart';
-import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class BasePropertyDetailsEntity extends Equatable {
@@ -44,6 +43,27 @@ abstract class BasePropertyDetailsEntity extends Equatable {
     required this.monthlyRentPeriod,
   });
 
+  BasePropertyDetailsEntity copyWith({
+    int? id,
+    String? title,
+    String? operation,
+    String? price,
+    double? area,
+    String? propertySubType,
+    String? status,
+    List<ImageEntity>? images,
+    List<AmenityEntity>? amenities,
+    String? description,
+    double? latitude,
+    double? longitude,
+    String? city,
+    String? state,
+    String? country,
+    bool? isInWishlist,
+    String? monthlyRentPeriod,
+    bool? rentIsRenewable,
+  });
+
   @override
   List<Object?> get props => [
     id,
@@ -62,5 +82,7 @@ abstract class BasePropertyDetailsEntity extends Equatable {
     state,
     country,
     isInWishlist,
+    monthlyRentPeriod,
+    rentIsRenewable,
   ];
 }

@@ -22,6 +22,7 @@ import 'features/home_module/home_imports.dart';
 import 'features/home_module/presentation/screens/home_screen.dart';
 import 'features/wallet/presentation/controller/wallet_cubit.dart';
 import 'features/wallet/presentation/screens/wallet_screen.dart';
+import 'features/wish_list/domain/use_cases/add_new_property_to_wish_list_use_case.dart';
 import 'features/wish_list/presentation/screens/wish_list_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -62,17 +63,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 1:
         return const MyBookingScreen();
       case 2:
-        return BlocProvider(
-          create: (context) {
-            WishListDi().setup();
-            return WishListCubit(
-              ServiceLocator.getIt<GetPropertiesWishListUseCase>(),
-              ServiceLocator.getIt<RemovePropertyFromWishListUseCase>(),
-            )
-              ..getPropertyWishList();
-          },
-          child: WishListScreen(),
-        );
+        return WishListScreen();
       case 3:
         return BlocProvider(
           create: (context) {

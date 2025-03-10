@@ -1,4 +1,5 @@
 import 'package:enmaa/configuration/routers/app_routers.dart';
+import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/request_states_extension.dart';
 import 'package:enmaa/features/wish_list/presentation/controller/wish_list_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,9 @@ class WishListScreen extends StatelessWidget {
                 context.read<WishListCubit>().getPropertyWishList();
               },
               child: BlocBuilder<WishListCubit, WishListState>(
+                buildWhen: (previous, current) =>
+                    previous.getPropertyWishListState !=
+                    current.getPropertyWishListState,
                 builder: (context, state) {
                   if (state.getPropertyWishListState.isLoaded) {
                     if (state.propertyWishList.isEmpty) {
@@ -53,10 +57,14 @@ class WishListScreen extends StatelessWidget {
                         final wishListItem = state.propertyWishList[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: WishListPropertyCard (
-                            wishListId: wishListItem.id.toString(),
-                            currentProperty: wishListItem.property!,
-                          ),
+                          child:
+                          RealStateCardComponent(
+                            width: MediaQuery.of(context).size.width,
+                            height: context.scale(290),
+                            currentProperty: wishListItem.property! ,
+
+                          )
+
                         );
                       },
                     );

@@ -1,5 +1,3 @@
-import 'package:enmaa/core/entites/amenity_entity.dart';
-import 'package:enmaa/core/entites/image_entity.dart';
 import 'package:enmaa/core/services/select_location_service/domain/entities/city_entity.dart';
 import 'package:enmaa/core/services/select_location_service/domain/entities/country_entity.dart';
 import 'package:enmaa/core/services/select_location_service/domain/entities/state_entity.dart';
@@ -16,7 +14,7 @@ abstract class PropertyEntity extends Equatable {
   final String propertySubType;
   final String status;
   final CityEntity city;
-  final CountryEntity country ;
+  final CountryEntity country;
   final StateEntity state;
   final bool isInWishlist;
 
@@ -38,18 +36,34 @@ abstract class PropertyEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-  id,
-  title,
-  image,
-  propertyType,
-  operation,
-  price,
-  area,
-  propertySubType,
-  status,
-  city,
-  isInWishlist,
-  state,
-  country,
+    id,
+    title,
+    image,
+    propertyType,
+    operation,
+    price,
+    area,
+    propertySubType,
+    status,
+    city,
+    state,
+    country,
+    isInWishlist,
   ];
+
+  PropertyEntity copyWith({
+    int? id,
+    String? title,
+    String? image,
+    String? propertyType,
+    String? operation,
+    String? price,
+    double? area,
+    String? propertySubType,
+    String? status,
+    CityEntity? city,
+    StateEntity? state,
+    CountryEntity? country,
+    bool? isInWishlist,
+  }) ;
 }

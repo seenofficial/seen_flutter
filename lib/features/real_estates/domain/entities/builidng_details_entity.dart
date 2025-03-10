@@ -1,7 +1,6 @@
 import 'package:enmaa/core/entites/amenity_entity.dart';
 import 'package:enmaa/core/entites/image_entity.dart';
  import 'package:enmaa/features/real_estates/domain/entities/property_details_entity.dart';
-import 'package:equatable/equatable.dart';
 
 class BuildingDetailsEntity extends BasePropertyDetailsEntity {
   final int numberOfFloors;
@@ -24,7 +23,8 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
     required super.state,
     required super.country,
     required super.isInWishlist,
-    required super.rentIsRenewable, required super.monthlyRentPeriod,
+    required super.rentIsRenewable,
+    required super.monthlyRentPeriod,
     required this.numberOfFloors,
     required this.usageType,
   });
@@ -35,4 +35,50 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
     numberOfFloors,
     usageType,
   ];
+
+  BuildingDetailsEntity copyWith({
+    int? id,
+    String? title,
+    String? operation,
+    String? price,
+    double? area,
+    String? propertySubType,
+    String? status,
+    List<ImageEntity>? images,
+    List<AmenityEntity>? amenities,
+    String? description,
+    double? latitude,
+    double? longitude,
+    String? city,
+    String? state,
+    String? country,
+    bool? isInWishlist,
+    String? monthlyRentPeriod,
+    bool? rentIsRenewable,
+    int? numberOfFloors,
+    String? usageType,
+  }) {
+    return BuildingDetailsEntity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      operation: operation ?? this.operation,
+      price: price ?? this.price,
+      area: area ?? this.area,
+      propertySubType: propertySubType ?? this.propertySubType,
+      status: status ?? this.status,
+      images: images ?? this.images,
+      amenities: amenities ?? this.amenities,
+      description: description ?? this.description,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      country: country ?? this.country,
+      isInWishlist: isInWishlist ?? this.isInWishlist,
+      monthlyRentPeriod: monthlyRentPeriod ?? this.monthlyRentPeriod,
+      rentIsRenewable: rentIsRenewable ?? this.rentIsRenewable,
+      numberOfFloors: numberOfFloors ?? this.numberOfFloors,
+      usageType: usageType ?? this.usageType,
+    );
+  }
 }

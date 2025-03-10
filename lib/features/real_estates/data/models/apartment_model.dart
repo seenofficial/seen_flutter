@@ -54,7 +54,7 @@ class ApartmentModel extends ApartmentEntity {
         id: countryData['id'].toString(),
         name: countryData['name'].toString(),
       ),
-      isInWishlist: propertyData['is_in_wishlist'] ?? false,
+      isInWishlist: json['is_in_wishlist'] ?? true,
       floor: propertyData['floor'] is int
           ? propertyData['floor']
           : int.parse(propertyData['floor'].toString()),
