@@ -11,6 +11,7 @@ import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/circular_icon_button.dart';
 import '../../../../core/components/custom_image.dart';
+import '../../../../core/components/reserved_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/utils/enums.dart';
@@ -83,40 +84,7 @@ class RealStateCardComponent extends StatelessWidget {
                           if(isScreenWidth)
                           Visibility(
                             visible: currentProperty.status != 'available',
-                            child: Container(
-                              width: context.scale(80),
-                              height: context.scale(28),
-
-                              decoration: BoxDecoration(
-                                color: ColorManager.primaryColor2,
-                                borderRadius: BorderRadius.circular(context.scale(24)),
-                              ),
-
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-
-                                  SvgImageComponent(
-                                      iconPath: AppAssets.reservedIcon,
-                                    width: 12,
-                                    height: 12,
-                                  ) ,
-
-                                  SizedBox(
-                                    width: context.scale(4),
-                                  ),
-
-                                  Text(
-                                    'محجوز',
-                                    style: getSemiBoldStyle(
-                                      color: ColorManager.blackColor,
-                                      fontSize: FontSize.s10,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                            ),
+                            child: ReservedComponent(),
                           )
                         ],
                       ),

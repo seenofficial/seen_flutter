@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+
+import '../translation/locale_keys.dart';
 import '../utils/enums.dart';
 
 extension PropertyTypeExtension on PropertyType {
@@ -12,6 +15,18 @@ extension PropertyTypeExtension on PropertyType {
         return 'building';
       case PropertyType.land:
         return 'land';
+    }
+  }
+  String get toName {
+    switch (this) {
+      case PropertyType.apartment:
+        return LocaleKeys.apartment.tr();
+      case PropertyType.villa:
+        return LocaleKeys.villa.tr();
+      case PropertyType.building:
+        return LocaleKeys.building.tr();
+      case PropertyType.land:
+       return  LocaleKeys.land.tr();
     }
   }
 

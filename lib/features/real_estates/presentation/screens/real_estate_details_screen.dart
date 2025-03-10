@@ -58,6 +58,7 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
                 BasePropertyDetailsEntity currentProperty = state.propertyDetails!;
                 List<ImageEntity> banners = List.from(currentProperty.images)
                   ..sort((a, b) => b.isMain ? 1 : -1);
+
                 return Stack(
                   children: [
                     Padding(
@@ -77,6 +78,7 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       RealEstateDetailsHeader(
+                                        realEstateDetailsStatus: currentProperty.status,
                                         realEstateDetailsTitle:
                                         currentProperty.title,
                                         realEstateDetailsPrice:
@@ -86,7 +88,6 @@ class _RealEstateDetailsScreenState extends State<RealEstateDetailsScreen> {
                                       ),
                                       SizedBox(height: context.scale(24)),
                                       RealEstateDetailsDescription(
-                                          /// todo : send description
                                           description: currentProperty.description,
                                           ),
                                       SizedBox(height: context.scale(24)),

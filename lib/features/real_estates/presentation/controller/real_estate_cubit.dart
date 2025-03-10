@@ -40,6 +40,8 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     final Either<Failure, BasePropertyDetailsEntity> result = await _getPropertyDetailsUseCase(propertyID);
 
 
+    print("reekekek ${result}");
+
     result.fold(
           (failure) => emit(state.copyWith(
             getPropertyDetailsState: RequestState.error,

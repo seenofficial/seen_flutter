@@ -22,7 +22,7 @@ class BuildingDetailsModel extends BuildingDetailsEntity {
     required super.country,
     required super.isInWishlist,
     required super.numberOfFloors,
-    required super.usageType,
+    required super.usageType, required super.rentIsRenewable, required super.monthlyRentPeriod,
   });
 
   factory BuildingDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -53,9 +53,11 @@ class BuildingDetailsModel extends BuildingDetailsEntity {
       city: cityData['name'].toString(),
       state: stateData['name'].toString(),
       country: countryData['name'].toString(),
-      isInWishlist: propertyData['is_in_wishlist'] ?? false,
+      isInWishlist: json['is_in_wishlist'] ?? false,
       numberOfFloors: propertyData['number_of_floors'] ?? 0,
       usageType: propertyData['usage_type'] ?? '',
+      rentIsRenewable: propertyData['is_renewable'] ?? '', monthlyRentPeriod: propertyData['monthly_rent_period'].toString() ?? '',
+
     );
   }
 }

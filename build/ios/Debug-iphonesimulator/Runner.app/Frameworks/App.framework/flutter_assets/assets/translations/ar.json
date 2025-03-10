@@ -29,6 +29,28 @@
   "chooseYourIdealPropertyEasily" : "اختر العقار المثالي لك بسهولة",
 
   "forSale": "للبيع",
-  "forRent": "للإيجار"
+  "forRent": "للإيجار",
+
+  "apartment": "شقة",
+  "villa": "فيلا",
+  "land": "أرض",
+  "building": "عماره",
+
+  "studio": "ستوديو",
+  "duplex": "دوبلكس",
+  "penthouse": "بنتهاوس",
+
+  "residential": "سكنية",
+  "commercial": "تجارية",
+  "mixedUse": "مختلطة",
+
+  "freehold": "حر",
+  "agricultural": "زراعي",
+  "industrial": "صناعي",
+
+  "standalone": "مستقلة",
+  "twinHouse": "توين هاوس",
+  "townHouse": "تاون هاوس"
+
 
 }

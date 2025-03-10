@@ -38,24 +38,37 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        AddNewRealEstateDi().setup();
-        return AddNewRealEstateCubit(
-          ServiceLocator.getIt(),
-          ServiceLocator.getIt(),
-          ServiceLocator.getIt(),
-          ServiceLocator.getIt(),
-          ServiceLocator.getIt(),
-        )..getAmenities(PropertyType.apartment.toJsonId.toString());
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            AddNewRealEstateDi().setup();
+            return AddNewRealEstateCubit(
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+            )
+              ..getAmenities(PropertyType.apartment.toJsonId.toString());
+          },
+        ),
+        BlocProvider(
+          create: (context) {
+            return SelectLocationServiceCubit.getOrCreate()
+              ..getCountries();
+          },
+        ),
+      ],
       child: Scaffold(
         backgroundColor: ColorManager.greyShade,
         body: BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
           buildWhen: (previous, current) {
             if (previous.addNewApartmentState.isLoading &&
                 current.addNewApartmentState.isLoaded) {
-              CustomSnackBar.show(context: context, message: 'تم اضافه العقار بنجاح', type: SnackBarType.success);
+              CustomSnackBar.show(context: context,
+                  message: 'تم اضافه العقار بنجاح',
+                  type: SnackBarType.success);
 
               Navigator.pop(context);
             }
@@ -87,13 +100,7 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                         children: [
                           AddNewRealEstateMainInformationScreen(),
                           AddNewRealEstatePriceScreen(),
-                          BlocProvider(
-                            create: (context) {
-                              return SelectLocationServiceCubit.getOrCreate()
-                                ..getCountries();
-                            },
-                            child: AddNewRealEstateLocationScreen(),
-                          ),
+                          AddNewRealEstateLocationScreen(),
                         ],
                       ),
                     ),
@@ -132,8 +139,8 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                 index == 0
                     ? 'المعلومات الأساسية'
                     : index == 1
-                        ? 'السعر والوصف'
-                        : 'الموقع والمميزات',
+                    ? 'السعر والوصف'
+                    : 'الموقع والمميزات',
                 style: getBoldStyle(
                   color: isActive
                       ? ColorManager.primaryColor
@@ -149,7 +156,7 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                 height: context.scale(4),
                 decoration: BoxDecoration(
                   color:
-                      isActive ? ColorManager.primaryColor : Color(0xFFD9D9D9),
+                  isActive ? ColorManager.primaryColor : Color(0xFFD9D9D9),
                   borderRadius: BorderRadius.circular(2.0),
                 ),
               ),

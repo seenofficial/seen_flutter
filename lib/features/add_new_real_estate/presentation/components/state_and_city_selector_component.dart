@@ -60,17 +60,11 @@ class StateCitySelectorComponent extends StatelessWidget {
               return Expanded(
                 child: CustomDropdown<String>(
                   items: state.cities.map((e) => e.name).toList(),
-                  value: context.read<AddNewRealEstateCubit>().state.selectedCityName,
+                  value: state.selectedCity?.name,
                   onChanged: (value) {
-                    final CityEntity currentCityId = state.cities.firstWhere((element) => element.name == value!);
-
-                    context.read<AddNewRealEstateCubit>().changeSelectedCity(
-
-                      currentCityId.id ,  value!);
-
                     context
                         .read<SelectLocationServiceCubit>()
-                        .changeSelectedCity(value);
+                        .changeSelectedCity(value!);
                   },
                   itemToString: (item) => item,
                   hint: Text('المدينة', style: TextStyle(fontSize: FontSize.s12)),

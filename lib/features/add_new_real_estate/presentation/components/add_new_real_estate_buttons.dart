@@ -42,142 +42,147 @@ class AddNewRealEstateButtons extends StatelessWidget {
         },
         child: currentPage == 0
             ? SizedBox(
-                key: const ValueKey<int>(0),
-                width: double.infinity,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (context
-                        .read<AddNewRealEstateCubit>()
-                        .formKey
-                        .currentState!
-                        .validate()) {
-                      pageController.nextPage(
-                        duration: animationTime,
-                        curve: Curves.easeIn,
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorManager.primaryColor,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('التالي'),
-                ),
-              )
+          key: const ValueKey<int>(0),
+          width: double.infinity,
+          height: 48,
+          child: ElevatedButton(
+            onPressed: () {
+              if (context
+                  .read<AddNewRealEstateCubit>()
+                  .formKey
+                  .currentState!
+                  .validate()) {
+                pageController.nextPage(
+                  duration: animationTime,
+                  curve: Curves.easeIn,
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ColorManager.primaryColor,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('التالي'),
+          ),
+        )
             : Row(
-                key: const ValueKey<int>(1),
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 175,
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (currentPage > 0) {
-                          pageController.previousPage(
-                            duration: Duration(milliseconds: 1),
-                            curve: Curves.easeInOutSine,
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFD6D8DB),
-                        foregroundColor: Color(0xFFD6D8DB),
-                      ),
-                      child: Text(
-                        'السابق',
-                        style: TextStyle(color: ColorManager.blackColor),
-                      ),
-                    ),
-                  ),
-                  BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
-                    builder: (context, state) {
-                      bool sendData = state.selectedLocation != null &&
-                          state.selectedCityName != null;
-                      return AnimatedSize(
-                        duration: animationTime,
-                        curve: Curves.easeInOut,
-                        child: SizedBox(
-                          width: 175,
-                          height: 48,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (currentPage < 2) {
-                                /// validate that user select images if not change the
-                                /// border color of the container to red
-                                var addNewRealEstateCubit =
-                                    context.read<AddNewRealEstateCubit>();
+          key: const ValueKey<int>(1),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 175,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (currentPage > 0) {
+                    pageController.previousPage(
+                      duration: Duration(milliseconds: 1),
+                      curve: Curves.easeInOutSine,
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFD6D8DB),
+                  foregroundColor: Color(0xFFD6D8DB),
+                ),
+                child: Text(
+                  'السابق',
+                  style: TextStyle(color: ColorManager.blackColor),
+                ),
+              ),
+            ),
+            BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
+              builder: (context, locationState) {
+                return BlocBuilder<AddNewRealEstateCubit,
+                    AddNewRealEstateState>(
+                  builder: (context, state) {
+                    bool sendData = state.selectedLocation != null &&
+                        locationState.selectedCity != null;
+                    return AnimatedSize(
+                      duration: animationTime,
+                      curve: Curves.easeInOut,
+                      child: SizedBox(
+                        width: 175,
+                        height: 48,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (currentPage < 2) {
+                              /// validate that user select images if not change the
+                              /// border color of the container to red
+                              var addNewRealEstateCubit =
+                              context.read<AddNewRealEstateCubit>();
 
-                                if (context
-                                        .read<AddNewRealEstateCubit>()
-                                        .priceForm
-                                        .currentState!
-                                        .validate() &&
-                                    addNewRealEstateCubit.validateImages()) {
-                                  pageController.nextPage(
-                                    duration: animationTime,
-                                    curve: Curves.easeIn,
+                              if (context
+                                  .read<AddNewRealEstateCubit>()
+                                  .priceForm
+                                  .currentState!
+                                  .validate() &&
+                                  addNewRealEstateCubit.validateImages()) {
+                                pageController.nextPage(
+                                  duration: animationTime,
+                                  curve: Curves.easeIn,
+                                );
+                              }
+                            } else {
+                              if (context
+                                  .read<AddNewRealEstateCubit>()
+                                  .locationForm
+                                  .currentState!
+                                  .validate() &&
+                                  context
+                                      .read<AddNewRealEstateCubit>()
+                                      .state
+                                      .selectedLocation !=
+                                      null) {
+                                /// send request to add new real estate
+
+                                final addNewRealEstateCubit =
+                                context.read<AddNewRealEstateCubit>();
+
+                                if (addNewRealEstateCubit
+                                    .state.currentPropertyType.isApartment) {
+                                  addNewRealEstateCubit.addNewApartment(
+                                      ServiceLocator.getIt<
+                                          SelectLocationServiceCubit>()
+                                  );
+                                } else if (addNewRealEstateCubit
+                                    .state.currentPropertyType.isVilla) {
+                                  addNewRealEstateCubit.addNewVilla(
+                                      ServiceLocator.getIt<
+                                          SelectLocationServiceCubit>()
+                                  );
+                                } else if (addNewRealEstateCubit
+                                    .state.currentPropertyType.isBuilding) {
+                                  addNewRealEstateCubit.addNewBuilding(
+                                      ServiceLocator.getIt<
+                                          SelectLocationServiceCubit>()
+                                  );
+                                } else if (addNewRealEstateCubit
+                                    .state.currentPropertyType.isLand) {
+                                  addNewRealEstateCubit.addNewLand(
+                                      ServiceLocator.getIt<
+                                          SelectLocationServiceCubit>()
                                   );
                                 }
-                              } else {
-                                if (context
-                                        .read<AddNewRealEstateCubit>()
-                                        .locationForm
-                                        .currentState!
-                                        .validate() &&
-                                    context
-                                            .read<AddNewRealEstateCubit>()
-                                            .state
-                                            .selectedLocation !=
-                                        null) {
-                                  /// send request to add new real estate
-
-                                  final addNewRealEstateCubit =
-                                      context.read<AddNewRealEstateCubit>();
-
-                                  if (addNewRealEstateCubit
-                                      .state.currentPropertyType.isApartment) {
-                                    addNewRealEstateCubit.addNewApartment(
-                                        ServiceLocator.getIt<
-                                                SelectLocationServiceCubit>()
-                                            .state);
-                                  } else if (addNewRealEstateCubit
-                                      .state.currentPropertyType.isVilla) {
-                                    addNewRealEstateCubit.addNewVilla(
-                                        ServiceLocator.getIt<
-                                                SelectLocationServiceCubit>()
-                                            .state);
-                                  } else if (addNewRealEstateCubit
-                                      .state.currentPropertyType.isBuilding) {
-                                    addNewRealEstateCubit.addNewBuilding(
-                                        ServiceLocator.getIt<
-                                                SelectLocationServiceCubit>()
-                                            .state);
-                                  } else if (addNewRealEstateCubit
-                                      .state.currentPropertyType.isLand) {
-                                    addNewRealEstateCubit.addNewLand(
-                                        ServiceLocator.getIt<
-                                                SelectLocationServiceCubit>()
-                                            .state);
-                                  }
-                                }
                               }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: sendData || currentPage != 2
-                                  ? ColorManager.primaryColor
-                                  : ColorManager.primaryColor2,
-                              foregroundColor: Colors.white,
-                            ),
-                            child: Text(currentPage == 2 ? 'إرسال' : 'التالي'),
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: sendData || currentPage != 2
+                                ? ColorManager.primaryColor
+                                : ColorManager.primaryColor2,
+                            foregroundColor: Colors.white,
                           ),
+                          child: Text(currentPage == 2 ? 'إرسال' : 'التالي'),
                         ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

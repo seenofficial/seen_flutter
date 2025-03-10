@@ -29,7 +29,29 @@
   "chooseYourIdealPropertyEasily" : "Choose your ideal property easily",
 
   "forSale": "For Sale",
-  "forRent": "For Rent"
+  "forRent": "For Rent",
+
+  "apartment": "Apartment",
+  "villa": "Villa",
+  "land": "Land",
+  "building": "Building",
+
+  "studio": "Studio",
+  "duplex": "Duplex",
+  "penthouse": "Penthouse",
+
+  "residential": "Residential",
+  "commercial": "Commercial",
+  "mixedUse": "Mixed",
+
+  "freehold": "Freehold",
+  "agricultural": "Agricultural",
+  "industrial": "Industrial",
+
+  "standalone": "Standalone",
+  "twinHouse": "Twin House",
+  "townHouse": "Town House"
+
 
 
 }

@@ -27,6 +27,7 @@ class ApartmentDetailsEntity extends BasePropertyDetailsEntity {
     required super.state,
     required super.country,
     required super.isInWishlist,
+    required super.rentIsRenewable, required super.monthlyRentPeriod,
     required this.floor,
     required this.rooms,
     required this.bathrooms,

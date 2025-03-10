@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../translation/locale_keys.dart';
 import '../../utils/enums.dart';
 
 extension ApartmentTypeExtension on ApartmentType {
@@ -22,6 +25,17 @@ extension ApartmentTypeExtension on ApartmentType {
         return 'Duplex';
       case ApartmentType.penthouse:
         return 'Penthouse';
+    }
+  }
+  /// Get the localized name of the apartment type.
+  String get toName {
+    switch (this) {
+      case ApartmentType.studio:
+        return LocaleKeys.studio.tr();
+      case ApartmentType.duplex:
+        return LocaleKeys.duplex.tr();
+      case ApartmentType.penthouse:
+        return LocaleKeys.penthouse.tr();
     }
   }
 

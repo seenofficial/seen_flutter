@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../translation/locale_keys.dart';
 import '../../utils/enums.dart';
 
 extension BuildingTypeExtension on BuildingType {
@@ -22,6 +25,17 @@ extension BuildingTypeExtension on BuildingType {
         return 'Commercial';
       case BuildingType.mixedUse:
         return 'Mixed';
+    }
+  }
+
+  String get toName {
+    switch (this) {
+      case BuildingType.residential:
+        return LocaleKeys.residential.tr();
+      case BuildingType.commercial:
+        return LocaleKeys.commercial.tr();
+      case BuildingType.mixedUse:
+        return LocaleKeys.mixedUse.tr();
     }
   }
 

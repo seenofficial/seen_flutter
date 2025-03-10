@@ -1,4 +1,11 @@
   import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/apartment_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/building_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/land_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/villa_type_extension.dart';
+import 'package:enmaa/core/extensions/property_type_extension.dart';
+import 'package:enmaa/core/services/convert_string_to_enum.dart';
+import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/real_estates/domain/entities/apartment_details_entity.dart';
 import 'package:enmaa/features/real_estates/domain/entities/builidng_details_entity.dart';
 import 'package:enmaa/features/real_estates/domain/entities/land_details_entity.dart';
@@ -87,41 +94,47 @@ import '../../../../../configuration/managers/color_manager.dart';
       /// todo : i want to add items for rent operation
       if (villa != null) {
         return [
-          {'icon': AppAssets.villaIcon, 'text': 'Villa'},
-          {'icon': AppAssets.independentPropertyIcon, 'text': villa.propertySubType},
+          {'icon': AppAssets.villaIcon, 'text': PropertyType.villa.toName},
+          {'icon': AppAssets.independentPropertyIcon, 'text': getVillaType(villa.propertySubType).toName},
           {'icon': villa.isFurnished ? AppAssets.furnishedIcon : AppAssets.emptyIcon, 'text': villa.isFurnished ? 'مفروش' : 'غير مفروش'},
           {'icon': AppAssets.areaIcon, 'text': villa.area.toString()},
           {'icon': AppAssets.forSellIcon, 'text': villa.operation == 'for_rent' ? 'للايجار' : 'للبيع'},
+          if(villa.operation == 'for_rent') {'icon': AppAssets.calendarIcon, 'text': "${villa.monthlyRentPeriod!}  شهور"},
           {'icon': AppAssets.landIcon, 'text': '${villa.numberOfFloors} طوابق'},
           {'icon': AppAssets.bedIcon, 'text': villa.rooms.toString()},
           {'icon': AppAssets.bathIcon, 'text': villa.bathrooms.toString()},
         ];
       } else if (apartment != null) {
         return [
-          {'icon': AppAssets.apartmentIcon, 'text': 'Apartment'},
-          {'icon': AppAssets.twinHouseIcon, 'text': apartment.propertySubType},
+          {'icon': AppAssets.apartmentIcon, 'text': PropertyType.apartment.toName},
+          {'icon': AppAssets.twinHouseIcon, 'text': getApartmentType(apartment.propertySubType).toName},
           {'icon': apartment.isFurnished ? AppAssets.furnishedIcon : AppAssets.emptyIcon, 'text': apartment.isFurnished ? 'مفروش' : 'غير مفروش'},
           {'icon': AppAssets.areaIcon, 'text': apartment.area.toString()},
           {'icon': AppAssets.forSellIcon, 'text': apartment.operation == 'for_rent' ? 'للايجار' : 'للبيع'},
+          if(apartment.operation == 'for_rent') {'icon': AppAssets.calendarIcon, 'text': "${apartment.monthlyRentPeriod!}  شهور"},
+
           {'icon': AppAssets.landIcon, 'text': '${apartment.floor} الدور'},
           {'icon': AppAssets.bedIcon, 'text': apartment.rooms.toString()},
           {'icon': AppAssets.bathIcon, 'text': apartment.bathrooms.toString()},
         ];
       } else if (building != null) {
         return [
-          {'icon': AppAssets.residentialBuildingIcon, 'text': 'Building'},
-          {'icon': AppAssets.twinHouseIcon, 'text': building.propertySubType},
+          {'icon': AppAssets.residentialBuildingIcon, 'text': PropertyType.building.toName},
+          {'icon': AppAssets.twinHouseIcon, 'text': getBuildingType(building.propertySubType).toName},
           {'icon': AppAssets.areaIcon, 'text': building.area.toString()},
           {'icon': AppAssets.forSellIcon, 'text': building.operation == 'for_rent' ? 'للايجار' : 'للبيع'},
+          if(building.operation == 'for_rent') {'icon': AppAssets.calendarIcon, 'text': "${building.monthlyRentPeriod!}  شهور"},
+
           {'icon': AppAssets.landIcon, 'text': '${building.numberOfFloors} طوابق'},
           {'icon': AppAssets.apartmentIcon, 'text': building.numberOfFloors.toString()},
         ];
       } else if (land != null) {
         return [
-          {'icon': AppAssets.landIcon, 'text': 'أرض'},
-          {'icon': AppAssets.independentPropertyIcon, 'text': land.propertySubType},
+          {'icon': AppAssets.landIcon, 'text': PropertyType.building.toName},
+          {'icon': AppAssets.independentPropertyIcon, 'text': getLandType(land.propertySubType).toName},
           {'icon': AppAssets.areaIcon, 'text': land.area.toString()},
           {'icon': AppAssets.forSellIcon, 'text': land.operation == 'for_rent' ? 'للايجار' : 'للبيع'},
+          if(land.operation == 'for_rent') {'icon': AppAssets.calendarIcon, 'text': "${land.monthlyRentPeriod!}  شهور"},
           {'icon': AppAssets.readyForBuilding, 'text': land.isLicensed ? 'جاهزة للبناء' : 'غير جاهزة للبناء'},
         ];
       } else {

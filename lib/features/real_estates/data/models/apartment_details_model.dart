@@ -24,7 +24,7 @@ class ApartmentDetailsModel extends ApartmentDetailsEntity {
     required super.rooms,
     required super.bathrooms,
     required super.isFurnished,
-    required super.usageType,
+    required super.usageType, required super.rentIsRenewable, required super.monthlyRentPeriod,
   });
 
   factory ApartmentDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -55,12 +55,13 @@ class ApartmentDetailsModel extends ApartmentDetailsEntity {
       city: cityData['name'].toString(),
       state: stateData['name'].toString(),
       country: countryData['name'].toString(),
-      isInWishlist: propertyData['is_in_wishlist'] ?? false,
+      isInWishlist: json['is_in_wishlist'] ?? false,
       floor: propertyData['floor'] ?? 0,
       rooms: propertyData['rooms'] ?? 0,
       bathrooms: propertyData['bathrooms'] ?? 0,
       isFurnished: propertyData['is_furnitured'] ?? false,
       usageType: propertyData['usage_type'] ?? '',
+      rentIsRenewable: propertyData['is_renewable'] ?? '', monthlyRentPeriod: propertyData['monthly_rent_period'].toString() ?? '',
     );
   }
 }

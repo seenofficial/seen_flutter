@@ -186,14 +186,14 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     );
   }
 
-  Map<String, dynamic> _extractCommonFields({required String areaControllerKey}) {
+  Map<String, dynamic> _extractCommonFields({required String areaControllerKey , required SelectLocationServiceCubit locationServiceCubit}) {
     final String title = addressController.text.trim();
     final String description = descriptionController.text.trim();
     final double price = double.tryParse(priceController.text.trim()) ?? 0;
     final String area = formController.getController(areaControllerKey).text.trim();
-      String city = state.selectedCityId;
-      String latitude = state.selectedLocation!.latitude.toString();
-      String longitude = state.selectedLocation!.longitude.toString();
+    String city = locationServiceCubit.state.selectedCity!.id.toString();
+    String latitude = state.selectedLocation!.latitude.toString();
+    String longitude = state.selectedLocation!.longitude.toString();
 
     final List<String> amenities = state.selectedAmenities;
 
@@ -212,8 +212,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   //
   // REQUEST MODEL FACTORIES
   //
-  Future<ApartmentRequestModel> _getApartmentRequestModel() async {
-    final common = _extractCommonFields(areaControllerKey: LocalKeys.apartmentAreaController);
+  Future<ApartmentRequestModel> _getApartmentRequestModel(SelectLocationServiceCubit locationServiceCubit) async {
+    final common = _extractCommonFields(areaControllerKey: LocalKeys.apartmentAreaController , locationServiceCubit: locationServiceCubit);
     final bool isFurnitured = state.currentFurnishingStatus.isFurnished;
     final String floor = formController.getController(LocalKeys.apartmentFloorsController).text.trim();
     final String rooms = formController.getController(LocalKeys.apartmentRoomsController).text.trim();
@@ -241,8 +241,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     );
   }
 
-  Future<VillaRequestModel> _getVillaRequestModel() async {
-    final common = _extractCommonFields(areaControllerKey: LocalKeys.villaAreaController);
+  Future<VillaRequestModel> _getVillaRequestModel(SelectLocationServiceCubit locationServiceCubit) async {
+    final common = _extractCommonFields(areaControllerKey: LocalKeys.villaAreaController , locationServiceCubit: locationServiceCubit);
     final bool isFurnitured = state.currentFurnishingStatus.isFurnished;
     final String numberOfFloors = formController.getController(LocalKeys.villaFloorsController).text.trim();
     final String rooms = formController.getController(LocalKeys.villaRoomsController).text.trim();
@@ -271,8 +271,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     );
   }
 
-  Future<BuildingRequestModel> _getBuildingRequestModel() async {
-    final common = _extractCommonFields(areaControllerKey: LocalKeys.buildingAreaController);
+  Future<BuildingRequestModel> _getBuildingRequestModel(SelectLocationServiceCubit locationServiceCubit) async {
+    final common = _extractCommonFields(areaControllerKey: LocalKeys.buildingAreaController , locationServiceCubit: locationServiceCubit);
     final String numberOfFloorsStr = formController.getController(LocalKeys.buildingFloorsController).text.trim();
     final String numberOfApartmentsStr = formController.getController(LocalKeys.buildingApartmentsPerFloorController).text.trim();
     final List<PropertyImage> images = await _processImages();
@@ -296,8 +296,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     );
   }
 
-  Future<LandRequestModel> _getLandRequestModel() async {
-    final common = _extractCommonFields(areaControllerKey: LocalKeys.landAreaController);
+  Future<LandRequestModel> _getLandRequestModel(SelectLocationServiceCubit locationServiceCubit) async {
+    final common = _extractCommonFields(areaControllerKey: LocalKeys.landAreaController , locationServiceCubit: locationServiceCubit);
     final List<PropertyImage> images = await _processImages();
     final bool isLicensed = state.landLicenseStatus.isLicensed;
 
@@ -320,10 +320,10 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   }
 
 
-  void addNewApartment(SelectLocationServiceState location) async {
+  void addNewApartment(SelectLocationServiceCubit locationServiceCubit) async {
     emit(state.copyWith(addNewApartmentState: RequestState.loading));
 
-    final ApartmentRequestModel requestModel = await _getApartmentRequestModel();
+    final ApartmentRequestModel requestModel = await _getApartmentRequestModel(locationServiceCubit);
     final Either<Failure, void> result = await _addNewApartmentUseCase(requestModel);
 
     result.fold(
@@ -335,10 +335,10 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     );
   }
 
-  void addNewVilla(SelectLocationServiceState location) async {
+  void addNewVilla(SelectLocationServiceCubit locationServiceCubit) async {
     emit(state.copyWith(addNewApartmentState: RequestState.loading));
 
-    final VillaRequestModel requestModel = await _getVillaRequestModel();
+    final VillaRequestModel requestModel = await _getVillaRequestModel(locationServiceCubit);
     final Either<Failure, void> result = await _addVillaUseCase(requestModel);
 
     result.fold(
@@ -350,10 +350,10 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     );
   }
 
-  void addNewBuilding(SelectLocationServiceState location) async {
+  void addNewBuilding(SelectLocationServiceCubit locationServiceCubit) async {
     emit(state.copyWith(addNewApartmentState: RequestState.loading));
 
-    final BuildingRequestModel requestModel = await _getBuildingRequestModel();
+    final BuildingRequestModel requestModel = await _getBuildingRequestModel(locationServiceCubit);
     final Either<Failure, void> result = await _addNewBuildingUseCase(requestModel);
 
     result.fold(
@@ -365,10 +365,10 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     );
   }
 
-  void addNewLand(SelectLocationServiceState location) async {
-
-    final LandRequestModel requestModel = await _getLandRequestModel();
+  void addNewLand(SelectLocationServiceCubit locationServiceCubit) async {
     emit(state.copyWith(addNewApartmentState: RequestState.loading));
+
+    final LandRequestModel requestModel = await _getLandRequestModel(locationServiceCubit);
     final Either<Failure, void> result = await _addNewLandUseCase(requestModel);
 
     result.fold(
@@ -379,8 +379,6 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
           (_) => emit(state.copyWith(addNewApartmentState: RequestState.loaded)),
     );
   }
-
-
   /// get amenities
 
 

@@ -24,6 +24,7 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
     required super.state,
     required super.country,
     required super.isInWishlist,
+    required super.rentIsRenewable, required super.monthlyRentPeriod,
     required this.numberOfFloors,
     required this.usageType,
   });

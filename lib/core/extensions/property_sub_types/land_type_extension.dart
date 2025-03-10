@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import '../../translation/locale_keys.dart';
 import '../../utils/enums.dart';
 
 extension LandTypeExtension on LandType {
@@ -22,6 +24,18 @@ extension LandTypeExtension on LandType {
         return 'Agricultural';
       case LandType.industrial:
         return 'Industrial';
+    }
+  }
+
+  /// Get the localized name of the land type.
+  String get toName {
+    switch (this) {
+      case LandType.freehold:
+        return LocaleKeys.freehold.tr();
+      case LandType.agricultural:
+        return LocaleKeys.agricultural.tr();
+      case LandType.industrial:
+        return LocaleKeys.industrial.tr();
     }
   }
 

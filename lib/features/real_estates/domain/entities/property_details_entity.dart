@@ -20,6 +20,8 @@ abstract class BasePropertyDetailsEntity extends Equatable {
   final String state;
   final String country;
   final bool isInWishlist;
+  final String? monthlyRentPeriod;
+  final bool? rentIsRenewable;
 
   const BasePropertyDetailsEntity({
     required this.id,
@@ -38,6 +40,8 @@ abstract class BasePropertyDetailsEntity extends Equatable {
     required this.state,
     required this.country,
     required this.isInWishlist,
+    required this.rentIsRenewable,
+    required this.monthlyRentPeriod,
   });
 
   @override

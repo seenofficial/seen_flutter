@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../translation/locale_keys.dart';
 import '../../utils/enums.dart';
 
 extension VillaTypeExtension on VillaType {
@@ -22,6 +25,18 @@ extension VillaTypeExtension on VillaType {
         return 'Twin House';
       case VillaType.townHouse:
         return 'Town House';
+    }
+  }
+
+
+  String get toName {
+    switch (this) {
+      case VillaType.standalone:
+        return LocaleKeys.standalone.tr();
+      case VillaType.twinHouse:
+        return LocaleKeys.twinHouse.tr();
+      case VillaType.townHouse:
+        return LocaleKeys.townHouse.tr();
     }
   }
 

@@ -29,6 +29,7 @@ class AppAssets {
   static const String readyForBuilding = '${baseIconFolder}ready_for_building.svg';
   static const String needLicenceIcon = '${baseIconFolder}need_licence_icon.svg';
   static const String reservedIcon = '${baseIconFolder}reserved_icon.svg';
+  static const String lockIcon = '${baseIconFolder}lock_icon.svg';
   static const String chargeWallerIcon = '${baseIconFolder}charge_wallet_icon.svg';
   static const String sendIcon = '${baseIconFolder}send_icon.svg';
   static const String withdrawIcon = '${baseIconFolder}withdraw_icon.svg';

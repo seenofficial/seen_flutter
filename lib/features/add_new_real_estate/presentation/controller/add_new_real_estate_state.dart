@@ -19,8 +19,7 @@ class AddNewRealEstateState extends Equatable {
     this.getAmenitiesState = RequestState.initial,
     this.selectedAmenities = const [],
     this.selectedLocation,
-    this.selectedCityId = '',
-    this.selectedCityName,
+
     this.currentPaymentMethod = PaymentMethod.cash,
     this.landLicenseStatus = LandLicenseStatus.licensed,
   });
@@ -54,8 +53,7 @@ class AddNewRealEstateState extends Equatable {
   final RequestState getAmenitiesState;
   final List<String> selectedAmenities;
 
-  final String selectedCityId;
-  final String? selectedCityName;
+
 
   final PaymentMethod currentPaymentMethod;
 
@@ -85,8 +83,7 @@ class AddNewRealEstateState extends Equatable {
     LandLicenseStatus? landLicenseStatus,
   }) {
     return AddNewRealEstateState(
-      selectedCityId: selectedCityId ?? this.selectedCityId,
-      currentPropertyOperationType:
+       currentPropertyOperationType:
           currentPropertyOperationType ?? this.currentPropertyOperationType,
       currentPropertyType: currentPropertyType ?? this.currentPropertyType,
       currentApartmentType: currentApartmentType ?? this.currentApartmentType,
@@ -106,8 +103,7 @@ class AddNewRealEstateState extends Equatable {
       getAmenitiesState: getAmenitiesState ?? this.getAmenitiesState,
       selectedAmenities: selectedAmenities ?? this.selectedAmenities,
       selectedLocation: selectedLocation ?? this.selectedLocation,
-      selectedCityName: selectedCityName ?? this.selectedCityName,
-      currentPaymentMethod: currentPaymentMethod ?? this.currentPaymentMethod,
+       currentPaymentMethod: currentPaymentMethod ?? this.currentPaymentMethod,
       landLicenseStatus: landLicenseStatus ?? this.landLicenseStatus,
     );
   }
@@ -131,8 +127,7 @@ class AddNewRealEstateState extends Equatable {
         getAmenitiesState,
         selectedAmenities,
         selectedLocation,
-        selectedCityId,
-        selectedCityName,
+
         currentPaymentMethod,
         landLicenseStatus,
       ];

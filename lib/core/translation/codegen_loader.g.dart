@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
+// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters, constant_identifier_names
 
 import 'dart:ui';
 
@@ -14,7 +14,7 @@ class CodegenLoader extends AssetLoader{
     return Future.value(mapLocales[locale.toString()]);
   }
 
-  static const Map<String,dynamic> en = {
+  static const Map<String,dynamic> _en = {
   "somethingWentWrong": "Something went wrong",
   "badGateway": "Bad Gateway",
   "internalServerError": "Internal Server Error",
@@ -35,13 +35,29 @@ class CodegenLoader extends AssetLoader{
   "authenticateToAccessTheApp": "Please authenticate to access the app",
   "home": "Home",
   "myBookings": "My Bookings",
-  "wish_list": "Favorites",
+  "favorites": "Favorites",
   "myProfile": "My Profile",
   "chooseYourIdealPropertyEasily": "Choose your ideal property easily",
   "forSale": "For Sale",
-  "forRent": "For Rent"
+  "forRent": "For Rent",
+  "apartment": "Apartment",
+  "villa": "Villa",
+  "land": "Land",
+  "building": "Building",
+  "studio": "Studio",
+  "duplex": "Duplex",
+  "penthouse": "Penthouse",
+  "residential": "Residential",
+  "commercial": "Commercial",
+  "mixedUse": "Mixed",
+  "freehold": "Freehold",
+  "agricultural": "Agricultural",
+  "industrial": "Industrial",
+  "standalone": "Standalone",
+  "twinHouse": "Twin House",
+  "townHouse": "Town House"
 };
-static const Map<String,dynamic> ar = {
+static const Map<String,dynamic> _ar = {
   "somethingWentWrong": "حدث خطأ ما",
   "badGateway": "بوابة خاطئة",
   "internalServerError": "خطأ في الخادم الداخلي",
@@ -62,11 +78,27 @@ static const Map<String,dynamic> ar = {
   "authenticateToAccessTheApp": "الرجاء تسجيل الدخول للوصول إلى التطبيق",
   "home": "الرئيسية",
   "myBookings": "حجوزاتي",
-  "wish_list": "المفضلة",
+  "favorites": "المفضلة",
   "myProfile": "حسابي",
   "chooseYourIdealPropertyEasily": "اختر العقار المثالي لك بسهولة",
   "forSale": "للبيع",
-  "forRent": "للإيجار"
+  "forRent": "للإيجار",
+  "apartment": "شقة",
+  "villa": "فيلا",
+  "land": "أرض",
+  "building": "عماره",
+  "studio": "ستوديو",
+  "duplex": "دوبلكس",
+  "penthouse": "بنتهاوس",
+  "residential": "سكنية",
+  "commercial": "تجارية",
+  "mixedUse": "مختلطة",
+  "freehold": "حر",
+  "agricultural": "زراعي",
+  "industrial": "صناعي",
+  "standalone": "مستقلة",
+  "twinHouse": "توين هاوس",
+  "townHouse": "تاون هاوس"
 };
-static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
+static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "ar": _ar};
 }

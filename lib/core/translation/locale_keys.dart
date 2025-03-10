@@ -36,6 +36,30 @@ abstract class LocaleKeys {
   static const forSale = 'forSale' ;
   static const forRent = 'forRent' ;
 
+
+  static const String apartment = "apartment";
+  static const String villa = "villa";
+  static const String building = "building";
+  static const String land = "land";
+
+  /// apartment sub type
+  static const String studio = "studio";
+  static const String duplex = "duplex";
+  static const String penthouse = "penthouse";
+
+
+  static const String residential = "residential";
+  static const String commercial = "commercial";
+  static const String mixedUse = "mixedUse";
+
+  static const String freehold = "freehold";
+  static const String agricultural = "agricultural";
+  static const String industrial = "industrial";
+
+  static const String standalone = 'standalone';
+  static const String twinHouse = 'twinHouse';
+  static const String townHouse = 'townHouse';
+
   /// on boarding
 
 //  static const

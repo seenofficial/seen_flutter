@@ -23,7 +23,7 @@ class VillaDetailsModel extends VillaDetailsEntity {
     required super.isFurnished,
     required super.numberOfFloors,
     required super.rooms,
-    required super.bathrooms,
+    required super.bathrooms, required super.rentIsRenewable, required super.monthlyRentPeriod,
   });
 
   factory VillaDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -54,11 +54,13 @@ class VillaDetailsModel extends VillaDetailsEntity {
       city: cityData['name'].toString(),
       state: stateData['name'].toString(),
       country: countryData['name'].toString(),
-      isInWishlist: propertyData['is_in_wishlist'] ?? false,
+      isInWishlist: json['is_in_wishlist'] ?? false,
       isFurnished: propertyData['is_furnitured'] ?? false,
       numberOfFloors: propertyData['number_of_floors'] ?? 0,
       rooms: propertyData['rooms'] ?? 0,
       bathrooms: propertyData['bathrooms'] ?? 0,
+      rentIsRenewable: propertyData['is_renewable'] ?? '', monthlyRentPeriod: propertyData['monthly_rent_period'].toString() ?? '',
+
     );
   }
 }
