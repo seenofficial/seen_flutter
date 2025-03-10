@@ -32,8 +32,9 @@ class LandTextFields implements PropertyFields {
       ),
 
 
-      FormWidgetComponent(
-        label: 'الأثاث',
+      if(!fromFilter)
+        FormWidgetComponent(
+        label: 'حالة الرخصة ',
         content: BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
 
           buildWhen: (previous, current) =>

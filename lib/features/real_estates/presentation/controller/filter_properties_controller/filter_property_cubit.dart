@@ -1,5 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/apartment_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/building_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/land_type_extension.dart';
+import 'package:enmaa/core/extensions/property_sub_types/villa_type_extension.dart';
 import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:equatable/equatable.dart';
 
@@ -219,20 +223,19 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
 
     // Add selected sub-types
     if (state.selectedApartmentTypes.isNotEmpty && state.currentPropertyType == PropertyType.apartment) {
-      data['apartment_types'] =
-          state.selectedApartmentTypes.map((type) => type.toString()).toList();
+      data['property_sub_type'] = state.selectedApartmentTypes.map((type) => type.toId).join(',');
     }
+
     if (state.selectedVillaTypes.isNotEmpty && state.currentPropertyType == PropertyType.villa) {
-      data['villa_types'] =
-          state.selectedVillaTypes.map((type) => type.toString()).toList();
+      data['property_sub_type'] = state.selectedVillaTypes.map((type) => type.toId).join(',');
     }
+
     if (state.selectedBuildingTypes.isNotEmpty && state.currentPropertyType == PropertyType.building) {
-      data['building_types'] =
-          state.selectedBuildingTypes.map((type) => type.toString()).toList();
+      data['property_sub_type'] = state.selectedBuildingTypes.map((type) => type.toId).join(',');
     }
+
     if (state.selectedLandTypes.isNotEmpty && state.currentPropertyType == PropertyType.land) {
-      data['land_types'] =
-          state.selectedLandTypes.map((type) => type.toString()).toList();
+      data['property_sub_type'] = state.selectedLandTypes.map((type) => type.toId).join(',');
     }
 
     // Remove null or empty values
