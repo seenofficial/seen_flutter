@@ -133,6 +133,9 @@ class RealStateCardComponent extends StatelessWidget {
                   onPressed: () {
                     String propertyId = currentProperty.id.toString();
 
+
+
+                    /// todo :refactor this code to be more readable
                     if (isHomeScreen) {
                       if (isInWishlist) {
                         context.read<HomeBloc>().add(
@@ -141,6 +144,7 @@ class RealStateCardComponent extends StatelessWidget {
                               propertyType: getPropertyType(currentProperty.propertyType),
                             )
                         );
+
 
                         context.read<WishListCubit>().removePropertyFromWishList(propertyId);
                       } else {
@@ -169,6 +173,29 @@ class RealStateCardComponent extends StatelessWidget {
                           context.read<WishListCubit>().removePropertyFromWishList(propertyId);
                         } else {
                           context.read<RealEstateCubit>().addPropertyToWishList(propertyId);
+                          context.read<WishListCubit>().addPropertyToWishList(propertyId);
+                        }
+                      }
+                      else {
+
+                        if (isInWishlist) {
+                          context.read<HomeBloc>().add(
+                              RemovePropertyFromWishlist(
+                                propertyId: propertyId,
+                                propertyType: getPropertyType(currentProperty.propertyType),
+                              )
+                          );
+
+
+                          context.read<WishListCubit>().removePropertyFromWishList(propertyId);
+                        } else {
+                          context.read<HomeBloc>().add(
+                              AddPropertyToWishlist(
+                                propertyId: propertyId,
+                                propertyType: getPropertyType(currentProperty.propertyType),
+                              )
+                          );
+
                           context.read<WishListCubit>().addPropertyToWishList(propertyId);
                         }
                       }
