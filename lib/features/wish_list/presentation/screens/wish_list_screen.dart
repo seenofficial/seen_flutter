@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/app_bar_component.dart';
+import '../../../../core/components/card_listing_shimmer.dart';
 import '../../../../core/screens/error_app_screen.dart';
 import '../../../../core/screens/property_empty_screen.dart';
 import '../../../home_module/presentation/components/real_state_card_component.dart';
@@ -75,7 +76,11 @@ class WishListScreen extends StatelessWidget {
                     );
                   }
                   else {
-                    return const Center(child: CircularProgressIndicator());
+                    return CardShimmerList(
+                      scrollDirection: Axis.vertical,
+                      cardWidth: MediaQuery.of(context).size.width,
+                      cardHeight: context.scale(290),
+                    );
                   }
                 },
               ),
