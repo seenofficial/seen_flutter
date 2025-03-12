@@ -33,6 +33,13 @@ class AppAssets {
   static const String chargeWallerIcon = '${baseIconFolder}charge_wallet_icon.svg';
   static const String sendIcon = '${baseIconFolder}send_icon.svg';
   static const String withdrawIcon = '${baseIconFolder}withdraw_icon.svg';
+  static const String myPropertiesIcon = '${baseIconFolder}my_properties_icon.svg';
+  static const String electronicContractIcon = '${baseIconFolder}electronic_contract_icon.svg';
+  static const String myAppointmentIcon = '${baseIconFolder}my_appointment_icon.svg';
+  static const String localizationIcon = '${baseIconFolder}localization_icon.svg';
+  static const String privacyIcon = '${baseIconFolder}privacy_icon.svg';
+  static const String themeIcon = '${baseIconFolder}theme_icon.svg';
+  static const String trashIcon = '${baseIconFolder}trash_icon.svg';
 
   /// building sub types icons
   static const String residentialBuildingIcon2 = '${baseIconFolder}commercial_building_icon.svg';

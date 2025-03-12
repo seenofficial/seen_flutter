@@ -6,7 +6,7 @@ import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/features/my_booking/my_booking_DI.dart';
 import 'package:enmaa/features/my_booking/presentation/controller/my_booking_cubit.dart';
 import 'package:enmaa/features/my_booking/presentation/screens/my_booking_screen.dart';
-import 'package:enmaa/features/my_profile/my_profile_screen.dart';
+import 'package:enmaa/features/my_profile/presentation/screens/my_profile_screen.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/real_estates/real_estates_DI.dart';
 import 'package:enmaa/features/wallet/wallet_DI.dart';
