@@ -132,6 +132,7 @@ class AppRouters {
               return PreviewPropertyCubit(
                 ServiceLocator.getIt(),
                 ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
               ) ;
             },
             child: PreviewPropertyScreen(propertyId: propertyId,),

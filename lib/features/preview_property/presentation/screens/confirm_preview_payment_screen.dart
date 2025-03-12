@@ -12,6 +12,7 @@ import '../../../../core/components/reusable_type_selector_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/components/warning_message_component.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/utils/enums.dart';
 import '../../../add_new_real_estate/presentation/components/numbered_text_header_component.dart';
 import '../../../home_module/home_imports.dart';
 
@@ -88,8 +89,10 @@ class _ConfirmPreviewPaymentScreenState extends State<ConfirmPreviewPaymentScree
                   TypeSelectorComponent<String>(
                     selectorWidth: 171,
                     values: ['بطاقة الائتمان', 'المحفظة'],
-                    currentType: 'المحفظة',
-                    onTap: (type) {},
+                    currentType: state.currentPaymentMethod,
+                    onTap: (type) {
+                      context.read<PreviewPropertyCubit>().changePaymentMethod(type);
+                    },
                     getIcon: (type) {
                       switch (type) {
                         case 'بطاقة الائتمان':
@@ -117,6 +120,11 @@ class _ConfirmPreviewPaymentScreenState extends State<ConfirmPreviewPaymentScree
               ),
             ),
 
+            if(state.addNewPreviewTimeState.isLoading)
+              LoadingOverlayComponent(
+                opacity: 0,
+                text: ' جاري تأكيد الدفع',
+              ),
             if(state.getInspectionAmountState.isLoading)
               LoadingOverlayComponent(
                 opacity: 0,

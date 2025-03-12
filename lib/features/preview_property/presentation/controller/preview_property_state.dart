@@ -7,12 +7,16 @@ class PreviewPropertyState extends Equatable {
      this.selectedTime,
     this.availableHours = const [],
     this.getAvailableHoursState = RequestState.initial,
+    this.addNewPreviewTimeState = RequestState.initial,
     this.getAvailableHoursErrorMessage = '',
     this.currentAvailableHours = const [],
 
     this.getInspectionAmountErrorMessage = '' ,
     this.getInspectionAmountState = RequestState.initial,
     this.inspectionAmount = '',
+
+    this.currentPaymentMethod = 'بطاقة الائتمان',
+    this.addNewPreviewTimeErrorMessage = '',
   });
 
   final bool showPreviewDate;
@@ -30,6 +34,12 @@ class PreviewPropertyState extends Equatable {
   final String getInspectionAmountErrorMessage;
   final String inspectionAmount;
 
+
+  final String currentPaymentMethod ;
+
+
+  final RequestState addNewPreviewTimeState ;
+  final String addNewPreviewTimeErrorMessage ;
   PreviewPropertyState copyWith({
     bool? showPreviewDate,
     DateTime? selectedDate,
@@ -44,6 +54,11 @@ class PreviewPropertyState extends Equatable {
     RequestState? getInspectionAmountState,
     String? getInspectionAmountErrorMessage,
     String? inspectionAmount,
+
+    String? currentPaymentMethod,
+
+    RequestState? addNewPreviewTimeState,
+    String? addNewPreviewTimeErrorMessage,
   }) {
     return PreviewPropertyState(
       showPreviewDate: showPreviewDate ?? this.showPreviewDate,
@@ -57,6 +72,11 @@ class PreviewPropertyState extends Equatable {
       getInspectionAmountState: getInspectionAmountState ?? this.getInspectionAmountState,
       getInspectionAmountErrorMessage: getInspectionAmountErrorMessage ?? this.getInspectionAmountErrorMessage,
       inspectionAmount: inspectionAmount ?? this.inspectionAmount,
+
+      currentPaymentMethod: currentPaymentMethod ?? this.currentPaymentMethod,
+      addNewPreviewTimeErrorMessage: addNewPreviewTimeErrorMessage ?? this.addNewPreviewTimeErrorMessage,
+
+      addNewPreviewTimeState: addNewPreviewTimeState ?? this.addNewPreviewTimeState,
     );
   }
 
@@ -69,9 +89,13 @@ class PreviewPropertyState extends Equatable {
     availableHours,
     getAvailableHoursErrorMessage,
     currentAvailableHours,
+    currentPaymentMethod,
 
     getInspectionAmountState,
     getInspectionAmountErrorMessage,
     inspectionAmount,
+    addNewPreviewTimeState,
+    addNewPreviewTimeErrorMessage,
+
   ];
 }

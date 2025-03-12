@@ -1,5 +1,6 @@
 
- import 'package:enmaa/core/components/custom_snack_bar.dart';
+ import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/request_states_extension.dart';
 import 'package:enmaa/features/preview_property/presentation/controller/preview_property_cubit.dart';
@@ -11,11 +12,13 @@ import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
  import '../../../../core/components/button_app_component.dart';
  import '../../../home_module/home_imports.dart';
+import '../../data/models/add_new_preview_time_request_model.dart';
 
 class BottomButtons extends StatelessWidget {
-  const BottomButtons({super.key , required this.currentPage, required this.pageController});
+  const BottomButtons({super.key , required this.currentPage, required this.pageController , required this.propertyId});
   final int currentPage ;
   final PageController pageController  ;
+  final String propertyId ;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,13 @@ class BottomButtons extends StatelessWidget {
               }
             },
           ),
-          BlocBuilder<PreviewPropertyCubit, PreviewPropertyState>(
+          BlocConsumer<PreviewPropertyCubit, PreviewPropertyState>(
+            listener: (context, state) {
+              if(state.addNewPreviewTimeState.isLoaded) {
+                CustomSnackBar.show(context: context, message: 'تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.', type: SnackBarType.success);
+                Navigator.pop(context);
+              }
+            },
             builder: (context, state) {
               final bool canConfirm = state.selectedDate != null && state.selectedTime != null ;
               final bool canSendRequest = state.getInspectionAmountState.isLoaded ;
@@ -84,9 +93,14 @@ class BottomButtons extends StatelessWidget {
                   }
                   else {
                     if(canSendRequest) {
-                      /// send
-                      CustomSnackBar.show(context: context, message: 'تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.', type: SnackBarType.success);
-                      Navigator.pop(context);
+
+                      AddNewPreviewRequestModel request = AddNewPreviewRequestModel(
+                        propertyId: propertyId,
+                        previewTime: state.selectedTime,
+                        previewDate: DateFormat('yyyy-MM-dd', 'en').format(state.selectedDate!), // Use lowercase 'yyyy'
+                        paymentMethod: state.currentPaymentMethod == 'بطاقة الائتمان' ? 'credit' : 'wallet',
+                      );
+                      context.read<PreviewPropertyCubit>().addPreviewTimeForSpecificProperty(request);
                     }
                   }
                 },

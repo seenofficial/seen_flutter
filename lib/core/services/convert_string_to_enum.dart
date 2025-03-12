@@ -66,3 +66,14 @@ PropertyType getPropertyType(String type) {
       return PropertyType.villa;
   }
 }
+
+PaymentMethod getPaymentMethod(String type) {
+  switch (type) {
+    case "cash":
+      return PaymentMethod.cash;
+    case "wallet":
+      return PaymentMethod.wallet;
+    default:
+      return PaymentMethod.cash;
+  }
+}

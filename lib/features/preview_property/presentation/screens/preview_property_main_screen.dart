@@ -85,6 +85,7 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
             ],
           ),
           BottomButtons(
+            propertyId: widget.propertyId,
               currentPage: _currentPage, pageController: _pageController)
         ],
       ),
