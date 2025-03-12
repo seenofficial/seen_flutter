@@ -60,6 +60,10 @@ abstract class LocaleKeys {
   static const String twinHouse = 'twinHouse';
   static const String townHouse = 'townHouse';
 
+
+  static const String completed = "completed";
+  static const String active = "active";
+  static const String cancelled = "cancelled";
   /// on boarding
 
 //  static const

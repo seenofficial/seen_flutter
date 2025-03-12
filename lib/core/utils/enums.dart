@@ -47,3 +47,9 @@ enum PaymentMethod {
   cash,
   wallet,
 }
+
+enum Status {
+  completed,
+  cancelled,
+  active
+}

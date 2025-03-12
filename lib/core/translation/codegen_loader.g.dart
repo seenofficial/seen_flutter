@@ -55,7 +55,10 @@ class CodegenLoader extends AssetLoader{
   "industrial": "Industrial",
   "standalone": "Standalone",
   "twinHouse": "Twin House",
-  "townHouse": "Town House"
+  "townHouse": "Town House",
+  "active": "Active",
+  "completed": "Completed",
+  "cancelled": "Cancelled"
 };
 static const Map<String,dynamic> _ar = {
   "somethingWentWrong": "حدث خطأ ما",
@@ -98,7 +101,10 @@ static const Map<String,dynamic> _ar = {
   "industrial": "صناعي",
   "standalone": "مستقلة",
   "twinHouse": "توين هاوس",
-  "townHouse": "تاون هاوس"
+  "townHouse": "تاون هاوس",
+  "active": " نشط",
+  "completed": "مكتمل",
+  "cancelled": " ملغي"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "ar": _ar};
 }
