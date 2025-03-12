@@ -33,6 +33,7 @@ class RealEstateRemoteDataSource extends BaseRealEstateRemoteData {
       return PropertyModel.fromJson(jsonItem);
     }).toList();
 
+    print('lengggg ${properties.length}');
     return properties;
   }
 

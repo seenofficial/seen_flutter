@@ -64,7 +64,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         return const MyBookingScreen();
       case 2:
         return WishListScreen();
-      case 3:
+     /* case 3:
         return BlocProvider(
           create: (context) {
             WalletDi().setup();
@@ -76,8 +76,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
               ..getWalletData() ..getTransactionHistoryData();
           },
           child: WalletScreen(),
-        );
-      case 4:
+        );*/
+      case 3:
         return const ProfileScreen();
       default:
         return const SizedBox.shrink();
@@ -113,9 +113,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
         FloatingNavBarItem(
             icon: AppAssets.heartIcon,
             text: 'المفضله'),
-        FloatingNavBarItem(
-            icon: AppAssets.walletIcon,
-            text: 'محفظتي'),
+        // FloatingNavBarItem(
+        //     icon: AppAssets.walletIcon,
+        //     text: 'محفظتي'),
         FloatingNavBarItem(
             icon: AppAssets.personIcon, text: 'حسابي'),
       ];
@@ -170,8 +170,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
                 );
               }
 
-              return ServiceLocator.getIt<RealEstateCubit>()
-                ..fetchProperties();
+              return ServiceLocator.getIt<RealEstateCubit>();
             }
         ),
       ],

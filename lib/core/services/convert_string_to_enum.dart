@@ -51,3 +51,18 @@ LandType getLandType(String type) {
       return LandType.freehold;
   }
 }
+
+PropertyType getPropertyType(String type) {
+  switch (type) {
+    case "villa":
+      return PropertyType.villa;
+    case "apartment":
+      return PropertyType.apartment;
+    case "building":
+      return PropertyType.building;
+    case "land":
+      return PropertyType.land;
+    default:
+      return PropertyType.villa;
+  }
+}

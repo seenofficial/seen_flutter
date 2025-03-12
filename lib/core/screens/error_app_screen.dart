@@ -11,14 +11,15 @@ import '../components/circular_icon_button.dart';
 import '../constants/app_assets.dart';
 
 class ErrorAppScreen extends StatelessWidget {
-  const ErrorAppScreen({super.key , this.showBackButton = true , this.showActionButton = true});
+  const ErrorAppScreen({super.key , this.showBackButton = true , this.showActionButton = true , this.backgroundColor});
 
   final bool showBackButton  ;
   final bool showActionButton;
+  final Color? backgroundColor ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.whiteColor,
+      backgroundColor: backgroundColor?? ColorManager.whiteColor,
       body: Stack(
         children: [
           if(showBackButton)

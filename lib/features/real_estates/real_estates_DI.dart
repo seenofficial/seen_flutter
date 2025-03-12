@@ -20,6 +20,7 @@ class RealEstatesDi {
     _registerUseCases();
 
 
+    if(sl.isRegistered<RealEstateCubit>()) return;
     sl.registerLazySingleton<RealEstateCubit>(
           () => RealEstateCubit(
         sl<GetPropertiesUseCase>(),
@@ -32,22 +33,26 @@ class RealEstatesDi {
 
 
   void _registerRemoteDataSource() {
+    if(sl.isRegistered<BaseRealEstateRemoteData>()) return;
     sl.registerLazySingleton<BaseRealEstateRemoteData>(
           () => RealEstateRemoteDataSource(dioService: sl()),
     );
   }
 
   void _registerRepositories() {
+    if(sl.isRegistered<BaseRealEstateRepository>()) return;
     sl.registerLazySingleton<BaseRealEstateRepository>(
           () => RealEstateRepository(baseRealEstateRemoteData: sl()),
     );
   }
 
   void _registerUseCases() {
+    if(sl.isRegistered<GetPropertiesUseCase>()) return;
     sl.registerLazySingleton(
           () => GetPropertiesUseCase(sl()),
     );
 
+    if(sl.isRegistered<GetPropertyDetailsUseCase>()) return;
     sl.registerLazySingleton(
           () => GetPropertyDetailsUseCase(sl()),
     );

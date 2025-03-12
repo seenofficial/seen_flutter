@@ -469,7 +469,17 @@ class RealEstateFilterScreen extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               var filterData = context.read<FilterPropertyCubit>().prepareDataForApi();
-              context.read<RealEstateCubit>().fetchProperties(filters : filterData) ;
+
+              final operationType = context.read<FilterPropertyCubit>().state.currentPropertyOperationType;
+
+
+              context.read<RealEstateCubit>().clearPropertyList(operationType);
+              context.read<RealEstateCubit>().fetchProperties(
+                filters: filterData,
+                operationType: operationType,
+                refresh: true,
+              );
+
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
@@ -481,5 +491,4 @@ class RealEstateFilterScreen extends StatelessWidget {
         ),
       ],
     );
-  }
-}
+  }}

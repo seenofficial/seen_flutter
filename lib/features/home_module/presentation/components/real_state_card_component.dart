@@ -29,6 +29,8 @@ import '../../../real_estates/presentation/controller/real_estate_cubit.dart';
 import '../../../wish_list/presentation/controller/wish_list_cubit.dart';
 import '../../../wish_list/wish_list_DI.dart';
 import '../../home_imports.dart';
+import '../controller/home_bloc.dart';
+import '../screens/home_screen.dart';
 
 class RealStateCardComponent extends StatelessWidget {
   final double width;
@@ -114,39 +116,67 @@ class RealStateCardComponent extends StatelessWidget {
             ),
           ),
           PositionedDirectional(
-              top: context.scale(8),
-              end: context.scale(8),
-              child: BlocBuilder<RealEstateCubit, RealEstateState>(
-                builder: (context, state) {
-                  bool isInWishlist = currentProperty.isInWishlist;
-                  return CircularIconButton(
-                    iconPath: isInWishlist
-                        ? AppAssets.selectedHeartIcon
-                        : AppAssets.heartIcon,
-                    containerSize: context.scale(40),
-                    iconSize: context.scale(20),
-                    onPressed: () {
+            top: context.scale(8),
+            end: context.scale(8),
+            child: Builder(
+              builder: (context) {
+                bool isInWishlist = currentProperty.isInWishlist;
 
-                      if(state.getPropertiesState.isLoaded){
-                        String propertyId = currentProperty.id.toString();
-                        if(isInWishlist){
+                final bool isHomeScreen = context.findAncestorWidgetOfExactType<HomeScreen>() != null;
 
-                          context.read<RealEstateCubit>().removeSelectedPropertyFromWishList(propertyId);
+                return CircularIconButton(
+                  iconPath: isInWishlist
+                      ? AppAssets.selectedHeartIcon
+                      : AppAssets.heartIcon,
+                  containerSize: context.scale(40),
+                  iconSize: context.scale(20),
+                  onPressed: () {
+                    String propertyId = currentProperty.id.toString();
+
+                    if (isHomeScreen) {
+                      if (isInWishlist) {
+                        context.read<HomeBloc>().add(
+                            RemovePropertyFromWishlist(
+                              propertyId: propertyId,
+                              propertyType: getPropertyType(currentProperty.propertyType),
+                            )
+                        );
+
+                        context.read<WishListCubit>().removePropertyFromWishList(propertyId);
+                      } else {
+                        context.read<HomeBloc>().add(
+                            AddPropertyToWishlist(
+                              propertyId: propertyId,
+                              propertyType: getPropertyType(currentProperty.propertyType),
+                            )
+                        );
+
+                        context.read<WishListCubit>().addPropertyToWishList(propertyId);
+                      }
+                    } else {
+                      final realEstateState = context.read<RealEstateCubit>().state;
+                      final PropertyOperationType operationType = currentProperty.operation == 'for_sale'
+                          ? PropertyOperationType.forSale
+                          : PropertyOperationType.forRent;
+
+                      final bool isLoaded = operationType == PropertyOperationType.forSale
+                          ? realEstateState.getPropertiesSaleState == RequestState.loaded
+                          : realEstateState.getPropertiesRentState == RequestState.loaded;
+
+                      if (isLoaded) {
+                        if (isInWishlist) {
+                          context.read<RealEstateCubit>().removePropertyFromWishList(propertyId);
                           context.read<WishListCubit>().removePropertyFromWishList(propertyId);
-
-                        }
-                        else {
-
-                          context.read<RealEstateCubit>().addSelectedPropertyToWishList(propertyId);
+                        } else {
+                          context.read<RealEstateCubit>().addPropertyToWishList(propertyId);
                           context.read<WishListCubit>().addPropertyToWishList(propertyId);
-
                         }
                       }
-                    },
-                  );
+                    }
+                  },
+                );
                 },
-              ),
-
+            ),
           ),
         ],
       ),

@@ -40,6 +40,8 @@ class JsonKeys {
   static const String code = 'code';
 
 
+  static const String offset = 'offset';
+  static const String limit = 'limit';
 
   /// add properties
 
@@ -52,6 +54,19 @@ class JsonKeys {
   static const String paymentMethod = 'payment_method';
   static const String numberOfApartments = 'number_of_apartments';
   static const String isLicensed = 'is_licensed';
+
+
+  /// filter properties
+///
+  static const String propertyTypeName = 'property_type_name';
+  static const String priceMax = 'price_max';
+  static const String priceMin = 'price_min';
+  static const String areaMax = 'area_max';
+  static const String areaMin = 'area_min';
+  static const String monthlyRentPeriodMin = 'monthly_rent_period_min';
+  static const String monthlyRentPeriodMax = 'monthly_rent_period_max';
+
+
 
 
 }

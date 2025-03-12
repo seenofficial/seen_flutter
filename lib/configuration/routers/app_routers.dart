@@ -55,6 +55,7 @@ class AppRouters {
                       () => HomeBloc(
                         ServiceLocator.getIt(),
                         ServiceLocator.getIt(),
+                        ServiceLocator.getIt(),
                   ),
                 );
               }

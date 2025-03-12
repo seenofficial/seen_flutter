@@ -1,4 +1,5 @@
 import 'package:enmaa/core/components/custom_snack_bar.dart';
+import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/core/components/app_bar_component.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
 import 'package:enmaa/core/services/service_locator.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../../../../configuration/managers/value_manager.dart';
 import '../../../../core/components/card_listing_shimmer.dart';
 import '../../../../core/utils/enums.dart';
@@ -24,10 +26,6 @@ import '../components/services_listing_widget.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  List<PropertyEntity> filterPropertiesByType(List<PropertyEntity> properties, String type) {
-    return properties.where((property) => property.propertyType == type).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -41,15 +39,21 @@ class HomeScreen extends StatelessWidget {
               ),
               AppTextField(
                 hintText: 'ابحث عن كل ما تريد معرفته ...',
-                prefixIcon:
-                    Icon(Icons.search, color: ColorManager.blackColor),
+                prefixIcon: Icon(Icons.search, color: ColorManager.blackColor),
               ),
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    context.read<HomeBloc>().add(FetchBanners());
-                    context.read<HomeBloc>().add(FetchAppServices());
-                    context.read<RealEstateCubit>().fetchProperties();
+                    state.properties.forEach((propertyType, propertyData) {
+                      if (propertyData.state != RequestState.initial) {
+                        context.read<HomeBloc>().add(
+                            FetchNearByProperties(
+                                propertyType: propertyType,
+                                location: '1'
+                            )
+                        );
+                      }
+                    });
                   },
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -61,8 +65,7 @@ class HomeScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => MainServicesScreen(
-                                      serviceName: serviceName),
+                                  builder: (context) => MainServicesScreen(serviceName: serviceName),
                                 ),
                               );
                             } else {
@@ -74,70 +77,105 @@ class HomeScreen extends StatelessWidget {
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 4, // Four types of properties
+                          itemCount: 4,
                           itemBuilder: (context, index) {
-                            final List<String> propertyTypes = ['apartment', 'land', 'building', 'villa'];
+                            final List<PropertyType> propertyTypes = [PropertyType.apartment, PropertyType.land, PropertyType.building, PropertyType.villa];
                             final List<String> propertyTypeTitles = ['شقق', 'اراضي', 'مباني', 'فلل'];
-                            final String propertyType = propertyTypes[index];
+                            final PropertyType propertyType = propertyTypes[index];
 
                             return Padding(
                               padding: EdgeInsets.only(top: context.scale(24)),
-                              child: BlocBuilder<RealEstateCubit, RealEstateState>(
-                                buildWhen: (previous, current) =>
-                                previous.getPropertiesState != current.getPropertiesState,
-                                builder: (context, state) {
-                                  switch (state.getPropertiesState) {
-                                    case RequestState.loading || RequestState.initial:
-                                      return SizedBox(
-                                        height: context.scale(241),
-                                        child: CardShimmerList(
-                                          scrollDirection: Axis.horizontal,
-                                          cardWidth: context.scale(209),
-                                          cardHeight: context.scale(241),
-                                        ),
+                              child: VisibilityDetector(
+                                key: Key('property_section_${propertyType.toString()}'),
+                                onVisibilityChanged: (info) {
+                                  if (info.visibleFraction > 0.1) {
+                                    final propertyData = state.properties[propertyType];
+                                    if (propertyData == null ||
+                                        (propertyData.state != RequestState.loaded &&
+                                            propertyData.state != RequestState.loading)) {
+                                      context.read<HomeBloc>().add(
+                                          FetchNearByProperties(
+                                              propertyType: propertyType,
+                                              location: '1'
+                                          )
                                       );
-
-                                    case RequestState.loaded:
-                                      final filteredProperties = filterPropertiesByType(state.properties, propertyType);
-
-                                      return ServicesListingWidget(
-                                        seeMoreAction: () {
-                                          // Handle see more action for each property type
-                                        },
-                                        listingWidget: SizedBox(
-                                          height: context.scale(241),
-                                          child: ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: filteredProperties.length,
-                                            itemBuilder: (context, index) {
-                                              final property = filteredProperties[index];
-                                              return Padding(
-                                                padding: EdgeInsets.only(right: context.scale(AppPadding.p16)),
-                                                child: RealStateCardComponent(
-                                                  width: context.scale(209),
-                                                  height: context.scale(241),
-                                                  currentProperty: property,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        title: '  ${propertyTypeTitles[index]} بالقرب منك', // Custom title based on property type
-                                      );
-
-                                    case RequestState.error:
-                                      return Center(
-                                        child: Text(
-                                          state.getPropertiesError,
-                                          style: TextStyle(color: Colors.red),
-                                        ),
-                                      );
+                                    }
                                   }
                                 },
+                                child: BlocBuilder<HomeBloc, HomeState>(
+                                  buildWhen: (previous, current) {
+                                    final previousData = previous.properties[propertyType];
+                                    final currentData = current.properties[propertyType];
+
+                                    return previousData != currentData;
+                                  },
+                                  builder: (context, state) {
+                                    final propertyData = state.properties[propertyType];
+                                    final requestState = propertyData?.state ?? RequestState.initial;
+
+                                    switch (requestState) {
+                                      case RequestState.loading:
+                                      case RequestState.initial:
+                                        return SizedBox(
+                                          height: context.scale(241),
+                                          child: CardShimmerList(
+                                            scrollDirection: Axis.horizontal,
+                                            cardWidth: context.scale(209),
+                                            cardHeight: context.scale(241),
+                                          ),
+                                        );
+
+                                      case RequestState.loaded:
+                                        final properties = propertyData?.properties ?? [];
+
+                                        if (properties.isEmpty) {
+                                          return Center(
+                                            child: Text(
+                                              'لا توجد ${propertyTypeTitles[index]} متاحة',
+                                              style: TextStyle(color: ColorManager.blackColor),
+                                            ),
+                                          );
+                                        }
+
+                                        return ServicesListingWidget(
+                                          seeMoreAction: () {
+                                          },
+                                          listingWidget: SizedBox(
+                                            height: context.scale(241),
+                                            child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: properties.length,
+                                              itemBuilder: (context, index) {
+                                                final property = properties[index];
+                                                return Padding(
+                                                  padding: EdgeInsets.only(right: context.scale(AppPadding.p16)),
+                                                  child: RealStateCardComponent(
+                                                    width: context.scale(209),
+                                                    height: context.scale(241),
+                                                    currentProperty: property,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          title: '  ${propertyTypeTitles[index]} بالقرب منك',
+                                        );
+
+                                      case RequestState.error:
+                                        return Center(
+                                          child: Text(
+                                            propertyData?.errorMessage ?? 'حدث خطأ',
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                        );
+                                    }
+                                  },
+                                ),
                               ),
                             );
                           },
-                        ),                      ],
+                        ),
+                      ],
                     ),
                   ),
                 ),

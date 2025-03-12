@@ -8,6 +8,7 @@ import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/components/property_form_controller.dart';
+import '../../../../../core/constants/json_keys.dart';
 import '../../../../../core/constants/local_keys.dart';
 import '../../../../../core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import '../../../../../core/services/service_locator.dart';
@@ -139,39 +140,39 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
 
 
   Map<String, dynamic> prepareDataForApi() {
-    final locationCubit = ServiceLocator.getIt<SelectLocationServiceCubit>();
+    final locationCubit = SelectLocationServiceCubit.getOrCreate();
     final formController = this.formController;
 
     final Map<String, dynamic> data = {
-      'operation': state.currentPropertyOperationType.isForSale
+      JsonKeys.operation : state.currentPropertyOperationType.isForSale
           ? 'for_sale'
           : 'for_rent',
-      'price_min': state.minPriceValue,
-      'price_max': state.maxPriceValue,
-      'area_min': state.minAreaValue,
-      'area_max': state.maxAreaValue,
+      JsonKeys.priceMin: state.minPriceValue,
+      JsonKeys.priceMax: state.maxPriceValue,
+      JsonKeys.areaMin : state.minAreaValue,
+      JsonKeys.areaMax: state.maxAreaValue,
     };
 
     // Add monthly rent period if operation is for rent
     if (state.currentPropertyOperationType.isForRent) {
-      data['monthly_rent_period_min'] = state.minNumberOfMonths;
-      data['monthly_rent_period_max'] = state.maxNumberOfMonths;
+      data[JsonKeys.monthlyRentPeriodMin] = state.minNumberOfMonths;
+      data[JsonKeys.monthlyRentPeriodMax] = state.maxNumberOfMonths;
     }
 
     // Add location data if selected
     if (locationCubit.state.selectedCountry != null) {
-      data['country'] = locationCubit.state.selectedCountry!.id;
+      data[JsonKeys.country] = locationCubit.state.selectedCountry!.id;
     }
     if (locationCubit.state.selectedState != null) {
-      data['state'] = locationCubit.state.selectedState!.id;
+      data[JsonKeys.state] = locationCubit.state.selectedState!.id;
     }
     if (locationCubit.state.selectedCity != null) {
-      data['city'] = locationCubit.state.selectedCity!.id;
+      data[JsonKeys.city] = locationCubit.state.selectedCity!.id;
     }
 
     // Add property type if selected
     if (state.currentPropertyType != null) {
-      data['property_type_name'] = state.currentPropertyType?.toEnglish;
+      data[JsonKeys.propertyTypeName] = state.currentPropertyType?.toEnglish;
     }
 
     // Add property-specific filters
@@ -181,8 +182,7 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
       data['apartment_bath_rooms'] =
           formController.getController(LocalKeys.apartmentBathRoomsController).text;
 
-      /// todo : floor
-      ///
+
       if(state.selectedFurnishingStatuses.length == 1){
         bool isFurnished = state.selectedFurnishingStatuses.contains(FurnishingStatus.furnished);
         data['apartment_is_furnitured'] = isFurnished;
@@ -206,7 +206,7 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
           formController.getController(LocalKeys.buildingApartmentsPerFloorController).text;
     } else if (state.currentPropertyType == PropertyType.land) {
       if (state.selectedLandLicenseStatuses.length == 1) {
-        data['is_licensed'] = state.selectedLandLicenseStatuses.contains(LandLicenseStatus.licensed);
+        data[JsonKeys.isLicensed] = state.selectedLandLicenseStatuses.contains(LandLicenseStatus.licensed);
       }
     }
     else {
@@ -214,7 +214,7 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
       if(state.selectedFurnishingStatuses.isNotEmpty){
         if(state.selectedFurnishingStatuses.length !=2){
           bool isFurnished = state.selectedFurnishingStatuses.contains(FurnishingStatus.furnished);
-          data['is_furnitured'] = isFurnished;
+          data[JsonKeys.isFurnitured] = isFurnished;
         }
       }
     }
@@ -223,19 +223,19 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
 
     // Add selected sub-types
     if (state.selectedApartmentTypes.isNotEmpty && state.currentPropertyType == PropertyType.apartment) {
-      data['property_sub_type'] = state.selectedApartmentTypes.map((type) => type.toId).join(',');
+      data[JsonKeys.propertySubType] = state.selectedApartmentTypes.map((type) => type.toId).join(',');
     }
 
     if (state.selectedVillaTypes.isNotEmpty && state.currentPropertyType == PropertyType.villa) {
-      data['property_sub_type'] = state.selectedVillaTypes.map((type) => type.toId).join(',');
+      data[JsonKeys.propertySubType] = state.selectedVillaTypes.map((type) => type.toId).join(',');
     }
 
     if (state.selectedBuildingTypes.isNotEmpty && state.currentPropertyType == PropertyType.building) {
-      data['property_sub_type'] = state.selectedBuildingTypes.map((type) => type.toId).join(',');
+      data[JsonKeys.propertySubType] = state.selectedBuildingTypes.map((type) => type.toId).join(',');
     }
 
     if (state.selectedLandTypes.isNotEmpty && state.currentPropertyType == PropertyType.land) {
-      data['property_sub_type'] = state.selectedLandTypes.map((type) => type.toId).join(',');
+      data[JsonKeys.propertySubType] = state.selectedLandTypes.map((type) => type.toId).join(',');
     }
 
     // Remove null or empty values

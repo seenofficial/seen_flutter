@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:enmaa/core/errors/failure.dart';
+import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
 import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/real_estates/domain/entities/property_details_entity.dart';
 import 'package:enmaa/features/real_estates/domain/use_cases/get_property_details_use_case.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/constants/json_keys.dart';
 import '../../domain/entities/base_property_entity.dart';
 import '../../domain/use_cases/get_properties_use_case.dart';
 
@@ -15,78 +17,174 @@ class RealEstateCubit extends Cubit<RealEstateState> {
   final GetPropertiesUseCase _getPropertiesUseCase;
   final GetPropertyDetailsUseCase _getPropertyDetailsUseCase;
 
-  RealEstateCubit(this._getPropertiesUseCase , this._getPropertyDetailsUseCase) : super(const RealEstateState());
+  RealEstateCubit(this._getPropertiesUseCase, this._getPropertyDetailsUseCase)
+      : super(const RealEstateState());
 
-  Future<void> fetchProperties({Map<String, dynamic>? filters}) async {
-    emit(state.copyWith(getPropertiesState: RequestState.loading));
+  void clearPropertyList(PropertyOperationType operationType) {
 
-    final Either<Failure, List<PropertyEntity>> result = await _getPropertiesUseCase(filters: filters);
+    if(operationType == PropertyOperationType.forSale) {
+      emit(state.copyWith(
+        saleProperties: [],
+        saleOffset: 0,
+        hasMoreSaleProperties: true,
+        saleTabLoaded: false,
+      ));
+    }
+    else {
+      emit(state.copyWith(
+        rentProperties: [],
+        rentOffset: 0,
+        hasMoreRentProperties: true,
+        rentTabLoaded: false,
+      ));
+    }
+  }
+
+
+  Future<void> fetchProperties({
+    Map<String, dynamic>? filters,
+    PropertyOperationType operationType = PropertyOperationType.forSale,
+    bool refresh = false,
+  }) async {
+    if (refresh) {
+      if (operationType == PropertyOperationType.forSale) {
+        emit(state.copyWith(
+            getPropertiesSaleState: RequestState.loading,
+            saleOffset: 0,
+            hasMoreSaleProperties: true
+        ));
+      } else {
+        emit(state.copyWith(
+            getPropertiesRentState: RequestState.loading,
+            rentOffset: 0,
+            hasMoreRentProperties: true
+        ));
+      }
+    } else {
+      if (operationType == PropertyOperationType.forSale) {
+        if (state.getPropertiesSaleState == RequestState.loading ||
+            !state.hasMoreSaleProperties) {
+          return;
+        }
+        emit(state.copyWith(getPropertiesSaleState: RequestState.loading));
+      } else {
+        if (state.getPropertiesRentState == RequestState.loading ||
+            !state.hasMoreRentProperties) {
+          return;
+        }
+        emit(state.copyWith(getPropertiesRentState: RequestState.loading));
+      }
+    }
+
+    final int offset = operationType == PropertyOperationType.forSale
+        ? state.saleOffset
+        : state.rentOffset;
+
+    final paginatedFilters = {
+      ...?filters,
+      JsonKeys.offset: offset,
+      JsonKeys.limit: state.limit,
+      JsonKeys.operation: operationType.isForSale
+          ? 'for_sale'
+          : 'for_rent',
+    };
+
+    final Either<Failure, List<PropertyEntity>> result =
+    await _getPropertiesUseCase(filters: paginatedFilters);
 
     result.fold(
-          (failure) => emit(state.copyWith(
-        getPropertiesState: RequestState.error,
-        getPropertiesError: failure.message,
-      )),
-          (properties) => emit(state.copyWith(
-        getPropertiesState: RequestState.loaded,
-        properties: properties,
-      )),
+          (failure) {
+        if (operationType == PropertyOperationType.forSale) {
+          emit(state.copyWith(
+            getPropertiesSaleState: RequestState.error,
+            getPropertiesSaleError: failure.message,
+          ));
+        } else {
+          emit(state.copyWith(
+            getPropertiesRentState: RequestState.error,
+            getPropertiesRentError: failure.message,
+          ));
+        }
+      },
+          (properties) {
+        final bool hasMore = properties.length >= state.limit;
+
+        if (operationType == PropertyOperationType.forSale) {
+          final List<PropertyEntity> updatedSaleProperties = refresh
+              ? properties
+              : [...state.saleProperties, ...properties];
+
+          emit(state.copyWith(
+            getPropertiesSaleState: RequestState.loaded,
+            saleProperties: updatedSaleProperties,
+            saleOffset: offset + properties.length,
+            hasMoreSaleProperties: hasMore,
+            saleTabLoaded: true,
+          ));
+        } else {
+          final List<PropertyEntity> updatedRentProperties = refresh
+              ? properties
+              : [...state.rentProperties, ...properties];
+
+          emit(state.copyWith(
+            getPropertiesRentState: RequestState.loaded,
+            rentProperties: updatedRentProperties,
+            rentOffset: offset + properties.length,
+            hasMoreRentProperties: hasMore,
+            rentTabLoaded: true,
+          ));
+        }
+      },
     );
   }
 
   Future<void> fetchPropertyDetails(String propertyID) async {
     emit(state.copyWith(getPropertyDetailsState: RequestState.loading));
 
-    final Either<Failure, BasePropertyDetailsEntity> result = await _getPropertyDetailsUseCase(propertyID);
-
+    final Either<Failure, BasePropertyDetailsEntity> result =
+    await _getPropertyDetailsUseCase(propertyID);
 
     result.fold(
           (failure) => emit(state.copyWith(
-            getPropertyDetailsState: RequestState.error,
+        getPropertyDetailsState: RequestState.error,
         getPropertyDetailsError: failure.message,
       )),
           (properties) => emit(state.copyWith(
-            getPropertyDetailsState: RequestState.loaded,
+        getPropertyDetailsState: RequestState.loaded,
         propertyDetails: properties,
       )),
     );
   }
 
-
   void removePropertyFromWishList(String propertyID) {
-
     final BasePropertyDetailsEntity? propertyDetails = state.propertyDetails;
 
     if (propertyDetails != null) {
-      final BasePropertyDetailsEntity updatedPropertyDetails = propertyDetails.copyWith(isInWishlist: false);
+      final BasePropertyDetailsEntity updatedPropertyDetails =
+      propertyDetails.copyWith(isInWishlist: false);
 
       emit(state.copyWith(propertyDetails: updatedPropertyDetails));
     }
 
     removeSelectedPropertyFromWishList(propertyID);
-
   }
 
   void addPropertyToWishList(String propertyID) {
-
     final BasePropertyDetailsEntity? propertyDetails = state.propertyDetails;
 
     if (propertyDetails != null) {
-      final BasePropertyDetailsEntity updatedPropertyDetails = propertyDetails.copyWith(isInWishlist: true);
+      final BasePropertyDetailsEntity updatedPropertyDetails =
+      propertyDetails.copyWith(isInWishlist: true);
 
       emit(state.copyWith(propertyDetails: updatedPropertyDetails));
     }
 
     addSelectedPropertyToWishList(propertyID);
-
   }
 
   void removeSelectedPropertyFromWishList(String propertyID) {
-
-    emit(state.copyWith(getPropertiesState: RequestState.loading));
-    final List<PropertyEntity> properties = state.properties;
-
-    final List<PropertyEntity> updatedProperties = properties.map((property) {
+    final List<PropertyEntity> saleProperties = state.saleProperties;
+    final List<PropertyEntity> updatedSaleProperties = saleProperties.map((property) {
       if (property.id.toString() == propertyID) {
         return property.copyWith(isInWishlist: false);
       } else {
@@ -94,16 +192,24 @@ class RealEstateCubit extends Cubit<RealEstateState> {
       }
     }).toList();
 
-    emit(state.copyWith(properties: updatedProperties , getPropertiesState: RequestState.loaded));
+    final List<PropertyEntity> rentProperties = state.rentProperties;
+    final List<PropertyEntity> updatedRentProperties = rentProperties.map((property) {
+      if (property.id.toString() == propertyID) {
+        return property.copyWith(isInWishlist: false);
+      } else {
+        return property;
+      }
+    }).toList();
+
+    emit(state.copyWith(
+      saleProperties: updatedSaleProperties,
+      rentProperties: updatedRentProperties,
+    ));
   }
 
   void addSelectedPropertyToWishList(String propertyID) {
-
-    emit(state.copyWith(getPropertiesState: RequestState.loading));
-
-    final List<PropertyEntity> properties = state.properties;
-
-    final List<PropertyEntity> updatedProperties = properties.map((property) {
+    final List<PropertyEntity> saleProperties = state.saleProperties;
+    final List<PropertyEntity> updatedSaleProperties = saleProperties.map((property) {
       if (property.id.toString() == propertyID) {
         return property.copyWith(isInWishlist: true);
       } else {
@@ -111,6 +217,31 @@ class RealEstateCubit extends Cubit<RealEstateState> {
       }
     }).toList();
 
-    emit(state.copyWith(properties: updatedProperties, getPropertiesState: RequestState.loaded));
+    final List<PropertyEntity> rentProperties = state.rentProperties;
+    final List<PropertyEntity> updatedRentProperties = rentProperties.map((property) {
+      if (property.id.toString() == propertyID) {
+        return property.copyWith(isInWishlist: true);
+      } else {
+        return property;
+      }
+    }).toList();
+
+    emit(state.copyWith(
+      saleProperties: updatedSaleProperties,
+      rentProperties: updatedRentProperties,
+    ));
+  }
+
+  void loadMoreProperties(PropertyOperationType operationType ,
+      {Map<String, dynamic>? filters}) {
+    fetchProperties(operationType: operationType , filters: filters);
+  }
+
+  void loadTabData(PropertyOperationType operationType) {
+    if (operationType == PropertyOperationType.forSale && !state.saleTabLoaded) {
+      fetchProperties(operationType: operationType, refresh: true);
+    } else if (operationType == PropertyOperationType.forRent && !state.rentTabLoaded) {
+      fetchProperties(operationType: operationType, refresh: true);
+    }
   }
 }

@@ -16,7 +16,7 @@ class FilterPropertyState extends Equatable {
     this.maxAreaValue = '1000',
     this.minNumberOfMonths = '0',
     this.maxNumberOfMonths = '12',
-    this.selectedLandLicenseStatuses = const [], // New property
+    this.selectedLandLicenseStatuses = const [],
   });
 
   final PropertyOperationType currentPropertyOperationType;

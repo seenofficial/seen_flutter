@@ -3,8 +3,10 @@ import 'package:enmaa/features/home_module/domain/repository/base_home_repositor
 import 'package:enmaa/features/home_module/domain/use_cases/get_app_services_use_case.dart';
 import 'package:enmaa/features/home_module/domain/use_cases/get_banners_use_case.dart';
 import 'package:enmaa/features/home_module/presentation/controller/home_bloc.dart';
+import 'package:enmaa/features/real_estates/domain/use_cases/get_properties_use_case.dart';
 
 import '../../core/services/service_locator.dart';
+import '../real_estates/real_estates_DI.dart';
 import 'data/data_source/remote_data/home_remote_data_source.dart';
 
 class HomeDi {
@@ -21,6 +23,7 @@ class HomeDi {
           () => HomeBloc(
         sl<GetBannersUseCase>(),
         sl<GetAppServicesUseCase>(),
+        sl<GetPropertiesUseCase>(),
       ),
     );
 
@@ -47,6 +50,10 @@ class HomeDi {
     sl.registerLazySingleton(
           () => GetAppServicesUseCase(sl()),
     );
+    if(!sl.isRegistered<GetPropertiesUseCase>()){
+      RealEstatesDi().setup();
+    }
+
 
   }
 }
