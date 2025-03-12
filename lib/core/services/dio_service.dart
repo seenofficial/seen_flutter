@@ -23,12 +23,12 @@ class DioService {
           onRequest: (options, handler) async {
 
             final prefs = await SharedPreferences.getInstance();
-            Object accessToken =   prefs.get('access_token')?? '';
-
-            print('access token: $accessToken');
-            options.headers.addAll({
-              "Authorization": 'Bearer $accessToken',
-            });
+            Object? accessToken = prefs.get('access_token') ;
+            if(accessToken != null) {
+              options.headers.addAll({
+                "Authorization": 'Bearer $accessToken',
+              });
+            }
 
 
            /* var userBox = await Hive.openBox<User>('userBox');
