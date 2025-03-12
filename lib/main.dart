@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'configuration/routers/app_routers.dart';
 import 'configuration/routers/route_names.dart';
+import 'core/components/custom_snack_bar.dart';
 import 'core/services/bio_metric_service.dart';
 import 'core/services/bloc_observer.dart';
 import 'core/services/navigator_observer.dart';
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          scaffoldMessengerKey: CustomSnackBar.scaffoldMessengerKey,
           navigatorObservers: [RouteObserverService()],
           debugShowCheckedModeBanner: false,
           localizationsDelegates: context.localizationDelegates,

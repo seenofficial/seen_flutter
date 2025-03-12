@@ -92,9 +92,11 @@ class PreviewPropertyCubit extends Cubit<PreviewPropertyState> {
 
     final result = await _addNewPreviewTimeUseCase(data);
     result.fold(
-      (failure) => emit(state.copyWith(
-          addNewPreviewTimeState: RequestState.error,
-          addNewPreviewTimeErrorMessage: failure.message)),
+      (failure) {
+        emit(state.copyWith(
+            addNewPreviewTimeState: RequestState.error,
+            addNewPreviewTimeErrorMessage: failure.message));
+      },
       (_) => emit(state.copyWith(addNewPreviewTimeState: RequestState.loaded)),
     );
   }

@@ -6,14 +6,19 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 enum SnackBarType { success, error }
 
 class CustomSnackBar {
+  static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+  GlobalKey<ScaffoldMessengerState>();
+
   static void show({
-    required BuildContext context,
+    BuildContext? context,
     required String message,
-    required SnackBarType type,
+    SnackBarType type = SnackBarType.error,
+    Duration duration = const Duration(seconds: 3),
   }) {
     final Color iconColor = type == SnackBarType.success
         ? ColorManager.primaryColor
         : ColorManager.redColor;
+
     final IconData icon = type == SnackBarType.success
         ? Icons.check_circle
         : Icons.error;
@@ -48,11 +53,17 @@ class CustomSnackBar {
           ],
         ),
       ),
-      duration: const Duration(seconds: 3),
+      duration: duration,
     );
 
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(snackBar);
+    final scaffoldMessenger = context != null
+        ? ScaffoldMessenger.of(context)
+        : scaffoldMessengerKey.currentState;
+
+    if (scaffoldMessenger != null) {
+      scaffoldMessenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(snackBar);
+    }
   }
 }

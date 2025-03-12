@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+import '../components/custom_snack_bar.dart';
 import '../translation/locale_keys.dart';
 
 abstract class Failure extends Equatable {
@@ -49,6 +50,28 @@ class ServerFailure extends Failure {
       dynamic error,
       Map<String, dynamic>? messageError,
       ) {
+
+    String errorMessage = LocaleKeys.somethingWentWrong.tr();
+
+    if (messageError is Map<String, dynamic>) {
+      final errors = messageError['errors'];
+
+      if (errors is List && errors.isNotEmpty) {
+        final firstError = errors.first;
+
+        if (firstError is Map<String, dynamic>) {
+          errorMessage = firstError.values.first.toString();
+        } else if (firstError is String) {
+          errorMessage = firstError;
+        }
+      }
+    }
+
+    CustomSnackBar.show( message: errorMessage, type: SnackBarType.error);
+
+    return ServerFailure(errorMessage);
+
+
     switch (statusCode) {
       case 400:
         return ServerFailure(

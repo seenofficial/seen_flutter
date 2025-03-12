@@ -24,6 +24,7 @@ class DioService {
 
             final prefs = await SharedPreferences.getInstance();
             Object? accessToken = prefs.get('access_token') ;
+            print('access token is $accessToken');
             if(accessToken != null) {
               options.headers.addAll({
                 "Authorization": 'Bearer $accessToken',

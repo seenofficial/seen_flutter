@@ -64,7 +64,7 @@ class PreviewPropertyRemoteDataSource extends BasePreviewPropertyDataSource {
   Future<void> addNewPreviewTime(AddNewPreviewRequestModel data) async {
     FormData formData = FormData.fromMap(data.toJson());
 
-    await dioService.post(
+    var res = await dioService.post(
       url: '${ApiConstants.preview}/',
       data: formData,
       options: Options(
