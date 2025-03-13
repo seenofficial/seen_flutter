@@ -1,0 +1,10 @@
+import 'package:dartz/dartz.dart';
+import '../../../../../../core/errors/failure.dart';
+import '../entities/appointment_entity.dart';
+
+
+abstract class BaseUserAppointmentsRepository {
+  Future<Either<Failure, List<AppointmentEntity>>> getUserAppointments({
+    Map<String, dynamic>? filters,
+  });
+}

@@ -58,3 +58,9 @@ enum BookingStatus {
   reserved,
   available,
 }
+
+enum AppointmentStatus {
+  completed,
+  cancelled,
+  coming ,
+}

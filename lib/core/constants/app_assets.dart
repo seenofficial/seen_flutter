@@ -41,6 +41,11 @@ class AppAssets {
   static const String themeIcon = '${baseIconFolder}theme_icon.svg';
   static const String trashIcon = '${baseIconFolder}trash_icon.svg';
 
+  static const String comingIcon = '${baseIconFolder}coming_icon.svg';
+  static const String completedIcon = '${baseIconFolder}completed_icon.svg';
+  static const String cancelledIcon = '${baseIconFolder}cancelled_icon.svg';
+
+
   /// building sub types icons
   static const String residentialBuildingIcon2 = '${baseIconFolder}commercial_building_icon.svg';
   static const String commercialBuildingIcon = '${baseIconFolder}residential_building_icon.svg';

@@ -4,6 +4,7 @@ import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import '../../../../configuration/managers/color_manager.dart';
+import '../../../../configuration/routers/route_names.dart';
 import '../../../home_module/home_imports.dart';
 
 class UserScreensWidget extends StatelessWidget {
@@ -28,21 +29,22 @@ class UserScreensWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
             
-                Row(
-                  children: [
-                    SvgImageComponent(
-                      width: 20,
-                      height: 20,
-                      iconPath: AppAssets.myAppointmentIcon , color: ColorManager.grey,) ,
-                    SizedBox(width: context.scale(8),),
-                    Text('مواعيدي' , style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s16),),
-                    Spacer(),
-                    InkWell(
-                        onTap: (){
-                        },
-                        child: Icon(Icons.arrow_forward_ios)
-                    )
-                  ],
+                InkWell(
+                  onTap: (){
+                    Navigator.pushNamed(context, RoutersNames.userAppointmentsScreen);
+                  },
+                  child: Row(
+                    children: [
+                      SvgImageComponent(
+                        width: 20,
+                        height: 20,
+                        iconPath: AppAssets.myAppointmentIcon , color: ColorManager.grey,) ,
+                      SizedBox(width: context.scale(8),),
+                      Text('مواعيدي' , style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s16),),
+                      Spacer(),
+                      Icon(Icons.arrow_forward_ios)
+                    ],
+                  ),
                 ),
                 Row(
                   children: [

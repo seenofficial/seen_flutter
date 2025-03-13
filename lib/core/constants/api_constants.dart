@@ -28,6 +28,7 @@ class ApiConstants {
   static const String propertyOrderDetails= "${baseUrl}property-order-detail";
   static const String amenities= "${baseUrl}amenities";
   static const String preview= "${baseUrl}viewing-requests";
+  static const String appointments= "${baseUrl}viewing-requests-list";
 
 
 }

@@ -1,4 +1,6 @@
+import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/font_manager.dart';
@@ -12,29 +14,36 @@ class LogOutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: context.scale(54),
-      decoration: BoxDecoration(
-        color: ColorManager.whiteColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          SvgImageComponent(
-              width: 20, height: 20, iconPath: AppAssets.trashIcon),
-          SizedBox(
-            width: context.scale(8),
-          ),
-          Text(
-            'حذف الحساب',
-            style: getSemiBoldStyle(
-                color: ColorManager.redColor, fontSize: FontSize.s16),
-          ),
-          Spacer(),
-          InkWell(onTap: () {}, child: Icon(Icons.arrow_forward_ios))
-        ],
+    return InkWell(
+      onTap: ()async{
+        final prefs = await SharedPreferences.getInstance();
+        prefs.remove('access_token');
+        Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
+      },
+      child: Container(
+        width: double.infinity,
+        height: context.scale(54),
+        decoration: BoxDecoration(
+          color: ColorManager.whiteColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            SvgImageComponent(
+                width: 20, height: 20, iconPath: AppAssets.trashIcon),
+            SizedBox(
+              width: context.scale(8),
+            ),
+            Text(
+              'حذف الحساب',
+              style: getSemiBoldStyle(
+                  color: ColorManager.redColor, fontSize: FontSize.s16),
+            ),
+            Spacer(),
+            Icon(Icons.arrow_forward_ios)
+          ],
+        ),
       ),
     );
   }

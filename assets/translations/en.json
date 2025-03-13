@@ -59,7 +59,9 @@
   "cancelled" : "Cancelled",
 
   "reserved" : "Reserved",
-  "available" : "Available"
+  "available" : "Available",
+  "coming" : "Coming"
+
 
 
 }

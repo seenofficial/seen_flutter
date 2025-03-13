@@ -69,6 +69,8 @@ abstract class LocaleKeys {
   static const String reserved = "reserved";
   static const String available = "available";
 
+  static const String coming = "coming";
+
   /// on boarding
 
 //  static const
