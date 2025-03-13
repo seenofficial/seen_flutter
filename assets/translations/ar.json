@@ -54,7 +54,11 @@
 
   "active" : " نشط",
     "completed" : "مكتمل",
-  "cancelled" : " ملغي"
+  "cancelled" : " ملغي",
+
+  "reserved" : " محجوز",
+  "available" : " متاح"
+
 
 
 }

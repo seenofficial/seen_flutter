@@ -3,21 +3,30 @@ import 'package:easy_localization/easy_localization.dart';
 import '../translation/locale_keys.dart';
 import '../utils/enums.dart';
 
-extension StatusExtension on Status {
-  bool get isActive => this == Status.active;
-  bool get isCompleted => this == Status.completed;
-  bool get isCancelled => this == Status.cancelled;
+extension StatusExtension on RequestStatus {
+  bool get isActive => this == RequestStatus.active;
+  bool get isCompleted => this == RequestStatus.completed;
+  bool get isCancelled => this == RequestStatus.cancelled;
 
   String get name {
     switch (this) {
-      case Status.completed:
+      case RequestStatus.completed:
         return LocaleKeys.completed.tr();
-      case Status.cancelled:
+      case RequestStatus.cancelled:
         return LocaleKeys.cancelled.tr();
-      case Status.active:
+      case RequestStatus.active:
         return LocaleKeys.active.tr();
     }
   }
 
-  String toJson() => name.toLowerCase();
+  String   toJson( ) {
+    switch (this) {
+      case RequestStatus.completed:
+        return 'completed';
+      case RequestStatus.cancelled:
+        return 'cancelled';
+      case RequestStatus.active:
+        return 'pending';
+    }
+}
 }

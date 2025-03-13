@@ -1,7 +1,9 @@
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
+import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import '../../../../configuration/managers/color_manager.dart';
+import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../home_module/home_imports.dart';
@@ -12,7 +14,9 @@ class ManageMyPropertiesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+          Navigator.pushNamed(context, RoutersNames.myPropertiesScreen);
+      },
       child: Container(
         width: double.infinity,
         height: context.scale(108),

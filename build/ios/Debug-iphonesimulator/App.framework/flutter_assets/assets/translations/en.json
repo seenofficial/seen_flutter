@@ -50,8 +50,16 @@
 
   "standalone": "Standalone",
   "twinHouse": "Twin House",
-  "townHouse": "Town House"
+  "townHouse": "Town House",
 
+
+
+  "active" : "Active",
+  "completed" : "Completed",
+  "cancelled" : "Cancelled",
+
+  "reserved" : "Reserved",
+  "available" : "Available"
 
 
 }

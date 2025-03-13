@@ -50,7 +50,15 @@
 
   "standalone": "مستقلة",
   "twinHouse": "توين هاوس",
-  "townHouse": "تاون هاوس"
+  "townHouse": "تاون هاوس",
+
+  "active" : " نشط",
+    "completed" : "مكتمل",
+  "cancelled" : " ملغي",
+
+  "reserved" : " محجوز",
+  "available" : " متاح"
+
 
 
 }

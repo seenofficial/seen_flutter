@@ -39,12 +39,14 @@ class RealStateCardComponent extends StatelessWidget {
   final Function? onTap ;
   final PropertyEntity currentProperty;
 
+  final bool showWishlistButton ;
   const RealStateCardComponent({
     super.key,
     required this.width,
     required this.height,
     required this.currentProperty,
     this.onTap,
+    this.showWishlistButton = true ,
   });
 
   @override
@@ -115,6 +117,7 @@ class RealStateCardComponent extends StatelessWidget {
               ],
             ),
           ),
+          if(showWishlistButton)
           PositionedDirectional(
             top: context.scale(8),
             end: context.scale(8),

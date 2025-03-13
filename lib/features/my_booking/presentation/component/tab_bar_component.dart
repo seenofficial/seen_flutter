@@ -7,7 +7,7 @@ import '../../../../configuration/managers/color_manager.dart';
 
 class CustomTabBar extends StatelessWidget {
   final TabController tabController;
-  final List<Status> tabStatuses;
+  final List<RequestStatus> tabStatuses;
   final Function(int) onTabChanged;
 
   const CustomTabBar({
@@ -17,13 +17,13 @@ class CustomTabBar extends StatelessWidget {
     required this.onTabChanged,
   });
 
-  Color _getColorForStatus(Status status) {
+  Color _getColorForStatus(RequestStatus status) {
     switch (status) {
-      case Status.active:
+      case RequestStatus.active:
         return ColorManager.yellowColor;
-      case Status.completed:
+      case RequestStatus.completed:
         return ColorManager.primaryColor;
-      case Status.cancelled:
+      case RequestStatus.cancelled:
         return ColorManager.redColor;
     }
   }
@@ -52,9 +52,11 @@ class CustomTabBar extends StatelessWidget {
           unselectedLabelColor: ColorManager.blackColor,
           labelStyle: const TextStyle(
             fontWeight: FontWeight.bold,
+            overflow: TextOverflow.ellipsis,
           ),
           unselectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.normal,
+            overflow: TextOverflow.ellipsis,
           ),
           onTap: onTabChanged,
           tabs: tabStatuses.map((status) {

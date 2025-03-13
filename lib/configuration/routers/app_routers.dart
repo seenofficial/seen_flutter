@@ -5,6 +5,8 @@ import 'package:enmaa/features/authentication_module/presentation/screens/sign_u
 import 'package:enmaa/features/book_property/presentation/screens/book_property_main_screen.dart';
 import 'package:enmaa/features/home_module/presentation/controller/home_bloc.dart';
 import 'package:enmaa/features/home_module/presentation/screens/home_screen.dart';
+import 'package:enmaa/features/my_profile/modules/user_properties_module/presentation/screens/user_properties_screen.dart';
+import 'package:enmaa/features/my_profile/modules/user_properties_module/user_properties_DI.dart';
 import 'package:enmaa/features/preview_property/presentation/screens/preview_property_main_screen.dart';
 import 'package:enmaa/features/preview_property/preview_property_DI.dart';
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_details_screen.dart';
@@ -19,6 +21,7 @@ import '../../features/add_new_real_estate/presentation/screens/add_new_real_est
 import '../../features/authentication_module/authentication_flow_navigator.dart';
 import '../../features/authentication_module/presentation/controller/biometric_bloc.dart';
 import '../../features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
+import '../../features/my_profile/modules/user_properties_module/presentation/controller/user_properties_cubit.dart';
 import '../../features/preview_property/presentation/controller/preview_property_cubit.dart';
 import '../../features/wallet/presentation/screens/charge_wallet_screen.dart';
 import 'route_names.dart';
@@ -75,6 +78,20 @@ class AppRouters {
           builder: (_) => BlocProvider(
             create: (context) => BiometricBloc(ServiceLocator.getIt()),
             child: const BioMetricScreen(),
+          ),
+        );
+        case RoutersNames.myPropertiesScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.myPropertiesScreen),
+          builder: (_) => BlocProvider(
+            create: (context){
+              UserPropertiesDi().setup();
+
+              return UserPropertiesCubit(
+                ServiceLocator.getIt(),
+              ) ;
+            },
+            child: const MyPropertiesScreen(),
           ),
         );
 

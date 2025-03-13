@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:enmaa/core/extensions/status_extension.dart';
+import 'package:enmaa/core/services/convert_string_to_enum.dart';
 import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/my_booking/domain/use_cases/get_my_booking_use_case.dart';
 import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
@@ -22,9 +24,10 @@ class MyBookingCubit extends Cubit<MyBookingState> {
     final offset = isRefresh ? 0 : state.getOffsetForStatus(status);
     _updateStateBeforeRequest(status, isRefresh);
 
+    String currentStatus = getStatus(status).toJson();
     final filters = {
       /*'client': true,
-      'client_order_status': status,*/
+      'client_order_status': currentStatus,*/
       'offset': offset,
       'limit': state.limit,
     };

@@ -64,6 +64,11 @@ abstract class LocaleKeys {
   static const String completed = "completed";
   static const String active = "active";
   static const String cancelled = "cancelled";
+
+
+  static const String reserved = "reserved";
+  static const String available = "available";
+
   /// on boarding
 
 //  static const

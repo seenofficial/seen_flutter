@@ -56,8 +56,10 @@
 
   "active" : "Active",
   "completed" : "Completed",
-  "cancelled" : "Cancelled"
+  "cancelled" : "Cancelled",
 
+  "reserved" : "Reserved",
+  "available" : "Available"
 
 
 }

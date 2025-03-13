@@ -12,7 +12,7 @@ import 'package:enmaa/features/home_module/presentation/components/real_state_ca
 import '../controller/my_booking_cubit.dart';
 
 class BookingListBuilderComponent extends StatelessWidget {
-  final Status status;
+  final RequestStatus status;
   final ScrollController scrollController;
 
   const BookingListBuilderComponent({

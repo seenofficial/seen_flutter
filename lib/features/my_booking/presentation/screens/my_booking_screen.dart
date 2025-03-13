@@ -16,7 +16,7 @@ class MyBookingScreen extends StatefulWidget {
 
 class _MyBookingScreenState extends State<MyBookingScreen> with TickerProviderStateMixin {
   late TabController _tabController;
-  final List<Status> _tabStatuses = [Status.active, Status.completed, Status.cancelled];
+  final List<RequestStatus> _tabStatuses = [RequestStatus.active, RequestStatus.completed, RequestStatus.cancelled];
   final List<ScrollController> _scrollControllers = [];
 
   @override
@@ -51,7 +51,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> with TickerProviderSt
     }
   }
 
-  void _handleScroll(ScrollController controller, Status status) {
+  void _handleScroll(ScrollController controller, RequestStatus status) {
     if (controller.position.extentAfter < 300 &&
         !context.read<MyBookingCubit>().state.isLoadingMore &&
         context.read<MyBookingCubit>().state.hasMoreBookings(status.toJson())) {

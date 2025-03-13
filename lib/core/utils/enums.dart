@@ -48,8 +48,13 @@ enum PaymentMethod {
   wallet,
 }
 
-enum Status {
+enum RequestStatus {
   completed,
   cancelled,
   active
+}
+
+enum BookingStatus {
+  reserved,
+  available,
 }

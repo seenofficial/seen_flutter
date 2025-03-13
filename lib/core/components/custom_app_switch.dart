@@ -15,7 +15,7 @@ class CustomAppSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
-      scale: 1.1,
+      scale: .9,
       child: Switch(
         value: value,
         onChanged: onChanged,

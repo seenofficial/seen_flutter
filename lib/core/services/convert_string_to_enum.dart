@@ -77,3 +77,27 @@ PaymentMethod getPaymentMethod(String type) {
       return PaymentMethod.cash;
   }
 }
+
+RequestStatus getStatus(String type) {
+  switch (type) {
+    case "active":
+      return RequestStatus.active;
+    case "completed":
+      return RequestStatus.completed;
+    case "cancelled":
+      return RequestStatus.cancelled;
+    default:
+      return RequestStatus.active;
+  }
+}
+
+BookingStatus getBookingStatus(String type) {
+  switch (type) {
+    case "reserved":
+      return BookingStatus.reserved;
+    case "available":
+      return BookingStatus.available;
+    default:
+      return BookingStatus.reserved;
+  }
+}

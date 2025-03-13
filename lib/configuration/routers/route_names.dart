@@ -11,6 +11,11 @@ class RoutersNames {
   static const String chargeWalletScreen = "/charge-wallet-screen";
 
 
+  static const String myPropertiesScreen = "/my-properties-screen";
+
+
+
+
   static const String authenticationFlow = "/authentication-flow";
   static const String loginScreen = "/login-screen";
   static const String signUpScreen = "/sign-up-screen";
