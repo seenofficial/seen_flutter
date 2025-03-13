@@ -1,10 +1,10 @@
+import 'package:enmaa/core/components/svg_image_component.dart';
+import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/booking_status_extension.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/core/utils/enums.dart';
-
 import '../../../../../../configuration/managers/color_manager.dart';
-
 
 class UserPropertiesTabBar extends StatelessWidget {
   final TabController tabController;
@@ -18,7 +18,7 @@ class UserPropertiesTabBar extends StatelessWidget {
     required this.onTabChanged,
   });
 
-  Color _getColorForStatus(BookingStatus status) {
+   Color _getColorForStatus(BookingStatus status) {
     switch (status) {
       case BookingStatus.available:
         return ColorManager.greenColor;
@@ -27,6 +27,14 @@ class UserPropertiesTabBar extends StatelessWidget {
     }
   }
 
+   String _getIconForStatus(BookingStatus status) {
+    switch (status) {
+      case BookingStatus.available:
+        return AppAssets.completedIcon;
+      case BookingStatus.reserved:
+        return AppAssets.lockIcon;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +59,12 @@ class UserPropertiesTabBar extends StatelessWidget {
           unselectedLabelColor: ColorManager.blackColor,
           labelStyle: const TextStyle(
             fontWeight: FontWeight.bold,
+            fontSize: 14,
             overflow: TextOverflow.ellipsis,
-
           ),
           unselectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.normal,
+            fontSize: 14,
             overflow: TextOverflow.ellipsis,
           ),
           onTap: onTabChanged,
@@ -64,15 +73,34 @@ class UserPropertiesTabBar extends StatelessWidget {
               child: Container(
                 width: context.scale(103),
                 height: context.scale(36),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Center(
-                  child: Text(
-                    status.getName,
-                    style: const TextStyle(fontSize: 14),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Icon
+                    SvgImageComponent(
+                      width: 20,
+                      height: 20,
+                      iconPath: _getIconForStatus(status),
+                      color: tabController.index == tabStatuses.indexOf(status)
+                          ? ColorManager.whiteColor
+                          : ColorManager.blackColor,
+                    ),
+                    const SizedBox(width: 8),
+                    // Text
+                    Text(
+                      status.getName,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: tabController.index == tabStatuses.indexOf(status)
+                            ? ColorManager.whiteColor
+                            : ColorManager.blackColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );

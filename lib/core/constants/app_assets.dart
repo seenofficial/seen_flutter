@@ -43,6 +43,7 @@ class AppAssets {
   static const String trashIcon = '${baseIconFolder}trash_icon.svg';
 
   static const String comingIcon = '${baseIconFolder}coming_icon.svg';
+  static const String activeIcon = '${baseIconFolder}active_icon.svg';
   static const String completedIcon = '${baseIconFolder}completed_icon.svg';
   static const String cancelledIcon = '${baseIconFolder}cancelled_icon.svg';
 

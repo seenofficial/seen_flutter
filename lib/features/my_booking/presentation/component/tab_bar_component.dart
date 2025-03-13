@@ -1,8 +1,9 @@
+import 'package:enmaa/core/components/svg_image_component.dart';
+import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
-import 'package:flutter/material.dart';
 import 'package:enmaa/core/extensions/status_extension.dart';
+import 'package:flutter/material.dart';
 import 'package:enmaa/core/utils/enums.dart';
-
 import '../../../../configuration/managers/color_manager.dart';
 
 class CustomTabBar extends StatelessWidget {
@@ -28,6 +29,16 @@ class CustomTabBar extends StatelessWidget {
     }
   }
 
+  String _getIconForStatus(RequestStatus status) {
+    switch (status) {
+      case RequestStatus.active:
+        return AppAssets.activeIcon;
+      case RequestStatus.completed:
+        return AppAssets.completedIcon;
+      case RequestStatus.cancelled:
+        return AppAssets.cancelledIcon;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +63,12 @@ class CustomTabBar extends StatelessWidget {
           unselectedLabelColor: ColorManager.blackColor,
           labelStyle: const TextStyle(
             fontWeight: FontWeight.bold,
+            fontSize: 14,
             overflow: TextOverflow.ellipsis,
           ),
           unselectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.normal,
+            fontSize: 14,
             overflow: TextOverflow.ellipsis,
           ),
           onTap: onTabChanged,
@@ -64,15 +77,34 @@ class CustomTabBar extends StatelessWidget {
               child: Container(
                 width: context.scale(103),
                 height: context.scale(36),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Center(
-                  child: Text(
-                    status.name,
-                    style: const TextStyle(fontSize: 14),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Icon
+                    SvgImageComponent(
+                      width: 20,
+                      height: 20,
+                      iconPath: _getIconForStatus(status),
+                      color: tabController.index == tabStatuses.indexOf(status)
+                          ? ColorManager.whiteColor
+                          : ColorManager.blackColor,
+                    ),
+                    const SizedBox(width: 8),
+                    // Text
+                    Text(
+                      status.name,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: tabController.index == tabStatuses.indexOf(status)
+                            ? ColorManager.whiteColor
+                            : ColorManager.blackColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
