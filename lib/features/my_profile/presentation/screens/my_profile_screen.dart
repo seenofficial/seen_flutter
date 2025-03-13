@@ -12,6 +12,7 @@ import '../components/app_controls_widget.dart';
 import '../components/log_out_widget.dart';
 import '../components/manage_my_properties_widget.dart';
 import '../components/name_and_phone_widget.dart';
+import '../components/remove_account_widget.dart';
 import '../components/user_screens_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -30,23 +31,30 @@ class ProfileScreen extends StatelessWidget {
             centerText: true,
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 12),
-            child: Column(
-              spacing: context.scale(12),
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                NameAndPhoneWidget() ,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 12),
+              child: SingleChildScrollView(
+                child: Column(
+                  spacing: context.scale(12),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    NameAndPhoneWidget() ,
 
-                ManageMyPropertiesWidget(),
+                    ManageMyPropertiesWidget(),
 
-                UserScreensWidget(),
+                    UserScreensWidget(),
 
-                AppControlsWidget(),
+                    AppControlsWidget(),
 
-                LogOutWidget()
+                    LogOutWidget(),
 
-              ],
+
+                    RemoveAccountWidget()
+
+                  ],
+                ),
+              ),
             ),
           )
         ],

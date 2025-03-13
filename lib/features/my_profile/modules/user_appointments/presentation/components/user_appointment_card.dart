@@ -97,7 +97,6 @@ class UserAppointmentCard extends StatelessWidget {
                     ],
                     onChanged: (String? value) {
                       if (value == 'edit') {
-
                         Navigator.pushNamed(context, RoutersNames.previewPropertyScreen , arguments: appointment.propertyId);
                       } else if (value == 'delete') {
 

@@ -9,8 +9,8 @@ import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../home_module/home_imports.dart';
 
-class LogOutWidget extends StatelessWidget {
-  const LogOutWidget({super.key});
+class RemoveAccountWidget extends StatelessWidget {
+  const RemoveAccountWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,14 @@ class LogOutWidget extends StatelessWidget {
         child: Row(
           children: [
             SvgImageComponent(
-                width: 20, height: 20, iconPath: AppAssets.logOutIcon),
+                width: 20, height: 20, iconPath: AppAssets.trashIcon),
             SizedBox(
               width: context.scale(8),
             ),
             Text(
-              'تسجيل الخروج',
+              'حذف الحساب',
               style: getSemiBoldStyle(
-                  color: ColorManager.blackColor, fontSize: FontSize.s16),
+                  color: ColorManager.redColor, fontSize: FontSize.s16),
             ),
             Spacer(),
             Icon(Icons.arrow_forward_ios)

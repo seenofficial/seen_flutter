@@ -39,6 +39,7 @@ class AppAssets {
   static const String localizationIcon = '${baseIconFolder}localization_icon.svg';
   static const String privacyIcon = '${baseIconFolder}privacy_icon.svg';
   static const String themeIcon = '${baseIconFolder}theme_icon.svg';
+  static const String logOutIcon = '${baseIconFolder}log_out_icon.svg';
   static const String trashIcon = '${baseIconFolder}trash_icon.svg';
 
   static const String comingIcon = '${baseIconFolder}coming_icon.svg';
