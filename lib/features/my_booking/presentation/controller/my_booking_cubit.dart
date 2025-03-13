@@ -25,9 +25,10 @@ class MyBookingCubit extends Cubit<MyBookingState> {
     _updateStateBeforeRequest(status, isRefresh);
 
     String currentStatus = getStatus(status).toJson();
+
     final filters = {
-      /*'client': true,
-      'client_order_status': currentStatus,*/
+      'client': true,
+      'client_order_status': currentStatus,
       'offset': offset,
       'limit': state.limit,
     };

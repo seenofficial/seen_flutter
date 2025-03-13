@@ -30,7 +30,7 @@ class UserPropertiesCubit extends Cubit<UserPropertiesState> {
     String currentStatus = getBookingStatus(status).toJson();
     final filters = {
       'owner': true,
-      'property_status': currentStatus,
+      'owner_order_status': currentStatus,
       'offset': offset,
       'limit': state.limit,
     };

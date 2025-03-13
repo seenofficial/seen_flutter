@@ -23,9 +23,12 @@ class UserAppointmentsCubit extends Cubit<UserAppointmentsState> {
     final offset = isRefresh ? 0 : state.getOffsetForStatus(status);
     _updateStateBeforeRequest(status, isRefresh);
 
+
+    // todo : status
     final filters = {
       'status': status,
       'offset': offset,
+      //"order__status": status,
       'limit': state.limit,
     };
 
