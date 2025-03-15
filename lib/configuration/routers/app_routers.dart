@@ -154,7 +154,10 @@ case RoutersNames.userAppointmentsScreen:
       case RoutersNames.previewPropertyScreen:
         final args = settings.arguments as Map<String, dynamic> ;
         final String propertyId = args['id'] as String ;
-        final bool updateAppointment = args['updateAppointment'] as bool ;
+        bool updateAppointment = false ;
+        if(args.containsKey('updateAppointment')){
+          updateAppointment = args['updateAppointment'] as bool ;
+        }
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.previewPropertyScreen),
           builder: (_) => BlocProvider(

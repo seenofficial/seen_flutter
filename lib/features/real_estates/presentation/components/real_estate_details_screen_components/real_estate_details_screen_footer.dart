@@ -42,7 +42,9 @@ class RealEstateDetailsScreenFooter extends StatelessWidget {
           onTap: () async {
             final result = await Navigator.of(context).pushNamed(
               RoutersNames.previewPropertyScreen,
-              arguments: propertyId ,
+              arguments: {
+                'id': propertyId,
+              } ,
             );
 
             if (result == true) {
