@@ -1,18 +1,25 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:enmaa/core/extensions/buyer_type_extension.dart';
+import 'package:enmaa/features/book_property/domain/entities/book_property_response_entity.dart';
 import 'package:enmaa/features/book_property/domain/use_cases/get_property_sale_details_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/services/image_picker_service.dart';
 import '../../../../core/utils/enums.dart';
+import '../../../home_module/home_imports.dart';
+import '../../data/models/book_property_request_model.dart';
+import '../../data/models/book_property_response_model.dart';
 import '../../domain/entities/property_sale_details_entity.dart';
+import '../../domain/use_cases/book_property_use_case.dart';
 
 part 'book_property_state.dart';
 
 class BookPropertyCubit extends Cubit<BookPropertyState> {
   BookPropertyCubit(
-      this._getPropertySaleDetailsUseCase
+      this._getPropertySaleDetailsUseCase,
+      this._bookPropertyUseCase,
       ) : super(BookPropertyState());
 
 
@@ -78,12 +85,57 @@ class BookPropertyCubit extends Cubit<BookPropertyState> {
   }
 
 
+  void changeBuyerType(BuyerType buyerType) {
+    emit(state.copyWith(buyerType: buyerType));
+  }
+
+  void setUserName(String userName) {
+    emit(state.copyWith(userName: userName));
+  }
+
+  void setIDUserNumber(String userID) {
+    emit(state.copyWith(userID: userID));
+    state.iDNumberController.text = userID;
+  }
+
+  void setPhoneNumber(String phoneNumber) {
+    emit(state.copyWith(phoneNumber: phoneNumber));
+  }
+
+  void setCountryCode(String countryCode) {
+    emit(state.copyWith(countryCode: countryCode));
+  }
+
+   void changeBirthDatePickerVisibility() {
+    emit(state.copyWith(showBirthDatePicker: !state.showBirthDatePicker, showIDExpirationDatePicker: false));
+  }
+
+  void selectBirthDate(DateTime date) {
+    emit(state.copyWith(birthDate: date, showBirthDatePicker: false));
+  }
+
+   void changeIDExpirationDatePickerVisibility() {
+    emit(state.copyWith(showIDExpirationDatePicker: !state.showIDExpirationDatePicker, showBirthDatePicker: false));
+  }
+
+  void selectIDExpirationDate(DateTime date) {
+    emit(state.copyWith(idExpirationDate: date, showIDExpirationDatePicker: false));
+  }
+
+  void changePaymentMethod(String method) {
+    emit(state.copyWith(currentPaymentMethod: method));
+  }
+
+
+
+
+
   final GetPropertySaleDetailsUseCase _getPropertySaleDetailsUseCase ;
+  final BookPropertyUseCase _bookPropertyUseCase ;
   void getPropertySaleDetails(String propertyID){
 
     emit(state.copyWith(getPropertySaleDetailsState: RequestState.loading));
     _getPropertySaleDetailsUseCase.call(propertyID).then((result) {
-      print("rerer ${result}");
       result.fold(
               (failure) => emit(state.copyWith(getPropertySaleDetailsState: RequestState.error, getPropertySaleDetailsError: failure.message)),
               (propertySaleDetails) => emit(state.copyWith(getPropertySaleDetailsState: RequestState.loaded, propertySaleDetailsEntity: propertySaleDetails))
@@ -91,6 +143,48 @@ class BookPropertyCubit extends Cubit<BookPropertyState> {
     });
 
 
+  }
+
+
+  Future<void> bookProperty(String propertyId) async {
+    emit(state.copyWith(bookPropertyState: RequestState.loading));
+
+    final String dateOfBirth = state.birthDate != null
+        ? "${state.birthDate!.year}-${state.birthDate!.month.toString().padLeft(
+        2, '0')}-${state.birthDate!.day.toString().padLeft(2, '0')}"
+        : "";
+
+    final String idExpiryDate = state.idExpirationDate != null
+        ? "${state.idExpirationDate!.year}-${state.idExpirationDate!.month
+        .toString().padLeft(2, '0')}-${state.idExpirationDate!.day.toString()
+        .padLeft(2, '0')}"
+        : "";
+
+    final bookPropertyRequest = BookPropertyRequestModel(
+      propertyId: propertyId,
+      isUser: state.buyerType.amIABuyer,
+      name: state.userName,
+      phoneNumber: state.phoneNumber,
+      idNumber: state.userID,
+      dateOfBirth: dateOfBirth,
+      idExpiryDate: idExpiryDate,
+      paymentMethod: state.currentPaymentMethod == 'المحفظة'
+          ? 'wallet'
+          : 'credit',
+      idImage: state.selectedImages[0],
+
+    );
+
+    final result = await _bookPropertyUseCase.call(bookPropertyRequest);
+
+    result.fold(
+          (failure) => emit(state.copyWith(
+          bookPropertyState: RequestState.error,
+          bookPropertyError: failure.message)),
+          (response) => emit(state.copyWith(
+          bookPropertyState: RequestState.loaded,
+          bookPropertyResponse: response)),
+    );
   }
 
 }

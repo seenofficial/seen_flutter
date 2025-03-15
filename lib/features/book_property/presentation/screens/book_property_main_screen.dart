@@ -20,9 +20,10 @@ import 'buyer_data_screen.dart';
 import 'complete_the_purchase_screen.dart';
 
 class BookPropertyMainScreen extends StatefulWidget {
-  const BookPropertyMainScreen({super.key , required this.propertyId});
+  const BookPropertyMainScreen({super.key, required this.propertyId});
 
   final String propertyId;
+
   @override
   _BookPropertyMainScreenState createState() => _BookPropertyMainScreenState();
 }
@@ -40,51 +41,64 @@ class _BookPropertyMainScreenState extends State<BookPropertyMainScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context){
-        BookPropertyDi().setup() ;
+      create: (context) {
+        BookPropertyDi().setup();
         return BookPropertyCubit(
           ServiceLocator.getIt(),
-        )..getPropertySaleDetails(widget.propertyId);
+          ServiceLocator.getIt(),
+        )
+          ..getPropertySaleDetails(widget.propertyId);
       },
       child: Scaffold(
         backgroundColor: ColorManager.greyShade,
-        body: Stack(
-          children: [
-            Column(
+        body: BlocBuilder<BookPropertyCubit, BookPropertyState>(
+          buildWhen: (previous , current) => previous.bookPropertyState != current.bookPropertyState,
+          builder: (context, state) {
+            return Stack(
               children: [
-                AppBarComponent(
-                  appBarTextMessage: 'حجز العقار',
-                  showNotificationIcon: false,
-                  showLocationIcon: false,
-                  showBackIcon: true,
-                  centerText: true,
+                Column(
+                  children: [
+                    AppBarComponent(
+                      appBarTextMessage: 'حجز العقار',
+                      showNotificationIcon: false,
+                      showLocationIcon: false,
+                      showBackIcon: true,
+                      centerText: true,
+                    ),
+                    _buildPageIndicator(),
+                    Expanded(
+                      child: PageView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
+                        children: [
+                          SaleDetailsScreen(),
+                          BuyerDataScreen(),
+                          CompleteThePurchaseScreen()
+                        ],
+                      ),
+                    ),
+                    BookPropertyButtons(
+                      pageController: _pageController,
+                      currentPage: _currentPage,
+                      propertyID: widget.propertyId,
+                      animationTime: const Duration(milliseconds: 500),
+                    ),
+                  ],
                 ),
-                _buildPageIndicator(),
-                Expanded(
-                  child: PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (index) {
-                      setState(() {
-                        _currentPage = index;
-                      });
-                    },
-                    children: [
-                      SaleDetailsScreen(),
-                      BuyerDataScreen(),
-                      CompleteThePurchaseScreen()
-                    ],
-                  ),
-                ),
-                BookPropertyButtons(
-                  pageController: _pageController,
-                  currentPage: _currentPage,
-                  animationTime: const Duration(milliseconds: 500),
-                ),
-              ],
-            ),
 
-          ],
+                if(state.bookPropertyState.isLoading)
+                  LoadingOverlayComponent(
+                    opacity: 0,
+                  ),
+
+              ],
+            );
+          },
         ),
       ),
     );

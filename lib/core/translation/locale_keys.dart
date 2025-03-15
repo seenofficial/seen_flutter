@@ -71,6 +71,12 @@ abstract class LocaleKeys {
 
   static const String coming = "coming";
 
+
+  static const String iAmBuyer = "iAmBuyer";
+  static const String anotherBuyer = "anotherBuyer";
+
+
+
   /// on boarding
 
 //  static const

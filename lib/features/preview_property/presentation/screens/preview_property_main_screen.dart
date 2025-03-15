@@ -15,6 +15,7 @@ import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../core/components/app_bar_component.dart';
 import '../../../../core/components/button_app_component.dart';
+import '../../../../core/components/custom_date_picker.dart';
 import '../../../../core/components/custom_snack_bar.dart';
 import '../../../add_new_real_estate/presentation/components/numbered_text_header_component.dart';
 import '../../../home_module/home_imports.dart';
@@ -289,79 +290,15 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
                         ],
                       ),
                       clipBehavior: Clip.antiAlias,
-                      child: SfCalendar(
-                        view: CalendarView.month,
-                        firstDayOfWeek: 6,
-                        showNavigationArrow: true,
-                        backgroundColor: ColorManager.whiteColor,
-                        headerStyle: CalendarHeaderStyle(
-                          textStyle: getBoldStyle(
-                            color: ColorManager.primaryColor,
-                            fontSize: FontSize.s14,
-                          ),
-                          backgroundColor: ColorManager.whiteColor,
-                          textAlign: TextAlign.center,
-                        ),
-                        todayHighlightColor: ColorManager.primaryColor,
-                        monthViewSettings: MonthViewSettings(
-                          showTrailingAndLeadingDates: false,
-                          dayFormat: 'EEE',
-                          navigationDirection: MonthNavigationDirection.horizontal,
-                        ),
-                        cellBorderColor: Colors.transparent,
+                      child: CustomDatePicker (
+                        selectedDate: context.watch<PreviewPropertyCubit>().state.selectedDate,
                         onSelectionChanged: (calendarSelectionDetails) {
                           context.read<PreviewPropertyCubit>().selectDate(
                             calendarSelectionDetails.date!,
                           );
                         },
-                        minDate: DateTime.now(),
-                        selectionDecoration: BoxDecoration(
-                          color: Colors.transparent,
-                        ),
-                        monthCellBuilder: (BuildContext context, MonthCellDetails details) {
-                          final selectedDate = context.watch<PreviewPropertyCubit>().state.selectedDate;
-                          final today = DateTime.now();
+                      ) ,
 
-                          bool isSelected = selectedDate != null &&
-                              details.date.year == selectedDate.year &&
-                              details.date.month == selectedDate.month &&
-                              details.date.day == selectedDate.day;
-
-                          bool isToday = details.date.year == today.year &&
-                              details.date.month == today.month &&
-                              details.date.day == today.day;
-
-                          bool isPastDay = details.date.isBefore(today);
-
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? ColorManager.primaryColor
-                                  : isToday
-                                  ? ColorManager.primaryColor2
-                                  : Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              details.date.day.toString(),
-                              style:isSelected || isToday ? getBoldStyle(
-                                color: isSelected
-                                  ? Colors.white
-                                  : ColorManager.primaryColor, fontSize: FontSize.s14 ) :  getRegularStyle(
-                                color: isSelected
-                                    ? Colors.white
-                                    : isToday
-                                    ? ColorManager.primaryColor
-                                    : isPastDay
-                                    ? Colors.grey
-                                    : Colors.black,
-                                fontSize: FontSize.s12,
-                              ),
-                            ),
-                          );
-                        },
-                      )
                     ),
                   )
                       : SizedBox.shrink(),

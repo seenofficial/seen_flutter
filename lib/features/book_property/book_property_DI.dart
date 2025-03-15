@@ -12,6 +12,7 @@ import 'package:enmaa/features/book_property/domain/repository/base_book_propert
 import 'package:enmaa/features/book_property/domain/use_cases/get_property_sale_details_use_case.dart';
 
 import '../../core/services/service_locator.dart';
+import 'domain/use_cases/book_property_use_case.dart';
 
 
 class BookPropertyDi {
@@ -50,6 +51,9 @@ class BookPropertyDi {
 
     sl.registerLazySingleton(
           () => GetPropertySaleDetailsUseCase (sl()),
+    );
+    sl.registerLazySingleton(
+          () => BookPropertyUseCase (sl()),
     );
 
 

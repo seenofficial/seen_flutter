@@ -1,15 +1,6 @@
 part of 'book_property_cubit.dart';
 
 class BookPropertyState extends Equatable {
-  const BookPropertyState({
-    this.selectedImages = const [],
-    this.selectImagesState = RequestState.initial,
-    this.validateImages = true,
-    this.getPropertySaleDetailsState = RequestState.initial,
-    this.propertySaleDetailsEntity,
-    this.getPropertySaleDetailsError = '',
-  });
-
   final List<File> selectedImages;
   final RequestState selectImagesState;
   final bool validateImages;
@@ -18,6 +9,57 @@ class BookPropertyState extends Equatable {
   final PropertySaleDetailsEntity? propertySaleDetailsEntity;
   final String getPropertySaleDetailsError;
 
+  final RequestState bookPropertyState;
+  final String bookPropertyError;
+  final BookPropertyResponseEntity? bookPropertyResponse;
+
+  final BuyerType buyerType;
+
+  final String phoneNumber;
+  final String countryCode;
+
+  final String userName;
+  final String userID;
+
+  final TextEditingController phoneNumberController;
+  final TextEditingController nameController;
+  final TextEditingController iDNumberController;
+
+  final bool showBirthDatePicker;
+  final DateTime? birthDate;
+
+  final bool showIDExpirationDatePicker;
+  final DateTime? idExpirationDate;
+
+  final String currentPaymentMethod;
+
+  BookPropertyState({
+    this.selectedImages = const [],
+    this.selectImagesState = RequestState.initial,
+    this.validateImages = true,
+    this.getPropertySaleDetailsState = RequestState.initial,
+    this.propertySaleDetailsEntity,
+    this.getPropertySaleDetailsError = '',
+    this.bookPropertyState = RequestState.initial,
+    this.bookPropertyError = '',
+    this.bookPropertyResponse,
+    this.buyerType = BuyerType.iAmBuyer,
+    this.phoneNumber = '',
+    this.countryCode = '+20',
+    this.userName = '',
+    this.userID = '',
+    TextEditingController? phoneNumberController,
+    TextEditingController? nameController,
+    TextEditingController? iDNumberController,
+    this.showBirthDatePicker = false,
+    this.birthDate,
+    this.showIDExpirationDatePicker = false,
+    this.idExpirationDate,
+    this.currentPaymentMethod = 'بطاقة الائتمان',
+  })  : phoneNumberController = phoneNumberController ?? TextEditingController(text: '+20'),
+        nameController = nameController ?? TextEditingController(),
+        iDNumberController = iDNumberController ?? TextEditingController();
+
   BookPropertyState copyWith({
     List<File>? selectedImages,
     RequestState? selectImagesState,
@@ -25,27 +67,66 @@ class BookPropertyState extends Equatable {
     RequestState? getPropertySaleDetailsState,
     PropertySaleDetailsEntity? propertySaleDetailsEntity,
     String? getPropertySaleDetailsError,
+    RequestState? bookPropertyState,
+    String? bookPropertyError,
+    BookPropertyResponseEntity? bookPropertyResponse,
+    BuyerType? buyerType,
+    String? phoneNumber,
+    String? countryCode,
+    String? userName,
+    String? userID,
+    TextEditingController? phoneNumberController,
+    TextEditingController? nameController,
+    TextEditingController? iDNumberController,
+    bool? showBirthDatePicker,
+    DateTime? birthDate,
+    bool? showIDExpirationDatePicker,
+    DateTime? idExpirationDate,
+    String? currentPaymentMethod,
   }) {
     return BookPropertyState(
       selectedImages: selectedImages ?? this.selectedImages,
       selectImagesState: selectImagesState ?? this.selectImagesState,
       validateImages: validateImages ?? this.validateImages,
-      getPropertySaleDetailsState:
-          getPropertySaleDetailsState ?? this.getPropertySaleDetailsState,
-      propertySaleDetailsEntity:
-          propertySaleDetailsEntity ?? this.propertySaleDetailsEntity,
-      getPropertySaleDetailsError:
-          getPropertySaleDetailsError ?? this.getPropertySaleDetailsError,
+      getPropertySaleDetailsState: getPropertySaleDetailsState ?? this.getPropertySaleDetailsState,
+      propertySaleDetailsEntity: propertySaleDetailsEntity ?? this.propertySaleDetailsEntity,
+      getPropertySaleDetailsError: getPropertySaleDetailsError ?? this.getPropertySaleDetailsError,
+      bookPropertyState: bookPropertyState ?? this.bookPropertyState,
+      bookPropertyError: bookPropertyError ?? this.bookPropertyError,
+      bookPropertyResponse: bookPropertyResponse ?? this.bookPropertyResponse,
+      buyerType: buyerType ?? this.buyerType,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      countryCode: countryCode ?? this.countryCode,
+      userName: userName ?? this.userName,
+      userID: userID ?? this.userID,
+      showBirthDatePicker: showBirthDatePicker ?? this.showBirthDatePicker,
+      birthDate: birthDate ?? this.birthDate,
+      showIDExpirationDatePicker: showIDExpirationDatePicker ?? this.showIDExpirationDatePicker,
+      idExpirationDate: idExpirationDate ?? this.idExpirationDate,
+      currentPaymentMethod: currentPaymentMethod ?? this.currentPaymentMethod,
     );
   }
 
   @override
   List<Object?> get props => [
-        selectedImages,
-        selectImagesState,
-        validateImages,
-        getPropertySaleDetailsState,
-        propertySaleDetailsEntity,
-        getPropertySaleDetailsError
-      ];
+    selectedImages,
+    selectImagesState,
+    validateImages,
+    getPropertySaleDetailsState,
+    propertySaleDetailsEntity,
+    getPropertySaleDetailsError,
+    bookPropertyState,
+    bookPropertyError,
+    bookPropertyResponse,
+    buyerType,
+    countryCode,
+    phoneNumber,
+    userName,
+    userID,
+    showBirthDatePicker,
+    birthDate,
+    showIDExpirationDatePicker,
+    idExpirationDate,
+    currentPaymentMethod,
+  ];
 }

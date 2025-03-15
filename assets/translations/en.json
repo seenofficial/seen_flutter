@@ -60,7 +60,11 @@
 
   "reserved" : "Reserved",
   "available" : "Available",
-  "coming" : "Coming"
+  "coming" : "Coming",
+
+
+  "iAmBuyer": "I am a Buyer",
+  "anotherBuyer": "Another Buyer"
 
 
 

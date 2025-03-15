@@ -58,8 +58,8 @@
 
   "reserved" : " محجوز",
   "available" : " متاح",
-  "coming" : " قادم"
+  "coming" : " قادم",
 
-
-
+  "iAmBuyer": " أنا مشتري",
+  "anotherBuyer": " مشتري آخر"
 }

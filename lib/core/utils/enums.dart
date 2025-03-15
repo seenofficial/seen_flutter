@@ -64,3 +64,8 @@ enum AppointmentStatus {
   cancelled,
   coming ,
 }
+
+enum BuyerType {
+  iAmBuyer,
+  anotherBuyer,
+}
