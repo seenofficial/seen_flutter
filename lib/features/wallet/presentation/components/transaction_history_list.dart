@@ -2,10 +2,10 @@ import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/components/shimmer_component.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/request_states_extension.dart';
+import 'package:enmaa/core/screens/error_app_screen.dart';
 import 'package:enmaa/core/screens/property_empty_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/font_manager.dart';
 import '../../../../core/components/app_bar_component.dart';
@@ -16,9 +16,10 @@ import '../components/wallet_data_container.dart';
 import '../controller/wallet_cubit.dart';
 
 class TransactionHistoryList extends StatelessWidget {
-  const TransactionHistoryList({super.key , this.title = 'سجل المعاملات'});
+  const TransactionHistoryList({super.key, this.title = 'سجل المعاملات'});
 
-  final String title ;
+  final String title;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,22 +28,25 @@ class TransactionHistoryList extends StatelessWidget {
         Text(
           title,
           style: getBoldStyle(
-              color: ColorManager.primaryColor,
-              fontSize: FontSize.s18),
+            color: ColorManager.primaryColor,
+            fontSize: FontSize.s18,
+          ),
         ),
-
         SizedBox(height: context.scale(16)),
-
         BlocBuilder<WalletCubit, WalletState>(
           builder: (context, state) {
-
-            if (state.getTransactionHistoryDataState.isLoading) {
-              return _buildShimmerList();
+            if ( state.getTransactionHistoryDataState.isLoading) {
+              return _buildShimmerList(context);
             } else if (state.getTransactionHistoryDataState.isLoaded) {
-              final List<TransactionHistoryEntity> transactionHistory =
-                  state.transactions;
-              if (transactionHistory.isEmpty) {
-                return Expanded(child: EmptyScreen(alertText1: 'لا توجد معاملات حتى الآن', alertText2: 'عند إجراء أي معاملة، ستظهر هنا فورًا.',  ));
+              final List<TransactionHistoryEntity> transactionHistory = state.transactions;
+              if ( transactionHistory.isEmpty) {
+                return SizedBox(
+                  height: context.scale(300),
+                  child: const EmptyScreen(
+                    alertText1: 'لا توجد معاملات حتى الآن',
+                    alertText2: 'عند إجراء أي معاملة، ستظهر هنا فورًا.',
+                  ),
+                );
               }
               return ListView.builder(
                 padding: EdgeInsets.zero,
@@ -56,11 +60,12 @@ class TransactionHistoryList extends StatelessWidget {
                 },
               );
             } else {
-              return Center(
-                child: Text(
-                  "فشل في جلب البيانات",
-                  style: getMediumStyle(
-                      color: ColorManager.redColor, fontSize: FontSize.s16),
+              return SizedBox(
+                height: context.scale(300),
+                child: ErrorAppScreen(
+                  showActionButton: false,
+                  showBackButton: false,
+                  backgroundColor: ColorManager.greyShade,
                 ),
               );
             }
@@ -68,11 +73,11 @@ class TransactionHistoryList extends StatelessWidget {
         ),
       ],
     );
-
   }
 
-  Widget _buildShimmerList() {
-    return Expanded(
+  Widget _buildShimmerList(BuildContext context) {
+    return SizedBox(
+      height: context.scale(320),
       child: SingleChildScrollView(
         child: Column(
           children: List.generate(
@@ -89,5 +94,4 @@ class TransactionHistoryList extends StatelessWidget {
       ),
     );
   }
-
 }

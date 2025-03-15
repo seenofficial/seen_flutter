@@ -144,14 +144,11 @@ case RoutersNames.userAppointmentsScreen:
           builder: (_) => const AuthenticationNavigator(),
         );
         case RoutersNames.chargeWalletScreen:
-          final args = settings.arguments ;
-          final WalletCubit walletCubit = args as WalletCubit ;
 
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.chargeWalletScreen),
           builder: (_) =>   ChargeWalletScreen(
-            walletCubit: walletCubit,
-          ),
+           ),
         );
       case RoutersNames.previewPropertyScreen:
         final args = settings.arguments ;

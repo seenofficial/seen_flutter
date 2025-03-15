@@ -34,27 +34,7 @@ class ChargeScreenWalletDataContainer extends StatelessWidget {
               children: [
 
                 SizedBox(
-                  height: context.scale(54),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(context.scale(16)),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: CircularIconButton(
-                          containerSize: context.scale(32),
-                          iconPath: AppAssets.backIcon,
-                          backgroundColor: ColorManager.whiteColor,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: context.scale(10),
+                  height: context.scale(102),
                 ),
 
                 Text(
@@ -156,14 +136,19 @@ class ChargeScreenWalletDataContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
+                SizedBox(
+                  height: context.scale(102),
+                ),
+
                 Text(
                   'رصيدك الحالي',
                   style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s16),),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ShimmerComponent(height: context.scale(13), width: context.scale(100)),
+                    Text(
+                      '',
+                      style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s32),),
                     SizedBox(
                       width: context.scale(8),
                     ),
@@ -175,6 +160,76 @@ class ChargeScreenWalletDataContainer extends StatelessWidget {
                 SizedBox(
                   height: context.scale(20),
                 ),
+
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+
+                          },
+                          child: CircularIconButton(
+                            containerSize: context.scale(60),
+                            iconPath: AppAssets.chargeWallerIcon,
+                            iconSize: 30,
+                            backgroundColor: ColorManager.whiteColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: context.scale(8),
+                        ),
+                        Text('سحب',
+                          style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s14),),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+
+                          },
+                          child: CircularIconButton(
+                            containerSize: context.scale(60),
+                            iconPath: AppAssets.shareIcon,
+                            iconSize: 30,
+                            backgroundColor: ColorManager.whiteColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: context.scale(8),
+                        ),
+                        Text('تحويل ',
+                          style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s14),),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+
+                          },
+                          child: CircularIconButton(
+                            containerSize: context.scale(60),
+                            iconPath: AppAssets.withdrawIcon,
+                            iconSize: 30,
+                            backgroundColor: ColorManager.whiteColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: context.scale(8),
+                        ),
+                        Text('شحن ',
+                          style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s14),),
+                      ],
+                    ),
+                  ],
+                )
 
 
 

@@ -22,6 +22,7 @@ import 'core/services/service_locator.dart';
 import 'features/home_module/home_imports.dart';
 import 'features/home_module/presentation/screens/home_screen.dart';
 import 'features/wallet/presentation/controller/wallet_cubit.dart';
+import 'features/wallet/presentation/screens/charge_wallet_screen.dart';
 import 'features/wallet/presentation/screens/wallet_screen.dart';
 import 'features/wish_list/domain/use_cases/add_new_property_to_wish_list_use_case.dart';
 import 'features/wish_list/presentation/screens/wish_list_screen.dart';
@@ -65,7 +66,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         return const MyBookingScreen();
       case 2:
         return WishListScreen();
-     /* case 3:
+      case 3:
         return BlocProvider(
           create: (context) {
             WalletDi().setup();
@@ -76,9 +77,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
             )
               ..getWalletData() ..getTransactionHistoryData();
           },
-          child: WalletScreen(),
-        );*/
-      case 3:
+          child: ChargeWalletScreen(),
+        );
+      case 4:
         return const ProfileScreen();
       default:
         return const SizedBox.shrink();
@@ -114,9 +115,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
         FloatingNavBarItem(
             icon: AppAssets.heartIcon,
             text: 'المفضله'),
-        // FloatingNavBarItem(
-        //     icon: AppAssets.walletIcon,
-        //     text: 'محفظتي'),
+        FloatingNavBarItem(
+            icon: AppAssets.walletIcon,
+            text: 'معاملاتي'),
         FloatingNavBarItem(
             icon: AppAssets.personIcon, text: 'حسابي'),
       ];
