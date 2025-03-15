@@ -10,6 +10,7 @@ class UserAppointmentsState extends Equatable {
     this.errors = const {},
     this.currentStatus = 'pending',
     this.isLoadingMore = false,
+    this.cancelAppointmentState = RequestState.initial,
   });
 
   final int limit;
@@ -21,10 +22,13 @@ class UserAppointmentsState extends Equatable {
   final String currentStatus;
   final bool isLoadingMore;
 
-  List<AppointmentEntity> getAppointmentsByStatus(String status) => appointments[status] ?? [];
+  final RequestState cancelAppointmentState;
+  List<AppointmentEntity> getAppointmentsByStatus(String status) =>
+      appointments[status] ?? [];
   int getOffsetForStatus(String status) => offsets[status] ?? 0;
   bool hasMoreAppointments(String status) => hasMore[status] ?? false;
-  RequestState getStateByStatus(String status) => loadedStates[status] ?? RequestState.initial;
+  RequestState getStateByStatus(String status) =>
+      loadedStates[status] ?? RequestState.initial;
   String getErrorByStatus(String status) => errors[status] ?? '';
 
   UserAppointmentsState copyWith({
@@ -36,6 +40,7 @@ class UserAppointmentsState extends Equatable {
     Map<String, String>? errors,
     String? currentStatus,
     bool? isLoadingMore,
+    RequestState? cancelAppointmentState,
   }) {
     return UserAppointmentsState(
       limit: limit ?? this.limit,
@@ -46,18 +51,21 @@ class UserAppointmentsState extends Equatable {
       errors: errors ?? this.errors,
       currentStatus: currentStatus ?? this.currentStatus,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+      cancelAppointmentState:
+          cancelAppointmentState ?? this.cancelAppointmentState,
     );
   }
 
   @override
   List<Object?> get props => [
-    limit,
-    appointments,
-    offsets,
-    hasMore,
-    loadedStates,
-    errors,
-    currentStatus,
-    isLoadingMore,
-  ];
+        limit,
+        appointments,
+        offsets,
+        hasMore,
+        loadedStates,
+        errors,
+        currentStatus,
+        isLoadingMore,
+        cancelAppointmentState,
+      ];
 }

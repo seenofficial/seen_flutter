@@ -7,4 +7,7 @@ abstract class BaseUserAppointmentsRepository {
   Future<Either<Failure, List<AppointmentEntity>>> getUserAppointments({
     Map<String, dynamic>? filters,
   });
+  Future<Either<Failure, String>> cancelAppointment(
+    String appointmentId,
+  );
 }

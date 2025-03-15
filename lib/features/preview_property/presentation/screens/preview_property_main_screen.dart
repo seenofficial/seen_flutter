@@ -23,10 +23,12 @@ import '../components/select_available_times.dart';
 import 'confirm_preview_payment_screen.dart';
 
 class PreviewPropertyScreen extends StatefulWidget {
-  const PreviewPropertyScreen({super.key, required this.propertyId});
+  const PreviewPropertyScreen(
+      {super.key, required this.propertyId, this.updateAppointment = false});
 
   final String propertyId;
 
+  final bool updateAppointment;
   @override
   State<PreviewPropertyScreen> createState() => _PreviewPropertyScreenState();
 }
@@ -58,14 +60,16 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AppBarComponent(
-                appBarTextMessage: 'معاينة العقار',
+              AppBarComponent(
+                appBarTextMessage: widget.updateAppointment
+                    ? "تغيير موعد المعاينة"
+                    : 'معاينة العقار',
                 showNotificationIcon: false,
                 showLocationIcon: false,
                 showBackIcon: true,
                 centerText: true,
               ),
-              _buildPageIndicator(),
+              if (!widget.updateAppointment) _buildPageIndicator(),
               Expanded(
                 child: PageView(
                   physics: const NeverScrollableScrollPhysics(),
@@ -77,9 +81,10 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
                   },
                   children: [
                     _buildDateAndTimeSelectionPage(context),
-                    ConfirmPreviewPaymentScreen(
-                      propertyId: widget.propertyId,
-                    ),
+                    if (!widget.updateAppointment)
+                      ConfirmPreviewPaymentScreen(
+                        propertyId: widget.propertyId,
+                      ),
                   ],
                 ),
               ),
@@ -87,21 +92,20 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
           ),
           BottomButtons(
             propertyId: widget.propertyId,
-              currentPage: _currentPage, pageController: _pageController)
+            currentPage: _currentPage,
+            pageController: _pageController,
+            updateAppointment: widget.updateAppointment,
+          )
         ],
       ),
     );
   }
 
-
   Widget _buildDateAndTimeSelectionPage(BuildContext context) {
     return BlocBuilder<PreviewPropertyCubit, PreviewPropertyState>(
       builder: (context, state) {
-
-        if(state.getAvailableHoursState.isLoaded){
-
-
-           return SingleChildScrollView(
+        if (state.getAvailableHoursState.isLoaded) {
+          return SingleChildScrollView(
             child: SafeArea(
               top: false,
               child: Padding(
@@ -114,7 +118,7 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
                     _buildDateSection(context),
                     SizedBox(height: context.scale(16)),
                     SelectAvailableTimes(
-                      availableTimes:state.currentAvailableHours,
+                      availableTimes: state.currentAvailableHours,
                     ),
                     SizedBox(height: context.scale(24)),
                     _buildWarningMessages(context),
@@ -123,8 +127,7 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
               ),
             ),
           );
-        }
-        else {
+        } else {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -161,7 +164,7 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
                 height: context.scale(4),
                 decoration: BoxDecoration(
                   color:
-                  isActive ? ColorManager.primaryColor : Color(0xFFD9D9D9),
+                      isActive ? ColorManager.primaryColor : Color(0xFFD9D9D9),
                   borderRadius: BorderRadius.circular(2.0),
                 ),
               ),
@@ -177,7 +180,6 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
       number: '1',
       text: 'حدد تاريخ ووقت المعاينة',
     );
-
   }
 
   Widget _buildDateSection(BuildContext context) {
@@ -216,7 +218,7 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
                     ),
                     child: Padding(
                       padding:
-                      EdgeInsets.symmetric(horizontal: context.scale(16)),
+                          EdgeInsets.symmetric(horizontal: context.scale(16)),
                       child: Row(
                         children: [
                           SvgImageComponent(
@@ -228,19 +230,17 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
                           Expanded(
                             child: Text(
                               state.selectedDate != null
-                                  ? '${state.selectedDate!.day}/${state
-                                  .selectedDate!.month}/${state.selectedDate!
-                                  .year}'
+                                  ? '${state.selectedDate!.day}/${state.selectedDate!.month}/${state.selectedDate!.year}'
                                   : 'اختر التاريخ',
                               style: state.selectedDate == null
                                   ? getRegularStyle(
-                                color: ColorManager.grey2,
-                                fontSize: FontSize.s12,
-                              )
+                                      color: ColorManager.grey2,
+                                      fontSize: FontSize.s12,
+                                    )
                                   : getSemiBoldStyle(
-                                color: ColorManager.primaryColor,
-                                fontSize: FontSize.s12,
-                              ),
+                                      color: ColorManager.primaryColor,
+                                      fontSize: FontSize.s12,
+                                    ),
                             ),
                           ),
                           Icon(
@@ -272,35 +272,37 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
                   },
                   child: state.showPreviewDate
                       ? FadeInDown(
-                    duration: Duration(seconds: 1),
-                    child: Container(
-                      key: ValueKey<bool>(state.showPreviewDate),
-                      margin: EdgeInsets.only(top: context.scale(8)),
-                      decoration: BoxDecoration(
-                        color: ColorManager.whiteColor,
-                        borderRadius:
-                        BorderRadius.circular(context.scale(12)),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                            ColorManager.blackColor.withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
+                          duration: Duration(seconds: 1),
+                          child: Container(
+                            key: ValueKey<bool>(state.showPreviewDate),
+                            margin: EdgeInsets.only(top: context.scale(8)),
+                            decoration: BoxDecoration(
+                              color: ColorManager.whiteColor,
+                              borderRadius:
+                                  BorderRadius.circular(context.scale(12)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      ColorManager.blackColor.withOpacity(0.1),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: CustomDatePicker(
+                              selectedDate: context
+                                  .watch<PreviewPropertyCubit>()
+                                  .state
+                                  .selectedDate,
+                              onSelectionChanged: (calendarSelectionDetails) {
+                                context.read<PreviewPropertyCubit>().selectDate(
+                                      calendarSelectionDetails.date!,
+                                    );
+                              },
+                            ),
                           ),
-                        ],
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: CustomDatePicker (
-                        selectedDate: context.watch<PreviewPropertyCubit>().state.selectedDate,
-                        onSelectionChanged: (calendarSelectionDetails) {
-                          context.read<PreviewPropertyCubit>().selectDate(
-                            calendarSelectionDetails.date!,
-                          );
-                        },
-                      ) ,
-
-                    ),
-                  )
+                        )
                       : SizedBox.shrink(),
                 ),
               ],
@@ -316,12 +318,12 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
       children: [
         WarningMessageComponent(
           text:
-          'سيكون هناك مستشار عقاري معك من البداية حتى إتمام المعاينة لضمان تجربة سلسة وآمنة.',
+              'سيكون هناك مستشار عقاري معك من البداية حتى إتمام المعاينة لضمان تجربة سلسة وآمنة.',
         ),
         SizedBox(height: context.scale(12)),
         WarningMessageComponent(
           text:
-          'تتم جميع المعاينات مباشرة من خلال مكتب إنماء لضمان الشفافية والمصداقية في كل خطوة.',
+              'تتم جميع المعاينات مباشرة من خلال مكتب إنماء لضمان الشفافية والمصداقية في كل خطوة.',
         ),
       ],
     );

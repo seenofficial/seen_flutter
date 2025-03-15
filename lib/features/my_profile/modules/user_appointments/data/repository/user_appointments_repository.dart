@@ -23,5 +23,14 @@ class UserAppointmentsRepository extends BaseUserAppointmentsRepository {
     });
   }
 
+  @override
+  Future<Either<Failure, String>> cancelAppointment(String appointmentId) async{
+
+    return HandleRequestService.handleApiCall<String>(() async {
+      final result = await baseUserAppointmentsRemoteData.cancelAppointment(appointmentId);
+      return result;
+    });
+  }
+
 
 }

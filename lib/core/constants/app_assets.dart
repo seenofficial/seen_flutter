@@ -87,6 +87,7 @@ class AppAssets {
 
   static const String errorImage = '${baseImagesFolder}error_image.svg';
   static const String propertyEmptyImage = '${baseImagesFolder}property_empty_image.svg';
+  static const String removeImage = '${baseImagesFolder}remove_image.svg';
 
   /// on boarding images
   static const String onBoarding1 = '${baseImagesFolder}on_boarding1.svg';

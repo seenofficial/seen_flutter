@@ -25,7 +25,7 @@ extension AppointmentStatusExtension on AppointmentStatus {
       case AppointmentStatus.cancelled:
         return 'cancelled';
       case AppointmentStatus.coming:
-        return 'coming';
+        return 'pending';
     }
   }
 
@@ -35,7 +35,7 @@ extension AppointmentStatusExtension on AppointmentStatus {
         return AppointmentStatus.completed;
       case 'cancelled':
         return AppointmentStatus.cancelled;
-      case 'coming':
+      case 'pending':
         return AppointmentStatus.coming;
       default:
         throw ArgumentError('Invalid status: $status');

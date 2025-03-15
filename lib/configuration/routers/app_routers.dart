@@ -105,6 +105,7 @@ case RoutersNames.userAppointmentsScreen:
               UserAppointmentsDi().setup();
               return UserAppointmentsCubit(
                 ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
               ) ;
             },
             child: const UserAppointmentsScreen(),
@@ -151,8 +152,9 @@ case RoutersNames.userAppointmentsScreen:
            ),
         );
       case RoutersNames.previewPropertyScreen:
-        final args = settings.arguments ;
-        final String propertyId = args as String ;
+        final args = settings.arguments as Map<String, dynamic> ;
+        final String propertyId = args['id'] as String ;
+        final bool updateAppointment = args['updateAppointment'] as bool ;
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.previewPropertyScreen),
           builder: (_) => BlocProvider(
@@ -165,7 +167,7 @@ case RoutersNames.userAppointmentsScreen:
                 ServiceLocator.getIt(),
               ) ;
             },
-            child: PreviewPropertyScreen(propertyId: propertyId,),
+            child: PreviewPropertyScreen(propertyId: propertyId, updateAppointment: updateAppointment,),
           ),
         );
       default:

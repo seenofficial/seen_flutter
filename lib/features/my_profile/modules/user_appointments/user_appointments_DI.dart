@@ -1,6 +1,7 @@
 import 'package:enmaa/features/my_profile/modules/user_appointments/data/data_source/user_appointments_remote_data_source.dart';
 import 'package:enmaa/features/my_profile/modules/user_appointments/data/repository/user_appointments_repository.dart';
 import 'package:enmaa/features/my_profile/modules/user_appointments/domain/repository/base_user_appointments_repository.dart';
+import 'package:enmaa/features/my_profile/modules/user_appointments/domain/use_cases/cancel_appointment_use_case.dart';
 import 'package:enmaa/features/my_profile/modules/user_appointments/domain/use_cases/get_user_appointments_use_case.dart';
 import 'package:enmaa/features/my_profile/modules/user_properties_module/data/data_source/user_properties_remote_data_source.dart';
 import 'package:enmaa/features/my_profile/modules/user_properties_module/data/repository/user_properties_repository.dart';
@@ -39,6 +40,9 @@ class UserAppointmentsDi {
     if(sl.isRegistered<GetUserAppointmentsUseCase>()) return;
     sl.registerLazySingleton(
           () => GetUserAppointmentsUseCase(sl()),
+    );
+    sl.registerLazySingleton(
+          () => CancelAppointmentUseCase(sl()),
     );
 
 

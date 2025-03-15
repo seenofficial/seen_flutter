@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:enmaa/core/components/custom_snack_bar.dart';
+import 'package:enmaa/features/my_profile/modules/user_appointments/domain/use_cases/cancel_appointment_use_case.dart';
 import 'package:equatable/equatable.dart';
- import 'package:enmaa/core/utils/enums.dart';
+import 'package:enmaa/core/utils/enums.dart';
 
 import '../../domain/entities/appointment_entity.dart';
 import '../../domain/use_cases/get_user_appointments_use_case.dart';
@@ -8,9 +10,12 @@ import '../../domain/use_cases/get_user_appointments_use_case.dart';
 part 'user_appointments_state.dart';
 
 class UserAppointmentsCubit extends Cubit<UserAppointmentsState> {
-  UserAppointmentsCubit(this.getUserAppointmentsUseCase) : super(const UserAppointmentsState());
+  UserAppointmentsCubit(
+      this.getUserAppointmentsUseCase, this.cancelAppointmentUseCase)
+      : super(const UserAppointmentsState());
 
   final GetUserAppointmentsUseCase getUserAppointmentsUseCase;
+  final CancelAppointmentUseCase cancelAppointmentUseCase;
 
   Future<void> getUserAppointments({
     required String status,
@@ -23,12 +28,10 @@ class UserAppointmentsCubit extends Cubit<UserAppointmentsState> {
     final offset = isRefresh ? 0 : state.getOffsetForStatus(status);
     _updateStateBeforeRequest(status, isRefresh);
 
-
-    // todo : status
     final filters = {
       'status': status,
       'offset': offset,
-      //"order__status": status,
+      "order__status": status,
       'limit': state.limit,
     };
 
@@ -36,8 +39,52 @@ class UserAppointmentsCubit extends Cubit<UserAppointmentsState> {
 
     result.fold(
           (failure) => _handleFailure(status, failure.message),
-          (newAppointments) => _handleSuccess(status, List<AppointmentEntity>.from(newAppointments), isRefresh),
+          (newAppointments) => _handleSuccess(
+          status, List<AppointmentEntity>.from(newAppointments), isRefresh),
     );
+  }
+
+  Future<void> cancelAppointment(String appointmentId) async {
+    emit(state.copyWith(cancelAppointmentState: RequestState.loading));
+
+    final result = await cancelAppointmentUseCase(appointmentId);
+
+    result.fold(
+          (failure) {
+        emit(state.copyWith(
+          cancelAppointmentState: RequestState.error,
+        ));
+      },
+          (message) {
+            CustomSnackBar.show(message: message , type: SnackBarType.success) ;
+        _moveAppointmentToCanceled(appointmentId);
+      },
+    );
+  }
+
+  void _moveAppointmentToCanceled(String appointmentId) {
+    final pendingAppointments =
+    List<AppointmentEntity>.from(state.getAppointmentsByStatus("pending"));
+
+    final appointmentIndex =
+    pendingAppointments.indexWhere((a) => a.id == appointmentId);
+
+    if (appointmentIndex != -1) {
+      final canceledAppointments =
+      List<AppointmentEntity>.from(state.getAppointmentsByStatus("canceled"));
+
+      final canceledAppointment = pendingAppointments.removeAt(appointmentIndex);
+      canceledAppointments.add(canceledAppointment);
+
+      emit(state.copyWith(
+        appointments: {
+          ...state.appointments,
+          "pending": pendingAppointments,
+          "canceled": canceledAppointments,
+        },
+        cancelAppointmentState: RequestState.loaded,
+      ));
+    }
   }
 
   void _updateStateBeforeRequest(String status, bool isRefresh) {
@@ -60,11 +107,14 @@ class UserAppointmentsCubit extends Cubit<UserAppointmentsState> {
     ));
   }
 
-  void _handleSuccess(String status, List<AppointmentEntity> newAppointments, bool isRefresh) {
+  void _handleSuccess(
+      String status, List<AppointmentEntity> newAppointments, bool isRefresh) {
     final hasReachedMax = newAppointments.length < state.limit;
-    final currentAppointments = isRefresh ? <AppointmentEntity>[] : [...state.getAppointmentsByStatus(status)];
+    final currentAppointments =
+    isRefresh ? <AppointmentEntity>[] : [...state.getAppointmentsByStatus(status)];
     final updatedAppointments = [...currentAppointments, ...newAppointments];
-    final newOffset = isRefresh ? newAppointments.length : state.getOffsetForStatus(status) + newAppointments.length;
+    final newOffset =
+    isRefresh ? newAppointments.length : state.getOffsetForStatus(status) + newAppointments.length;
 
     emit(state.copyWith(
       appointments: {...state.appointments, status: updatedAppointments},

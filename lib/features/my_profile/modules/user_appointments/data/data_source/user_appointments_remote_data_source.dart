@@ -8,6 +8,7 @@ import '../../../../../../core/services/dio_service.dart';
 
 abstract class BaseUserAppointmentsRemoteData {
   Future<List<AppointmentModel>> getUserAppointments({Map<String, dynamic>? filters});
+  Future<String> cancelAppointment(String appointmentId);
 }
 
 class UserAppointmentsRemoteDataSource extends BaseUserAppointmentsRemoteData {
@@ -32,6 +33,19 @@ class UserAppointmentsRemoteDataSource extends BaseUserAppointmentsRemoteData {
     }).toList();
 
     return properties;
+  }
+
+  @override
+  Future<String> cancelAppointment(String appointmentId) async{
+    final formData = FormData.fromMap({'cancel': 'true'});
+
+    final response = await dioService.patch(
+      url: '${ApiConstants.appointmentUpdate}/$appointmentId/',
+      data: formData ,
+      options: Options(contentType: 'multipart/form-data'),
+    );
+
+    return response.data['message'];
   }
 
 
