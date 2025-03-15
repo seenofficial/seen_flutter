@@ -41,7 +41,21 @@ class CustomNetworkImage extends StatelessWidget {
             color: ColorManager.greyShade,
             borderRadius: borderRadiusGeometry,
           ),
-          child: const Center(child: Icon(Icons.error)),
+          child: Container(
+            height: height,
+            width: width,
+            decoration: BoxDecoration(
+              color: ColorManager.grey3,
+              borderRadius: borderRadiusGeometry,
+            ),
+            child: Center(
+              child: Icon(
+                Icons.refresh, // Refresh icon
+                color: ColorManager.primaryColor,
+                size: 30, // Adjust size as needed
+              ),
+            ),
+          ),
         ),
       placeholder: (context, url) {
         return Shimmer.fromColors(
