@@ -135,16 +135,7 @@ class BookPropertyButtons extends StatelessWidget {
                         backgroundColor: ColorManager.primaryColor,
                         foregroundColor: Colors.white,
                       ),
-                      child: isLoading
-                          ? SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ),
-                      )
-                          : Text(currentPage == 2 ? 'إرسال' : 'التالي'),
+                      child: Text(currentPage == 2 ? 'إرسال' : 'التالي'),
                     ),
                   ),
                 ),
