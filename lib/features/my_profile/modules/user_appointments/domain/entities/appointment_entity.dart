@@ -25,6 +25,33 @@ class AppointmentEntity extends Equatable {
     required this.orderStatus,
   });
 
+  // Add copyWith method
+  AppointmentEntity copyWith({
+    String? id,
+    String? date,
+    String? time,
+    String? propertyId,
+    String? propertyType,
+    String? propertyArea,
+    String? propertyCity,
+    String? propertyState,
+    String? propertyCountry,
+    String? orderStatus,
+  }) {
+    return AppointmentEntity(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      time: time ?? this.time,
+      propertyId: propertyId ?? this.propertyId,
+      propertyType: propertyType ?? this.propertyType,
+      propertyArea: propertyArea ?? this.propertyArea,
+      propertyCity: propertyCity ?? this.propertyCity,
+      propertyState: propertyState ?? this.propertyState,
+      propertyCountry: propertyCountry ?? this.propertyCountry,
+      orderStatus: orderStatus ?? this.orderStatus,
+    );
+  }
+
   @override
   List<Object> get props => [
     id,

@@ -19,6 +19,8 @@ import 'core/services/bloc_observer.dart';
 import 'core/services/navigator_observer.dart';
 import 'core/services/service_locator.dart';
 import 'core/translation/codegen_loader.g.dart';
+import 'features/my_profile/modules/user_appointments/presentation/controller/user_appointments_cubit.dart';
+import 'features/my_profile/modules/user_appointments/user_appointments_DI.dart';
 import 'features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'features/wish_list/domain/use_cases/add_new_property_to_wish_list_use_case.dart';
 import 'features/wish_list/domain/use_cases/get_properties_wish_list_use_case.dart';
@@ -64,6 +66,16 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) => FilterPropertyCubit(),
+          ),
+          BlocProvider(
+            create: (context){
+              UserAppointmentsDi().setup();
+              return UserAppointmentsCubit(
+                ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
+              ) ;
+            },
           ),
           BlocProvider(
             create: (context) {

@@ -3,6 +3,7 @@
 import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/request_states_extension.dart';
+import 'package:enmaa/features/my_profile/modules/user_appointments/presentation/controller/user_appointments_cubit.dart';
 import 'package:enmaa/features/preview_property/presentation/controller/preview_property_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,8 +102,10 @@ class BottomButtons extends StatelessWidget {
                 onTap: () {
                   if(updateAppointment && canConfirm) {
 
-                    /// todo : update appointment
-                    CustomSnackBar.show(message: 'تم تعديل موعد المعاينة بنجاح', type: SnackBarType.success);
+                    context.read<UserAppointmentsCubit>().updateAppointment(
+                      newDate: DateFormat('yyyy-MM-dd', 'en').format(state.selectedDate!),
+                      newTime:  state.selectedTime! ,
+                    );
                     Navigator.pop(context);
                   }
                   else

@@ -11,6 +11,8 @@ class UserAppointmentsState extends Equatable {
     this.currentStatus = 'pending',
     this.isLoadingMore = false,
     this.cancelAppointmentState = RequestState.initial,
+    this.updateAppointmentState = RequestState.initial,
+    this.currentAppointmentId = '',
   });
 
   final int limit;
@@ -23,6 +25,9 @@ class UserAppointmentsState extends Equatable {
   final bool isLoadingMore;
 
   final RequestState cancelAppointmentState;
+  final RequestState updateAppointmentState;
+  final String currentAppointmentId;
+
   List<AppointmentEntity> getAppointmentsByStatus(String status) =>
       appointments[status] ?? [];
   int getOffsetForStatus(String status) => offsets[status] ?? 0;
@@ -41,6 +46,8 @@ class UserAppointmentsState extends Equatable {
     String? currentStatus,
     bool? isLoadingMore,
     RequestState? cancelAppointmentState,
+    RequestState? updateAppointmentState,
+    String? currentAppointmentId,
   }) {
     return UserAppointmentsState(
       limit: limit ?? this.limit,
@@ -53,6 +60,9 @@ class UserAppointmentsState extends Equatable {
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       cancelAppointmentState:
           cancelAppointmentState ?? this.cancelAppointmentState,
+      updateAppointmentState:
+          updateAppointmentState ?? this.updateAppointmentState,
+      currentAppointmentId: currentAppointmentId ?? this.currentAppointmentId,
     );
   }
 
@@ -67,5 +77,7 @@ class UserAppointmentsState extends Equatable {
         currentStatus,
         isLoadingMore,
         cancelAppointmentState,
+        updateAppointmentState,
+        currentAppointmentId,
       ];
 }

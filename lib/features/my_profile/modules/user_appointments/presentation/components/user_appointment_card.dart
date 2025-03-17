@@ -99,6 +99,9 @@ class UserAppointmentCard extends StatelessWidget {
                     ],
                     onChanged: (String? value) {
                       if (value == 'edit') {
+
+                        context.read<UserAppointmentsCubit>().updateCurrentAppointmentId(appointment.id);
+
                         Navigator.pushNamed(context, RoutersNames.previewPropertyScreen , arguments: {
                           'id' : appointment.propertyId ,
                           'updateAppointment' : true ,

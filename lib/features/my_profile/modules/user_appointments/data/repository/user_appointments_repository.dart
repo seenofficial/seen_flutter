@@ -32,5 +32,13 @@ class UserAppointmentsRepository extends BaseUserAppointmentsRepository {
     });
   }
 
+  @override
+  Future<Either<Failure, void>> updateAppointment(Map<String, dynamic> data) async{
+   return HandleRequestService.handleApiCall<void>(() async {
+      final result = await baseUserAppointmentsRemoteData.updateAppointment(data);
+      return result;
+    });
+  }
+
 
 }

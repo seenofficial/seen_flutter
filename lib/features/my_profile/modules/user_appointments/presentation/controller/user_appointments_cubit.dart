@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/features/my_profile/modules/user_appointments/domain/use_cases/cancel_appointment_use_case.dart';
+import 'package:enmaa/features/my_profile/modules/user_appointments/domain/use_cases/update_appointment_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:enmaa/core/utils/enums.dart';
 
@@ -11,11 +12,18 @@ part 'user_appointments_state.dart';
 
 class UserAppointmentsCubit extends Cubit<UserAppointmentsState> {
   UserAppointmentsCubit(
+      this.updateAppointmentUseCase ,
       this.getUserAppointmentsUseCase, this.cancelAppointmentUseCase)
       : super(const UserAppointmentsState());
 
   final GetUserAppointmentsUseCase getUserAppointmentsUseCase;
   final CancelAppointmentUseCase cancelAppointmentUseCase;
+  final UpdateAppointmentUseCase updateAppointmentUseCase ;
+
+
+  void updateCurrentAppointmentId (String id){
+    emit(state.copyWith(currentAppointmentId: id));
+  }
 
   Future<void> getUserAppointments({
     required String status,
@@ -85,6 +93,76 @@ class UserAppointmentsCubit extends Cubit<UserAppointmentsState> {
         cancelAppointmentState: RequestState.loaded,
       ));
     }
+  }
+
+
+  Future<void> updateAppointment({
+    required String newDate,
+    required String newTime,
+  }) async {
+    emit(state.copyWith(updateAppointmentState: RequestState.loading));
+
+    final parameters = {
+      'appointmentId': state.currentAppointmentId,
+      'date': newDate,
+      'time': newTime,
+    };
+
+    final result = await updateAppointmentUseCase(parameters);
+
+    result.fold(
+          (failure) {
+        emit(state.copyWith(
+          updateAppointmentState: RequestState.error,
+        ));
+        CustomSnackBar.show(
+          message: failure.message,
+          type: SnackBarType.error,
+        );
+      },
+          (updatedAppointment) {
+        CustomSnackBar.show(
+          message: 'Appointment updated successfully',
+          type: SnackBarType.success,
+        );
+        _updateAppointmentInList(state.currentAppointmentId, newDate, newTime);
+      },
+    );
+  }
+
+  void _updateAppointmentInList(String appointmentId, String newDate, String newTime) {
+    final status = _findAppointmentStatus(appointmentId);
+    if (status != null) {
+      final appointmentsList = List<AppointmentEntity>.from(state.getAppointmentsByStatus(status));
+      final appointmentIndex = appointmentsList.indexWhere((a) => a.id == appointmentId);
+
+      if (appointmentIndex != -1) {
+        final currentAppointment = appointmentsList[appointmentIndex];
+        final updatedAppointment = currentAppointment.copyWith(
+          date: newDate,
+          time: newTime,
+        );
+
+        appointmentsList[appointmentIndex] = updatedAppointment;
+
+        emit(state.copyWith(
+          appointments: {
+            ...state.appointments,
+            status: appointmentsList,
+          },
+          updateAppointmentState: RequestState.loaded,
+        ));
+      }
+    }
+  }
+
+  String? _findAppointmentStatus(String appointmentId) {
+    for (final status in state.appointments.keys) {
+      if (state.getAppointmentsByStatus(status).any((a) => a.id == appointmentId)) {
+        return status;
+      }
+    }
+    return null;
   }
 
   void _updateStateBeforeRequest(String status, bool isRefresh) {

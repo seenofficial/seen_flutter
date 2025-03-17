@@ -100,16 +100,7 @@ class AppRouters {
 case RoutersNames.userAppointmentsScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.userAppointmentsScreen),
-          builder: (_) => BlocProvider(
-            create: (context){
-              UserAppointmentsDi().setup();
-              return UserAppointmentsCubit(
-                ServiceLocator.getIt(),
-                ServiceLocator.getIt(),
-              ) ;
-            },
-            child: const UserAppointmentsScreen(),
-          ),
+          builder: (_) => const UserAppointmentsScreen(),
         );
 
       case RoutersNames.realEstateDetailsScreen:

@@ -10,4 +10,7 @@ abstract class BaseUserAppointmentsRepository {
   Future<Either<Failure, String>> cancelAppointment(
     String appointmentId,
   );
+  Future<Either<Failure, void>> updateAppointment(
+    Map<String , dynamic> data,
+  );
 }

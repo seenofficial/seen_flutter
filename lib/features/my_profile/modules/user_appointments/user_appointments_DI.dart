@@ -7,6 +7,7 @@ import 'package:enmaa/features/my_profile/modules/user_properties_module/data/da
 import 'package:enmaa/features/my_profile/modules/user_properties_module/data/repository/user_properties_repository.dart';
 import 'package:enmaa/features/my_profile/modules/user_properties_module/domain/repository/base_user_properties_repository.dart';
 import '../../../../core/services/service_locator.dart';
+import 'domain/use_cases/update_appointment_use_case.dart';
 
 class UserAppointmentsDi {
   final sl = ServiceLocator.getIt;
@@ -43,6 +44,9 @@ class UserAppointmentsDi {
     );
     sl.registerLazySingleton(
           () => CancelAppointmentUseCase(sl()),
+    );
+    sl.registerLazySingleton(
+          () => UpdateAppointmentUseCase(sl()),
     );
 
 

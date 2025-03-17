@@ -38,26 +38,6 @@ class AddNewRealEstateLocationScreen extends StatelessWidget {
           return Stack(
             children: [
 
-               BlocBuilder<MapServicesCubit, MapServicesState>(
-                buildWhen: (previous, current) =>
-                previous.showSuggestionsList != current.showSuggestionsList,
-                builder: (context, state) {
-                  return Visibility(
-                    visible: state.showSuggestionsList,
-                    child: GestureDetector(
-                      onTap: () {
-                        print('Tapped Outside');
-                        context.read<MapServicesCubit>().changeVisibilityOfSuggestionsList();
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        color: Colors.red,
-                      ),
-                    ),
-                  );
-                },
-              ),
 
               BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
                 buildWhen: (previous, current) =>

@@ -39,7 +39,7 @@ class PreviewPropertyRemoteDataSource extends BasePreviewPropertyDataSource {
 
 
     Map<String, dynamic> jsonData = {
-      "date": "2025-03-15",
+      "date": "2025-03-17",
       "busy_hours": ["08:00", "12:00", "15:00"]
     };
 

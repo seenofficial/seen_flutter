@@ -57,8 +57,9 @@
   "cancelled" : " ملغي",
 
   "reserved" : " محجوز",
-  "available" : " متاح"
+  "available" : " متاح",
+  "coming" : " قادم",
 
-
-
+  "iAmBuyer": " أنا مشتري",
+  "anotherBuyer": " مشتري آخر"
 }
