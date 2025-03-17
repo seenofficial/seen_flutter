@@ -29,16 +29,16 @@ class PreviewPropertyRemoteDataSource extends BasePreviewPropertyDataSource {
     );
 
 
-   /* List<dynamic> jsonResponse = response.data;
+    List<dynamic> jsonResponse = response.data;
 
     List<DayAndHoursModel> availableHours = jsonResponse.map((day) {
       return DayAndHoursModel.fromJson(day);
     }).toList();
 
-    return availableHours ;*/
+    return availableHours ;
 
 
-    Map<String, dynamic> jsonData = {
+    /*Map<String, dynamic> jsonData = {
       "date": "2025-03-17",
       "busy_hours": ["08:00", "12:00", "15:00"]
     };
@@ -47,7 +47,7 @@ class PreviewPropertyRemoteDataSource extends BasePreviewPropertyDataSource {
 
     availableHours.add(DayAndHoursModel.fromJson(jsonData));
 
-    return availableHours ;
+    return availableHours ;*/
   }
 
   @override
