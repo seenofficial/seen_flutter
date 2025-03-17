@@ -6,6 +6,7 @@ import 'package:enmaa/features/authentication_module/domain/use_cases/sign_up_us
 import 'package:enmaa/features/authentication_module/domain/use_cases/verify_otp_use_case.dart';
 import 'package:enmaa/features/authentication_module/presentation/controller/biometric_bloc.dart';
 import 'package:enmaa/features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
+import '../../core/services/bio_metric_service.dart';
 import '../../core/services/service_locator.dart';
 import 'data/data_source/remote_data/authentication_remote_data_source.dart';
 import 'data/repository/authentication_repository.dart';
@@ -63,9 +64,16 @@ class AuthenticationDi {
   }
   void _registerBlocs() {
 
+    sl.registerLazySingleton<BiometricService>(
+          () => BiometricService(
+
+      ),
+    );
+
     sl.registerLazySingleton<BiometricBloc>(
           () => BiometricBloc(
         sl<LoginUsingLocalAuthentication>(),
+        sl<BiometricService>(),
       ),
     );
 

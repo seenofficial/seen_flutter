@@ -1,6 +1,11 @@
+import 'package:enmaa/configuration/managers/color_manager.dart';
+import 'package:enmaa/core/components/custom_snack_bar.dart';
+import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
+import '../../../../core/components/button_app_component.dart';
 import '../controller/biometric_bloc.dart';
 import '../controller/biometric_event.dart';
 import '../controller/biometric_state.dart';
@@ -12,55 +17,158 @@ class BioMetricScreen extends StatefulWidget {
   State<BioMetricScreen> createState() => _BioMetricScreenState();
 }
 
-class _BioMetricScreenState extends State<BioMetricScreen> {
+class _BioMetricScreenState extends State<BioMetricScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _lineAnimation;
+  bool _showSuccessUI = false;
+
   @override
   void initState() {
     super.initState();
+
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+
+    _lineAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
     Future.microtask(() {
       context.read<BiometricBloc>().add(AuthenticateWithBiometrics());
     });
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _handleSuccess() {
+    setState(() {
+      _showSuccessUI = true;
+    });
+
+    _animationController.reset();
+    _animationController.forward();
+
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, RoutersNames.onBoardingScreen);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorManager.grey3,
       body: BlocListener<BiometricBloc, BiometricState>(
         listener: (context, state) {
-          if (state is BiometricSuccess || state is BiometricNotAvailable) {
-            Navigator.pushReplacementNamed(context, RoutersNames.onBoardingScreen);
+          if (state is BiometricSuccess) {
+            _handleSuccess();
           } else if (state is BiometricFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Authentication Failed or Unavailable")),
-            );
+            CustomSnackBar.show(message: 'Authentication failed. Please try again.');
           }
         },
         child: BlocBuilder<BiometricBloc, BiometricState>(
           builder: (context, state) {
-            if (state is BiometricLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is BiometricFailure) {
+            if (_showSuccessUI) {
+              return _buildSuccessUI();
+            } else {
+
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Biometric authentication failed or is unavailable.",
-                      textAlign: TextAlign.center,
+                    Icon(
+                      Icons.error,
+                      color: Colors.red,
+                      size: context.scale(50),
                     ),
                     const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
+                    ButtonAppComponent(
+                      width: context.scale(150),
+
+                      onTap: () {
                         context.read<BiometricBloc>().add(AuthenticateWithBiometrics());
                       },
-                      child: const Text("Retry Authentication"),
+                      buttonContent: Center(child: Text("Retry Authentication" , style: getBoldStyle(
+                        color: ColorManager.whiteColor,
+                      ),)),
+
                     ),
                   ],
                 ),
               );
+
             }
-            return const Center(child: Text("Waiting for authentication..."));
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildSuccessUI() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: context.scale(150),
+            height: context.scale(150),
+            decoration: BoxDecoration(
+              color: ColorManager.whiteColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Container(
+                width: context.scale(65),
+                height: context.scale(65),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.green, width: 3),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.check,
+                    size: context.scale(30),
+                    color: Colors.green,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          AnimatedBuilder(
+            animation: _lineAnimation,
+            builder: (context, child) {
+              return Container(
+                width: _lineAnimation.value * context.scale(150),
+                height: 5,
+                color: Colors.green,
+              );
+            },
+          ),
+
+          const SizedBox(height: 15),
+
+          const Text(
+            "Authentication Successful",
+            style: TextStyle(
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+        ],
       ),
     );
   }

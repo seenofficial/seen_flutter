@@ -79,7 +79,10 @@ class AppRouters {
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.biometricScreen),
           builder: (_) => BlocProvider(
-            create: (context) => BiometricBloc(ServiceLocator.getIt()),
+            create: (context) => BiometricBloc(
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+            ),
             child: const BioMetricScreen(),
           ),
         );
