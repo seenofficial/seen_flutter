@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:enmaa/features/wallet/data/models/transaction_history_model.dart';
 import 'package:enmaa/features/wallet/data/models/wallet_data_model.dart';
 
+import '../../../../core/constants/api_constants.dart';
+
 
 
 
@@ -24,38 +26,26 @@ class WalletRemoteDataSource extends BaseWalletRemoteDataSource {
 
   @override
   Future<WalletDataModel> getWalletData() async{
+    final response = await dioService.get(
+      url: ApiConstants.user,
+    );
+
+    return WalletDataModel.fromJson(response.data);
 
 
-    await Future.delayed(Duration(seconds: 2));
-    return  WalletDataModel(currentBalance: '10000', totalBalance: '20000', pendingBalance: '10000');
   }
 
   @override
   Future<List<TransactionHistoryModel>> getTransactionHistoryData() async {
-    await Future.delayed(Duration(seconds: 4));
 
-    List<TransactionHistoryModel> fakeData = [
-      TransactionHistoryModel(
-        id: "1",
-        title: "Salary Deposit",
-        amount: "5000.00",
-        date: "2025-03-01",
-      ),
-      TransactionHistoryModel(
-        id: "2",
-        title: "Online Purchase",
-        amount: "-150.00",
-        date: "2025-03-02",
-      ),
-      TransactionHistoryModel(
-        id: "3",
-        title: "Utility Bill Payment",
-        amount: "-200.00",
-        date: "2025-03-03",
-      ),
-    ];
-
-    return fakeData;
+    final response = await dioService.get(
+      url: '${ApiConstants.transactions}history/',
+    );
+    final List<dynamic> results = response.data['results'] ?? [];
+    List<TransactionHistoryModel> transactions = results.map((json) {
+      return TransactionHistoryModel.fromJson(json);
+    }).toList();
+    return transactions;
   }
 
 

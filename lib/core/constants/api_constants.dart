@@ -34,5 +34,6 @@ class ApiConstants {
 
 
   static const String deals= "${baseUrl}deals/";
+  static const String transactions= "${baseUrl}payments/transactions/";
 
 }

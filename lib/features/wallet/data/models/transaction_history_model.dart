@@ -10,10 +10,10 @@ class TransactionHistoryModel extends TransactionHistoryEntity {
 
   factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) {
     return TransactionHistoryModel(
-      id: json['id'],
-      title: json['title'],
-      amount: json['amount'],
-      date: json['date'],
+      id: json['id']??'',
+      title: json['title']??'',
+      amount: json['amount']??'',
+      date: json['date']??'',
     );
   }
 
