@@ -59,3 +59,16 @@ class GetUserLocation extends HomeEvent {
   @override
   List<Object> get props => [];
 }
+
+class RemoveProperty extends HomeEvent {
+  final String propertyId;
+  final PropertyType propertyType;
+
+  const RemoveProperty({
+    required this.propertyId,
+    required this.propertyType,
+  });
+
+  @override
+  List<Object?> get props => [propertyId, propertyType];
+}

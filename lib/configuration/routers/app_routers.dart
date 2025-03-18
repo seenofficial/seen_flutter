@@ -96,6 +96,7 @@ class AppRouters {
 
               return UserPropertiesCubit(
                 ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
               ) ;
             },
             child: const MyPropertiesScreen(),

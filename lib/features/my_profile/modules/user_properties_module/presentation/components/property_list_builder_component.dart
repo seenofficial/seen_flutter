@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:enmaa/core/extensions/booking_status_extension.dart';
 import 'package:enmaa/features/my_profile/modules/user_properties_module/presentation/controller/user_properties_cubit.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,9 @@ import 'package:enmaa/core/screens/error_app_screen.dart';
 import 'package:enmaa/core/screens/property_empty_screen.dart';
 import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/home_module/presentation/components/real_state_card_component.dart';
+
+
+import 'my_properties_card_actions.dart';
 
 class UserPropertiesListBuilderComponent extends StatelessWidget {
   final BookingStatus status;
@@ -25,16 +29,19 @@ class UserPropertiesListBuilderComponent extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         await context.read<UserPropertiesCubit>().getMyProperties(
-          status: status.toJson(),
-          isRefresh: true,
-        );
+              status: status.toJson(),
+              isRefresh: true,
+            );
       },
       child: BlocBuilder<UserPropertiesCubit, UserPropertiesState>(
         buildWhen: (previous, current) =>
-        previous.loadedStates[status.toJson()] != current.loadedStates[status.toJson()] ||
-            previous.properties[status.toJson()] != current.properties[status.toJson()] ||
+            previous.loadedStates[status.toJson()] !=
+                current.loadedStates[status.toJson()] ||
+            previous.properties[status.toJson()] !=
+                current.properties[status.toJson()] ||
             previous.isLoadingMore != current.isLoadingMore ||
-            previous.hasMore[status.toJson()] != current.hasMore[status.toJson()],
+            previous.hasMore[status.toJson()] !=
+                current.hasMore[status.toJson()],
         builder: (context, state) {
           final properties = state.getPropertiesByStatus(status.toJson());
           final requestState = state.getStateByStatus(status.toJson());
@@ -47,7 +54,9 @@ class UserPropertiesListBuilderComponent extends StatelessWidget {
             );
           }
 
-          if (requestState.isLoaded && properties.isEmpty && !state.isLoadingMore) {
+          if (requestState.isLoaded &&
+              properties.isEmpty &&
+              !state.isLoadingMore) {
             return EmptyScreen(
               alertText1: 'لا توجد عقارات ${status.name}',
               alertText2: 'يمكنك إضافة عقاراتك للبدء في عرضها للحجز',
@@ -71,7 +80,8 @@ class UserPropertiesListBuilderComponent extends StatelessWidget {
             controller: scrollController,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: properties.length + (state.hasMoreProperties(status.toJson()) ? 1 : 0),
+            itemCount: properties.length +
+                (state.hasMoreProperties(status.toJson()) ? 1 : 0),
             itemBuilder: (context, index) {
               if (index >= properties.length) {
                 return CardListingShimmer(
@@ -88,7 +98,9 @@ class UserPropertiesListBuilderComponent extends StatelessWidget {
                   height: context.scale(290),
                   currentProperty: propertyItem,
                   showWishlistButton: false,
-
+                  cardActions: MyPropertiesCardActions (
+                    propertyItem: propertyItem,
+                  ),
                 ),
               );
             },

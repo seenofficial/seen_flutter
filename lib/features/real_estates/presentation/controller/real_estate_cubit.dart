@@ -40,6 +40,28 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     }
   }
 
+  void removePropertyById(String propertyId) {
+
+    final saleIndex = state.saleProperties.indexWhere(
+          (property) => property.id.toString() == propertyId,
+    );
+    final updatedSaleProperties = List<PropertyEntity>.from(state.saleProperties);
+    if (saleIndex != -1) {
+      updatedSaleProperties.removeAt(saleIndex);
+    }
+
+    final rentIndex = state.rentProperties.indexWhere(
+          (property) => property.id.toString() == propertyId,
+    );
+    final updatedRentProperties = List<PropertyEntity>.from(state.rentProperties);
+    if (rentIndex != -1) {
+      updatedRentProperties.removeAt(rentIndex);
+    }
+    emit(state.copyWith(
+      saleProperties: updatedSaleProperties,
+      rentProperties: updatedRentProperties,
+    ));
+  }
 
   Future<void> fetchProperties({
     Map<String, dynamic>? filters,

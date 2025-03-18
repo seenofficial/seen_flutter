@@ -43,10 +43,43 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<RemovePropertyFromWishlist>(_onRemovePropertyFromWishlist);
     on<UpdateUserLocation>(_onUpdateUserLocation);
     on<GetUserLocation>(_onGetUserLocation);
-
+    on<RemoveProperty>(_onRemoveProperty);
 
   }
-  
+
+  Future<void> _onRemoveProperty(
+      RemoveProperty event,
+      Emitter<HomeState> emit,
+      ) async {
+    final propertyId = event.propertyId;
+    final propertyType = event.propertyType;
+
+    final updatedProperties = Map<PropertyType, PropertyData>.from(state.properties);
+
+    final propertyData = updatedProperties[propertyType];
+    if (propertyData == null || propertyData.properties.isEmpty) {
+      return;
+    }
+
+    final index = propertyData.properties.indexWhere(
+          (property) => property.id.toString() == propertyId,
+    );
+
+    if (index == -1) {
+      return;
+    }
+
+    final updatedPropertyList = List<PropertyEntity>.from(propertyData.properties);
+    updatedPropertyList.removeAt(index);
+
+    updatedProperties[propertyType] = propertyData.copyWith(
+      properties: updatedPropertyList,
+    );
+
+    emit(state.copyWith(properties: updatedProperties));
+
+  }
+
   Future<void> _onGetUserLocation(
       GetUserLocation event,
       Emitter<HomeState> emit,
