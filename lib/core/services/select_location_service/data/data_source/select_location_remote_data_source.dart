@@ -32,13 +32,11 @@ class SelectLocationRemoteDataSource extends BaseSelectLocationRemoteDataSource 
 
   @override
   Future<List<StateModel>> getStates(String countryId) async {
-    final formData = FormData.fromMap({
-      'country': countryId,
-    });
+
 
     final response = await dioService.get(
       url: ApiConstants.states,
-      body: formData,
+      queryParameters: {'country': countryId},
       options: Options(contentType: 'multipart/form-data'),
     );
     final List<dynamic> results = response.data['results'] ?? [];
@@ -50,12 +48,9 @@ class SelectLocationRemoteDataSource extends BaseSelectLocationRemoteDataSource 
 
   @override
   Future<List<CityModel>> getCities(String stateId) async {
-    final formData = FormData.fromMap({
-      'state': stateId,
-    });
     final response = await dioService.get(
       url: ApiConstants.cities,
-      body: formData,
+      queryParameters: {'state': stateId},
       options: Options(contentType: 'multipart/form-data'),
     );
     final List<dynamic> results = response.data['results'] ?? [];

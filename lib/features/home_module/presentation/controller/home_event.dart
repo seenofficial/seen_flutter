@@ -42,3 +42,20 @@ class RemovePropertyFromWishlist extends HomeEvent {
   @override
   List<Object> get props => [propertyId, propertyType];
 }
+
+class UpdateUserLocation extends HomeEvent {
+  final String cityID;
+  final String cityName ;
+
+  const UpdateUserLocation({required this.cityID , required this.cityName});
+
+  @override
+  List<Object> get props => [cityID , cityName];
+}
+class GetUserLocation extends HomeEvent {
+
+  const GetUserLocation();
+
+  @override
+  List<Object> get props => [];
+}

@@ -9,4 +9,6 @@ import '../../../../core/errors/failure.dart';
 abstract class BaseHomeRepository {
   Future<Either<Failure, List<ImageEntity>>> getBannersData();
   Future<Either<Failure, List<AppServiceEntity>>> getAppServicesData();
+  Future<Either<Failure, void>> updateUserLocation(String cityID);
+
 }

@@ -34,8 +34,9 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: ColorManager.greyShade,
           body: Column(
             children: [
-              const AppBarComponent(
+                AppBarComponent(
                 appBarTextMessage: 'كل الخيارات بين يديك',
+                homeBloc: context.read<HomeBloc>(),
               ),
               AppTextField(
                 hintText: 'ابحث عن كل ما تريد معرفته ...',

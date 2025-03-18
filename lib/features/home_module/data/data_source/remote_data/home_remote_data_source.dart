@@ -9,6 +9,7 @@ import '../../../../../core/services/dio_service.dart';
 abstract class BaseHomeRemoteData {
   Future<List<ImageEntity>> getBanners();
   Future<List<AppServiceModel>> getAppServicesData();
+  Future<void> updateUserLocation(String cityID);
 
 }
 
@@ -55,6 +56,19 @@ class HomeRemoteDataSource extends BaseHomeRemoteData {
     }).toList();
 
     return appServices;
+  }
+
+  @override
+  Future<void> updateUserLocation(String cityID) async{
+    final formData = FormData.fromMap({
+      'city_id': cityID,
+    });
+    final response = await dioService.patch(
+      url: ApiConstants.user,
+      data: formData ,
+      options: Options(contentType: 'multipart/form-data'),
+    );
+
   }
 
 }

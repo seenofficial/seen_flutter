@@ -31,15 +31,32 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
     );
 
     final token = response.data['access'];
+    final refreshToken = response.data['refresh'];
+    final fullName = response.data['full_name'];
+    final language = response.data['language'];
 
+    final cityId = response.data['city']['id'];
+    final cityName = response.data['city']['name'];
+    final stateId = response.data['city']['state']['id'];
+    final stateName = response.data['city']['state']['name'];
+    final countryId = response.data['city']['state']['country']['id'];
+    final countryName = response.data['city']['state']['country']['name'];
 
-    // Store token in SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('access_token', token);
+    await prefs.setString('refresh_token', refreshToken);
+    await prefs.setString('full_name', fullName);
+    await prefs.setString('language', language);
+
+    await prefs.setInt('city_id', cityId);
+    await prefs.setString('city_name', cityName);
+    await prefs.setInt('state_id', stateId);
+    await prefs.setString('state_name', stateName);
+    await prefs.setInt('country_id', countryId);
+    await prefs.setString('country_name', countryName);
 
     return token;
   }
-
 
   @override
   Future<OTPResponseModel> sendOtp(String phoneNumber) async{

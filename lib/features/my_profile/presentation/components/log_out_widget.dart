@@ -17,7 +17,7 @@ class LogOutWidget extends StatelessWidget {
     return InkWell(
       onTap: ()async{
         final prefs = await SharedPreferences.getInstance();
-        prefs.remove('access_token');
+        prefs.clear();
         Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
       },
       child: Container(

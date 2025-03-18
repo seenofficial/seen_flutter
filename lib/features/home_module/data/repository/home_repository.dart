@@ -36,5 +36,12 @@ class HomeRepository extends BaseHomeRepository {
     });
   }
 
+  @override
+  Future<Either<Failure, void>> updateUserLocation(String cityID) async{
+    return HandleRequestService.handleApiCall<void>(() async {
+      await baseHomeRemoteData.updateUserLocation(cityID);
+    });
+  }
+
 
 }

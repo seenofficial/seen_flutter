@@ -8,6 +8,7 @@ import 'package:enmaa/features/home_module/domain/use_cases/get_app_services_use
 import 'package:enmaa/features/real_estates/domain/use_cases/get_properties_use_case.dart';
 import 'package:enmaa/features/real_estates/real_estates_DI.dart';
 import 'package:equatable/equatable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/constants/json_keys.dart';
 import '../../../../core/errors/failure.dart';
@@ -16,6 +17,7 @@ import '../../../real_estates/domain/entities/base_property_entity.dart';
 import '../../domain/entities/app_service_entity.dart';
 import '../../domain/entities/banner_entity.dart';
 import '../../domain/use_cases/get_banners_use_case.dart';
+import '../../domain/use_cases/update_user_location_use_case.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -25,8 +27,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetAppServicesUseCase getAppServicesUseCase;
   /// get near by properties for home screen
   final GetPropertiesUseCase getRealEstatesUseCase;
+  final UpdateUserLocationUseCase updateUserLocationUseCase;
 
-  HomeBloc(this.getBannersUseCase, this.getAppServicesUseCase , this.getRealEstatesUseCase)
+  HomeBloc(
+      this.updateUserLocationUseCase ,
+      this.getBannersUseCase, this.getAppServicesUseCase , this.getRealEstatesUseCase)
       : super(const HomeState()) {
 
     on<FetchBanners>(_onFetchBanners);
@@ -36,8 +41,56 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<AddPropertyToWishlist>(_onAddPropertyToWishlist);
     on<RemovePropertyFromWishlist>(_onRemovePropertyFromWishlist);
+    on<UpdateUserLocation>(_onUpdateUserLocation);
+    on<GetUserLocation>(_onGetUserLocation);
 
 
+  }
+  
+  Future<void> _onGetUserLocation(
+      GetUserLocation event,
+      Emitter<HomeState> emit,
+      ) async {
+
+    emit(state.copyWith(
+       userLocationState: RequestState.loading,
+    ));
+    SharedPreferences.getInstance().then((pref){
+      String cityName = pref.getString('city_name')??'';
+
+      emit(state.copyWith(
+        selectedCityName: cityName,
+        userLocationState: RequestState.loaded,
+      ));
+    });
+
+  }
+
+  Future<void> _onUpdateUserLocation(
+      UpdateUserLocation event,
+      Emitter<HomeState> emit,
+      ) async {
+    emit (state.copyWith(userLocationState: RequestState.loading));
+    final Either<Failure, void> result = await updateUserLocationUseCase(event.cityID);
+
+    result.fold(
+          (failure) => emit(state.copyWith(
+        userLocationState: RequestState.error,
+        errorMessage: failure.message,
+      )),
+          (_) {
+            SharedPreferences.getInstance().then((pref){
+
+              pref.setString('city_name', event.cityName);
+              pref.setString('city_id', event.cityID);
+
+
+            });        emit(state.copyWith(
+          selectedCityName: event.cityName,
+          userLocationState: RequestState.loaded,
+        ));
+      },
+    );
   }
 
   Future<void> _onFetchBanners(

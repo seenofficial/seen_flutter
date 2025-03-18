@@ -62,7 +62,8 @@ class AppRouters {
                         ServiceLocator.getIt(),
                         ServiceLocator.getIt(),
                         ServiceLocator.getIt(),
-                  ),
+                        ServiceLocator.getIt(),
+                  )..add(GetUserLocation()),
                 );
               }
 
