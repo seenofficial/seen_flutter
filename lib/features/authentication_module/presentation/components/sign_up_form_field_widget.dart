@@ -86,6 +86,8 @@ class _PhoneField extends StatelessWidget {
                     controller: controller,
                     validator: validator,
                     onChanged: (value) {
+                      BlocProvider.of<RemoteAuthenticationCubit>(context)
+                          .changeUserPhoneNumber(value);
                       if (!value.startsWith(state.currentCountryCode)) {
                         controller.clear();
                         controller.text = state.currentCountryCode;

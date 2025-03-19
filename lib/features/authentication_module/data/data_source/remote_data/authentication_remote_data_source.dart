@@ -35,12 +35,8 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
     final fullName = response.data['full_name'];
     final language = response.data['language'];
 
-    final cityId = response.data['city']['id'];
-    final cityName = response.data['city']['name'];
-    final stateId = response.data['city']['state']['id'];
-    final stateName = response.data['city']['state']['name'];
-    final countryId = response.data['city']['state']['country']['id'];
-    final countryName = response.data['city']['state']['country']['name'];
+
+
 
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('access_token', token);
@@ -48,12 +44,23 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
     await prefs.setString('full_name', fullName);
     await prefs.setString('language', language);
 
-    await prefs.setInt('city_id', cityId);
-    await prefs.setString('city_name', cityName);
-    await prefs.setInt('state_id', stateId);
-    await prefs.setString('state_name', stateName);
-    await prefs.setInt('country_id', countryId);
-    await prefs.setString('country_name', countryName);
+    if(response.data['city'] != null){
+
+      final cityId = response.data['city']['id'];
+      final cityName = response.data['city']['name'];
+      final stateId = response.data['city']['state']['id'];
+      final stateName = response.data['city']['state']['name'];
+      final countryId = response.data['city']['state']['country']['id'];
+      final countryName = response.data['city']['state']['country']['name'];
+
+      await prefs.setInt('city_id', cityId);
+      await prefs.setString('city_name', cityName);
+      await prefs.setInt('state_id', stateId);
+      await prefs.setString('state_name', stateName);
+      await prefs.setInt('country_id', countryId);
+      await prefs.setString('country_name', countryName);
+    }
+
 
     return token;
   }
@@ -67,7 +74,6 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
       }
     );
 
-    print('otpppp ${response.data}');
 
     return OTPResponseModel.fromJson(response.data);
 
@@ -100,6 +106,8 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
 
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('access_token', response.data['access_token']);
+    await prefs.setString('full_name', response.data['full_name']);
+    await prefs.setString('phone_number', response.data['phone_number']);
 
     return response.data['access_token'];
   }

@@ -1,5 +1,3 @@
-// lib/features/authentication_module/presentation/screens/login_screen.dart
-
 import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +27,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _phoneController = TextEditingController();
+  final _phoneController = TextEditingController(text: '+20');
   final _passwordController = TextEditingController();
   bool navigateToNextScreen = true ;
   String? _validatePhone(String? value) {

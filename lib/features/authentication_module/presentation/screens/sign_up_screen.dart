@@ -25,7 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String? _validatePhone(String? value) {
-    if (value == null || value.isEmpty || value.length < 8) {
+    if (value == null || value.isEmpty ) {
       return 'رقم الموبايل مطلوب';
     }
     return null;

@@ -51,6 +51,9 @@ class RemoteAuthenticationCubit extends Cubit<RemoteAuthenticationState> {
     emit(state.copyWith(userName: userName));
   }
 
+  void changeUserPhoneNumber(String phoneNumber) {
+    emit(state.copyWith(userPhoneNumber: phoneNumber));
+  }
   Future<void> remoteLogin(LoginRequestModel loginBody) async {
     emit(state.copyWith(loginRequestState: RequestState.loading));
 

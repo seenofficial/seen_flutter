@@ -244,21 +244,6 @@ class _OtpScreenState extends State<OtpScreen> {
                                 ),
                               ],
                             ),
-
-                            //todo remove this
-                            BlocBuilder<RemoteAuthenticationCubit,
-                                RemoteAuthenticationState>(
-                              builder: (context, state) {
-                                if (state.currentOTP == null)
-                                  return const SizedBox();
-                                return Text(
-                                  'enter this code ${state.currentOTP!.otpCode}',
-                                  style: getBoldStyle(
-                                      color: ColorManager.blackColor,
-                                      fontSize: FontSize.s20),
-                                );
-                              },
-                            ),
                           ],
                         ),
                       ),
