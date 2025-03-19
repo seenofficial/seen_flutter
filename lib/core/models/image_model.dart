@@ -10,9 +10,9 @@ class ImageModel extends ImageEntity{
 
   factory ImageModel.fromJson(Map<String, dynamic> json) {
     return ImageModel(
-     id: json[JsonKeys.id],
-      image: json[JsonKeys.image],
-      isMain: json[JsonKeys.isMain],
+     id: json[JsonKeys.id] ?? 0,
+      image: json[JsonKeys.image] ?? '',
+      isMain: json[JsonKeys.isMain] ?? true ,
     );
   }
 
