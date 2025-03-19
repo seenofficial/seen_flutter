@@ -14,10 +14,12 @@ import 'package:enmaa/features/wish_list/domain/use_cases/get_properties_wish_li
 import 'package:enmaa/features/wish_list/domain/use_cases/remove_property_from_wish_list_use_case.dart';
 import 'package:enmaa/features/wish_list/presentation/controller/wish_list_cubit.dart';
 import 'package:enmaa/features/wish_list/wish_list_DI.dart';
+import 'package:enmaa/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'configuration/managers/color_manager.dart';
 import 'core/components/floating_nav_bar.dart';
+import 'core/components/need_to_login_component.dart';
 import 'core/services/service_locator.dart';
 import 'features/home_module/home_imports.dart';
 import 'features/home_module/presentation/screens/home_screen.dart';
@@ -133,10 +135,24 @@ class _LayoutScreenState extends State<LayoutScreen> {
             AppRouters.homeNavigatorKey.currentState?.popUntil((route) =>
             route.isFirst);
           } else {
-            setState(() {
-              currentIndex = index;
-              _pageController.jumpToPage(index);
-            });
+            if(index == 0 || index == 4) {
+              setState(() {
+                currentIndex = index;
+                _pageController.jumpToPage(index);
+              });
+            }
+            else {
+              if(isAuth){
+                setState(() {
+                  currentIndex = index;
+                  _pageController.jumpToPage(index);
+                });
+              }
+              else {
+
+                needToLoginSnackBar();
+              }
+            }
           }
         },
       ),

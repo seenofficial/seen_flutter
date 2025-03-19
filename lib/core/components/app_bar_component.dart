@@ -4,6 +4,7 @@ import 'package:enmaa/core/components/circular_icon_button.dart';
 import 'package:enmaa/core/components/custom_bottom_sheet.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 
 import '../../features/home_module/presentation/controller/home_bloc.dart';
 import '../screens/select_location_screen.dart';
+import 'need_to_login_component.dart';
 
 class AppBarComponent extends StatefulWidget {
   const AppBarComponent({
@@ -130,32 +132,35 @@ class _AppBarComponentState extends State<AppBarComponent> {
               ),
             ),
           if (userName == null)
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(context.scale(10)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'مرحباً بك، ',
-                      style: getBoldStyle(color: ColorManager.blackColor),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context, rootNavigator: true)
-                            .pushReplacementNamed(
-                                RoutersNames.authenticationFlow);
-                      },
-                      child: Text(
-                        'أنشئ حساباً لتحصل علي المميزات',
-                        style: getUnderlineRegularStyle(
-                            color: ColorManager.grey, fontSize: FontSize.s14),
+            Visibility(
+              visible: !widget.centerText,
+              child: Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(context.scale(10)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'مرحباً بك، ',
+                        style: getBoldStyle(color: ColorManager.blackColor),
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacementNamed(
+                                  RoutersNames.authenticationFlow);
+                        },
+                        child: Text(
+                          'أنشئ حساباً لتحصل علي المميزات',
+                          style: getUnderlineRegularStyle(
+                              color: ColorManager.grey, fontSize: FontSize.s14),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -169,7 +174,12 @@ class _AppBarComponentState extends State<AppBarComponent> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      _showLocationPickerBottomSheet(context, widget.homeBloc!);
+                      if(isAuth) {
+                        _showLocationPickerBottomSheet(context, widget.homeBloc!);
+                      }
+                      else {
+                        needToLoginSnackBar();
+                      }
                     },
                     child: LayoutBuilder(
                       builder: (context, constraints) {

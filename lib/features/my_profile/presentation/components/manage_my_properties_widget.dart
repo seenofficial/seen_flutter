@@ -2,8 +2,10 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/main.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
+import '../../../../core/components/need_to_login_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../home_module/home_imports.dart';
@@ -15,7 +17,13 @@ class ManageMyPropertiesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        if(isAuth) {
           Navigator.pushNamed(context, RoutersNames.myPropertiesScreen);
+        }
+        else {
+          needToLoginSnackBar();
+
+        }
       },
       child: Container(
         width: double.infinity,

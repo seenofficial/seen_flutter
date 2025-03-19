@@ -44,18 +44,7 @@ class HomeRemoteDataSource extends BaseHomeRemoteData {
 
   @override
   Future<List<AppServiceModel>> getAppServicesData() async {
-    final response = await dioService.get(
-      url: "https://vicious-katleen-inmaa-611bcf31.koyeb.app/api/core/services/",
-    );
-
-    final List<Map<String, dynamic>> dataList =
-    (response.data as List).cast<Map<String, dynamic>>();
-
-    List<AppServiceModel> appServices = dataList.map((service) {
-      return AppServiceModel.fromJson(service);
-    }).toList();
-
-    return appServices;
+    return [];
   }
 
   @override

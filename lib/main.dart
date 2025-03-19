@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'configuration/routers/app_routers.dart';
 import 'configuration/routers/route_names.dart';
@@ -28,6 +29,7 @@ import 'features/wish_list/domain/use_cases/remove_property_from_wish_list_use_c
 import 'features/wish_list/presentation/controller/wish_list_cubit.dart';
 import 'features/wish_list/wish_list_DI.dart';
 
+bool isAuth = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -45,6 +47,11 @@ void main() async {
       storageDirectory:
           HydratedStorageDirectory((await getTemporaryDirectory()).path));
 
+  final prefs = await SharedPreferences.getInstance();
+  var  token =   prefs.get('access_token');
+  if(token != null){
+    isAuth = true;
+  }
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],

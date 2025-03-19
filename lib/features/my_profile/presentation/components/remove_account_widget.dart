@@ -1,10 +1,12 @@
 import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
+import '../../../../core/components/need_to_login_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../home_module/home_imports.dart';
@@ -16,9 +18,15 @@ class RemoveAccountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: ()async{
-        final prefs = await SharedPreferences.getInstance();
-        prefs.remove('access_token');
-        Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
+        if(isAuth) {
+          final prefs = await SharedPreferences.getInstance();
+          prefs.remove('access_token');
+          Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
+        }
+        else {
+          needToLoginSnackBar();
+        }
+
       },
       child: Container(
         width: double.infinity,

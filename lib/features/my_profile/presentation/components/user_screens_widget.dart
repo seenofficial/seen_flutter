@@ -3,8 +3,10 @@ import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/main.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
+import '../../../../core/components/need_to_login_component.dart';
 import '../../../home_module/home_imports.dart';
 
 class UserScreensWidget extends StatelessWidget {
@@ -31,7 +33,13 @@ class UserScreensWidget extends StatelessWidget {
             
                 InkWell(
                   onTap: (){
-                    Navigator.pushNamed(context, RoutersNames.userAppointmentsScreen);
+                    if(isAuth) {
+                      Navigator.pushNamed(context, RoutersNames.userAppointmentsScreen);
+                    }
+                    else {
+                      needToLoginSnackBar();
+
+                    }
                   },
                   child: Row(
                     children: [
@@ -57,6 +65,12 @@ class UserScreensWidget extends StatelessWidget {
                     Spacer(),
                     InkWell(
                         onTap: (){
+                          if(isAuth) {
+
+                           }
+                          else {
+                            needToLoginSnackBar();
+                          }
                         },
                         child: Icon(Icons.arrow_forward_ios)
                     )
