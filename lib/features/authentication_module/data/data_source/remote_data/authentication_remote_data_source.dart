@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../core/constants/api_constants.dart';
 import '../../../../../core/constants/json_keys.dart';
+import '../../../../../main.dart';
 import '../../models/login_request_model.dart';
 import '../../models/sign_up_request_model.dart';
 
@@ -62,6 +63,7 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
     }
 
 
+    isAuth = true ;
     return token;
   }
 
@@ -108,6 +110,9 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
     await prefs.setString('access_token', response.data['access_token']);
     await prefs.setString('full_name', response.data['full_name']);
     await prefs.setString('phone_number', response.data['phone_number']);
+
+
+    isAuth = true ;
 
     return response.data['access_token'];
   }
