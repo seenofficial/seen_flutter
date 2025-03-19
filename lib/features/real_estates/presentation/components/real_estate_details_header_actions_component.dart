@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:enmaa/core/components/need_to_login_component.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/request_states_extension.dart';
 import 'package:enmaa/core/services/service_locator.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/wish_list/presentation/controller/wish_list_cubit.dart';
+import 'package:enmaa/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/components/circular_icon_button.dart';
@@ -34,11 +36,14 @@ class RealEstateDetailsHeaderActionsComponent extends StatelessWidget {
         ),
         Row(
           children: [
-            CircularIconButton(
-              iconPath: AppAssets.shareIcon,
-              containerSize: context.scale(containerSize),
-              iconSize: context.scale(iconSize),
-              onPressed: () {},
+            Visibility(
+              visible: false,
+              child: CircularIconButton(
+                iconPath: AppAssets.shareIcon,
+                containerSize: context.scale(containerSize),
+                iconSize: context.scale(iconSize),
+                onPressed: () {},
+              ),
             ),
             SizedBox(width: context.scale(16)),
             BlocBuilder<RealEstateCubit, RealEstateState>(
@@ -53,19 +58,24 @@ class RealEstateDetailsHeaderActionsComponent extends StatelessWidget {
                   iconSize: context.scale(iconSize),
                   onPressed: () {
 
-                    if(state.getPropertyDetailsState.isLoaded){
-                      if(isInWishlist){
+                    if(isAuth){
+                      if(state.getPropertyDetailsState.isLoaded){
+                        if(isInWishlist){
 
-                        context.read<RealEstateCubit>().removePropertyFromWishList(state.propertyDetails!.id.toString());
-                        context.read<WishListCubit>().removePropertyFromWishList(state.propertyDetails!.id.toString());
+                          context.read<RealEstateCubit>().removePropertyFromWishList(state.propertyDetails!.id.toString());
+                          context.read<WishListCubit>().removePropertyFromWishList(state.propertyDetails!.id.toString());
 
-                      }
-                      else {
+                        }
+                        else {
 
-                        context.read<RealEstateCubit>().addPropertyToWishList(state.propertyDetails!.id.toString());
-                        context.read<WishListCubit>().addPropertyToWishList(state.propertyDetails!.id.toString());
+                          context.read<RealEstateCubit>().addPropertyToWishList(state.propertyDetails!.id.toString());
+                          context.read<WishListCubit>().addPropertyToWishList(state.propertyDetails!.id.toString());
 
-                      }
+                        }
+    }
+                    }
+                    else {
+                      needToLoginSnackBar();
                     }
                   },
                 );

@@ -1,3 +1,4 @@
+import 'package:enmaa/core/components/need_to_login_component.dart';
 import 'package:enmaa/core/extensions/furnished_status_extension.dart';
 import 'package:enmaa/core/extensions/land_license_status_extension.dart';
 import 'package:enmaa/core/extensions/property_sub_types/apartment_type_extension.dart';
@@ -9,6 +10,7 @@ import 'package:enmaa/core/services/convert_string_to_enum.dart';
 import 'package:enmaa/features/real_estates/domain/entities/apartment_entity.dart';
 import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
 import 'package:enmaa/features/real_estates/domain/entities/villa_entity.dart';
+import 'package:enmaa/main.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
@@ -136,53 +138,13 @@ class RealStateCardComponent extends StatelessWidget {
                   containerSize: context.scale(40),
                   iconSize: context.scale(20),
                   onPressed: () {
-                    String propertyId = currentProperty.id.toString();
+                    if(isAuth){
+                      String propertyId = currentProperty.id.toString();
 
 
 
-                    /// todo :refactor this code to be more readable
-                    if (isHomeScreen) {
-                      if (isInWishlist) {
-                        context.read<HomeBloc>().add(
-                            RemovePropertyFromWishlist(
-                              propertyId: propertyId,
-                              propertyType: getPropertyType(currentProperty.propertyType),
-                            )
-                        );
-
-
-                        context.read<WishListCubit>().removePropertyFromWishList(propertyId);
-                      } else {
-                        context.read<HomeBloc>().add(
-                            AddPropertyToWishlist(
-                              propertyId: propertyId,
-                              propertyType: getPropertyType(currentProperty.propertyType),
-                            )
-                        );
-
-                        context.read<WishListCubit>().addPropertyToWishList(propertyId);
-                      }
-                    } else {
-                      final realEstateState = context.read<RealEstateCubit>().state;
-                      final PropertyOperationType operationType = currentProperty.operation == 'for_sale'
-                          ? PropertyOperationType.forSale
-                          : PropertyOperationType.forRent;
-
-                      final bool isLoaded = operationType == PropertyOperationType.forSale
-                          ? realEstateState.getPropertiesSaleState == RequestState.loaded
-                          : realEstateState.getPropertiesRentState == RequestState.loaded;
-
-                      if (isLoaded) {
-                        if (isInWishlist) {
-                          context.read<RealEstateCubit>().removePropertyFromWishList(propertyId);
-                          context.read<WishListCubit>().removePropertyFromWishList(propertyId);
-                        } else {
-                          context.read<RealEstateCubit>().addPropertyToWishList(propertyId);
-                          context.read<WishListCubit>().addPropertyToWishList(propertyId);
-                        }
-                      }
-                      else {
-
+                      /// todo :refactor this code to be more readable
+                      if (isHomeScreen) {
                         if (isInWishlist) {
                           context.read<HomeBloc>().add(
                               RemovePropertyFromWishlist(
@@ -203,10 +165,56 @@ class RealStateCardComponent extends StatelessWidget {
 
                           context.read<WishListCubit>().addPropertyToWishList(propertyId);
                         }
+                      } else {
+                        final realEstateState = context.read<RealEstateCubit>().state;
+                        final PropertyOperationType operationType = currentProperty.operation == 'for_sale'
+                            ? PropertyOperationType.forSale
+                            : PropertyOperationType.forRent;
+
+                        final bool isLoaded = operationType == PropertyOperationType.forSale
+                            ? realEstateState.getPropertiesSaleState == RequestState.loaded
+                            : realEstateState.getPropertiesRentState == RequestState.loaded;
+
+                        if (isLoaded) {
+                          if (isInWishlist) {
+                            context.read<RealEstateCubit>().removePropertyFromWishList(propertyId);
+                            context.read<WishListCubit>().removePropertyFromWishList(propertyId);
+                          } else {
+                            context.read<RealEstateCubit>().addPropertyToWishList(propertyId);
+                            context.read<WishListCubit>().addPropertyToWishList(propertyId);
+                          }
+                        }
+                        else {
+
+                          if (isInWishlist) {
+                            context.read<HomeBloc>().add(
+                                RemovePropertyFromWishlist(
+                                  propertyId: propertyId,
+                                  propertyType: getPropertyType(currentProperty.propertyType),
+                                )
+                            );
+
+
+                            context.read<WishListCubit>().removePropertyFromWishList(propertyId);
+                          } else {
+                            context.read<HomeBloc>().add(
+                                AddPropertyToWishlist(
+                                  propertyId: propertyId,
+                                  propertyType: getPropertyType(currentProperty.propertyType),
+                                )
+                            );
+
+                            context.read<WishListCubit>().addPropertyToWishList(propertyId);
+                          }
+                        }
                       }
+                    }
+                    else {
+                      needToLoginSnackBar();
                     }
                   },
                 );
+
                 },
             ),
           ),

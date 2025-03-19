@@ -1,7 +1,9 @@
+import 'package:enmaa/core/components/need_to_login_component.dart';
 import 'package:enmaa/core/extensions/booking_status_extension.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/status_extension.dart';
 import 'package:enmaa/features/my_profile/modules/user_properties_module/presentation/controller/user_properties_cubit.dart';
+import 'package:enmaa/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:enmaa/core/components/app_bar_component.dart';
@@ -113,8 +115,14 @@ class _MyPropertiesScreenState extends State<MyPropertiesScreen> with TickerProv
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 width: context.scale(117),
                 onTap: () {
-                  Navigator.of(context, rootNavigator: true)
-                      .pushNamed(RoutersNames.addNewRealEstateScreen);
+                  if(isAuth) {
+    Navigator.of(context, rootNavigator: true)
+        .pushNamed(RoutersNames.addNewRealEstateScreen);
+    }
+                    else {
+                      needToLoginSnackBar();
+                  }
+
                 },
                 buttonContent: Row(
                   mainAxisSize: MainAxisSize.min, // Prevents taking infinite width

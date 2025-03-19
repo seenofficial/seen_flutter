@@ -1,5 +1,7 @@
 import 'package:enmaa/configuration/routers/route_names.dart';
+import 'package:enmaa/core/components/need_to_login_component.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/main.dart';
 
 import '../../../../../configuration/managers/color_manager.dart';
 import '../../../../../configuration/managers/font_manager.dart';
@@ -40,19 +42,24 @@ class RealEstateDetailsScreenFooter extends StatelessWidget {
             ),
           ),
           onTap: () async {
-            final result = await Navigator.of(context).pushNamed(
-              RoutersNames.previewPropertyScreen,
-              arguments: {
-                'id': propertyId,
-              } ,
-            );
-
-            if (result == true) {
-              CustomSnackBar.show(
-                context: context,
-                message: 'تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.',
-                type: SnackBarType.success,
+            if(isAuth){
+              final result = await Navigator.of(context).pushNamed(
+                RoutersNames.previewPropertyScreen,
+                arguments: {
+                  'id': propertyId,
+                } ,
               );
+
+              if (result == true) {
+                CustomSnackBar.show(
+                  context: context,
+                  message: 'تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.',
+                  type: SnackBarType.success,
+                );
+              }
+            }
+            else {
+              needToLoginSnackBar();
             }
             },
         ),
@@ -76,17 +83,22 @@ class RealEstateDetailsScreenFooter extends StatelessWidget {
           ),
           onTap: () async{
 
-            final result = await Navigator.of(context).pushNamed(
-              RoutersNames.bookPropertyScreen,
-              arguments: propertyId ,
-            );
-
-            if (result == true) {
-              CustomSnackBar.show(
-                context: context,
-                message: 'تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.',
-                type: SnackBarType.success,
+            if(isAuth){
+              final result = await Navigator.of(context).pushNamed(
+                RoutersNames.bookPropertyScreen,
+                arguments: propertyId ,
               );
+
+              if (result == true) {
+                CustomSnackBar.show(
+                  context: context,
+                  message: 'تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.',
+                  type: SnackBarType.success,
+                );
+              }
+            }
+            else {
+              needToLoginSnackBar();
             }
 
           },

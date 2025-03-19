@@ -21,11 +21,13 @@ import '../../../../core/components/button_app_component.dart';
 import '../../../../core/components/card_listing_shimmer.dart';
 import '../../../../core/components/custom_snack_bar.dart';
 import '../../../../core/components/custom_tab.dart';
+import '../../../../core/components/need_to_login_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/screens/property_empty_screen.dart';
 import '../../../../core/translation/locale_keys.dart';
 import '../../../../core/utils/enums.dart';
+import '../../../../main.dart';
 import '../../../home_module/presentation/components/real_state_card_component.dart';
 import '../../../home_module/presentation/components/services_list_shimmer.dart';
 import '../../../main_services_layout/main_service_layout_screen.dart';
@@ -152,8 +154,13 @@ class _RealStateScreenState extends State<RealStateScreen>
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 width: context.scale(111),
                 onTap: () {
-                  Navigator.of(context, rootNavigator: true)
-                      .pushNamed(RoutersNames.addNewRealEstateScreen);
+                  if(isAuth) {
+                    Navigator.of(context, rootNavigator: true)
+                        .pushNamed(RoutersNames.addNewRealEstateScreen);
+                  }
+                  else {
+                    needToLoginSnackBar();
+                  }
                 },
                 buttonContent: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
