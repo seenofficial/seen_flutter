@@ -63,11 +63,11 @@ extension BuildingTypeExtension on BuildingType {
   /// Convert an ID from the backend to the corresponding building type.
   static BuildingType fromId(int id) {
     switch (id) {
-      case 11:
-        return BuildingType.residential;
       case 12:
+        return BuildingType.residential;
+      case 10:
         return BuildingType.commercial;
-      case 3:
+      case 11:
         return BuildingType.mixedUse;
       default:
         throw ArgumentError('Invalid BuildingType ID: $id');

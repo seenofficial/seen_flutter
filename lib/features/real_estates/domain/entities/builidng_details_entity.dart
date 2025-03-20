@@ -4,6 +4,7 @@ import 'package:enmaa/core/entites/image_entity.dart';
 
 class BuildingDetailsEntity extends BasePropertyDetailsEntity {
   final int numberOfFloors;
+  final int numberOfApartmentsPerFloor;
   final String usageType;
 
   const BuildingDetailsEntity({
@@ -27,6 +28,7 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
     required super.monthlyRentPeriod,
     required this.numberOfFloors,
     required this.usageType,
+    required this.numberOfApartmentsPerFloor,
   });
 
   @override
@@ -34,6 +36,7 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
     ...super.props,
     numberOfFloors,
     usageType,
+    numberOfApartmentsPerFloor,
   ];
 
   BuildingDetailsEntity copyWith({
@@ -56,6 +59,7 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
     String? monthlyRentPeriod,
     bool? rentIsRenewable,
     int? numberOfFloors,
+    int? numberOfApartmentsPerFloor,
     String? usageType,
   }) {
     return BuildingDetailsEntity(
@@ -79,6 +83,7 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
       rentIsRenewable: rentIsRenewable ?? this.rentIsRenewable,
       numberOfFloors: numberOfFloors ?? this.numberOfFloors,
       usageType: usageType ?? this.usageType,
+      numberOfApartmentsPerFloor: numberOfApartmentsPerFloor ?? this.numberOfApartmentsPerFloor,
     );
   }
 }

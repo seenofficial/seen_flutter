@@ -20,9 +20,9 @@ abstract class BaseAddNewRealEstateDataSource {
   Future<void> addBuilding(BuildingRequestModel building);
   Future<void> addLand(LandRequestModel land);
 
-  Future<ApartmentDetailsModel> updateApartment(String apartmentId, Map<String, dynamic> updatedFields);
-  Future<VillaDetailsModel> updateVilla(String villaId, Map<String, dynamic> updatedFields);
-  Future<BuildingDetailsModel> updateBuilding(String buildingId, Map<String, dynamic> updatedFields);
+  Future<void> updateApartment(String apartmentId, Map<String, dynamic> updatedFields);
+  Future<void> updateVilla(String villaId, Map<String, dynamic> updatedFields);
+  Future<void> updateBuilding(String buildingId, Map<String, dynamic> updatedFields);
   Future<void> updateLand(String landId, Map<String, dynamic> updatedFields);
 
   Future<List<AmenityModel>> getPropertyAmenities(String propertyType);
@@ -74,36 +74,33 @@ class AddNewRealEstateRemoteDataSource extends BaseAddNewRealEstateDataSource {
   }
 
   @override
-  Future<ApartmentDetailsModel> updateApartment(String apartmentId, Map<String, dynamic> updatedFields) async {
+  Future<void> updateApartment(String apartmentId, Map<String, dynamic> updatedFields) async {
     final formData = await _prepareFormData(updatedFields);
     final response = await dioService.patch(
-      url: '${ApiConstants.apartment}/$apartmentId',
+      url: '${ApiConstants.apartment}$apartmentId/',
       data: formData,
       options: Options(contentType: 'multipart/form-data'),
     );
-    return ApartmentDetailsModel.fromJson(response.data['data']);
   }
 
   @override
-  Future<VillaDetailsModel> updateVilla(String villaId, Map<String, dynamic> updatedFields) async {
+  Future<void> updateVilla(String villaId, Map<String, dynamic> updatedFields) async {
     final formData = await _prepareFormData(updatedFields);
     final response = await dioService.patch(
-      url: '${ApiConstants.villa}$villaId',
+      url: '${ApiConstants.villa}$villaId/',
       data: formData,
       options: Options(contentType: 'multipart/form-data'),
     );
-    return VillaDetailsModel.fromJson(response.data['data']);
   }
 
   @override
-  Future<BuildingDetailsModel> updateBuilding(String buildingId, Map<String, dynamic> updatedFields) async {
+  Future<void> updateBuilding(String buildingId, Map<String, dynamic> updatedFields) async {
     final formData = await _prepareFormData(updatedFields);
     final response = await dioService.patch(
-      url: '${ApiConstants.building}$buildingId',
+      url: '${ApiConstants.building}$buildingId/',
       data: formData,
       options: Options(contentType: 'multipart/form-data'),
     );
-    return BuildingDetailsModel.fromJson(response.data['data']);
   }
 
   @override
@@ -133,32 +130,35 @@ class AddNewRealEstateRemoteDataSource extends BaseAddNewRealEstateDataSource {
 
     for (var entry in updatedFields.entries) {
       if (entry.key == 'images' && entry.value is List) {
-         final images = entry.value as List<PropertyImage>;
+        final images = entry.value as List<PropertyImage>;
 
         for (int i = 0; i < images.length; i++) {
           final image = images[i];
           final filePath = image.filePath;
 
-           final multipartFile = await MultipartFile.fromFile(
+          final multipartFile = await MultipartFile.fromFile(
             filePath,
             filename: filePath.split('/').last,
           );
           formData.files.add(MapEntry('images', multipartFile));
 
-           formData.fields.add(
+          formData.fields.add(
             MapEntry(
               'images[$i].is_main',
               image.isMain?.toString() ?? 'false',
             ),
           );
         }
+      } else if (entry.key == 'amenities' && entry.value is List) {
+        final amenities = entry.value as List<dynamic>;
+
+        for (var amenity in amenities) {
+          formData.fields.add(MapEntry('amenities', amenity.toString()));
+        }
       } else {
-         formData.fields.add(MapEntry(entry.key, entry.value.toString()));
+        formData.fields.add(MapEntry(entry.key, entry.value.toString()));
       }
     }
-
-    print('formData: ${formData.fields}');
-    print('formData: ${formData.files}');
 
     return formData;
   }

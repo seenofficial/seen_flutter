@@ -52,31 +52,31 @@ class AddNewRealEstateRepository extends BaseAddNewRealEstateRepository {
   }
 
   @override
-  Future<Either<Failure, BasePropertyDetailsEntity>> updateApartment({
+  Future<Either<Failure, void>> updateApartment({
     required String apartmentId,
     required Map<String, dynamic> updatedFields,
   }) async {
-    return await HandleRequestService.handleApiCall<BasePropertyDetailsEntity>(() async {
+    return await HandleRequestService.handleApiCall<void>(() async {
       return await baseAddNewRealEstateDataSource.updateApartment(apartmentId, updatedFields);
     });
   }
 
   @override
-  Future<Either<Failure, BasePropertyDetailsEntity>> updateVilla({
+  Future<Either<Failure, void>> updateVilla({
     required String villaId,
     required Map<String, dynamic> updatedFields,
   }) async {
-    return await HandleRequestService.handleApiCall<BasePropertyDetailsEntity>(() async {
+    return await HandleRequestService.handleApiCall<void>(() async {
       return await baseAddNewRealEstateDataSource.updateVilla(villaId, updatedFields);
     });
   }
 
   @override
-  Future<Either<Failure, BasePropertyDetailsEntity>> updateBuilding({
+  Future<Either<Failure, void>> updateBuilding({
     required String buildingId,
     required Map<String, dynamic> updatedFields,
   }) async {
-    return await HandleRequestService.handleApiCall<BasePropertyDetailsEntity>(() async {
+    return await HandleRequestService.handleApiCall<void>(() async {
       return await baseAddNewRealEstateDataSource.updateBuilding(buildingId, updatedFields);
     });
   }

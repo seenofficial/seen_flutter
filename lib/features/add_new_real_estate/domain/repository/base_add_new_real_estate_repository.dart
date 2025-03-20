@@ -14,17 +14,17 @@ abstract class BaseAddNewRealEstateRepository {
   Future<Either<Failure, void>> addNewBuilding(BuildingRequestModel building);
   Future<Either<Failure, void>> addNewLand(LandRequestModel land);
 
-  Future<Either<Failure, BasePropertyDetailsEntity>> updateApartment({
+  Future<Either<Failure, void>> updateApartment({
     required String apartmentId,
     required Map<String, dynamic> updatedFields,
   });
 
-  Future<Either<Failure, BasePropertyDetailsEntity>> updateVilla({
+  Future<Either<Failure, void>> updateVilla({
     required String villaId,
     required Map<String, dynamic> updatedFields,
   });
 
-  Future<Either<Failure, BasePropertyDetailsEntity>> updateBuilding({
+  Future<Either<Failure, void>> updateBuilding({
     required String buildingId,
     required Map<String, dynamic> updatedFields,
   });
