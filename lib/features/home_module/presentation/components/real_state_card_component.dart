@@ -241,10 +241,13 @@ class RealStateCardComponent extends StatelessWidget {
           height: 12,
         ),
         SizedBox(width: context.scale(4)),
-        Text(
-          '${currentProperty.state.name} - ${currentProperty.city.name}',
-          style: getLightStyle(
-              color: ColorManager.blackColor, fontSize: FontSize.s11),
+        Expanded(
+          child: Text(
+            '${currentProperty.state.name} - ${currentProperty.city.name}',
+            overflow:  TextOverflow.ellipsis,
+            style: getLightStyle(
+                color: ColorManager.blackColor, fontSize: FontSize.s11),
+          ),
         ),
       ],
     );

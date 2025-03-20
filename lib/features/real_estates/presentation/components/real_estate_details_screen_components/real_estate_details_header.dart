@@ -35,10 +35,13 @@ class RealEstateDetailsHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
           children: [
-            Text(
-              realEstateDetailsTitle,
-              style: getBoldStyle(
-                  color: ColorManager.blackColor, fontSize: FontSize.s12),
+            Expanded(
+              child: Text(
+                realEstateDetailsTitle,
+                overflow: TextOverflow.ellipsis,
+                style: getBoldStyle(
+                    color: ColorManager.blackColor, fontSize: FontSize.s12),
+              ),
             ),
 
             Visibility(
@@ -62,11 +65,14 @@ class RealEstateDetailsHeader extends StatelessWidget {
                     height: 12,
                   ),
                   SizedBox(width: context.scale(4)),
-                  Text(
-                    realEstateDetailsLocation,
-                    style: getLightStyle(
-                      color: ColorManager.blackColor,
-                      fontSize: FontSize.s11,
+                  Expanded(
+                    child: Text(
+                      realEstateDetailsLocation,
+                      overflow: TextOverflow.ellipsis,
+                      style: getLightStyle(
+                        color: ColorManager.blackColor,
+                        fontSize: FontSize.s11,
+                      ),
                     ),
                   ),
                 ],

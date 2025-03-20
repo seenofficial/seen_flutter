@@ -29,9 +29,19 @@ class AddNewRealEstateLocationScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) {
         MapServicesDi().setup();
-        return MapServicesCubit(
+        var mapServicesCubit = MapServicesCubit(
           ServiceLocator.getIt(),
         );
+        if(addNewRealEstateCubit.state.propertyDetailsEntity != null ){
+          var propertyDetails = addNewRealEstateCubit.state.propertyDetailsEntity!;
+          final latLng = LatLng(
+            double.parse(propertyDetails.latitude.toString()),
+            double.parse(propertyDetails.longitude.toString()),
+          );
+          mapServicesCubit.updateSelectedLocation(latLng);
+        }
+
+        return mapServicesCubit;
       },
       child: BlocBuilder<MapServicesCubit, MapServicesState>(
         builder: (context, state) {

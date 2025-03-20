@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/core/constants/local_keys.dart';
 import 'package:enmaa/core/entites/amenity_entity.dart';
+import 'package:enmaa/core/entites/image_entity.dart';
 import 'package:enmaa/core/extensions/furnished_status_extension.dart';
 import 'package:enmaa/core/extensions/land_license_status_extension.dart';
 import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
@@ -13,7 +15,10 @@ import 'package:enmaa/core/extensions/property_sub_types/building_type_extension
 import 'package:enmaa/core/extensions/property_sub_types/land_type_extension.dart';
 import 'package:enmaa/core/extensions/property_sub_types/villa_type_extension.dart';
 import 'package:enmaa/core/extensions/property_type_extension.dart';
+import 'package:enmaa/core/extensions/request_states_extension.dart';
+import 'package:enmaa/core/services/convert_string_to_enum.dart';
 import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
+import 'package:enmaa/core/services/service_locator.dart';
 import 'package:enmaa/features/add_new_real_estate/data/models/apartment_request_model.dart';
 import 'package:enmaa/features/add_new_real_estate/data/models/building_request_model.dart';
 import 'package:enmaa/features/add_new_real_estate/data/models/land_request_model.dart';
@@ -25,31 +30,46 @@ import 'package:enmaa/features/add_new_real_estate/domain/use_cases/get_property
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
-
+import 'package:path_provider/path_provider.dart';
 import '../../../../core/components/property_form_controller.dart';
 import '../../../../core/errors/failure.dart';
+import '../../../../core/models/image_model.dart';
 import '../../../../core/services/image_picker_service.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../home_module/home_imports.dart';
+import '../../../real_estates/data/models/apartment_details_model.dart';
+import '../../../real_estates/data/models/building_drtails_model.dart';
+import '../../../real_estates/data/models/land_details_model.dart';
+import '../../../real_estates/data/models/villa_details_model.dart';
+import '../../../real_estates/domain/entities/property_details_entity.dart';
+import '../../../real_estates/domain/use_cases/get_property_details_use_case.dart';
 import '../../data/models/property_request_model.dart';
 import '../../domain/use_cases/add_villa_use_case.dart';
+import '../../domain/use_cases/update_apartment_use_case.dart';
+import '../../domain/use_cases/update_building_use_case.dart';
+import '../../domain/use_cases/update_land_use_case.dart';
+import '../../domain/use_cases/update_villa_use_case.dart';
 
 part 'add_new_real_estate_state.dart';
 
 class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   AddNewRealEstateCubit(
-      this._addNewApartmentUseCase ,
+      this._addNewApartmentUseCase,
       this._addVillaUseCase,
       this._addNewBuildingUseCase,
-      this._addNewLandUseCase ,
-      this._getPropertyAmenitiesUseCase ,
-      ) : super(AddNewRealEstateState());
+      this._addNewLandUseCase,
+      this._getPropertyAmenitiesUseCase,
+      this._getPropertyDetailsUseCase,
+      this._updateApartmentUseCase,
+      this._updateVillaUseCase,
+      this._updateBuildingUseCase,
+      this._updateLandUseCase,
+      ) : super(const AddNewRealEstateState());
 
   final PropertyFormController formController = PropertyFormController();
   final formKey = GlobalKey<FormState>();
   final priceForm = GlobalKey<FormState>();
   final locationForm = GlobalKey<FormState>();
-
 
   final TextEditingController addressController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -57,34 +77,33 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   final TextEditingController rentController = TextEditingController();
   final TextEditingController rentDurationController = TextEditingController();
 
+  final AddNewApartmentUseCase _addNewApartmentUseCase;
+  final AddVillaUseCase _addVillaUseCase;
+  final AddNewBuildingUseCase _addNewBuildingUseCase;
+  final AddNewLandUseCase _addNewLandUseCase;
+  final GetPropertyAmenitiesUseCase _getPropertyAmenitiesUseCase;
+  final GetPropertyDetailsUseCase _getPropertyDetailsUseCase;
+  final UpdateApartmentUseCase _updateApartmentUseCase;
+  final UpdateVillaUseCase _updateVillaUseCase;
+  final UpdateBuildingUseCase _updateBuildingUseCase;
+  final UpdateLandUseCase _updateLandUseCase;
+
   Future<void> selectImages() async {
-     emit(state.copyWith(
-      selectImagesState: RequestState.loading,
-    ));
+    emit(state.copyWith(selectImagesState: RequestState.loading));
 
     final ImagePickerHelper imagePickerHelper = ImagePickerHelper();
-
-    final result = await imagePickerHelper.pickImages(
-      maxImages: 5 - state.selectedImages.length,
-     );
+    final result = await imagePickerHelper.pickImages(maxImages: 5 - state.selectedImages.length);
 
     result.fold(
           (failure) {
-         emit(state.copyWith(
-          selectImagesState: RequestState.loaded,
-        ));
+        emit(state.copyWith(selectImagesState: RequestState.loaded));
       },
           (xFiles) async {
         if (xFiles.isEmpty) {
-          emit(state.copyWith(
-            selectImagesState: RequestState.loaded,
-            validateImages: true,
-          ));
+          emit(state.copyWith(selectImagesState: RequestState.loaded, validateImages: true));
           return;
         }
-
         final processedFiles = await imagePickerHelper.processImagesWithResiliency(xFiles);
-
         emit(state.copyWith(
           selectImagesState: RequestState.loaded,
           validateImages: true,
@@ -96,20 +115,16 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
 
   void removeImage(int index) {
     emit(state.copyWith(selectImagesState: RequestState.loading));
-
-    final List<File> newImages = state.selectedImages;
-    newImages.removeAt(index);
-    emit(state.copyWith(selectedImages: newImages , selectImagesState: RequestState.loaded));
+    final List<File> newImages = List.from(state.selectedImages)..removeAt(index);
+    emit(state.copyWith(selectedImages: newImages, selectImagesState: RequestState.loaded));
   }
 
   bool validateImages() {
-    if(state.selectedImages.isEmpty) {
+    if (state.selectedImages.isEmpty) {
       emit(state.copyWith(validateImages: false));
-    }
-    else {
+    } else {
       emit(state.copyWith(validateImages: true));
     }
-
     return state.selectedImages.isNotEmpty;
   }
 
@@ -117,18 +132,16 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     emit(state.copyWith(currentPropertyOperationType: propertyOperationType));
   }
 
-  void changeSelectedLocation (LatLng location){
-
+  void changeSelectedLocation(LatLng location) {
     emit(state.copyWith(selectedLocation: location));
-
   }
 
   void changePropertyType(PropertyType propertyType) {
+    if(!state.getPropertyDetailsState.isInitial) return ;
     getAmenities(propertyType.toJsonId.toString());
     emit(state.copyWith(currentPropertyType: propertyType));
   }
 
-  /// change subtypes
   void changeApartmentType(ApartmentType apartmentType) {
     emit(state.copyWith(currentApartmentType: apartmentType));
   }
@@ -144,44 +157,197 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   void changeLandType(LandType landType) {
     emit(state.copyWith(currentLandType: landType));
   }
+
   void changeAvailabilityForRenewal() {
     emit(state.copyWith(availableForRenewal: !state.availableForRenewal));
   }
-  void changeFurnishingStatus (FurnishingStatus furnishingStatus) {
+
+  void changeFurnishingStatus(FurnishingStatus furnishingStatus) {
     emit(state.copyWith(currentFurnishingStatus: furnishingStatus));
   }
 
-  void changeLandLicence (LandLicenseStatus landLicenseStatus) {
+  void changeLandLicence(LandLicenseStatus landLicenseStatus) {
     emit(state.copyWith(landLicenseStatus: landLicenseStatus));
   }
 
-
   void changeSelectedCity(String cityId, String cityName) {
-    emit(state.copyWith(selectedCityId: cityId , selectedCityName: cityName));
+    emit(state.copyWith(selectedCityId: cityId, selectedCityName: cityName));
   }
 
-  void changePaymentMethod ( PaymentMethod paymentMethod){
+  void changePaymentMethod(PaymentMethod paymentMethod) {
     emit(state.copyWith(currentPaymentMethod: paymentMethod));
-
   }
 
+  Future<void> fetchPropertyDetailsAndPopulateIt(String propertyID) async {
+    emit(state.copyWith(getPropertyDetailsState: RequestState.loading));
 
-  final AddNewApartmentUseCase _addNewApartmentUseCase;
-  final AddVillaUseCase _addVillaUseCase;
-  final AddNewBuildingUseCase _addNewBuildingUseCase;
-  final AddNewLandUseCase _addNewLandUseCase;
-  final GetPropertyAmenitiesUseCase _getPropertyAmenitiesUseCase ;
+    final Either<Failure, BasePropertyDetailsEntity> result = await _getPropertyDetailsUseCase(propertyID);
 
+    result.fold(
+          (failure) => emit(state.copyWith(
+        getPropertyDetailsState: RequestState.error,
+        getPropertyDetailsError: failure.message,
+      )),
+          (property) async {
+        await populateStateWithPropertyDetails(property);
+
+        String propertyTypeId;
+        if (property is VillaDetailsModel) {
+          propertyTypeId = PropertyType.villa.toJsonId.toString();
+        } else if (property is ApartmentDetailsModel) {
+          propertyTypeId = PropertyType.apartment.toJsonId.toString();
+        } else if (property is BuildingDetailsModel) {
+          propertyTypeId = PropertyType.building.toJsonId.toString();
+        } else if (property is LandDetailsModel) {
+          propertyTypeId = PropertyType.land.toJsonId.toString();
+        } else {
+          propertyTypeId = PropertyType.apartment.toJsonId.toString();
+        }
+
+        await getAmenities(propertyTypeId).then((_) {
+          for (var amenity in property.amenities) {
+            selectAmenity(amenity.id.toString());
+          }
+        });
+
+        emit(state.copyWith(
+          getPropertyDetailsState: RequestState.loaded,
+          propertyDetailsEntity: property,
+        ));
+      },
+    );
+  }
+
+  Future<List<File>> _downloadImages(List<ImageEntity> imageModels) async {
+    final dio = Dio();
+    final tempDir = await getTemporaryDirectory();
+    final List<File> localFiles = [];
+
+    for (var img in imageModels) {
+      if (img.image.startsWith('http')) {
+        try {
+          final fileName = img.image.split('/').last;
+          final filePath = '${tempDir.path}/$fileName';
+          await dio.download(
+            img.image,
+            filePath,
+            options: Options(responseType: ResponseType.bytes),
+          );
+          final file = File(filePath);
+          if (await file.exists()) {
+            localFiles.add(file);
+          }
+        } catch (e) {
+          CustomSnackBar.show(message: e.toString());
+        }
+      } else {
+        localFiles.add(File(img.image));
+      }
+    }
+    return localFiles;
+  }
+
+  Future<void> populateStateWithPropertyDetails(BasePropertyDetailsEntity propertyDetails) async {
+    addressController.text = propertyDetails.title;
+    descriptionController.text = propertyDetails.description;
+    priceController.text = propertyDetails.price;
+
+    final operationType = propertyDetails.operation == 'sale'
+        ? PropertyOperationType.forSale
+        : PropertyOperationType.forRent;
+
+    if (operationType == PropertyOperationType.forRent) {
+      rentController.text = propertyDetails.price;
+      rentDurationController.text = propertyDetails.monthlyRentPeriod ?? '';
+    }
+
+    final latLng = LatLng(
+      double.parse(propertyDetails.latitude.toString()),
+      double.parse(propertyDetails.longitude.toString()),
+    );
+
+    final localImages = await _downloadImages(propertyDetails.images);
+
+    if (propertyDetails is ApartmentDetailsModel) {
+      final apartment = propertyDetails;
+      formController.getController(LocalKeys.apartmentAreaController).text = apartment.area.toString();
+      formController.getController(LocalKeys.apartmentFloorsController).text = apartment.floor.toString();
+      formController.getController(LocalKeys.apartmentRoomsController).text = apartment.rooms.toString();
+      formController.getController(LocalKeys.apartmentBathRoomsController).text = apartment.bathrooms.toString();
+
+      emit(state.copyWith(
+        currentPropertyType: PropertyType.apartment,
+        currentApartmentType: ApartmentType.values.firstWhere(
+              (type) => type.toId.toString() == apartment.propertySubType,
+          orElse: () => ApartmentType.studio,
+        ),
+        currentFurnishingStatus: apartment.isFurnished ? FurnishingStatus.furnished : FurnishingStatus.notFurnished,
+        availableForRenewal: apartment.rentIsRenewable,
+      ));
+    } else if (propertyDetails is VillaDetailsModel) {
+      final villa = propertyDetails;
+      formController.getController(LocalKeys.villaAreaController).text = villa.area.toString();
+      formController.getController(LocalKeys.villaFloorsController).text = villa.numberOfFloors.toString();
+      formController.getController(LocalKeys.villaRoomsController).text = villa.rooms.toString();
+      formController.getController(LocalKeys.villaBathRoomsController).text = villa.bathrooms.toString();
+
+      emit(state.copyWith(
+        currentPropertyType: PropertyType.villa,
+        currentVillaType: VillaType.values.firstWhere(
+              (type) => type.toId.toString() == villa.propertySubType,
+          orElse: () => VillaType.standalone,
+        ),
+        currentFurnishingStatus: villa.isFurnished ? FurnishingStatus.furnished : FurnishingStatus.notFurnished,
+        availableForRenewal: villa.rentIsRenewable,
+      ));
+    } else if (propertyDetails is BuildingDetailsModel) {
+      final building = propertyDetails;
+      formController.getController(LocalKeys.buildingAreaController).text = building.area.toString();
+      formController.getController(LocalKeys.buildingFloorsController).text = building.numberOfFloors.toString();
+      formController.getController(LocalKeys.buildingApartmentsPerFloorController).text = '0';
+
+      emit(state.copyWith(
+        currentPropertyType: PropertyType.building,
+        currentBuildingType: BuildingType.values.firstWhere(
+              (type) => type.toId.toString() == building.propertySubType,
+          orElse: () => BuildingType.residential,
+        ),
+        availableForRenewal: building.rentIsRenewable,
+      ));
+    } else if (propertyDetails is LandDetailsModel) {
+      final land = propertyDetails;
+      formController.getController(LocalKeys.landAreaController).text = land.area.toString();
+
+      emit(state.copyWith(
+        currentPropertyType: PropertyType.land,
+        currentLandType: LandType.values.firstWhere(
+              (type) => type.toId.toString() == land.propertySubType,
+          orElse: () => LandType.freehold,
+        ),
+        landLicenseStatus: land.isLicensed ? LandLicenseStatus.licensed : LandLicenseStatus.notLicensed,
+        availableForRenewal: land.rentIsRenewable,
+      ));
+    }
+
+
+
+
+    
+
+    emit(state.copyWith(
+      currentPropertyOperationType: operationType,
+      selectedLocation: latLng,
+      selectedImages: localImages,
+      validateImages: localImages.isNotEmpty,
+    ));
+  }
 
   Future<List<PropertyImage>> _processImages() async {
     return await Future.wait(
       state.selectedImages.asMap().entries.map((entry) async {
         final index = entry.key;
         final img = entry.value;
-        return PropertyImage(
-          filePath: img.path,
-          isMain: index == 0,
-        );
+        return PropertyImage(filePath: img.path, isMain: index == 0);
       }),
     );
   }
@@ -200,7 +366,7 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     return {
       'title': title,
       'description': description,
-      'price':state.currentPropertyOperationType.isForSale? price :double.tryParse(rentController.text.trim()) ?? 0 ,
+      'price': state.currentPropertyOperationType.isForSale ? price : double.tryParse(rentController.text.trim()) ?? 0,
       'area': area,
       'city': city,
       'latitude': latitude,
@@ -209,11 +375,10 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     };
   }
 
-  //
-  // REQUEST MODEL FACTORIES
-  //
+
+
   Future<ApartmentRequestModel> _getApartmentRequestModel(SelectLocationServiceCubit locationServiceCubit) async {
-    final common = _extractCommonFields(areaControllerKey: LocalKeys.apartmentAreaController , locationServiceCubit: locationServiceCubit);
+    final common = _extractCommonFields(areaControllerKey: LocalKeys.apartmentAreaController, locationServiceCubit: locationServiceCubit);
     final bool isFurnitured = state.currentFurnishingStatus.isFurnished;
     final String floor = formController.getController(LocalKeys.apartmentFloorsController).text.trim();
     final String rooms = formController.getController(LocalKeys.apartmentRoomsController).text.trim();
@@ -236,7 +401,7 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       bathrooms: bathrooms,
       images: images,
       currentPropertyOperationType: state.currentPropertyOperationType.toRequest,
-      monthlyRentPeriod: state.currentPropertyOperationType.isForRent? int.parse(rentDurationController.text) : 0 ,
+      monthlyRentPeriod: state.currentPropertyOperationType.isForRent ? int.parse(rentDurationController.text) : 0,
       isRenewable: state.availableForRenewal,
     );
   }
@@ -272,7 +437,7 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
   }
 
   Future<BuildingRequestModel> _getBuildingRequestModel(SelectLocationServiceCubit locationServiceCubit) async {
-    final common = _extractCommonFields(areaControllerKey: LocalKeys.buildingAreaController , locationServiceCubit: locationServiceCubit);
+    final common = _extractCommonFields(areaControllerKey: LocalKeys.buildingAreaController, locationServiceCubit: locationServiceCubit);
     final String numberOfFloorsStr = formController.getController(LocalKeys.buildingFloorsController).text.trim();
     final String numberOfApartmentsStr = formController.getController(LocalKeys.buildingApartmentsPerFloorController).text.trim();
     final List<PropertyImage> images = await _processImages();
@@ -290,14 +455,14 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       area: common['area'],
       numberOfFloors: int.parse(numberOfFloorsStr),
       numberOfApartments: int.parse(numberOfApartmentsStr),
-      monthlyRentPeriod: state.currentPropertyOperationType.isForRent? int.parse(rentDurationController.text) : 0 ,
+      monthlyRentPeriod: state.currentPropertyOperationType.isForRent ? int.parse(rentDurationController.text) : 0,
       isRenewable: state.availableForRenewal,
       propertySubType: state.currentBuildingType.toId.toString(),
     );
   }
 
   Future<LandRequestModel> _getLandRequestModel(SelectLocationServiceCubit locationServiceCubit) async {
-    final common = _extractCommonFields(areaControllerKey: LocalKeys.landAreaController , locationServiceCubit: locationServiceCubit);
+    final common = _extractCommonFields(areaControllerKey: LocalKeys.landAreaController, locationServiceCubit: locationServiceCubit);
     final List<PropertyImage> images = await _processImages();
     final bool isLicensed = state.landLicenseStatus.isLicensed;
 
@@ -313,16 +478,14 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       amenities: common['amenities'],
       area: common['area'],
       isLicensed: isLicensed,
-      monthlyRentPeriod: state.currentPropertyOperationType.isForRent? int.parse(rentDurationController.text) : 0 ,
+      monthlyRentPeriod: state.currentPropertyOperationType.isForRent ? int.parse(rentDurationController.text) : 0,
       isRenewable: state.availableForRenewal,
-      propertySubType:  state.currentLandType.toId.toString(),
+      propertySubType: state.currentLandType.toId.toString(),
     );
   }
 
-
   void addNewApartment(SelectLocationServiceCubit locationServiceCubit) async {
     emit(state.copyWith(addNewApartmentState: RequestState.loading));
-
     final ApartmentRequestModel requestModel = await _getApartmentRequestModel(locationServiceCubit);
     final Either<Failure, void> result = await _addNewApartmentUseCase(requestModel);
 
@@ -337,7 +500,6 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
 
   void addNewVilla(SelectLocationServiceCubit locationServiceCubit) async {
     emit(state.copyWith(addNewApartmentState: RequestState.loading));
-
     final VillaRequestModel requestModel = await _getVillaRequestModel(locationServiceCubit);
     final Either<Failure, void> result = await _addVillaUseCase(requestModel);
 
@@ -352,7 +514,6 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
 
   void addNewBuilding(SelectLocationServiceCubit locationServiceCubit) async {
     emit(state.copyWith(addNewApartmentState: RequestState.loading));
-
     final BuildingRequestModel requestModel = await _getBuildingRequestModel(locationServiceCubit);
     final Either<Failure, void> result = await _addNewBuildingUseCase(requestModel);
 
@@ -367,7 +528,6 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
 
   void addNewLand(SelectLocationServiceCubit locationServiceCubit) async {
     emit(state.copyWith(addNewApartmentState: RequestState.loading));
-
     final LandRequestModel requestModel = await _getLandRequestModel(locationServiceCubit);
     final Either<Failure, void> result = await _addNewLandUseCase(requestModel);
 
@@ -379,12 +539,111 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
           (_) => emit(state.copyWith(addNewApartmentState: RequestState.loaded)),
     );
   }
-  /// get amenities
+
+  Future<void> updateApartment({
+    required String apartmentId,
+    bool replaceImages = false,
+    String? mainImageId,
+    required SelectLocationServiceCubit locationServiceCubit,
+  }) async {
+
+  }
+
+  Future<void> updateVilla({
+    required String villaId,
+    bool replaceImages = false,
+    String? mainImageId,
+    required SelectLocationServiceCubit locationServiceCubit,
+  }) async {
+
+  }
+
+  Future<void> updateBuilding({
+    required String buildingId,
+    bool replaceImages = false,
+    String? mainImageId,
+    required SelectLocationServiceCubit locationServiceCubit,
+  }) async {
+
+  }
+  Future<void> updateLand({
+    required String landId,
+    required SelectLocationServiceCubit locationServiceCubit,
+  }) async {
+    emit(state.copyWith(updateLandState: RequestState.loading));
+
+    final original = state.propertyDetailsEntity as LandDetailsModel;
+
+    final current = await _getLandRequestModel(locationServiceCubit);
+
+    final updatedFields = <String, dynamic>{};
+
+    if (original.title != current.title) updatedFields['title'] = current.title;
+    if (original.description != current.description) updatedFields['description'] = current.description;
+    if (current.price.toInt() != double.parse(original.price).toInt()) updatedFields['price'] = current.price;
+    if (original.area.toString() != current.area) updatedFields['area'] = current.area;
+    if (locationServiceCubit.state.selectedCity!.name != original.city) updatedFields['city'] = current.city;
+    if (original.latitude.toString() != current.latitude) updatedFields['latitude'] = current.latitude;
+    if (original.longitude.toString() != current.longitude) updatedFields['longitude'] = current.longitude;
+    if (original.isLicensed != current.isLicensed) updatedFields['is_licensed'] = current.isLicensed;
+    if (current.propertySubType != getLandType(original.propertySubType).toId.toString()) updatedFields['property_sub_type'] = current.propertySubType;
+    if (original.operation != current.currentPropertyOperationType) updatedFields['operation'] = current.currentPropertyOperationType;
 
 
-  void getAmenities(String propertyType)async {
-    emit(state.copyWith(getAmenitiesState: RequestState.loading , selectedAmenities: []));
+    final originalAmenities = original.amenities.map((a) => a.id.toString()).toList()..sort();
+    final currentAmenities = current.amenities.toList()..sort();
 
+    bool isAmenitiesChanged = false;
+
+    if (originalAmenities.length != currentAmenities.length) {
+      isAmenitiesChanged = true;
+    } else {
+      for (var i = 0; i < originalAmenities.length; i++) {
+        if (originalAmenities[i] != currentAmenities[i]) {
+          isAmenitiesChanged = true;
+          break;
+        }
+      }
+    }
+
+    if (isAmenitiesChanged) {
+      updatedFields['amenities'] = current.amenities;
+    }
+
+    if (state.currentPropertyOperationType.isForRent) {
+      if (original.monthlyRentPeriod != current.monthlyRentPeriod.toString()) {
+        updatedFields['monthly_rent_period'] = current.monthlyRentPeriod;
+      }
+      if (original.rentIsRenewable != current.isRenewable) {
+        updatedFields['is_renewable'] = current.isRenewable;
+      }
+    }
+
+
+    if (state.selectedImages.isNotEmpty) {
+      updatedFields['images'] = await _processImages();
+      updatedFields['replace_images'] = 'true';
+    }
+
+
+
+    final result = await _updateLandUseCase(landId: landId, updatedFields: updatedFields);
+
+    result.fold(
+          (failure) => emit(state.copyWith(
+        updateLandState: RequestState.error,
+        updateLandErrorMessage: failure.message,
+      )),
+          (updatedLand) => emit(state.copyWith(
+        updateLandState: RequestState.loaded,
+        propertyDetailsEntity: updatedLand,
+      )),
+    );
+  }
+
+
+  Future<void> getAmenities(String propertyType) async {
+    emit(state.copyWith(getAmenitiesState: RequestState.loading));
     final Either<Failure, List<AmenityEntity>> result = await _getPropertyAmenitiesUseCase(propertyType);
 
     result.fold(
@@ -400,20 +659,28 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
 
   void selectAmenity(String amenityId) {
     final updatedSelectedAmenities = List<String>.from(state.selectedAmenities);
-    updatedSelectedAmenities.add(amenityId);
-    emit(state.copyWith(selectedAmenities: updatedSelectedAmenities));
+    if (!updatedSelectedAmenities.contains(amenityId)) {
+      updatedSelectedAmenities.add(amenityId);
+      emit(state.copyWith(selectedAmenities: updatedSelectedAmenities));
+    }
   }
 
   void unSelectAmenity(String amenityId) {
-    final updatedSelectedAmenities = List<String>.from(state.selectedAmenities)
-      ..remove(amenityId);
-    emit(state.copyWith(selectedAmenities: updatedSelectedAmenities));
+    final updatedSelectedAmenities = List<String>.from(state.selectedAmenities);
+    if (updatedSelectedAmenities.contains(amenityId)) {
+      updatedSelectedAmenities.remove(amenityId);
+      emit(state.copyWith(selectedAmenities: updatedSelectedAmenities));
+    }
   }
 
   @override
   Future<void> close() {
     formController.dispose();
+    addressController.dispose();
+    descriptionController.dispose();
+    priceController.dispose();
+    rentController.dispose();
+    rentDurationController.dispose();
     return super.close();
   }
-
 }

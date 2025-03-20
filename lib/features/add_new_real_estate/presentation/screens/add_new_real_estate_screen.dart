@@ -20,7 +20,9 @@ import 'add_new_real_estate_location_screen.dart';
 import 'add_new_real_estate_price_screen.dart';
 
 class AddNewRealEstateScreen extends StatefulWidget {
-  const AddNewRealEstateScreen({super.key});
+  const AddNewRealEstateScreen({super.key, this.propertyID});
+
+  final String? propertyID;
 
   @override
   _AddNewRealEstateScreenState createState() => _AddNewRealEstateScreenState();
@@ -43,88 +45,156 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
         BlocProvider(
           create: (context) {
             AddNewRealEstateDi().setup();
-            return AddNewRealEstateCubit(
+            final cubit = AddNewRealEstateCubit(
               ServiceLocator.getIt(),
               ServiceLocator.getIt(),
               ServiceLocator.getIt(),
               ServiceLocator.getIt(),
               ServiceLocator.getIt(),
-            )
-              ..getAmenities(PropertyType.apartment.toJsonId.toString());
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+              ServiceLocator.getIt(),
+            );
+
+            // If propertyID is not null, fetch property details
+            if (widget.propertyID != null) {
+              cubit.fetchPropertyDetailsAndPopulateIt(widget.propertyID!);
+            } else {
+              // Fetch amenities initially for apartments
+              cubit.getAmenities(PropertyType.apartment.toJsonId.toString());
+            }
+
+            return cubit;
           },
         ),
         BlocProvider(
           create: (context) {
-            return SelectLocationServiceCubit.getOrCreate()
-              ..getCountries();
+            return SelectLocationServiceCubit.getOrCreate()..getCountries();
           },
         ),
       ],
       child: Scaffold(
         backgroundColor: ColorManager.greyShade,
-        body: BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
-          buildWhen: (previous, current) {
-            if (previous.addNewApartmentState.isLoading &&
-                current.addNewApartmentState.isLoaded) {
-              CustomSnackBar.show(context: context,
-                  message: 'تم اضافه العقار بنجاح',
-                  type: SnackBarType.success);
-
+        body: BlocListener<AddNewRealEstateCubit, AddNewRealEstateState>(
+          listener: (context, state) {
+            // Handle success for add
+            if (state.addNewApartmentState.isLoaded && !state.addNewApartmentState.isLoading) {
+              CustomSnackBar.show(
+                context: context,
+                message: 'تم إضافة العقار بنجاح',
+                type: SnackBarType.success,
+              );
               Navigator.pop(context);
             }
-            return previous.addNewApartmentState !=
-                current.addNewApartmentState;
+
+            // Handle success for update
+            if ((state.updateApartmentState.isLoaded ||
+                state.updateVillaState.isLoaded ||
+                state.updateBuildingState.isLoaded ||
+                state.updateLandState.isLoaded) &&
+                !(state.updateApartmentState.isLoading ||
+                    state.updateVillaState.isLoading ||
+                    state.updateBuildingState.isLoading ||
+                    state.updateLandState.isLoading)) {
+              CustomSnackBar.show(
+                context: context,
+                message: 'تم تحديث العقار بنجاح',
+                type: SnackBarType.success,
+              );
+              Navigator.pop(context);
+            }
+
+            if (state.getPropertyDetailsState.isLoaded && widget.propertyID != null) {
+              final locationCubit = context.read<SelectLocationServiceCubit>();
+              final propertyDetails = state.propertyDetailsEntity;
+              if (propertyDetails != null) {
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  await locationCubit.setPropertyLocation(
+                    countryName: propertyDetails.country ?? '',
+                    stateName: propertyDetails.state ?? '',
+                    cityName: propertyDetails.city ?? '',
+                  );
+                });
+              }
+            }
           },
-          builder: (context, state) {
-            return Stack(
-              children: [
-                Column(
-                  children: [
-                    AppBarComponent(
-                      appBarTextMessage: 'إضافة عقار',
-                      showNotificationIcon: false,
-                      showLocationIcon: false,
-                      showBackIcon: true,
-                      centerText: true,
-                    ),
-                    _buildPageIndicator(),
-                    Expanded(
-                      child: PageView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: _pageController,
-                        onPageChanged: (index) {
-                          setState(() {
-                            _currentPage = index;
-                          });
-                        },
-                        children: [
-                          AddNewRealEstateMainInformationScreen(),
-                          AddNewRealEstatePriceScreen(),
-                          AddNewRealEstateLocationScreen(),
-                        ],
-                      ),
-                    ),
-                    AddNewRealEstateButtons(
-                      pageController: _pageController,
-                      currentPage: _currentPage,
-                      animationTime: const Duration(milliseconds: 500),
-                    ),
-                  ],
-                ),
-                if (state.addNewApartmentState.isLoading)
-                  const LoadingOverlayComponent(
-                    opacity: 0,
-                    text: 'جاري رفع العقار...',
+          child: BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
+            buildWhen: (previous, current) {
+              return previous.addNewApartmentState != current.addNewApartmentState ||
+                  previous.updateApartmentState != current.updateApartmentState ||
+                  previous.updateVillaState != current.updateVillaState ||
+                  previous.updateBuildingState != current.updateBuildingState ||
+                  previous.updateLandState != current.updateLandState ||
+                  previous.getPropertyDetailsState != current.getPropertyDetailsState;
+            },
+            builder: (context, state) {
+              return Column(
+                children: [
+                  AppBarComponent(
+                    appBarTextMessage: widget.propertyID != null ? 'تعديل عقار' : 'إضافة عقار',
+                    showNotificationIcon: false,
+                    showLocationIcon: false,
+                    showBackIcon: true,
+                    centerText: true,
                   ),
-              ],
-            );
-          },
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        Column(
+                          children: [
+                            _buildPageIndicator(),
+                            Expanded(
+                              child: PageView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                controller: _pageController,
+                                onPageChanged: (index) {
+                                  setState(() {
+                                    _currentPage = index;
+                                  });
+                                },
+                                children: const [
+                                  AddNewRealEstateMainInformationScreen(),
+                                  AddNewRealEstatePriceScreen(),
+                                  AddNewRealEstateLocationScreen(),
+                                ],
+                              ),
+                            ),
+                            AddNewRealEstateButtons(
+                              pageController: _pageController,
+                              currentPage: _currentPage,
+                              animationTime: const Duration(milliseconds: 500),
+                            ),
+                          ],
+                        ),
+                        if (state.addNewApartmentState.isLoading ||
+                            state.updateApartmentState.isLoading ||
+                            state.updateVillaState.isLoading ||
+                            state.updateBuildingState.isLoading ||
+                            state.updateLandState.isLoading)
+                          const LoadingOverlayComponent(
+                            opacity: 0,
+                            text: 'جاري معالجة العقار...',
+                          ),
+                        if (state.getPropertyDetailsState.isLoading)
+                          const LoadingOverlayComponent(
+                            opacity: 0,
+                            text: 'جاري جلب بيانات العقار...',
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  var animationTime = const Duration(milliseconds: 500);
+  final animationTime = const Duration(milliseconds: 500);
 
   Widget _buildPageIndicator() {
     return Padding(
@@ -142,9 +212,7 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                     ? 'السعر والوصف'
                     : 'الموقع والمميزات',
                 style: getBoldStyle(
-                  color: isActive
-                      ? ColorManager.primaryColor
-                      : ColorManager.blackColor,
+                  color: isActive ? ColorManager.primaryColor : ColorManager.blackColor,
                   fontSize: FontSize.s11,
                 ),
               ),
@@ -155,8 +223,7 @@ class _AddNewRealEstateScreenState extends State<AddNewRealEstateScreen> {
                 width: context.scale(115.33),
                 height: context.scale(4),
                 decoration: BoxDecoration(
-                  color:
-                  isActive ? ColorManager.primaryColor : Color(0xFFD9D9D9),
+                  color: isActive ? ColorManager.primaryColor : const Color(0xFFD9D9D9),
                   borderRadius: BorderRadius.circular(2.0),
                 ),
               ),

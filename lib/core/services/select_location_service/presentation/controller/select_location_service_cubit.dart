@@ -18,10 +18,10 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
   static SelectLocationServiceState? _lastState;
 
   SelectLocationServiceCubit._(
-      this._getCountriesUseCase,
-      this._getStatesUseCase,
-      this._getCitiesUseCase,
-      ) : super(_lastState ?? const SelectLocationServiceState()) {
+    this._getCountriesUseCase,
+    this._getStatesUseCase,
+    this._getCitiesUseCase,
+  ) : super(_lastState ?? const SelectLocationServiceState()) {
     if (_lastState != null) {
       emit(_lastState!); // Emit the saved state
     } else {
@@ -35,13 +35,14 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
 
   /// **Ensure Singleton Instance**
   static void init(
-      GetCountriesUseCase getCountriesUseCase,
-      GetStatesUseCase getStatesUseCase,
-      GetCitiesUseCase getCitiesUseCase,
-      ) {
+    GetCountriesUseCase getCountriesUseCase,
+    GetStatesUseCase getStatesUseCase,
+    GetCitiesUseCase getCitiesUseCase,
+  ) {
     if (!GetIt.I.isRegistered<SelectLocationServiceCubit>()) {
       GetIt.I.registerSingleton<SelectLocationServiceCubit>(
-        SelectLocationServiceCubit._(getCountriesUseCase, getStatesUseCase, getCitiesUseCase),
+        SelectLocationServiceCubit._(
+            getCountriesUseCase, getStatesUseCase, getCitiesUseCase),
       );
     }
   }
@@ -76,35 +77,63 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
     return cubit;
   }
 
+  Future<void> setPropertyLocation({
+    required String countryName,
+    required String stateName,
+    required String cityName,
+  }) async {
+    await getCountries();
+
+    final country = state.countries.firstWhere(
+      (c) => c.name == countryName,
+    );
+
+    changeSelectedCountry(country.name);
+
+    if (stateName.isNotEmpty) {
+      final stateEntity = state.states.firstWhere(
+        (s) => s.name == stateName,
+      );
+      changeSelectedState(stateEntity.name);
+
+      if (cityName.isNotEmpty) {
+        final city = state.cities.firstWhere(
+          (c) => c.name == cityName,
+        );
+
+        changeSelectedCity(city.name);
+      }
+    }
+  }
+
   /// **Get Countries**
   Future<void> getCountries() async {
     emit(state.copyWith(getCountriesState: RequestState.loading));
 
-    if(state.countries.isNotEmpty){
+    if (state.countries.isNotEmpty) {
       emit(state.copyWith(getCountriesState: RequestState.loaded));
       return;
     }
-    final Either<Failure, List<CountryEntity>> result = await _getCountriesUseCase();
+    final Either<Failure, List<CountryEntity>> result =
+        await _getCountriesUseCase();
 
     result.fold(
-            (failure) => emit(state.copyWith(
-          getCountriesState: RequestState.error,
-          getCountriesError: failure.message,
-        )),
-            (countries) {
-          emit(state.copyWith(
-            countries: countries,
-            getCountriesState: RequestState.loaded,
-          ));
-        }
-    );
+        (failure) => emit(state.copyWith(
+              getCountriesState: RequestState.error,
+              getCountriesError: failure.message,
+            )), (countries) {
+      emit(state.copyWith(
+        countries: countries,
+        getCountriesState: RequestState.loaded,
+      ));
+    });
   }
 
   /// **Get States for a Given Country**
   Future<void> getStates(String countryId) async {
     emit(state.copyWith(getStatesState: RequestState.loading));
 
-    if(state.cachedStates.containsKey(countryId)) {
+    if (state.cachedStates.containsKey(countryId)) {
       emit(state.copyWith(
         states: state.cachedStates[countryId]!,
         getStatesState: RequestState.loaded,
@@ -112,33 +141,32 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
       return;
     }
 
-    final Either<Failure, List<StateEntity>> result = await _getStatesUseCase(countryId);
+    final Either<Failure, List<StateEntity>> result =
+        await _getStatesUseCase(countryId);
 
     result.fold(
-            (failure) => emit(state.copyWith(
-          getStatesState: RequestState.error,
-          getStatesError: failure.message,
-        )),
-            (states) {
-          final Map<String, List<StateEntity>> cachedStates =
+        (failure) => emit(state.copyWith(
+              getStatesState: RequestState.error,
+              getStatesError: failure.message,
+            )), (states) {
+      final Map<String, List<StateEntity>> cachedStates =
           Map<String, List<StateEntity>>.from(state.cachedStates);
 
-          cachedStates[countryId] = states;
+      cachedStates[countryId] = states;
 
-          emit(state.copyWith(
-            states: states,
-            cachedStates: cachedStates,
-            getStatesState: RequestState.loaded,
-          ));
-        }
-    );
+      emit(state.copyWith(
+        states: states,
+        cachedStates: cachedStates,
+        getStatesState: RequestState.loaded,
+      ));
+    });
   }
 
   /// **Get Cities for a Given State**
   Future<void> getCities(String stateId) async {
     emit(state.copyWith(getCitiesState: RequestState.loading));
 
-    if(state.cachedCities.containsKey(stateId)) {
+    if (state.cachedCities.containsKey(stateId)) {
       emit(state.copyWith(
         cities: state.cachedCities[stateId]!,
         getCitiesState: RequestState.loaded,
@@ -146,28 +174,29 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
       return;
     }
 
-    final Either<Failure, List<CityEntity>> result = await _getCitiesUseCase(stateId);
+    final Either<Failure, List<CityEntity>> result =
+        await _getCitiesUseCase(stateId);
 
     result.fold(
-            (failure) => emit(state.copyWith(
-          getCitiesState: RequestState.error,
-          getCitiesError: failure.message,
-        )),
-            (cities){
-          final Map<String, List<CityEntity>> cachedCities = Map<String, List<CityEntity>>.from(state.cachedCities);
-          cachedCities[stateId] = cities;
+        (failure) => emit(state.copyWith(
+              getCitiesState: RequestState.error,
+              getCitiesError: failure.message,
+            )), (cities) {
+      final Map<String, List<CityEntity>> cachedCities =
+          Map<String, List<CityEntity>>.from(state.cachedCities);
+      cachedCities[stateId] = cities;
 
-          emit(state.copyWith(
-            cities: cities,
-            cachedCities: cachedCities,
-            getCitiesState: RequestState.loaded,
-          ));
-        }
-    );
+      emit(state.copyWith(
+        cities: cities,
+        cachedCities: cachedCities,
+        getCitiesState: RequestState.loaded,
+      ));
+    });
   }
 
   void changeSelectedCountry(String countryName) {
-    final country = state.countries.firstWhere((element) => element.name == countryName);
+    final country =
+        state.countries.firstWhere((element) => element.name == countryName);
     getStates(country.id);
     emit(state.copyWith(
       selectedCountry: country,
@@ -180,7 +209,8 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
   }
 
   void changeSelectedState(String stateName) {
-    final currentState = state.states.firstWhere((element) => element.name == stateName);
+    final currentState =
+        state.states.firstWhere((element) => element.name == stateName);
     getCities(currentState.id);
     emit(state.copyWith(
       selectedState: currentState,
@@ -190,9 +220,10 @@ class SelectLocationServiceCubit extends Cubit<SelectLocationServiceState> {
   }
 
   void changeSelectedCity(String cityName) {
-    final currentCity = state.cities.firstWhere((element) => element.name == cityName);
+    final currentCity =
+        state.cities.firstWhere((element) => element.name == cityName);
 
-    if(state.selectedCity != null && cityName == state.selectedCity!.name){
+    if (state.selectedCity != null && cityName == state.selectedCity!.name) {
       emit(state.copyWith(
         selectedCity: null,
         clearSelectedCity: true,

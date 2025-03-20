@@ -1,7 +1,6 @@
 import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import 'package:enmaa/core/services/service_locator.dart';
-import 'package:enmaa/features/add_new_real_estate/data/models/apartment_request_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/managers/color_manager.dart';
@@ -22,7 +21,7 @@ class AddNewRealEstateButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 16.0,
         right: 16.0,
         bottom: 32.0,
@@ -47,11 +46,7 @@ class AddNewRealEstateButtons extends StatelessWidget {
           height: 48,
           child: ElevatedButton(
             onPressed: () {
-              if (context
-                  .read<AddNewRealEstateCubit>()
-                  .formKey
-                  .currentState!
-                  .validate()) {
+              if (context.read<AddNewRealEstateCubit>().formKey.currentState!.validate()) {
                 pageController.nextPage(
                   duration: animationTime,
                   curve: Curves.easeIn,
@@ -76,14 +71,14 @@ class AddNewRealEstateButtons extends StatelessWidget {
                 onPressed: () {
                   if (currentPage > 0) {
                     pageController.previousPage(
-                      duration: Duration(milliseconds: 1),
+                      duration: const Duration(milliseconds: 1),
                       curve: Curves.easeInOutSine,
                     );
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFD6D8DB),
-                  foregroundColor: Color(0xFFD6D8DB),
+                  backgroundColor: const Color(0xFFD6D8DB),
+                  foregroundColor: const Color(0xFFD6D8DB),
                 ),
                 child: Text(
                   'السابق',
@@ -93,11 +88,11 @@ class AddNewRealEstateButtons extends StatelessWidget {
             ),
             BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
               builder: (context, locationState) {
-                return BlocBuilder<AddNewRealEstateCubit,
-                    AddNewRealEstateState>(
+                return BlocBuilder<AddNewRealEstateCubit, AddNewRealEstateState>(
                   builder: (context, state) {
-                    bool sendData = state.selectedLocation != null &&
-                        locationState.selectedCity != null;
+                    final bool sendData = state.selectedLocation != null && locationState.selectedCity != null;
+                    final bool isEditMode = state.propertyDetailsEntity != null;
+
                     return AnimatedSize(
                       duration: animationTime,
                       curve: Curves.easeInOut,
@@ -106,17 +101,9 @@ class AddNewRealEstateButtons extends StatelessWidget {
                         height: 48,
                         child: ElevatedButton(
                           onPressed: () {
+                            final addNewRealEstateCubit = context.read<AddNewRealEstateCubit>();
                             if (currentPage < 2) {
-                              /// validate that user select images if not change the
-                              /// border color of the container to red
-                              var addNewRealEstateCubit =
-                              context.read<AddNewRealEstateCubit>();
-
-                              if (context
-                                  .read<AddNewRealEstateCubit>()
-                                  .priceForm
-                                  .currentState!
-                                  .validate() &&
+                              if (addNewRealEstateCubit.priceForm.currentState!.validate() &&
                                   addNewRealEstateCubit.validateImages()) {
                                 pageController.nextPage(
                                   duration: animationTime,
@@ -124,45 +111,51 @@ class AddNewRealEstateButtons extends StatelessWidget {
                                 );
                               }
                             } else {
-                              if (context
-                                  .read<AddNewRealEstateCubit>()
-                                  .locationForm
-                                  .currentState!
-                                  .validate() &&
-                                  context
-                                      .read<AddNewRealEstateCubit>()
-                                      .state
-                                      .selectedLocation !=
-                                      null) {
-                                /// send request to add new real estate
+                              if (addNewRealEstateCubit.locationForm.currentState!.validate() &&
+                                  state.selectedLocation != null) {
+                                final locationCubit = ServiceLocator.getIt<SelectLocationServiceCubit>();
+                                if (isEditMode) {
+                                  // Update existing property
+                                  final propertyId = state.propertyDetailsEntity!.id.toString();
+                                  if (state.currentPropertyType.isApartment) {
+                                    addNewRealEstateCubit.updateApartment(
+                                      apartmentId: propertyId,
+                                      replaceImages: true,
+                                      mainImageId: null,
+                                      locationServiceCubit: locationCubit,
+                                    );
+                                  } else if (state.currentPropertyType.isVilla) {
+                                    addNewRealEstateCubit.updateVilla(
+                                      villaId: propertyId,
+                                      replaceImages: true,
+                                      mainImageId: null,
+                                      locationServiceCubit: locationCubit,
+                                    );
+                                  } else if (state.currentPropertyType.isBuilding) {
+                                    addNewRealEstateCubit.updateBuilding(
+                                      buildingId: propertyId,
+                                      replaceImages: true,
+                                      mainImageId: null,
+                                      locationServiceCubit: locationCubit,
+                                    );
+                                  } else if (state.currentPropertyType.isLand) {
+                                    addNewRealEstateCubit.updateLand(
+                                      landId: propertyId,
 
-                                final addNewRealEstateCubit =
-                                context.read<AddNewRealEstateCubit>();
-
-                                if (addNewRealEstateCubit
-                                    .state.currentPropertyType.isApartment) {
-                                  addNewRealEstateCubit.addNewApartment(
-                                      ServiceLocator.getIt<
-                                          SelectLocationServiceCubit>()
-                                  );
-                                } else if (addNewRealEstateCubit
-                                    .state.currentPropertyType.isVilla) {
-                                  addNewRealEstateCubit.addNewVilla(
-                                      ServiceLocator.getIt<
-                                          SelectLocationServiceCubit>()
-                                  );
-                                } else if (addNewRealEstateCubit
-                                    .state.currentPropertyType.isBuilding) {
-                                  addNewRealEstateCubit.addNewBuilding(
-                                      ServiceLocator.getIt<
-                                          SelectLocationServiceCubit>()
-                                  );
-                                } else if (addNewRealEstateCubit
-                                    .state.currentPropertyType.isLand) {
-                                  addNewRealEstateCubit.addNewLand(
-                                      ServiceLocator.getIt<
-                                          SelectLocationServiceCubit>()
-                                  );
+                                      locationServiceCubit: locationCubit,
+                                    );
+                                  }
+                                } else {
+                                  // Add new property
+                                  if (state.currentPropertyType.isApartment) {
+                                    addNewRealEstateCubit.addNewApartment(locationCubit);
+                                  } else if (state.currentPropertyType.isVilla) {
+                                    addNewRealEstateCubit.addNewVilla(locationCubit);
+                                  } else if (state.currentPropertyType.isBuilding) {
+                                    addNewRealEstateCubit.addNewBuilding(locationCubit);
+                                  } else if (state.currentPropertyType.isLand) {
+                                    addNewRealEstateCubit.addNewLand(locationCubit);
+                                  }
                                 }
                               }
                             }
@@ -173,7 +166,9 @@ class AddNewRealEstateButtons extends StatelessWidget {
                                 : ColorManager.primaryColor2,
                             foregroundColor: Colors.white,
                           ),
-                          child: Text(currentPage == 2 ? 'إرسال' : 'التالي'),
+                          child: Text(
+                            currentPage == 2 ? (isEditMode ? 'تحديث' : 'إرسال') : 'التالي',
+                          ),
                         ),
                       ),
                     );

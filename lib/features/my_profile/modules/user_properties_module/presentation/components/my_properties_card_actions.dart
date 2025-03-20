@@ -1,4 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:enmaa/configuration/routers/app_routers.dart';
+import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../configuration/managers/color_manager.dart';
@@ -70,7 +72,11 @@ class MyPropertiesCardActions extends StatelessWidget {
           ],
           onChanged: (String? value) {
             if (value == 'edit') {
-              // todo : navigate to edit property screen
+
+              Navigator.pushNamed(
+                  context, RoutersNames.addNewRealEstateScreen ,
+                  arguments: propertyItem.id.toString());
+
             } else if (value == 'delete') {
               if (propertyItem.status != 'available') {
                 CustomSnackBar.show(

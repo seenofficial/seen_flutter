@@ -116,9 +116,17 @@ case RoutersNames.userAppointmentsScreen:
         );
 
       case RoutersNames.addNewRealEstateScreen:
+        final args = settings.arguments ;
+        String ? propertyID ;
+        if(args != null){
+          propertyID = args as String ;
+        }
+
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.addNewRealEstateScreen),
-          builder: (_) => const AddNewRealEstateScreen(),
+          builder: (_) => AddNewRealEstateScreen(
+            propertyID: propertyID,
+          ),
         );
         case RoutersNames.bookPropertyScreen:
           final args = settings.arguments ;
