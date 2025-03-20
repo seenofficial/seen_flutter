@@ -8,7 +8,7 @@ class UpdateLandUseCase {
 
   UpdateLandUseCase(this._baseAddNewRealEstateRepository);
 
-  Future<Either<Failure, BasePropertyDetailsEntity>> call({
+  Future<Either<Failure, void>> call({
     required String landId,
     required Map<String, dynamic> updatedFields,
   }) async {

@@ -636,7 +636,6 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       )),
           (updatedLand) => emit(state.copyWith(
         updateLandState: RequestState.loaded,
-        propertyDetailsEntity: updatedLand,
       )),
     );
   }

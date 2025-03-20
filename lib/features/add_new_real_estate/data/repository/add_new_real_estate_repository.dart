@@ -82,11 +82,11 @@ class AddNewRealEstateRepository extends BaseAddNewRealEstateRepository {
   }
 
   @override
-  Future<Either<Failure, BasePropertyDetailsEntity>> updateLand({
+  Future<Either<Failure, void>> updateLand({
     required String landId,
     required Map<String, dynamic> updatedFields,
   }) async {
-    return await HandleRequestService.handleApiCall<BasePropertyDetailsEntity>(() async {
+    return await HandleRequestService.handleApiCall<void>(() async {
       return await baseAddNewRealEstateDataSource.updateLand(landId, updatedFields);
     });
   }

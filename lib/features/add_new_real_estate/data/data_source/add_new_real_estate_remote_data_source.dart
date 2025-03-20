@@ -23,7 +23,7 @@ abstract class BaseAddNewRealEstateDataSource {
   Future<ApartmentDetailsModel> updateApartment(String apartmentId, Map<String, dynamic> updatedFields);
   Future<VillaDetailsModel> updateVilla(String villaId, Map<String, dynamic> updatedFields);
   Future<BuildingDetailsModel> updateBuilding(String buildingId, Map<String, dynamic> updatedFields);
-  Future<LandDetailsModel> updateLand(String landId, Map<String, dynamic> updatedFields);
+  Future<void> updateLand(String landId, Map<String, dynamic> updatedFields);
 
   Future<List<AmenityModel>> getPropertyAmenities(String propertyType);
 }
@@ -107,14 +107,13 @@ class AddNewRealEstateRemoteDataSource extends BaseAddNewRealEstateDataSource {
   }
 
   @override
-  Future<LandDetailsModel> updateLand(String landId, Map<String, dynamic> updatedFields) async {
+  Future<void> updateLand(String landId, Map<String, dynamic> updatedFields) async {
     final formData = await _prepareFormData(updatedFields);
     final response = await dioService.patch(
       url: '${ApiConstants.land}$landId/',
       data: formData,
       options: Options(contentType: 'multipart/form-data'),
     );
-    return LandDetailsModel.fromJson(response.data['data']);
   }
 
   @override
@@ -144,7 +143,7 @@ class AddNewRealEstateRemoteDataSource extends BaseAddNewRealEstateDataSource {
             filePath,
             filename: filePath.split('/').last,
           );
-          formData.files.add(MapEntry('images[]', multipartFile));
+          formData.files.add(MapEntry('images', multipartFile));
 
            formData.fields.add(
             MapEntry(

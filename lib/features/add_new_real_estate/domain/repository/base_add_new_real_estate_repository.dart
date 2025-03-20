@@ -29,7 +29,7 @@ abstract class BaseAddNewRealEstateRepository {
     required Map<String, dynamic> updatedFields,
   });
 
-  Future<Either<Failure, BasePropertyDetailsEntity>> updateLand({
+  Future<Either<Failure, void>> updateLand({
     required String landId,
     required Map<String, dynamic> updatedFields,
   });
