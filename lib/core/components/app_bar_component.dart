@@ -212,26 +212,29 @@ class _AppBarComponentState extends State<AppBarComponent> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    location,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: getRegularStyle(
-                                      color: ColorManager.primaryColor,
-                                      fontSize: FontSize.s10,
+                            child: Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      location,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: getRegularStyle(
+                                        color: ColorManager.primaryColor,
+                                        fontSize: FontSize.s10,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: context.scale(8)),
-                                SvgPicture.asset(
-                                  AppAssets.locationIcon,
-                                  width: context.scale(16),
-                                  height: context.scale(16),
-                                  color: ColorManager.primaryColor,
-                                ),
-                              ],
+                                  SizedBox(width: context.scale(8)),
+                                  SvgPicture.asset(
+                                    AppAssets.locationIcon,
+                                    width: context.scale(16),
+                                    height: context.scale(16),
+                                    color: ColorManager.primaryColor,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
