@@ -403,8 +403,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       bathrooms: bathrooms,
       images: images,
       currentPropertyOperationType: state.currentPropertyOperationType.toRequest,
-      monthlyRentPeriod: state.currentPropertyOperationType.isForRent ? int.parse(rentDurationController.text) : 0,
-      isRenewable: state.availableForRenewal,
+      monthlyRentPeriod: state.currentPropertyOperationType.isForSale? null :  state.currentPropertyOperationType.isForRent? int.parse(rentDurationController.text) : 0 ,
+      isRenewable: state.currentPropertyOperationType.isForSale? null : state.availableForRenewal,
     );
   }
 
@@ -433,8 +433,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       numberOfFloors: int.parse(numberOfFloors),
       rooms: int.parse(rooms),
       bathrooms: int.parse(bathrooms),
-      monthlyRentPeriod: state.currentPropertyOperationType.isForRent? int.parse(rentDurationController.text) : 0 ,
-      isRenewable: state.availableForRenewal,
+      monthlyRentPeriod: state.currentPropertyOperationType.isForSale? null :  state.currentPropertyOperationType.isForRent? int.parse(rentDurationController.text) : 0 ,
+      isRenewable: state.currentPropertyOperationType.isForSale? null : state.availableForRenewal,
     );
   }
 
@@ -457,8 +457,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       area: common['area'],
       numberOfFloors: int.parse(numberOfFloorsStr),
       numberOfApartments: int.parse(numberOfApartmentsStr),
-      monthlyRentPeriod: state.currentPropertyOperationType.isForRent ? int.parse(rentDurationController.text) : 0,
-      isRenewable: state.availableForRenewal,
+      monthlyRentPeriod: state.currentPropertyOperationType.isForSale? null :  state.currentPropertyOperationType.isForRent? int.parse(rentDurationController.text) : 0 ,
+      isRenewable: state.currentPropertyOperationType.isForSale? null : state.availableForRenewal,
       propertySubType: state.currentBuildingType.toId.toString(),
     );
   }
@@ -480,8 +480,8 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
       amenities: common['amenities'],
       area: common['area'],
       isLicensed: isLicensed,
-      monthlyRentPeriod: state.currentPropertyOperationType.isForRent ? int.parse(rentDurationController.text) : 0,
-      isRenewable: state.availableForRenewal,
+      monthlyRentPeriod: state.currentPropertyOperationType.isForSale? null :  state.currentPropertyOperationType.isForRent? int.parse(rentDurationController.text) : 0 ,
+      isRenewable: state.currentPropertyOperationType.isForSale? null : state.availableForRenewal,
       propertySubType: state.currentLandType.toId.toString(),
     );
   }

@@ -52,11 +52,11 @@ extension BuildingTypeExtension on BuildingType {
   int get toId {
     switch (this) {
       case BuildingType.residential:
-        return 11;
-      case BuildingType.commercial:
         return 12;
+      case BuildingType.commercial:
+        return 10;
       case BuildingType.mixedUse:
-        return 3;
+        return 11;
     }
   }
 

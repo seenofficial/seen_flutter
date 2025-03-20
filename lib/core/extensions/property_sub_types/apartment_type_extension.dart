@@ -52,11 +52,11 @@ extension ApartmentTypeExtension on ApartmentType {
   int get toId {
     switch (this) {
       case ApartmentType.studio:
-        return 2;
+        return 3;
       case ApartmentType.duplex:
         return 1;
       case ApartmentType.penthouse:
-        return 8;
+        return 2;
     }
   }
 

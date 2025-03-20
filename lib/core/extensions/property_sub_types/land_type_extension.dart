@@ -52,11 +52,11 @@ extension LandTypeExtension on LandType {
   int get toId {
     switch (this) {
       case LandType.freehold:
-        return 6;
-      case LandType.agricultural:
-        return 5;
-      case LandType.industrial:
         return 7;
+      case LandType.agricultural:
+        return 8;
+      case LandType.industrial:
+        return 9;
     }
   }
 

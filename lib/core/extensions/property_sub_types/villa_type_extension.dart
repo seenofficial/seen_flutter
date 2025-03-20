@@ -53,11 +53,11 @@ extension VillaTypeExtension on VillaType {
   int get toId {
     switch (this) {
       case VillaType.standalone:
-        return 10;
-      case VillaType.twinHouse:
         return 4;
+      case VillaType.twinHouse:
+        return 5;
       case VillaType.townHouse:
-        return 9;
+        return 6;
     }
   }
 

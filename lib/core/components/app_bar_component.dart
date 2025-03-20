@@ -208,33 +208,31 @@ class _AppBarComponentState extends State<AppBarComponent> {
                           decoration: BoxDecoration(
                             color: ColorManager.greyShade,
                             borderRadius:
-                                BorderRadius.circular(context.scale(16)),
+                            BorderRadius.circular(context.scale(16)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      location,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: getRegularStyle(
-                                        color: ColorManager.primaryColor,
-                                        fontSize: FontSize.s10,
-                                      ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    location,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: getRegularStyle(
+                                      color: ColorManager.primaryColor,
+                                      fontSize: FontSize.s10,
                                     ),
                                   ),
-                                  SizedBox(width: context.scale(8)),
-                                  SvgPicture.asset(
-                                    AppAssets.locationIcon,
-                                    width: context.scale(16),
-                                    height: context.scale(16),
-                                    color: ColorManager.primaryColor,
-                                  ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(width: context.scale(8)),
+                                SvgPicture.asset(
+                                  AppAssets.locationIcon,
+                                  width: context.scale(16),
+                                  height: context.scale(16),
+                                  color: ColorManager.primaryColor,
+                                ),
+                              ],
                             ),
                           ),
                         );
