@@ -157,6 +157,9 @@ class AddNewRealEstateRemoteDataSource extends BaseAddNewRealEstateDataSource {
       }
     }
 
+    print('formData: ${formData.fields}');
+    print('formData: ${formData.files}');
+
     return formData;
   }
 

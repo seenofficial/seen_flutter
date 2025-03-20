@@ -226,13 +226,15 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     for (var img in imageModels) {
       if (img.image.startsWith('http')) {
         try {
-          final fileName = img.image.split('/').last;
+          final fileName = 'downloaded_${DateTime.now().millisecondsSinceEpoch}.jpg';
           final filePath = '${tempDir.path}/$fileName';
+
           await dio.download(
             img.image,
             filePath,
             options: Options(responseType: ResponseType.bytes),
           );
+
           final file = File(filePath);
           if (await file.exists()) {
             localFiles.add(file);
@@ -244,9 +246,9 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
         localFiles.add(File(img.image));
       }
     }
+
     return localFiles;
   }
-
   Future<void> populateStateWithPropertyDetails(BasePropertyDetailsEntity propertyDetails) async {
     addressController.text = propertyDetails.title;
     descriptionController.text = propertyDetails.description;
@@ -620,6 +622,7 @@ class AddNewRealEstateCubit extends Cubit<AddNewRealEstateState> {
     }
 
 
+    print("images iss ss ${state.selectedImages}");
     if (state.selectedImages.isNotEmpty) {
       updatedFields['images'] = await _processImages();
       updatedFields['replace_images'] = 'true';
