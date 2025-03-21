@@ -8,13 +8,12 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/components/app_bar_component.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
-import 'package:enmaa/core/components/custom_date_picker.dart';
-import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
-
+import '../../../../../../core/components/loading_overlay_component.dart';
 import '../../../../../../core/constants/local_keys.dart';
 import '../../../../../../core/services/shared_preferences_service.dart';
 import '../../../../../../core/utils/enums.dart';
+import '../components/date_selection_field.dart';
 import '../components/user_data_screen_buttons.dart';
 
 class EditUserDataScreen extends StatefulWidget {
@@ -57,18 +56,19 @@ class _EditUserDataScreenState extends State<EditUserDataScreen> {
     super.dispose();
   }
 
+  String _formatDate(DateTime? date) {
+    if (date == null) return '';
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  }
+
   void _onSavePressed() {
     if (_formKey.currentState!.validate()) {
       final updatedData = {
         'full_name': _fullNameController.text,
         'phone_number': _phoneNumberController.text,
         'id_number': _idNumberController.text,
-        'date_of_birth': _selectedBirthDate != null
-            ? '${_selectedBirthDate!.day}/${_selectedBirthDate!.month}/${_selectedBirthDate!.year}'
-            : '',
-        'id_expiry_date': _selectedIdExpirationDate != null
-            ? '${_selectedIdExpirationDate!.day}/${_selectedIdExpirationDate!.month}/${_selectedIdExpirationDate!.year}'
-            : '',
+        'date_of_birth': _formatDate(_selectedBirthDate),
+        'id_expiry_date': _formatDate(_selectedIdExpirationDate),
       };
       context.read<UserDataCubit>().updateUserData(updatedData);
     }
@@ -102,292 +102,145 @@ class _EditUserDataScreenState extends State<EditUserDataScreen> {
             child: BlocListener<UserDataCubit, UserDataState>(
               listener: (context, state) {
 
-                _spreadUserData(state);
               },
               child: BlocBuilder<UserDataCubit, UserDataState>(
+                buildWhen: (previous , current) {
+                  if(! previous.getUserDataState.isLoaded && current.getUserDataState.isLoaded){
+                    _spreadUserData(current);
+                  }
+                  return true;
+                },
                 builder: (context, state) {
                   if (state.getUserDataState.isLoading || state.getUserDataState.isInitial) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
                   if (state.getUserDataState.isLoaded) {
-                    return Column(
+                    return Stack(
                       children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            padding: EdgeInsets.all(context.scale(16)),
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                padding: EdgeInsets.all(context.scale(16)),
+                                child: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        width: context.scale(60),
-                                        height: context.scale(60),
-                                        decoration: BoxDecoration(
-                                          color: ColorManager.primaryColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            _fullNameController.text.isNotEmpty
-                                                ? _fullNameController.text[0]
-                                                : 'U',
-                                            style: getBoldStyle(
-                                              color: ColorManager.whiteColor,
-                                              fontSize: FontSize.s18,
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: context.scale(60),
+                                            height: context.scale(60),
+                                            decoration: BoxDecoration(
+                                              color: ColorManager.primaryColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                _fullNameController.text.isNotEmpty
+                                                    ? _fullNameController.text[0]
+                                                    : 'U',
+                                                style: getBoldStyle(
+                                                  color: ColorManager.whiteColor,
+                                                  fontSize: FontSize.s18,
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                        ],
+                                      ),
+                                      SizedBox(height: context.scale(16)),
+                                      Text('الاسم الكامل',
+                                          style: getBoldStyle(
+                                              color: ColorManager.blackColor,
+                                              fontSize: FontSize.s16)),
+                                      SizedBox(height: context.scale(8)),
+                                      AppTextField(
+                                        controller: _fullNameController,
+                                        height: 40,
+                                        hintText: 'أدخل الاسم الكامل',
+                                        backgroundColor: Colors.white,
+                                        borderRadius: 24,
+                                        validator: (value) =>
+                                        value == null || value.isEmpty ? 'الرجاء إدخال الاسم الكامل' : null,
+                                        padding: EdgeInsets.zero,
+                                      ),
+                                      SizedBox(height: context.scale(16)),
+                                      Text('رقم الهاتف',
+                                          style: getBoldStyle(
+                                              color: ColorManager.blackColor,
+                                              fontSize: FontSize.s16)),
+                                      SizedBox(height: context.scale(8)),
+                                      AppTextField(
+                                        controller: _phoneNumberController,
+                                        height: 40,
+                                        hintText: 'أدخل رقم الهاتف',
+                                        backgroundColor: Colors.white,
+                                        borderRadius: 24,
+                                        editable: false,
+                                        validator: (value) =>
+                                        value == null || value.isEmpty ? 'الرجاء إدخال رقم الهاتف' : null,
+                                        padding: EdgeInsets.zero,
+                                      ),
+                                      SizedBox(height: context.scale(16)),
+                                      Text('رقم الهوية',
+                                          style: getBoldStyle(
+                                              color: ColorManager.blackColor,
+                                              fontSize: FontSize.s16)),
+                                      SizedBox(height: context.scale(8)),
+                                      AppTextField(
+                                        controller: _idNumberController,
+                                        height: 40,
+                                        hintText: 'أدخل رقم الهوية',
+                                        backgroundColor: Colors.white,
+                                        borderRadius: 24,
+                                        validator: (value) =>
+                                        value == null || value.isEmpty ? 'الرجاء إدخال رقم الهوية' : null,
+                                        padding: EdgeInsets.zero,
+                                      ),
+                                      SizedBox(height: context.scale(16)),
+                                      DateSelectionField(
+                                        labelText: 'تاريخ الميلاد',
+                                        selectedDate: _selectedBirthDate,
+                                        iconPath: AppAssets.birthDayIcon,
+                                        onDateSelected: (date) {
+                                          setState(() {
+                                            _selectedBirthDate = date;
+                                          });
+                                        },
+                                      ),
+                                      SizedBox(height: context.scale(16)),
+                                      DateSelectionField(
+                                        labelText: 'تاريخ انتهاء الهوية',
+                                        iconPath: AppAssets.cardIdentityIcon,
+                                        selectedDate: _selectedIdExpirationDate,
+                                        onDateSelected: (date) {
+                                          setState(() {
+                                            _selectedIdExpirationDate = date;
+                                          });
+                                        },
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: context.scale(16)),
-                                  Text('الاسم الكامل',
-                                      style: getBoldStyle(
-                                          color: ColorManager.blackColor,
-                                          fontSize: FontSize.s16)),
-                                  SizedBox(height: context.scale(8)),
-                                  AppTextField(
-                                    controller: _fullNameController,
-                                    height: 40,
-                                    hintText: 'أدخل الاسم الكامل',
-                                    backgroundColor: Colors.white,
-                                    borderRadius: 24,
-                                    validator: (value) =>
-                                    value == null || value.isEmpty ? 'الرجاء إدخال الاسم الكامل' : null,
-                                    padding: EdgeInsets.zero,
-                                  ),
-                                  SizedBox(height: context.scale(16)),
-                                  Text('رقم الهاتف',
-                                      style: getBoldStyle(
-                                          color: ColorManager.blackColor,
-                                          fontSize: FontSize.s16)),
-                                  SizedBox(height: context.scale(8)),
-                                  AppTextField(
-                                    controller: _phoneNumberController,
-                                    height: 40,
-                                    hintText: 'أدخل رقم الهاتف',
-                                    backgroundColor: Colors.white,
-                                    borderRadius: 24,
-                                    editable: false,
-                                    validator: (value) =>
-                                    value == null || value.isEmpty ? 'الرجاء إدخال رقم الهاتف' : null,
-                                    padding: EdgeInsets.zero,
-                                  ),
-                                  SizedBox(height: context.scale(16)),
-                                  Text('رقم الهوية',
-                                      style: getBoldStyle(
-                                          color: ColorManager.blackColor,
-                                          fontSize: FontSize.s16)),
-                                  SizedBox(height: context.scale(8)),
-                                  AppTextField(
-                                    controller: _idNumberController,
-                                    height: 40,
-                                    hintText: 'أدخل رقم الهوية',
-                                    backgroundColor: Colors.white,
-                                    borderRadius: 24,
-                                    validator: (value) =>
-                                    value == null || value.isEmpty ? 'الرجاء إدخال رقم الهوية' : null,
-                                    padding: EdgeInsets.zero,
-                                  ),
-                                  SizedBox(height: context.scale(16)),
-                                  Text('تاريخ الميلاد',
-                                      style: getBoldStyle(
-                                          color: ColorManager.blackColor,
-                                          fontSize: FontSize.s16)),
-                                  SizedBox(height: context.scale(8)),
-                                  InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext dialogContext) {
-                                          return Dialog(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(context.scale(12)),
-                                            ),
-                                            child: Container(
-                                              padding: EdgeInsets.all(context.scale(16)),
-                                              width: MediaQuery.of(context).size.width * 0.8,
-                                              height: MediaQuery.of(context).size.height * 0.4,
-                                              decoration: BoxDecoration(
-                                                color: ColorManager.whiteColor,
-                                                borderRadius: BorderRadius.circular(context.scale(12)),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: ColorManager.blackColor.withOpacity(0.1),
-                                                    blurRadius: 10,
-                                                    offset: const Offset(0, 4),
-                                                  ),
-                                                ],
-                                              ),
-                                              child: CustomDatePicker(
-                                                showPreviousDates: true,
-                                                selectedDate: _selectedBirthDate,
-                                                onSelectionChanged: (calendarSelectionDetails) {
-                                                  setState(() {
-                                                    _selectedBirthDate = calendarSelectionDetails.date!;
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Container(
-                                      height: context.scale(44),
-                                      decoration: BoxDecoration(
-                                        color: ColorManager.whiteColor,
-                                        borderRadius: BorderRadius.circular(context.scale(20)),
-                                        border: Border.all(
-                                          color: ColorManager.greyShade,
-                                          width: 0.5,
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: context.scale(16)),
-                                        child: Row(
-                                          children: [
-                                            SvgImageComponent(
-                                              iconPath: AppAssets.calendarIcon,
-                                              width: 16,
-                                              height: 16,
-                                            ),
-                                            SizedBox(width: context.scale(8)),
-                                            Expanded(
-                                              child: Text(
-                                                _selectedBirthDate != null
-                                                    ? '${_selectedBirthDate!.day}/${_selectedBirthDate!.month}/${_selectedBirthDate!.year}'
-                                                    : 'اختر التاريخ',
-                                                style: _selectedBirthDate == null
-                                                    ? getRegularStyle(
-                                                  color: ColorManager.grey2,
-                                                  fontSize: FontSize.s12,
-                                                )
-                                                    : getSemiBoldStyle(
-                                                  color: ColorManager.primaryColor,
-                                                  fontSize: FontSize.s12,
-                                                ),
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_drop_down_sharp,
-                                              color: ColorManager.grey2,
-                                              size: context.scale(24),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: context.scale(16)),
-                                  Text('تاريخ انتهاء الهوية',
-                                      style: getBoldStyle(
-                                          color: ColorManager.blackColor,
-                                          fontSize: FontSize.s16)),
-                                  SizedBox(height: context.scale(8)),
-                                  InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext dialogContext) {
-                                          return Dialog(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(context.scale(12)),
-                                            ),
-                                            child: Container(
-                                              padding: EdgeInsets.all(context.scale(16)),
-                                              width: MediaQuery.of(context).size.width * 0.8,
-                                              height: MediaQuery.of(context).size.height * 0.4,
-                                              decoration: BoxDecoration(
-                                                color: ColorManager.whiteColor,
-                                                borderRadius: BorderRadius.circular(context.scale(12)),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: ColorManager.blackColor.withOpacity(0.1),
-                                                    blurRadius: 10,
-                                                    offset: const Offset(0, 4),
-                                                  ),
-                                                ],
-                                              ),
-                                              child: CustomDatePicker(
-                                                showPreviousDates: true,
-                                                selectedDate: _selectedIdExpirationDate,
-                                                onSelectionChanged: (calendarSelectionDetails) {
-                                                  setState(() {
-                                                    _selectedIdExpirationDate = calendarSelectionDetails.date!;
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Container(
-                                      height: context.scale(44),
-                                      decoration: BoxDecoration(
-                                        color: ColorManager.whiteColor,
-                                        borderRadius: BorderRadius.circular(context.scale(20)),
-                                        border: Border.all(
-                                          color: ColorManager.greyShade,
-                                          width: 0.5,
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: context.scale(16)),
-                                        child: Row(
-                                          children: [
-                                            SvgImageComponent(
-                                              iconPath: AppAssets.calendarIcon,
-                                              width: 16,
-                                              height: 16,
-                                            ),
-                                            SizedBox(width: context.scale(8)),
-                                            Expanded(
-                                              child: Text(
-                                                _selectedIdExpirationDate != null
-                                                    ? '${_selectedIdExpirationDate!.day}/${_selectedIdExpirationDate!.month}/${_selectedIdExpirationDate!.year}'
-                                                    : 'اختر التاريخ',
-                                                style: _selectedIdExpirationDate == null
-                                                    ? getRegularStyle(
-                                                  color: ColorManager.grey2,
-                                                  fontSize: FontSize.s12,
-                                                )
-                                                    : getSemiBoldStyle(
-                                                  color: ColorManager.primaryColor,
-                                                  fontSize: FontSize.s12,
-                                                ),
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_drop_down_sharp,
-                                              color: ColorManager.grey2,
-                                              size: context.scale(24),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
+                            UserDataScreenButtons(
+                              onSavePressed: _onSavePressed,
+                            ),
+                          ],
                         ),
-                        UserDataScreenButtons(
-                          onSavePressed: _onSavePressed,
-                        ),
+                        if(state.updateUserDataState.isLoading)
+                          LoadingOverlayComponent(
+                            opacity: 0,
+                            text: 'جاري تحديث البيانات',
+                          )
                       ],
                     );
                   }
-
                   return Center(
                     child: Text(
                        'حدث خطأ أثناء جلب البيانات',
@@ -406,11 +259,11 @@ class _EditUserDataScreenState extends State<EditUserDataScreen> {
   DateTime? _parseDate(String? dateString) {
     if (dateString == null || dateString.isEmpty) return null;
     try {
-      final parts = dateString.split('/');
+      final parts = dateString.split('-');
       if (parts.length != 3) return null;
-      final day = int.parse(parts[0]);
+      final year = int.parse(parts[0]);
       final month = int.parse(parts[1]);
-      final year = int.parse(parts[2]);
+      final day = int.parse(parts[2]);
       return DateTime(year, month, day);
     } catch (e) {
       return null;

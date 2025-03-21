@@ -11,6 +11,7 @@ import '../../../../../../core/services/dio_service.dart';
 
 abstract class BaseUserDataRemoteDataSource {
   Future<UserDataModel> getUserData( );
+  Future<void> updateUserData(Map<String , dynamic> updatedData);
 }
 
 class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
@@ -28,6 +29,18 @@ class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
     );
 
     return UserDataModel.fromJson(response.data);
+  }
+
+  @override
+  Future<void> updateUserData(Map<String, dynamic> updatedData) async {
+
+    FormData formData = FormData.fromMap(updatedData);
+
+    final response = await dioService.patch(
+      url: ApiConstants.user,
+      data: formData,
+      options: Options(contentType: 'multipart/form-data'),
+    );
   }
 
 

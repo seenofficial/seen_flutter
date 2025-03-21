@@ -53,14 +53,14 @@ class ServerFailure extends Failure {
 
     String errorMessage = LocaleKeys.somethingWentWrong.tr();
 
+
     if (messageError is Map<String, dynamic>) {
       final errors = messageError['errors'];
 
       if (errors is List && errors.isNotEmpty) {
         final firstError = errors.first;
-
         if (firstError is Map<String, dynamic>) {
-          errorMessage = firstError.values.first.toString();
+          errorMessage = firstError['detail']?.toString() ?? errorMessage ;
         } else if (firstError is String) {
           errorMessage = firstError;
         }

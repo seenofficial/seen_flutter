@@ -167,6 +167,7 @@ class AppRouters {
               UserDataDi().setup();
               final userCubit = UserDataCubit(
                 ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
               );
               return userCubit;
             },

@@ -5,5 +5,6 @@ import '../../../../../../core/errors/failure.dart';
 
 abstract class BaseUserDataRepository {
   Future<Either<Failure,UserDataEntity>> getUserData();
+  Future<Either<Failure,void>> updateUserData(Map<String,dynamic> updatedData);
 
 }

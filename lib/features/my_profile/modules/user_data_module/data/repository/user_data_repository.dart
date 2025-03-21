@@ -17,4 +17,12 @@ class UserDataRepository extends BaseUserDataRepository {
       return result;
     });
   }
+
+  @override
+  Future<Either<Failure, void>> updateUserData(Map<String, dynamic> updatedData) {
+   return HandleRequestService.handleApiCall<void>(() async {
+      final result = await baseUserDataRemoteDataSource.updateUserData(updatedData);
+      return result;
+    });
+  }
 }
