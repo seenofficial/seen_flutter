@@ -20,6 +20,7 @@ class AppTextField extends StatefulWidget {
   final TextDirection? textDirection;
   final String ? initialValue;
 
+  final bool editable;
   const AppTextField({
     super.key,
     this.width = double.infinity,
@@ -40,6 +41,7 @@ class AppTextField extends StatefulWidget {
     this.validator,
     this.textDirection,
     this.initialValue,
+    this.editable = true,
   });
 
   @override
@@ -64,6 +66,7 @@ class _AppTextFieldState extends State<AppTextField> {
             child: TextFormField(
               initialValue: widget.initialValue,
               controller: widget.controller,
+              enabled: widget.editable,
               keyboardType: widget.keyboardType,
               obscureText: widget.obscureText,
               onChanged: (value) {

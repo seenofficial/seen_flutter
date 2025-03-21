@@ -7,6 +7,7 @@ import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../main.dart';
 import '../../../home_module/home_imports.dart';
 
 class LogOutWidget extends StatelessWidget {
@@ -17,6 +18,7 @@ class LogOutWidget extends StatelessWidget {
     return InkWell(
       onTap: ()async{
         final prefs = await SharedPreferences.getInstance();
+        isAuth = false;
         prefs.clear();
         Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
       },

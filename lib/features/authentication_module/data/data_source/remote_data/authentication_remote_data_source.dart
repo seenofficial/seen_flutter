@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../core/constants/api_constants.dart';
 import '../../../../../core/constants/json_keys.dart';
+import '../../../../../core/services/shared_preferences_service.dart';
 import '../../../../../main.dart';
 import '../../models/login_request_model.dart';
 import '../../models/sign_up_request_model.dart';
@@ -38,12 +39,12 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
 
 
 
+    SharedPreferencesService().setUserPhone(loginBody.phone) ;
+    SharedPreferencesService().setUserName(fullName) ;
+    SharedPreferencesService().setAccessToken(token) ;
+    SharedPreferencesService().setRefreshToken(refreshToken) ;
+    SharedPreferencesService().setLanguage(language) ;
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('access_token', token);
-    await prefs.setString('refresh_token', refreshToken);
-    await prefs.setString('full_name', fullName);
-    await prefs.setString('language', language);
 
     if(response.data['city'] != null){
 
@@ -54,12 +55,12 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
       final countryId = response.data['city']['state']['country']['id'];
       final countryName = response.data['city']['state']['country']['name'];
 
-      await prefs.setInt('city_id', cityId);
-      await prefs.setString('city_name', cityName);
-      await prefs.setInt('state_id', stateId);
-      await prefs.setString('state_name', stateName);
-      await prefs.setInt('country_id', countryId);
-      await prefs.setString('country_name', countryName);
+      await SharedPreferencesService().storeValue('city_id', cityId);
+      await SharedPreferencesService().storeValue('city_name', cityName);
+      await SharedPreferencesService().storeValue('state_id', stateId);
+      await SharedPreferencesService().storeValue('state_name', stateName);
+      await SharedPreferencesService().storeValue('country_id', countryId);
+      await SharedPreferencesService().storeValue('country_name', countryName);
     }
 
 
@@ -108,9 +109,8 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
 
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('access_token', response.data['access_token']);
-    await prefs.setString('full_name', response.data['full_name']);
-    await prefs.setString('phone_number', response.data['phone_number']);
-
+    SharedPreferencesService().setUserName( response.data['full_name']) ;
+    SharedPreferencesService().setUserPhone(response.data['phone_number']) ;
 
     isAuth = true ;
 

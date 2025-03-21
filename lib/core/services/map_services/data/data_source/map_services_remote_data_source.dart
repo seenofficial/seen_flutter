@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:enmaa/core/constants/api_constants.dart';
 import 'package:enmaa/core/services/dio_service.dart';
 import 'package:enmaa/core/services/map_services/data/models/location_model.dart';
+import 'package:enmaa/core/services/shared_preferences_service.dart';
 
 abstract class BaseMapServicesRemoteDataSource {
   Future<List<LocationModel>> getSuggestedLocations(String query);
@@ -25,7 +26,7 @@ class MapServicesRemoteDataSource extends BaseMapServicesRemoteDataSource {
       },
       options: Options(
         headers: {
-          'User-Agent': 'enmaa.official (+201005734569)', // Custom User-Agent
+          'User-Agent': '${SharedPreferencesService().userName} (${SharedPreferencesService().userPhone})',
         },
       ),
     );

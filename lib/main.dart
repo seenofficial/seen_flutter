@@ -19,6 +19,7 @@ import 'core/services/bio_metric_service.dart';
 import 'core/services/bloc_observer.dart';
 import 'core/services/navigator_observer.dart';
 import 'core/services/service_locator.dart';
+import 'core/services/shared_preferences_service.dart';
 import 'core/translation/codegen_loader.g.dart';
 import 'features/my_profile/modules/user_appointments/presentation/controller/user_appointments_cubit.dart';
 import 'features/my_profile/modules/user_appointments/user_appointments_DI.dart';
@@ -47,8 +48,10 @@ void main() async {
       storageDirectory:
           HydratedStorageDirectory((await getTemporaryDirectory()).path));
 
+  await SharedPreferencesService().init();
+
   final prefs = await SharedPreferences.getInstance();
-  var  token =   prefs.get('access_token');
+  var  token =  prefs.get('access_token');
   if(token != null){
     isAuth = true;
   }

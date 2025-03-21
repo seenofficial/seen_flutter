@@ -30,6 +30,7 @@ import '../../../../core/utils/enums.dart';
 import '../../../../main.dart';
 import '../../../home_module/presentation/components/real_state_card_component.dart';
 import '../../../home_module/presentation/components/services_list_shimmer.dart';
+import '../../../home_module/presentation/controller/home_bloc.dart';
 import '../../../main_services_layout/main_service_layout_screen.dart';
 import '../../domain/entities/base_property_entity.dart';
 
@@ -134,6 +135,7 @@ class _RealStateScreenState extends State<RealStateScreen>
         children: [
           AppBarComponent(
             appBarTextMessage: 'اختر العقار المثالي لك بسهولة',
+            homeBloc: context.read<HomeBloc>(),
           ),
           Row(
             children: [

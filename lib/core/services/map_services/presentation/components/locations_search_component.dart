@@ -5,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../../../features/home_module/home_imports.dart';
 import '../../../../components/app_text_field.dart';
+import '../../../debouncer.dart';
 import '../controller /map_services_cubit.dart';
 
 class LocationsSearchComponent extends StatefulWidget {
@@ -22,10 +23,18 @@ class LocationsSearchComponent extends StatefulWidget {
 
 class _LocationsSearchComponentState extends State<LocationsSearchComponent> {
   final TextEditingController _searchController = TextEditingController();
+  late Debouncer _debouncer;
+
+  @override
+  void initState() {
+    super.initState();
+    _debouncer = Debouncer(delay: const Duration(seconds: 3));
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _debouncer.dispose();
     super.dispose();
   }
 
@@ -37,7 +46,7 @@ class _LocationsSearchComponentState extends State<LocationsSearchComponent> {
         children: [
           BlocBuilder<MapServicesCubit, MapServicesState>(
             buildWhen: (previous, current) =>
-                previous.showSuggestionsList != current.showSuggestionsList,
+            previous.showSuggestionsList != current.showSuggestionsList,
             builder: (context, state) {
               return AppTextField(
                 height: 40,
@@ -62,21 +71,18 @@ class _LocationsSearchComponentState extends State<LocationsSearchComponent> {
                   ),
                 ),
                 onChanged: (value) {
-
-                  /// todo need to fetch after last event of typing
-                  /// if i write for 1 minute take the last event that ends before 5 seconds to use
-
-
-                  context
-                      .read<MapServicesCubit>()
-                      .fetchLocationSuggestions(value);
+                  _debouncer.run(() {
+                    context
+                        .read<MapServicesCubit>()
+                        .fetchLocationSuggestions(value);
+                  });
                 },
               );
             },
           ),
           BlocBuilder<MapServicesCubit, MapServicesState>(
             buildWhen: (previous, current) =>
-                previous.showSuggestionsList != current.showSuggestionsList,
+            previous.showSuggestionsList != current.showSuggestionsList,
             builder: (context, state) {
               bool showSuggestionsList = state.showSuggestionsList;
               return Visibility(
@@ -107,7 +113,6 @@ class _LocationsSearchComponentState extends State<LocationsSearchComponent> {
                             itemCount: state.suggestions.length,
                             itemBuilder: (context, index) {
                               final suggestion = state.suggestions[index];
-
                               return LocationItemComponent(
                                   suggestion: suggestion,
                                   onLocationSelected: () {
@@ -120,18 +125,15 @@ class _LocationsSearchComponentState extends State<LocationsSearchComponent> {
                                     context
                                         .read<MapServicesCubit>()
                                         .updateSelectedLocation(latLng);
-
                                     context
                                         .read<MapServicesCubit>()
                                         .changeVisibilityOfSuggestionsList();
-
                                     widget.onLocationSelected(latLng);
                                   });
                             },
                           ),
                         );
                       } else {
-                        /// todo : select location loading
                         return Center(
                           child: CircularProgressIndicator(),
                         );
