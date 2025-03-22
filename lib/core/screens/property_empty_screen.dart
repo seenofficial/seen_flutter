@@ -35,7 +35,7 @@ class EmptyScreen extends StatelessWidget {
                 SvgImageComponent(
                   iconPath: AppAssets.propertyEmptyImage,
                   width: constraints.maxWidth * 0.8,
-                  height: constraints.maxHeight * 0.7
+                  height: constraints.maxHeight * 0.65
                 ),
                 SizedBox(
                   height: context.scale(8),

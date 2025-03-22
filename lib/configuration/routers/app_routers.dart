@@ -28,6 +28,7 @@ import '../../features/add_new_real_estate/presentation/screens/add_new_real_est
 import '../../features/authentication_module/authentication_flow_navigator.dart';
 import '../../features/authentication_module/presentation/controller/biometric_bloc.dart';
 import '../../features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
+import '../../features/my_profile/modules/contact_us_module/presenation/screens/contact_us_screen.dart';
 import '../../features/my_profile/modules/user_data_module/presentation/controller/user_data_cubit.dart';
 import '../../features/my_profile/modules/user_data_module/presentation/screens/edit_user_data_screen.dart';
 import '../../features/my_profile/modules/user_electronic_contracts_module/presentation/controller/user_electronic_contracts_cubit.dart';
@@ -134,6 +135,11 @@ class AppRouters {
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.realEstateDetailsScreen),
           builder: (_) => RealEstateDetailsScreen(propertyId: args),
+        );
+        case RoutersNames.contactUsScreen:
+         return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.contactUsScreen),
+          builder: (_) => ContactUsScreen( ),
         );
 
       case RoutersNames.addNewRealEstateScreen:

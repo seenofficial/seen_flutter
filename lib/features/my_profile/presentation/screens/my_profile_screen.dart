@@ -4,7 +4,7 @@ import '../../../../configuration/managers/color_manager.dart';
 import '../../../../core/components/app_bar_component.dart';
 import '../../../home_module/home_imports.dart';
 import '../components/app_controls_widget.dart';
-import '../components/log_out_widget.dart';
+import '../components/log_out_and_contact_us_widget.dart';
 import '../components/manage_my_properties_widget.dart';
 import '../components/name_and_phone_widget.dart';
 import '../components/remove_account_widget.dart';
@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
 
                     AppControlsWidget(),
 
-                    LogOutWidget(),
+                    LogOutAndContactUsWidget(),
 
 
                     RemoveAccountWidget()

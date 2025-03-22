@@ -15,6 +15,7 @@ class RoutersNames {
   static const String userAppointmentsScreen = "/user-appointments-screen";
   static const String userElectronicContracts = '/user-electronic-contracts';
   static const String editUserDataScreen = "/edit-user-data-screen";
+  static const String contactUsScreen = "/contact-us-screen";
 
 
   ///
