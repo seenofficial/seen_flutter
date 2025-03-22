@@ -13,6 +13,7 @@ class RoutersNames {
 
   static const String myPropertiesScreen = "/my-properties-screen";
   static const String userAppointmentsScreen = "/user-appointments-screen";
+  static const String userElectronicContracts = '/user-electronic-contracts';
   static const String editUserDataScreen = "/edit-user-data-screen";
 
 

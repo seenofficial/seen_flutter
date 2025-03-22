@@ -7,6 +7,7 @@ class SharedPreferencesService {
   static const String _keyAccessToken = 'access_token';
   static const String _keyRefreshToken = 'refresh_token';
   static const String _keyLanguage = 'language';
+  static const String _keyFirstLaunch = 'first_launch';
 
   // Singleton instance
   static final SharedPreferencesService _instance = SharedPreferencesService._internal();
@@ -42,6 +43,16 @@ class SharedPreferencesService {
   // Language
   String get language => _prefs.getString(_keyLanguage) ?? '';
   Future<void> setLanguage(String value) async => await _prefs.setString(_keyLanguage, value);
+
+  Future<bool> isFirstLaunch() async {
+    bool isFirstLaunch = _prefs.getBool(_keyFirstLaunch) ?? true;
+    if (isFirstLaunch) {
+      await _prefs.setBool(_keyFirstLaunch, false);
+    }
+    return isFirstLaunch;
+  }
+
+  Future<void> setFirstLaunch(bool value) async => await _prefs.setBool(_keyFirstLaunch, value);
 
   Future<void> storeValue(String key, dynamic value) async {
     if (value is String) {

@@ -54,27 +54,38 @@ class UserScreensWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    SvgImageComponent(
-                      width: 20,
-                      height: 20,
-                      iconPath: AppAssets.electronicContractIcon , color: ColorManager.grey,) ,
-                    SizedBox(width: context.scale(8),),
-                    Text('عقودي الإلكترونية' , style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s16),),
-                    Spacer(),
-                    InkWell(
-                        onTap: (){
-                          if(isAuth) {
+                InkWell(
+                  onTap: (){
+                    if(isAuth) {
+                      Navigator.pushNamed(context, RoutersNames.userElectronicContracts);
+                    }
+                    else {
+                      needToLoginSnackBar();
 
-                           }
-                          else {
-                            needToLoginSnackBar();
-                          }
-                        },
-                        child: Icon(Icons.arrow_forward_ios)
-                    )
-                  ],
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      SvgImageComponent(
+                        width: 20,
+                        height: 20,
+                        iconPath: AppAssets.electronicContractIcon , color: ColorManager.grey,) ,
+                      SizedBox(width: context.scale(8),),
+                      Text('عقودي الإلكترونية' , style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s16),),
+                      Spacer(),
+                      InkWell(
+                          onTap: (){
+                            if(isAuth) {
+
+                             }
+                            else {
+                              needToLoginSnackBar();
+                            }
+                          },
+                          child: Icon(Icons.arrow_forward_ios)
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

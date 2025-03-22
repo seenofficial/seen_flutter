@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/button_app_component.dart';
+import '../../../../core/services/shared_preferences_service.dart';
 import '../controller/biometric_bloc.dart';
 import '../controller/biometric_event.dart';
 import '../controller/biometric_state.dart';
@@ -56,10 +57,10 @@ class _BioMetricScreenState extends State<BioMetricScreen> with SingleTickerProv
 
     _animationController.reset();
     _animationController.forward();
-
+    SharedPreferencesService().setFirstLaunch(false);
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
-        Navigator.pushReplacementNamed(context, RoutersNames.onBoardingScreen);
+        Navigator.pushReplacementNamed(context, RoutersNames.layoutScreen);
       }
     });
   }

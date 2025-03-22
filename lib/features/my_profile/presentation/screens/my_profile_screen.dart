@@ -1,9 +1,4 @@
-import 'package:enmaa/configuration/managers/font_manager.dart';
-import 'package:enmaa/configuration/managers/style_manager.dart';
-import 'package:enmaa/core/components/svg_image_component.dart';
-import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../core/components/app_bar_component.dart';

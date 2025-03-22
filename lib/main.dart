@@ -56,19 +56,33 @@ void main() async {
   if(token != null){
     isAuth = true;
   }
+
+  bool isFirstLaunch = await SharedPreferencesService().isFirstLaunch();
+  String initialRoute;
+  if (isFirstLaunch) {
+    initialRoute = RoutersNames.onBoardingScreen;
+  } else if (token != null) {
+    initialRoute = RoutersNames.biometricScreen;
+  } else {
+    initialRoute = RoutersNames.authenticationFlow;
+  }
+
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       assetLoader: const CodegenLoader(), // load translation assets files
       fallbackLocale: Locale('en'),
-      child: MyApp(),
+      child: MyApp(
+        initialRoute: initialRoute,
+      ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key , required this.initialRoute});
+  final String initialRoute ;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -129,7 +143,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           onGenerateRoute: AppRouters().generateRoute,
-          initialRoute: RoutersNames.biometricScreen,
+          initialRoute: initialRoute,
         ),
       ),
     );

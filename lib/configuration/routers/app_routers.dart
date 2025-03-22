@@ -30,6 +30,9 @@ import '../../features/authentication_module/presentation/controller/biometric_b
 import '../../features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import '../../features/my_profile/modules/user_data_module/presentation/controller/user_data_cubit.dart';
 import '../../features/my_profile/modules/user_data_module/presentation/screens/edit_user_data_screen.dart';
+import '../../features/my_profile/modules/user_electronic_contracts_module/presentation/controller/user_electronic_contracts_cubit.dart';
+import '../../features/my_profile/modules/user_electronic_contracts_module/presentation/screens/user_electronic_contracts_screen.dart';
+import '../../features/my_profile/modules/user_electronic_contracts_module/user_electronic_contracts_DI.dart';
 import '../../features/my_profile/modules/user_properties_module/presentation/controller/user_properties_cubit.dart';
 import '../../features/preview_property/presentation/controller/preview_property_cubit.dart';
 import '../../features/wallet/presentation/screens/charge_wallet_screen.dart';
@@ -112,6 +115,19 @@ class AppRouters {
           settings: RouteSettings(name: RoutersNames.userAppointmentsScreen),
           builder: (_) => const UserAppointmentsScreen(),
         );
+      case RoutersNames.userElectronicContracts:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.userElectronicContracts),
+          builder: (_) => BlocProvider(
+            create: (context) {
+              UserElectronicContractsDi().setup();
+              return UserElectronicContractsCubit(
+                ServiceLocator.getIt(),
+              )..getUserElectronicContracts();
+            },
+            child: UserElectronicContractsScreen(),
+          ),
+        );
 
       case RoutersNames.realEstateDetailsScreen:
         final args = (settings.arguments as int).toString();
@@ -173,7 +189,8 @@ class AppRouters {
             },
             child: const EditUserDataScreen(),
           ),
-        );      case RoutersNames.previewPropertyScreen:
+        );
+      case RoutersNames.previewPropertyScreen:
         final args = settings.arguments as Map<String, dynamic>;
         final String propertyId = args['id'] as String;
         bool updateAppointment = false;
