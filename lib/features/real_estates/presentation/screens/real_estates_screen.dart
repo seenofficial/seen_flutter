@@ -22,6 +22,7 @@ import '../../../../core/components/need_to_login_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/screens/property_empty_screen.dart';
+import '../../../../core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../main.dart';
 import '../../../home_module/presentation/components/real_state_card_component.dart';
@@ -135,90 +136,92 @@ class _RealStateScreenState extends State<RealStateScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.greyShade,
-      body: Column(
-        children: [
-          AppBarComponent(
-            appBarTextMessage: 'اختر العقار المثالي لك بسهولة',
-            homeBloc: context.read<HomeBloc>(),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: AppTextField(
-                  onTap: _openFilterBottomSheet,
-                  width: context.scale(235),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.scale(16),
-                    vertical: context.scale(8),
-                  ),
-                  hintText: 'ابحث عن كل ما تريد معرفته ...',
-                  prefixIcon:
-                  Icon(Icons.search, color: ColorManager.blackColor),
-                ),
-              ),
-              ButtonAppComponent(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                width: context.scale(111),
-                onTap: () {
-                  if (isAuth) {
-                    Navigator.of(context, rootNavigator: true)
-                        .pushNamed(RoutersNames.addNewRealEstateScreen);
-                  } else {
-                    needToLoginSnackBar();
-                  }
-                },
-                buttonContent: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgImageComponent(
-                      iconPath: AppAssets.plusIcon,
-                      width: 16,
-                      height: 16,
-                    ),
-                    Text(
-                      'أضف عقارك',
-                      style: getBoldStyle(
-                          color: ColorManager.whiteColor,
-                          fontSize: FontSize.s12),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          ActiveFiltersComponent(),
-          TabBar(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.scale(8),
-              vertical: context.scale(6),
+        backgroundColor: ColorManager.greyShade,
+        body: Column(
+          children: [
+            AppBarComponent(
+              appBarTextMessage: 'اختر العقار المثالي لك بسهولة',
+              homeBloc: context.read<HomeBloc>(),
             ),
-            controller: _tabController,
-            indicator: const BoxDecoration(color: Colors.transparent),
-            dividerColor: Colors.transparent,
-            tabs: [
-              CustomTab(
-                text: 'للبيع ',
-                isSelected: _tabController.index == 0,
-              ),
-              CustomTab(
-                text: 'للإيجار ',
-                isSelected: _tabController.index == 1,
-              ),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
+            Row(
               children: [
-                _buildSaleTab(),
-                _buildRentTab(),
+                Expanded(
+                  child: AppTextField(
+                    onTap: _openFilterBottomSheet,
+                    width: context.scale(235),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.scale(16),
+                      vertical: context.scale(8),
+                    ),
+                    hintText: 'ابحث عن كل ما تريد معرفته ...',
+                    prefixIcon:
+                    Icon(Icons.search, color: ColorManager.blackColor),
+                  ),
+                ),
+                ButtonAppComponent(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  width: context.scale(111),
+                  onTap: () {
+                    if (isAuth) {
+                      Navigator.of(context, rootNavigator: true)
+                          .pushNamed(RoutersNames.addNewRealEstateScreen);
+                    } else {
+                      needToLoginSnackBar();
+                    }
+                  },
+                  buttonContent: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgImageComponent(
+                        iconPath: AppAssets.plusIcon,
+                        width: 16,
+                        height: 16,
+                      ),
+                      Text(
+                        'أضف عقارك',
+                        style: getBoldStyle(
+                            color: ColorManager.whiteColor,
+                            fontSize: FontSize.s12),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+            ActiveFiltersComponent(
+              selectLocationServiceCubit: context.read<SelectLocationServiceCubit>(),
+            ),
+            TabBar(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.scale(8),
+                vertical: context.scale(6),
+              ),
+              controller: _tabController,
+              indicator: const BoxDecoration(color: Colors.transparent),
+              dividerColor: Colors.transparent,
+              tabs: [
+                CustomTab(
+                  text: 'للبيع ',
+                  isSelected: _tabController.index == 0,
+                ),
+                CustomTab(
+                  text: 'للإيجار ',
+                  isSelected: _tabController.index == 1,
+                ),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildSaleTab(),
+                  _buildRentTab(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
   }
 
   Widget _buildSaleTab() {

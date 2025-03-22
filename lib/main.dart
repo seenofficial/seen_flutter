@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
+import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/filter_properties_controller/filter_property_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,9 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) => FilterPropertyCubit(),
+          ),
+          BlocProvider(
+            create: (context) => SelectLocationServiceCubit.getOrCreate()..getCountries(),
           ),
           BlocProvider(
             create: (context){

@@ -6,6 +6,7 @@ import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
 import 'package:enmaa/core/extensions/property_type_extension.dart';
+import 'package:enmaa/core/extensions/request_states_extension.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/filter_properties_controller/filter_property_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +15,7 @@ import '../../../../core/components/app_text_field.dart';
 import '../../../../core/components/button_app_component.dart';
 import '../../../../core/components/custom_app_drop_down.dart';
 import '../../../../core/components/generic_form_fields.dart';
+import '../../../../core/components/loading_overlay_component.dart';
 import '../../../../core/components/multi_selector_component.dart';
 import '../../../../core/components/range_slider_with_text_fields_component.dart';
 import '../../../../core/constants/app_constants.dart';
@@ -40,230 +42,237 @@ class RealEstateFilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        return SelectLocationServiceCubit.getOrCreate()..getCountries();
-      },
-      child: SizedBox(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height - context.scale(120),
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildTransactionTypeButtons(context),
-                    SizedBox(height: context.scale(20)),
-                    _buildSectionTitle('فئة العقار', context),
-                    SizedBox(height: context.scale(12)),
-                    _buildPropertyCategoryButtons(context),
-                    _buildPropertyTypeButtons(context),
-                    SizedBox(height: context.scale(20)),
+    return BlocBuilder<SelectLocationServiceCubit, SelectLocationServiceState>(
+      builder: (context, locationState) {
+        return SizedBox(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height - context.scale(120),
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTransactionTypeButtons(context),
+                      SizedBox(height: context.scale(20)),
+                      _buildSectionTitle('فئة العقار', context),
+                      SizedBox(height: context.scale(12)),
+                      _buildPropertyCategoryButtons(context),
+                      _buildPropertyTypeButtons(context),
+                      SizedBox(height: context.scale(20)),
 
-                    //// show furnished only for apartment and villa
-                    BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
-                      builder: (context, state) {
-                        bool showIsFurnished = state.currentPropertyType ==
-                            PropertyType.apartment || state.currentPropertyType == PropertyType.villa || state.currentPropertyType == null;
+                      //// show furnished only for apartment and villa
+                      BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
+                        builder: (context, state) {
+                          bool showIsFurnished = state.currentPropertyType ==
+                              PropertyType.apartment || state.currentPropertyType == PropertyType.villa || state.currentPropertyType == null;
 
-                        return Visibility(
-                          visible: showIsFurnished,
-                          child: FormWidgetComponent(
-                            label: 'الأثاث',
-                            content: BlocBuilder<FilterPropertyCubit,
-                                FilterPropertyState>(
-                              buildWhen: (previous, current) =>
-                                  previous.selectedFurnishingStatuses !=
-                                  current.selectedFurnishingStatuses,
-                              builder: (context, state) {
-                                final selectedFurnishingStatuses =
-                                    state.selectedFurnishingStatuses;
+                          return Visibility(
+                            visible: showIsFurnished,
+                            child: FormWidgetComponent(
+                              label: 'الأثاث',
+                              content: BlocBuilder<FilterPropertyCubit,
+                                  FilterPropertyState>(
+                                buildWhen: (previous, current) =>
+                                    previous.selectedFurnishingStatuses !=
+                                    current.selectedFurnishingStatuses,
+                                builder: (context, state) {
+                                  final selectedFurnishingStatuses =
+                                      state.selectedFurnishingStatuses;
 
-                                return MultiSelectTypeSelectorComponent<
-                                    FurnishingStatus>(
-                                  values: FurnishingStatus.values,
-                                  selectedTypes: selectedFurnishingStatuses,
-                                  onToggle: (type) => context
-                                      .read<FilterPropertyCubit>()
-                                      .toggleFurnishingStatus(type),
-                                  getIcon: _getFurnishedIcon,
-                                  getLabel: _getFurnishedLabel,
-                                  selectorWidth: 171,
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-
-                    /// show is licensed only for land
-                    ///
-
-                    BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
-                      builder: (context, state) {
-                        bool showIsLicensedState = state.currentPropertyType == PropertyType.land;
-
-                        return Visibility(
-                          visible: showIsLicensedState,
-                          child: FormWidgetComponent(
-                            label: 'حالة الرخصة',
-                            content: BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
-                              buildWhen: (previous, current) =>
-                              previous.selectedLandLicenseStatuses != current.selectedLandLicenseStatuses,
-                              builder: (context, state) {
-                                final selectedLandLicensed = state.selectedLandLicenseStatuses;
-
-                                return MultiSelectTypeSelectorComponent<LandLicenseStatus>(
-                                  values: LandLicenseStatus.values,
-                                  selectedTypes: selectedLandLicensed,
-                                  onToggle: (type) => context.read<FilterPropertyCubit>().toggleLandLicenseStatus(type),
-                                  getIcon: _getLandLicenseStatusIcon,
-                                  getLabel: _getLandLicenseStatusLabel,
-                                  selectorWidth: 171,
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-
-                    SizedBox(
-                      height: context.scale(16),
-                    ),
-
-                    /// todo : make indecator for loading countries
-                    const CountrySelectorComponent(),
-
-                    const StateCitySelectorComponent(),
-
-                    /// todo : add aminties here
-
-                    BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
-                      buildWhen: (previous, current) =>
-                          previous.currentPropertyOperationType !=
-                          current.currentPropertyOperationType,
-                      builder: (context, state) {
-                        return Visibility(
-                          visible: state.currentPropertyOperationType.isForRent,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildSectionTitle(
-                                  'مدة الإيجار بالشهور', context),
-                              SizedBox(height: context.scale(12)),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: AppTextField(
-                                      initialValue: state.minNumberOfMonths,
-                                      height: 40,
-                                      hintText: 'الأقل',
-                                      keyboardType: TextInputType.number,
-                                      backgroundColor: Colors.white,
-                                      borderRadius: 20,
-                                      padding: EdgeInsets.zero,
-                                      onChanged: (value) {
-                                        context.read<FilterPropertyCubit>().updateMinNumberOfMonths(value);
-
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(width: context.scale(10)),
-                                  Expanded(
-                                    child: AppTextField(
-                                      initialValue: state.maxNumberOfMonths,
-                                      height: 40,
-                                      hintText: 'الأكثر',
-                                      keyboardType: TextInputType.number,
-                                      backgroundColor: Colors.white,
-                                      borderRadius: 20,
-                                      padding: EdgeInsets.zero,
-                                      onChanged: (value) {
-                                        context.read<FilterPropertyCubit>().updateMaxNumberOfMonths(value);
-
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: context.scale(20)),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-
-                    /// fields for every type
-                    BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
-                      buildWhen: (previous, current) =>
-                          previous.currentPropertyType !=
-                          current.currentPropertyType,
-                      builder: (context, state) {
-                        PropertyType? currentPropertyType =
-                            state.currentPropertyType;
-                        late PropertyFields propertyFields;
-
-                        if (currentPropertyType != null) {
-                          switch (currentPropertyType) {
-                            case PropertyType.apartment:
-                              propertyFields =
-                                  ApartmentTextFields(fromFilter: true);
-                              break;
-                            case PropertyType.villa:
-                              propertyFields =
-                                  VillaTextFields(fromFilter: true);
-                              break;
-                            case PropertyType.land:
-                              propertyFields = LandTextFields(fromFilter: true);
-                              break;
-                            case PropertyType.building:
-                              propertyFields =
-                                  BuildingTextFields(fromFilter: true);
-                              break;
-                          }
-
-                          return Form(
-                            key: context.read<FilterPropertyCubit>().formKey,
-                            child: ZoomIn(
-                              duration: Duration(milliseconds: 500),
-                              key: ValueKey(currentPropertyType),
-                              child: Column(
-                                children: [
-                                  ...propertyFields.getFields(
-                                      context,
-                                      context
-                                          .read<FilterPropertyCubit>()
-                                          .formController),
-                                ],
+                                  return MultiSelectTypeSelectorComponent<
+                                      FurnishingStatus>(
+                                    values: FurnishingStatus.values,
+                                    selectedTypes: selectedFurnishingStatuses,
+                                    onToggle: (type) => context
+                                        .read<FilterPropertyCubit>()
+                                        .toggleFurnishingStatus(type),
+                                    getIcon: _getFurnishedIcon,
+                                    getLabel: _getFurnishedLabel,
+                                    selectorWidth: 171,
+                                  );
+                                },
                               ),
                             ),
                           );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    ),
+                        },
+                      ),
 
-                    _buildSectionTitle('السعر', context),
-                    SizedBox(height: context.scale(12)),
-                    _buildPriceRangeSlider(context),
-                    SizedBox(height: context.scale(20)),
-                    _buildSectionTitle('المساحة', context),
-                    SizedBox(height: context.scale(12)),
-                    _buildAreaRangeSlider(context),
-                    SizedBox(height: context.scale(40)),
-                  ],
+                      /// show is licensed only for land
+                      ///
+
+                      BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
+                        builder: (context, state) {
+                          bool showIsLicensedState = state.currentPropertyType == PropertyType.land;
+
+                          return Visibility(
+                            visible: showIsLicensedState,
+                            child: FormWidgetComponent(
+                              label: 'حالة الرخصة',
+                              content: BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
+                                buildWhen: (previous, current) =>
+                                previous.selectedLandLicenseStatuses != current.selectedLandLicenseStatuses,
+                                builder: (context, state) {
+                                  final selectedLandLicensed = state.selectedLandLicenseStatuses;
+
+                                  return MultiSelectTypeSelectorComponent<LandLicenseStatus>(
+                                    values: LandLicenseStatus.values,
+                                    selectedTypes: selectedLandLicensed,
+                                    onToggle: (type) => context.read<FilterPropertyCubit>().toggleLandLicenseStatus(type),
+                                    getIcon: _getLandLicenseStatusIcon,
+                                    getLabel: _getLandLicenseStatusLabel,
+                                    selectorWidth: 171,
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+
+                      SizedBox(
+                        height: context.scale(16),
+                      ),
+
+                      /// todo : make indecator for loading countries
+                      const CountrySelectorComponent(),
+
+                      const StateCitySelectorComponent(),
+
+                      /// todo : add aminties here
+
+                      BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
+                        buildWhen: (previous, current) =>
+                            previous.currentPropertyOperationType !=
+                            current.currentPropertyOperationType,
+                        builder: (context, state) {
+                          return Visibility(
+                            visible: state.currentPropertyOperationType.isForRent,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildSectionTitle(
+                                    'مدة الإيجار بالشهور', context),
+                                SizedBox(height: context.scale(12)),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: AppTextField(
+                                        initialValue: state.minNumberOfMonths,
+                                        height: 40,
+                                        hintText: 'الأقل',
+                                        keyboardType: TextInputType.number,
+                                        backgroundColor: Colors.white,
+                                        borderRadius: 20,
+                                        padding: EdgeInsets.zero,
+                                        onChanged: (value) {
+                                          context.read<FilterPropertyCubit>().updateMinNumberOfMonths(value);
+
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(width: context.scale(10)),
+                                    Expanded(
+                                      child: AppTextField(
+                                        initialValue: state.maxNumberOfMonths,
+                                        height: 40,
+                                        hintText: 'الأكثر',
+                                        keyboardType: TextInputType.number,
+                                        backgroundColor: Colors.white,
+                                        borderRadius: 20,
+                                        padding: EdgeInsets.zero,
+                                        onChanged: (value) {
+                                          context.read<FilterPropertyCubit>().updateMaxNumberOfMonths(value);
+
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: context.scale(20)),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+
+                      /// fields for every type
+                      BlocBuilder<FilterPropertyCubit, FilterPropertyState>(
+                        buildWhen: (previous, current) =>
+                            previous.currentPropertyType !=
+                            current.currentPropertyType,
+                        builder: (context, state) {
+                          PropertyType? currentPropertyType =
+                              state.currentPropertyType;
+                          late PropertyFields propertyFields;
+
+                          if (currentPropertyType != null) {
+                            switch (currentPropertyType) {
+                              case PropertyType.apartment:
+                                propertyFields =
+                                    ApartmentTextFields(fromFilter: true);
+                                break;
+                              case PropertyType.villa:
+                                propertyFields =
+                                    VillaTextFields(fromFilter: true);
+                                break;
+                              case PropertyType.land:
+                                propertyFields = LandTextFields(fromFilter: true);
+                                break;
+                              case PropertyType.building:
+                                propertyFields =
+                                    BuildingTextFields(fromFilter: true);
+                                break;
+                            }
+
+                            return Form(
+                              key: context.read<FilterPropertyCubit>().formKey,
+                              child: ZoomIn(
+                                duration: Duration(milliseconds: 500),
+                                key: ValueKey(currentPropertyType),
+                                child: Column(
+                                  children: [
+                                    ...propertyFields.getFields(
+                                        context,
+                                        context
+                                            .read<FilterPropertyCubit>()
+                                            .formController),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+
+                      _buildSectionTitle('السعر', context),
+                      SizedBox(height: context.scale(12)),
+                      _buildPriceRangeSlider(context),
+                      SizedBox(height: context.scale(20)),
+                      _buildSectionTitle('المساحة', context),
+                      SizedBox(height: context.scale(12)),
+                      _buildAreaRangeSlider(context),
+                      SizedBox(height: context.scale(40)),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            _buildActionButtons(context),
-          ],
-        ),
+              _buildActionButtons(context),
+            ],
+          ),
+          if(locationState.getCitiesState.isLoading || locationState.getCountriesState.isLoading || locationState.getStatesState.isLoading)
+            LoadingOverlayComponent(
+              opacity: 0,
+            )
+        ],
       ),
+    );
+      },
     );
   }
 
