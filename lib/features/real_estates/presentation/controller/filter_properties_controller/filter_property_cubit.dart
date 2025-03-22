@@ -8,6 +8,7 @@ import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/components/property_form_controller.dart';
+import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/constants/json_keys.dart';
 import '../../../../../core/constants/local_keys.dart';
 import '../../../../../core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
@@ -23,140 +24,236 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
   final PropertyFormController formController = PropertyFormController();
   final formKey = GlobalKey<FormState>();
 
-  void changePropertyOperationType(
-      PropertyOperationType propertyOperationType) {
+  void changePropertyOperationType(PropertyOperationType propertyOperationType) {
     emit(state.copyWith(currentPropertyOperationType: propertyOperationType));
   }
 
-
   void changePropertyType(PropertyType propertyType) {
-    if (state.currentPropertyType == propertyType) {
-      emit(state.copyWith(removeCurrentPropertyType: true));
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      if (state.salePropertyType == propertyType) {
+        emit(state.copyWith(removeCurrentPropertyType: true));
+      } else {
+        emit(state.copyWith(salePropertyType: propertyType));
+      }
     } else {
-      emit(state.copyWith(currentPropertyType: propertyType));
+      if (state.rentPropertyType == propertyType) {
+        emit(state.copyWith(removeCurrentPropertyType: true));
+      } else {
+        emit(state.copyWith(rentPropertyType: propertyType));
+      }
     }
   }
 
   void toggleApartmentType(ApartmentType apartmentType) {
-    List<ApartmentType> updatedTypes = List.from(state.selectedApartmentTypes);
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      List<ApartmentType> updatedTypes = List.from(state.saleApartmentTypes);
 
-    if (updatedTypes.contains(apartmentType)) {
-      updatedTypes.remove(apartmentType);
+      if (updatedTypes.contains(apartmentType)) {
+        updatedTypes.remove(apartmentType);
+      } else {
+        updatedTypes.add(apartmentType);
+      }
+
+      emit(state.copyWith(saleApartmentTypes: updatedTypes));
     } else {
-      updatedTypes.add(apartmentType);
-    }
+      List<ApartmentType> updatedTypes = List.from(state.rentApartmentTypes);
 
-    emit(state.copyWith(selectedApartmentTypes: updatedTypes));
+      if (updatedTypes.contains(apartmentType)) {
+        updatedTypes.remove(apartmentType);
+      } else {
+        updatedTypes.add(apartmentType);
+      }
+
+      emit(state.copyWith(rentApartmentTypes: updatedTypes));
+    }
   }
 
   void toggleVillaType(VillaType villaType) {
-    List<VillaType> updatedTypes = List.from(state.selectedVillaTypes);
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      List<VillaType> updatedTypes = List.from(state.saleVillaTypes);
 
-    if (updatedTypes.contains(villaType)) {
-      updatedTypes.remove(villaType);
+      if (updatedTypes.contains(villaType)) {
+        updatedTypes.remove(villaType);
+      } else {
+        updatedTypes.add(villaType);
+      }
+
+      emit(state.copyWith(saleVillaTypes: updatedTypes));
     } else {
-      updatedTypes.add(villaType);
-    }
+      List<VillaType> updatedTypes = List.from(state.rentVillaTypes);
 
-    emit(state.copyWith(selectedVillaTypes: updatedTypes));
+      if (updatedTypes.contains(villaType)) {
+        updatedTypes.remove(villaType);
+      } else {
+        updatedTypes.add(villaType);
+      }
+
+      emit(state.copyWith(rentVillaTypes: updatedTypes));
+    }
   }
 
   void toggleBuildingType(BuildingType buildingType) {
-    List<BuildingType> updatedTypes = List.from(state.selectedBuildingTypes);
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      List<BuildingType> updatedTypes = List.from(state.saleBuildingTypes);
 
-    if (updatedTypes.contains(buildingType)) {
-      updatedTypes.remove(buildingType);
+      if (updatedTypes.contains(buildingType)) {
+        updatedTypes.remove(buildingType);
+      } else {
+        updatedTypes.add(buildingType);
+      }
+
+      emit(state.copyWith(saleBuildingTypes: updatedTypes));
     } else {
-      updatedTypes.add(buildingType);
-    }
+      List<BuildingType> updatedTypes = List.from(state.rentBuildingTypes);
 
-    emit(state.copyWith(selectedBuildingTypes: updatedTypes));
+      if (updatedTypes.contains(buildingType)) {
+        updatedTypes.remove(buildingType);
+      } else {
+        updatedTypes.add(buildingType);
+      }
+
+      emit(state.copyWith(rentBuildingTypes: updatedTypes));
+    }
   }
 
   void toggleLandType(LandType landType) {
-    List<LandType> updatedTypes = List.from(state.selectedLandTypes);
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      List<LandType> updatedTypes = List.from(state.saleLandTypes);
 
-    if (updatedTypes.contains(landType)) {
-      updatedTypes.remove(landType);
+      if (updatedTypes.contains(landType)) {
+        updatedTypes.remove(landType);
+      } else {
+        updatedTypes.add(landType);
+      }
+
+      emit(state.copyWith(saleLandTypes: updatedTypes));
     } else {
-      updatedTypes.add(landType);
-    }
+      List<LandType> updatedTypes = List.from(state.rentLandTypes);
 
-    emit(state.copyWith(selectedLandTypes: updatedTypes));
+      if (updatedTypes.contains(landType)) {
+        updatedTypes.remove(landType);
+      } else {
+        updatedTypes.add(landType);
+      }
+
+      emit(state.copyWith(rentLandTypes: updatedTypes));
+    }
   }
 
   void changeAvailabilityForRenewal() {
-    emit(state.copyWith(availableForRenewal: !state.availableForRenewal));
+    emit(state.copyWith(rentAvailableForRenewal: !state.rentAvailableForRenewal));
   }
 
   void toggleFurnishingStatus(FurnishingStatus furnishingStatus) {
-    List<FurnishingStatus> updatedStatuses = List.from(
-        state.selectedFurnishingStatuses);
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      List<FurnishingStatus> updatedStatuses = List.from(state.saleFurnishingStatuses);
 
-    if (updatedStatuses.contains(furnishingStatus)) {
-      updatedStatuses.remove(furnishingStatus);
+      if (updatedStatuses.contains(furnishingStatus)) {
+        updatedStatuses.remove(furnishingStatus);
+      } else {
+        updatedStatuses.add(furnishingStatus);
+      }
+
+      emit(state.copyWith(saleFurnishingStatuses: updatedStatuses));
     } else {
-      updatedStatuses.add(furnishingStatus);
-    }
+      List<FurnishingStatus> updatedStatuses = List.from(state.rentFurnishingStatuses);
 
-    emit(state.copyWith(selectedFurnishingStatuses: updatedStatuses));
+      if (updatedStatuses.contains(furnishingStatus)) {
+        updatedStatuses.remove(furnishingStatus);
+      } else {
+        updatedStatuses.add(furnishingStatus);
+      }
+
+      emit(state.copyWith(rentFurnishingStatuses: updatedStatuses));
+    }
   }
 
   void updatePriceRange(double min, double max) {
-    emit(state.copyWith(
-      minPriceValue: min.toString(),
-      maxPriceValue: max.toString(),
-    ));
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      emit(state.copyWith(
+        saleMinPriceValue: min.toString(),
+        saleMaxPriceValue: max.toString(),
+      ));
+    } else {
+      emit(state.copyWith(
+        rentMinPriceValue: min.toString(),
+        rentMaxPriceValue: max.toString(),
+      ));
+    }
   }
 
   void updateAreaRange(double min, double max) {
-    emit(state.copyWith(
-      minAreaValue: min.toString(),
-      maxAreaValue: max.toString(),
-    ));
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      emit(state.copyWith(
+        saleMinAreaValue: min.toString(),
+        saleMaxAreaValue: max.toString(),
+      ));
+    } else {
+      emit(state.copyWith(
+        rentMinAreaValue: min.toString(),
+        rentMaxAreaValue: max.toString(),
+      ));
+    }
   }
 
-
   void updateMinNumberOfMonths(String value) {
-    emit(state.copyWith(minNumberOfMonths: value));
+    emit(state.copyWith(rentMinNumberOfMonths: value));
   }
 
   void updateMaxNumberOfMonths(String value) {
-    emit(state.copyWith(maxNumberOfMonths: value));
+    emit(state.copyWith(rentMaxNumberOfMonths: value));
   }
 
   void toggleLandLicenseStatus(LandLicenseStatus licenseStatus) {
-    final updatedStatuses = List<LandLicenseStatus>.from(
-        state.selectedLandLicenseStatuses);
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      final updatedStatuses = List<LandLicenseStatus>.from(state.saleLandLicenseStatuses);
 
-    if (updatedStatuses.contains(licenseStatus)) {
-      updatedStatuses.remove(licenseStatus);
+      if (updatedStatuses.contains(licenseStatus)) {
+        updatedStatuses.remove(licenseStatus);
+      } else {
+        updatedStatuses.add(licenseStatus);
+      }
+
+      emit(state.copyWith(saleLandLicenseStatuses: updatedStatuses));
     } else {
-      updatedStatuses.add(licenseStatus);
+      final updatedStatuses = List<LandLicenseStatus>.from(state.rentLandLicenseStatuses);
+
+      if (updatedStatuses.contains(licenseStatus)) {
+        updatedStatuses.remove(licenseStatus);
+      } else {
+        updatedStatuses.add(licenseStatus);
+      }
+
+      emit(state.copyWith(rentLandLicenseStatuses: updatedStatuses));
     }
-
-    emit(state.copyWith(selectedLandLicenseStatuses: updatedStatuses));
   }
-
 
   Map<String, dynamic> prepareDataForApi() {
     final locationCubit = SelectLocationServiceCubit.getOrCreate();
     final formController = this.formController;
+    final isForSale = state.currentPropertyOperationType == PropertyOperationType.forSale;
+
+    // Get the correct property type and filters based on operation type
+    final propertyType = isForSale ? state.salePropertyType : state.rentPropertyType;
+    final minPriceValue = isForSale ? state.saleMinPriceValue : state.rentMinPriceValue;
+    final maxPriceValue = isForSale ? state.saleMaxPriceValue : state.rentMaxPriceValue;
+    final minAreaValue = isForSale ? state.saleMinAreaValue : state.rentMinAreaValue;
+    final maxAreaValue = isForSale ? state.saleMaxAreaValue : state.rentMaxAreaValue;
+    final furnishingStatuses = isForSale ? state.saleFurnishingStatuses : state.rentFurnishingStatuses;
+    final landLicenseStatuses = isForSale ? state.saleLandLicenseStatuses : state.rentLandLicenseStatuses;
 
     final Map<String, dynamic> data = {
-      JsonKeys.operation : state.currentPropertyOperationType.isForSale
-          ? 'for_sale'
-          : 'for_rent',
-      JsonKeys.priceMin: state.minPriceValue,
-      JsonKeys.priceMax: state.maxPriceValue,
-      JsonKeys.areaMin : state.minAreaValue,
-      JsonKeys.areaMax: state.maxAreaValue,
+      JsonKeys.operation: isForSale ? 'for_sale' : 'for_rent',
+      JsonKeys.priceMin: minPriceValue,
+      JsonKeys.priceMax: maxPriceValue,
+      JsonKeys.areaMin: minAreaValue,
+      JsonKeys.areaMax: maxAreaValue,
     };
 
     // Add monthly rent period if operation is for rent
-    if (state.currentPropertyOperationType.isForRent) {
-      data[JsonKeys.monthlyRentPeriodMin] = state.minNumberOfMonths;
-      data[JsonKeys.monthlyRentPeriodMax] = state.maxNumberOfMonths;
+    if (!isForSale) {
+      data[JsonKeys.monthlyRentPeriodMin] = state.rentMinNumberOfMonths;
+      data[JsonKeys.monthlyRentPeriodMax] = state.rentMaxNumberOfMonths;
     }
 
     // Add location data if selected
@@ -171,23 +268,22 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
     }
 
     // Add property type if selected
-    if (state.currentPropertyType != null) {
-      data[JsonKeys.propertyTypeName] = state.currentPropertyType?.toEnglish;
+    if (propertyType != null) {
+      data[JsonKeys.propertyTypeName] = propertyType.toEnglish;
     }
 
     // Add property-specific filters
-    if (state.currentPropertyType == PropertyType.apartment) {
+    if (propertyType == PropertyType.apartment) {
       data['apartment_rooms'] =
           formController.getController(LocalKeys.apartmentRoomsController).text;
       data['apartment_bath_rooms'] =
           formController.getController(LocalKeys.apartmentBathRoomsController).text;
 
-
-      if(state.selectedFurnishingStatuses.length == 1){
-        bool isFurnished = state.selectedFurnishingStatuses.contains(FurnishingStatus.furnished);
+      if (furnishingStatuses.length == 1) {
+        bool isFurnished = furnishingStatuses.contains(FurnishingStatus.furnished);
         data['apartment_is_furnitured'] = isFurnished;
       }
-    } else if (state.currentPropertyType == PropertyType.villa) {
+    } else if (propertyType == PropertyType.villa) {
       data['villa_rooms'] =
           formController.getController(LocalKeys.villaRoomsController).text;
       data['villa_bath_rooms'] =
@@ -195,47 +291,56 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
       data['villa_number_of_floors'] =
           formController.getController(LocalKeys.villaFloorsController).text;
 
-      if(state.selectedFurnishingStatuses.length == 1){
-        bool isFurnished = state.selectedFurnishingStatuses.contains(FurnishingStatus.furnished);
+      if (furnishingStatuses.length == 1) {
+        bool isFurnished = furnishingStatuses.contains(FurnishingStatus.furnished);
         data['villa_is_furnitured'] = isFurnished;
       }
-    } else if (state.currentPropertyType == PropertyType.building) {
+    } else if (propertyType == PropertyType.building) {
       data['building_number_of_floors'] =
           formController.getController(LocalKeys.buildingFloorsController).text;
       data['number_of_apartments'] =
           formController.getController(LocalKeys.buildingApartmentsPerFloorController).text;
-    } else if (state.currentPropertyType == PropertyType.land) {
-      if (state.selectedLandLicenseStatuses.length == 1) {
-        data[JsonKeys.isLicensed] = state.selectedLandLicenseStatuses.contains(LandLicenseStatus.licensed);
+    } else if (propertyType == PropertyType.land) {
+      if (landLicenseStatuses.length == 1) {
+        data[JsonKeys.isLicensed] = landLicenseStatuses.contains(LandLicenseStatus.licensed);
       }
-    }
-    else {
-      // for villa and apartment
-      if(state.selectedFurnishingStatuses.isNotEmpty){
-        if(state.selectedFurnishingStatuses.length !=2){
-          bool isFurnished = state.selectedFurnishingStatuses.contains(FurnishingStatus.furnished);
+    } else {
+      // For villa and apartment (when property type is not specified)
+      if (furnishingStatuses.isNotEmpty) {
+        if (furnishingStatuses.length != 2) {
+          bool isFurnished = furnishingStatuses.contains(FurnishingStatus.furnished);
           data[JsonKeys.isFurnitured] = isFurnished;
         }
       }
     }
 
-
-
     // Add selected sub-types
-    if (state.selectedApartmentTypes.isNotEmpty && state.currentPropertyType == PropertyType.apartment) {
-      data[JsonKeys.propertySubType] = state.selectedApartmentTypes.map((type) => type.toId).join(',');
-    }
-
-    if (state.selectedVillaTypes.isNotEmpty && state.currentPropertyType == PropertyType.villa) {
-      data[JsonKeys.propertySubType] = state.selectedVillaTypes.map((type) => type.toId).join(',');
-    }
-
-    if (state.selectedBuildingTypes.isNotEmpty && state.currentPropertyType == PropertyType.building) {
-      data[JsonKeys.propertySubType] = state.selectedBuildingTypes.map((type) => type.toId).join(',');
-    }
-
-    if (state.selectedLandTypes.isNotEmpty && state.currentPropertyType == PropertyType.land) {
-      data[JsonKeys.propertySubType] = state.selectedLandTypes.map((type) => type.toId).join(',');
+    if (isForSale) {
+      if (state.saleApartmentTypes.isNotEmpty && propertyType == PropertyType.apartment) {
+        data[JsonKeys.propertySubType] = state.saleApartmentTypes.map((type) => type.toId).join(',');
+      }
+      if (state.saleVillaTypes.isNotEmpty && propertyType == PropertyType.villa) {
+        data[JsonKeys.propertySubType] = state.saleVillaTypes.map((type) => type.toId).join(',');
+      }
+      if (state.saleBuildingTypes.isNotEmpty && propertyType == PropertyType.building) {
+        data[JsonKeys.propertySubType] = state.saleBuildingTypes.map((type) => type.toId).join(',');
+      }
+      if (state.saleLandTypes.isNotEmpty && propertyType == PropertyType.land) {
+        data[JsonKeys.propertySubType] = state.saleLandTypes.map((type) => type.toId).join(',');
+      }
+    } else {
+      if (state.rentApartmentTypes.isNotEmpty && propertyType == PropertyType.apartment) {
+        data[JsonKeys.propertySubType] = state.rentApartmentTypes.map((type) => type.toId).join(',');
+      }
+      if (state.rentVillaTypes.isNotEmpty && propertyType == PropertyType.villa) {
+        data[JsonKeys.propertySubType] = state.rentVillaTypes.map((type) => type.toId).join(',');
+      }
+      if (state.rentBuildingTypes.isNotEmpty && propertyType == PropertyType.building) {
+        data[JsonKeys.propertySubType] = state.rentBuildingTypes.map((type) => type.toId).join(',');
+      }
+      if (state.rentLandTypes.isNotEmpty && propertyType == PropertyType.land) {
+        data[JsonKeys.propertySubType] = state.rentLandTypes.map((type) => type.toId).join(',');
+      }
     }
 
     // Remove null or empty values
@@ -245,11 +350,47 @@ class FilterPropertyCubit extends Cubit<FilterPropertyState> {
     return data;
   }
 
+  void resetFilters() {
+    ServiceLocator.getIt<SelectLocationServiceCubit>().removeSelectedData();
 
-
-    void resetFilters() {
-      ServiceLocator.getIt<SelectLocationServiceCubit>().removeSelectedData();
-      emit(FilterPropertyState());
+    // Only reset the current tab's filters
+    if (state.currentPropertyOperationType == PropertyOperationType.forSale) {
+      emit(state.copyWith(
+        salePropertyType: null,
+        saleApartmentTypes: [],
+        saleVillaTypes: [],
+        saleBuildingTypes: [],
+        saleLandTypes: [],
+        saleFurnishingStatuses: [],
+        saleLandLicenseStatuses: [],
+        saleMinPriceValue: AppConstants.minPrice,
+        saleMaxPriceValue: AppConstants.maxArea,
+        saleMinAreaValue: AppConstants.minArea,
+        saleMaxAreaValue: AppConstants.maxArea,
+      ));
+    } else {
+      emit(state.copyWith(
+        rentPropertyType: null,
+        rentApartmentTypes: [],
+        rentVillaTypes: [],
+        rentBuildingTypes: [],
+        rentLandTypes: [],
+        rentFurnishingStatuses: [],
+        rentLandLicenseStatuses: [],
+        rentMinPriceValue: AppConstants.minPrice,
+        rentMaxPriceValue: AppConstants.maxPrice,
+        rentMinAreaValue: AppConstants.minArea,
+        rentMaxAreaValue: AppConstants.maxArea,
+        rentMinNumberOfMonths: AppConstants.minNumberOfMonths,
+        rentMaxNumberOfMonths: AppConstants.maxNumberOfMonths,
+        rentAvailableForRenewal: false,
+      ));
     }
   }
 
+  // Add a method to reset all filters (both tabs)
+  void resetAllFilters() {
+    ServiceLocator.getIt<SelectLocationServiceCubit>().removeSelectedData();
+    emit(FilterPropertyState());
+  }
+}

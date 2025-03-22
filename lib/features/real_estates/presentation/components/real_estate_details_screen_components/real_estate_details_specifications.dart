@@ -130,7 +130,7 @@ import '../../../../../configuration/managers/color_manager.dart';
         ];
       } else if (land != null) {
         return [
-          {'icon': AppAssets.landIcon, 'text': PropertyType.building.toName},
+          {'icon': AppAssets.landIcon, 'text': PropertyType.land.toName},
           {'icon': AppAssets.independentPropertyIcon, 'text': getLandType(land.propertySubType).toName},
           {'icon': AppAssets.areaIcon, 'text': land.area.toString()},
           {'icon': AppAssets.forSellIcon, 'text': land.operation == 'for_rent' ? 'للايجار' : 'للبيع'},

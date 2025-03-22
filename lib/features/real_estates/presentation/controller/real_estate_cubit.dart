@@ -21,16 +21,14 @@ class RealEstateCubit extends Cubit<RealEstateState> {
       : super(const RealEstateState());
 
   void clearPropertyList(PropertyOperationType operationType) {
-
-    if(operationType == PropertyOperationType.forSale) {
+    if (operationType == PropertyOperationType.forSale) {
       emit(state.copyWith(
         saleProperties: [],
         saleOffset: 0,
         hasMoreSaleProperties: true,
         saleTabLoaded: false,
       ));
-    }
-    else {
+    } else {
       emit(state.copyWith(
         rentProperties: [],
         rentOffset: 0,
@@ -41,7 +39,6 @@ class RealEstateCubit extends Cubit<RealEstateState> {
   }
 
   void removePropertyById(String propertyId) {
-
     final saleIndex = state.saleProperties.indexWhere(
           (property) => property.id.toString() == propertyId,
     );
@@ -71,15 +68,15 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     if (refresh) {
       if (operationType == PropertyOperationType.forSale) {
         emit(state.copyWith(
-            getPropertiesSaleState: RequestState.loading,
-            saleOffset: 0,
-            hasMoreSaleProperties: true
+          getPropertiesSaleState: RequestState.loading,
+          saleOffset: 0,
+          hasMoreSaleProperties: true,
         ));
       } else {
         emit(state.copyWith(
-            getPropertiesRentState: RequestState.loading,
-            rentOffset: 0,
-            hasMoreRentProperties: true
+          getPropertiesRentState: RequestState.loading,
+          rentOffset: 0,
+          hasMoreRentProperties: true,
         ));
       }
     } else {
@@ -254,16 +251,17 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     ));
   }
 
-  void loadMoreProperties(PropertyOperationType operationType ,
+  void loadMoreProperties(PropertyOperationType operationType,
       {Map<String, dynamic>? filters}) {
-    fetchProperties(operationType: operationType , filters: filters);
+    fetchProperties(operationType: operationType, filters: filters);
   }
 
-  void loadTabData(PropertyOperationType operationType) {
+  void loadTabData(PropertyOperationType operationType,
+      {Map<String, dynamic>? filters}) {
     if (operationType == PropertyOperationType.forSale && !state.saleTabLoaded) {
-      fetchProperties(operationType: operationType, refresh: true);
+      fetchProperties(operationType: operationType, filters: filters, refresh: true);
     } else if (operationType == PropertyOperationType.forRent && !state.rentTabLoaded) {
-      fetchProperties(operationType: operationType, refresh: true);
+      fetchProperties(operationType: operationType, filters: filters, refresh: true);
     }
   }
 }

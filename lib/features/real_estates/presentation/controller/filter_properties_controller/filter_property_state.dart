@@ -1,99 +1,234 @@
 part of 'filter_property_cubit.dart';
 
 class FilterPropertyState extends Equatable {
+   final PropertyOperationType currentPropertyOperationType;
+
+  // For Sale tab filters
+  final PropertyType? salePropertyType;
+  final List<ApartmentType> saleApartmentTypes;
+  final List<VillaType> saleVillaTypes;
+  final List<BuildingType> saleBuildingTypes;
+  final List<LandType> saleLandTypes;
+  final List<FurnishingStatus> saleFurnishingStatuses;
+  final List<LandLicenseStatus> saleLandLicenseStatuses;
+  final String saleMinPriceValue;
+  final String saleMaxPriceValue;
+  final String saleMinAreaValue;
+  final String saleMaxAreaValue;
+
+  // For Rent tab filters
+  final PropertyType? rentPropertyType;
+  final List<ApartmentType> rentApartmentTypes;
+  final List<VillaType> rentVillaTypes;
+  final List<BuildingType> rentBuildingTypes;
+  final List<LandType> rentLandTypes;
+  final List<FurnishingStatus> rentFurnishingStatuses;
+  final List<LandLicenseStatus> rentLandLicenseStatuses;
+  final String rentMinPriceValue;
+  final String rentMaxPriceValue;
+  final String rentMinAreaValue;
+  final String rentMaxAreaValue;
+  final String rentMinNumberOfMonths;
+  final String rentMaxNumberOfMonths;
+  final bool rentAvailableForRenewal;
+
   const FilterPropertyState({
     this.currentPropertyOperationType = PropertyOperationType.forSale,
-    this.currentPropertyType,
-    this.selectedApartmentTypes = const [],
-    this.selectedVillaTypes = const [],
-    this.selectedBuildingTypes = const [],
-    this.selectedLandTypes = const [],
-    this.availableForRenewal = true,
-    this.selectedFurnishingStatuses = const [],
-    this.minPriceValue = '0',
-    this.maxPriceValue = '1000000',
-    this.minAreaValue = '0',
-    this.maxAreaValue = '1000',
-    this.minNumberOfMonths = '0',
-    this.maxNumberOfMonths = '12',
-    this.selectedLandLicenseStatuses = const [],
+
+    // For Sale tab
+    this.salePropertyType,
+    this.saleApartmentTypes = const [],
+    this.saleVillaTypes = const [],
+    this.saleBuildingTypes = const [],
+    this.saleLandTypes = const [],
+    this.saleFurnishingStatuses = const [],
+    this.saleLandLicenseStatuses = const [],
+    this.saleMinPriceValue = '0',
+    this.saleMaxPriceValue = '1000000000',
+    this.saleMinAreaValue = '0',
+    this.saleMaxAreaValue = '1000000',
+
+    // For Rent tab
+    this.rentPropertyType,
+    this.rentApartmentTypes = const [],
+    this.rentVillaTypes = const [],
+    this.rentBuildingTypes = const [],
+    this.rentLandTypes = const [],
+    this.rentFurnishingStatuses = const [],
+    this.rentLandLicenseStatuses = const [],
+    this.rentMinPriceValue = '0',
+    this.rentMaxPriceValue = '1000000000',
+    this.rentMinAreaValue = '0',
+    this.rentMaxAreaValue = '1000000',
+    this.rentMinNumberOfMonths = '0',
+    this.rentMaxNumberOfMonths = '100',
+    this.rentAvailableForRenewal = false,
   });
 
-  final PropertyOperationType currentPropertyOperationType;
-  final PropertyType? currentPropertyType;
+  // Helper getters to access the current tab's filters
+  PropertyType? get currentPropertyType =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? salePropertyType
+          : rentPropertyType;
 
-  /// Lists of selected sub types
-  final List<ApartmentType> selectedApartmentTypes;
-  final List<VillaType> selectedVillaTypes;
-  final List<BuildingType> selectedBuildingTypes;
-  final List<LandType> selectedLandTypes;
+  List<ApartmentType> get selectedApartmentTypes =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleApartmentTypes
+          : rentApartmentTypes;
 
-  final bool availableForRenewal;
-  final String minNumberOfMonths, maxNumberOfMonths;
-  final List<FurnishingStatus> selectedFurnishingStatuses;
+  List<VillaType> get selectedVillaTypes =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleVillaTypes
+          : rentVillaTypes;
 
-  final String minPriceValue, maxPriceValue;
-  final String minAreaValue, maxAreaValue;
+  List<BuildingType> get selectedBuildingTypes =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleBuildingTypes
+          : rentBuildingTypes;
 
-  final List<LandLicenseStatus> selectedLandLicenseStatuses; // New property
+  List<LandType> get selectedLandTypes =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleLandTypes
+          : rentLandTypes;
+
+  List<FurnishingStatus> get selectedFurnishingStatuses =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleFurnishingStatuses
+          : rentFurnishingStatuses;
+
+  List<LandLicenseStatus> get selectedLandLicenseStatuses =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleLandLicenseStatuses
+          : rentLandLicenseStatuses;
+
+  String get minPriceValue =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleMinPriceValue
+          : rentMinPriceValue;
+
+  String get maxPriceValue =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleMaxPriceValue
+          : rentMaxPriceValue;
+
+  String get minAreaValue =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleMinAreaValue
+          : rentMinAreaValue;
+
+  String get maxAreaValue =>
+      currentPropertyOperationType == PropertyOperationType.forSale
+          ? saleMaxAreaValue
+          : rentMaxAreaValue;
+
+  bool get availableForRenewal => rentAvailableForRenewal;
+
+  String get minNumberOfMonths => rentMinNumberOfMonths;
+
+  String get maxNumberOfMonths => rentMaxNumberOfMonths;
 
   FilterPropertyState copyWith({
     PropertyOperationType? currentPropertyOperationType,
-    PropertyType? currentPropertyType,
+
+    // For Sale tab
+    PropertyType? salePropertyType,
+    List<ApartmentType>? saleApartmentTypes,
+    List<VillaType>? saleVillaTypes,
+    List<BuildingType>? saleBuildingTypes,
+    List<LandType>? saleLandTypes,
+    List<FurnishingStatus>? saleFurnishingStatuses,
+    List<LandLicenseStatus>? saleLandLicenseStatuses,
+    String? saleMinPriceValue,
+    String? saleMaxPriceValue,
+    String? saleMinAreaValue,
+    String? saleMaxAreaValue,
+
+    // For Rent tab
+    PropertyType? rentPropertyType,
+    List<ApartmentType>? rentApartmentTypes,
+    List<VillaType>? rentVillaTypes,
+    List<BuildingType>? rentBuildingTypes,
+    List<LandType>? rentLandTypes,
+    List<FurnishingStatus>? rentFurnishingStatuses,
+    List<LandLicenseStatus>? rentLandLicenseStatuses,
+    String? rentMinPriceValue,
+    String? rentMaxPriceValue,
+    String? rentMinAreaValue,
+    String? rentMaxAreaValue,
+    String? rentMinNumberOfMonths,
+    String? rentMaxNumberOfMonths,
+    bool? rentAvailableForRenewal,
+
+    // Special flags
     bool? removeCurrentPropertyType,
-    List<ApartmentType>? selectedApartmentTypes,
-    List<VillaType>? selectedVillaTypes,
-    List<BuildingType>? selectedBuildingTypes,
-    List<LandType>? selectedLandTypes,
-    bool? availableForRenewal,
-    List<FurnishingStatus>? selectedFurnishingStatuses,
-    String? minPriceValue,
-    String? maxPriceValue,
-    String? minAreaValue,
-    String? maxAreaValue,
-    String? minNumberOfMonths,
-    String? maxNumberOfMonths,
-    List<LandLicenseStatus>? selectedLandLicenseStatuses, // Updated property
   }) {
     return FilterPropertyState(
-      currentPropertyOperationType:
-      currentPropertyOperationType ?? this.currentPropertyOperationType,
-      currentPropertyType: removeCurrentPropertyType == true
-          ? null
-          : currentPropertyType ?? this.currentPropertyType,
-      selectedApartmentTypes: selectedApartmentTypes ?? this.selectedApartmentTypes,
-      selectedVillaTypes: selectedVillaTypes ?? this.selectedVillaTypes,
-      selectedBuildingTypes: selectedBuildingTypes ?? this.selectedBuildingTypes,
-      selectedLandTypes: selectedLandTypes ?? this.selectedLandTypes,
-      availableForRenewal: availableForRenewal ?? this.availableForRenewal,
-      selectedFurnishingStatuses:
-      selectedFurnishingStatuses ?? this.selectedFurnishingStatuses,
-      minPriceValue: minPriceValue ?? this.minPriceValue,
-      maxPriceValue: maxPriceValue ?? this.maxPriceValue,
-      minAreaValue: minAreaValue ?? this.minAreaValue,
-      maxAreaValue: maxAreaValue ?? this.maxAreaValue,
-      minNumberOfMonths: minNumberOfMonths ?? this.minNumberOfMonths,
-      maxNumberOfMonths: maxNumberOfMonths ?? this.maxNumberOfMonths,
-      selectedLandLicenseStatuses: selectedLandLicenseStatuses ?? this.selectedLandLicenseStatuses, // Updated property
+      currentPropertyOperationType: currentPropertyOperationType ?? this.currentPropertyOperationType,
+
+      // For Sale tab
+      salePropertyType: removeCurrentPropertyType == true ?
+      null : (salePropertyType ?? this.salePropertyType),
+      saleApartmentTypes: saleApartmentTypes ?? this.saleApartmentTypes,
+      saleVillaTypes: saleVillaTypes ?? this.saleVillaTypes,
+      saleBuildingTypes: saleBuildingTypes ?? this.saleBuildingTypes,
+      saleLandTypes: saleLandTypes ?? this.saleLandTypes,
+      saleFurnishingStatuses: saleFurnishingStatuses ?? this.saleFurnishingStatuses,
+      saleLandLicenseStatuses: saleLandLicenseStatuses ?? this.saleLandLicenseStatuses,
+      saleMinPriceValue: saleMinPriceValue ?? this.saleMinPriceValue,
+      saleMaxPriceValue: saleMaxPriceValue ?? this.saleMaxPriceValue,
+      saleMinAreaValue: saleMinAreaValue ?? this.saleMinAreaValue,
+      saleMaxAreaValue: saleMaxAreaValue ?? this.saleMaxAreaValue,
+
+      // For Rent tab
+      rentPropertyType: removeCurrentPropertyType == true  ?
+      null : (rentPropertyType ?? this.rentPropertyType),
+      rentApartmentTypes: rentApartmentTypes ?? this.rentApartmentTypes,
+      rentVillaTypes: rentVillaTypes ?? this.rentVillaTypes,
+      rentBuildingTypes: rentBuildingTypes ?? this.rentBuildingTypes,
+      rentLandTypes: rentLandTypes ?? this.rentLandTypes,
+      rentFurnishingStatuses: rentFurnishingStatuses ?? this.rentFurnishingStatuses,
+      rentLandLicenseStatuses: rentLandLicenseStatuses ?? this.rentLandLicenseStatuses,
+      rentMinPriceValue: rentMinPriceValue ?? this.rentMinPriceValue,
+      rentMaxPriceValue: rentMaxPriceValue ?? this.rentMaxPriceValue,
+      rentMinAreaValue: rentMinAreaValue ?? this.rentMinAreaValue,
+      rentMaxAreaValue: rentMaxAreaValue ?? this.rentMaxAreaValue,
+      rentMinNumberOfMonths: rentMinNumberOfMonths ?? this.rentMinNumberOfMonths,
+      rentMaxNumberOfMonths: rentMaxNumberOfMonths ?? this.rentMaxNumberOfMonths,
+      rentAvailableForRenewal: rentAvailableForRenewal ?? this.rentAvailableForRenewal,
     );
   }
 
   @override
   List<Object?> get props => [
     currentPropertyOperationType,
-    currentPropertyType,
-    selectedApartmentTypes,
-    selectedVillaTypes,
-    selectedBuildingTypes,
-    selectedLandTypes,
-    availableForRenewal,
-    selectedFurnishingStatuses,
-    minPriceValue,
-    maxPriceValue,
-    minAreaValue,
-    maxAreaValue,
-    minNumberOfMonths,
-    maxNumberOfMonths,
-    selectedLandLicenseStatuses,
+
+    // For Sale tab
+    salePropertyType,
+    saleApartmentTypes,
+    saleVillaTypes,
+    saleBuildingTypes,
+    saleLandTypes,
+    saleFurnishingStatuses,
+    saleLandLicenseStatuses,
+    saleMinPriceValue,
+    saleMaxPriceValue,
+    saleMinAreaValue,
+    saleMaxAreaValue,
+
+    // For Rent tab
+    rentPropertyType,
+    rentApartmentTypes,
+    rentVillaTypes,
+    rentBuildingTypes,
+    rentLandTypes,
+    rentFurnishingStatuses,
+    rentLandLicenseStatuses,
+    rentMinPriceValue,
+    rentMaxPriceValue,
+    rentMinAreaValue,
+    rentMaxAreaValue,
+    rentMinNumberOfMonths,
+    rentMaxNumberOfMonths,
+    rentAvailableForRenewal,
   ];
 }

@@ -16,6 +16,7 @@ import '../../../../core/components/custom_app_drop_down.dart';
 import '../../../../core/components/generic_form_fields.dart';
 import '../../../../core/components/multi_selector_component.dart';
 import '../../../../core/components/range_slider_with_text_fields_component.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/components/reusable_type_selector_component.dart';
@@ -417,8 +418,8 @@ class RealEstateFilterScreen extends StatelessWidget {
 
   Widget _buildPriceRangeSlider(BuildContext context) {
     return RangeSliderWithFields(
-      minValue: 0,
-      maxValue: 1000000,
+      minValue: double.parse(AppConstants.minPrice),
+      maxValue: double.parse(AppConstants.maxPrice),
       initialMinValue: double.parse(context.read<FilterPropertyCubit>().state.minPriceValue),
       initialMaxValue: double.parse(context.read<FilterPropertyCubit>().state.maxPriceValue),
       unit: 'جنية',
@@ -430,8 +431,8 @@ class RealEstateFilterScreen extends StatelessWidget {
 
   Widget _buildAreaRangeSlider(BuildContext context) {
     return RangeSliderWithFields(
-      minValue: 0,
-      maxValue: 100000,
+      minValue: double.parse(AppConstants.minArea),
+      maxValue: double.parse(AppConstants.maxArea),
       initialMinValue: double.parse(context.read<FilterPropertyCubit>().state.minAreaValue),
       initialMaxValue: double.parse(context.read<FilterPropertyCubit>().state.maxAreaValue),
       unit: 'م',

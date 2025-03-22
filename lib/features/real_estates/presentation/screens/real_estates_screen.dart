@@ -1,9 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/components/custom_bottom_sheet.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
-import 'package:enmaa/core/extensions/operation_type_property_extension.dart';
-import 'package:enmaa/core/extensions/property_operation_type_extension.dart';
 import 'package:enmaa/core/screens/error_app_screen.dart';
 import 'package:enmaa/core/services/service_locator.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/filter_properties_controller/filter_property_cubit.dart';
@@ -25,14 +22,12 @@ import '../../../../core/components/need_to_login_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/screens/property_empty_screen.dart';
-import '../../../../core/translation/locale_keys.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../main.dart';
 import '../../../home_module/presentation/components/real_state_card_component.dart';
-import '../../../home_module/presentation/components/services_list_shimmer.dart';
 import '../../../home_module/presentation/controller/home_bloc.dart';
-import '../../../main_services_layout/main_service_layout_screen.dart';
 import '../../domain/entities/base_property_entity.dart';
+import '../components/real_estate_filteration_components/active_filters_component.dart';
 
 class RealStateScreen extends StatefulWidget {
   const RealStateScreen({super.key});
@@ -50,11 +45,20 @@ class _RealStateScreenState extends State<RealStateScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+
+    final currentOperationType =
+        context.read<FilterPropertyCubit>().state.currentPropertyOperationType;
+
+    _tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: currentOperationType == PropertyOperationType.forSale ? 0 : 1,
+    );
+
     _tabController.addListener(_onTabChanged);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<RealEstateCubit>().loadTabData(PropertyOperationType.forSale);
+      context.read<RealEstateCubit>().loadTabData(currentOperationType);
     });
 
     _setupScrollControllers();
@@ -64,22 +68,22 @@ class _RealStateScreenState extends State<RealStateScreen>
     _saleScrollController.addListener(() {
       if (_saleScrollController.position.pixels >=
           _saleScrollController.position.maxScrollExtent - 200) {
-        Map<String , dynamic > ? filterData ;
-       /* if(context.read<FilterPropertyCubit>().state.currentPropertyOperationType.isForSale){
-          filterData = context.read<FilterPropertyCubit>().prepareDataForApi();
-        }*/
-        context.read<RealEstateCubit>().loadMoreProperties(PropertyOperationType.forSale ,filters: filterData);
+        final filterData = context.read<FilterPropertyCubit>().prepareDataForApi();
+        context.read<RealEstateCubit>().loadMoreProperties(
+          PropertyOperationType.forSale,
+          filters: filterData,
+        );
       }
     });
 
     _rentScrollController.addListener(() {
       if (_rentScrollController.position.pixels >=
           _rentScrollController.position.maxScrollExtent - 200) {
-        Map<String , dynamic >? filterData ;
-        /*if(context.read<FilterPropertyCubit>().state.currentPropertyOperationType.isForRent){
-          filterData = context.read<FilterPropertyCubit>().prepareDataForApi();
-        }*/
-        context.read<RealEstateCubit>().loadMoreProperties(PropertyOperationType.forRent , filters: filterData);
+        final filterData = context.read<FilterPropertyCubit>().prepareDataForApi();
+        context.read<RealEstateCubit>().loadMoreProperties(
+          PropertyOperationType.forRent,
+          filters: filterData,
+        );
       }
     });
   }
@@ -92,7 +96,8 @@ class _RealStateScreenState extends State<RealStateScreen>
             : PropertyOperationType.forRent;
 
         context.read<FilterPropertyCubit>().changePropertyOperationType(type);
-        context.read<RealEstateCubit>().loadTabData(type);
+        final filterData = context.read<FilterPropertyCubit>().prepareDataForApi();
+        context.read<RealEstateCubit>().loadTabData(type, filters: filterData);
       });
     }
   }
@@ -156,11 +161,10 @@ class _RealStateScreenState extends State<RealStateScreen>
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 width: context.scale(111),
                 onTap: () {
-                  if(isAuth) {
+                  if (isAuth) {
                     Navigator.of(context, rootNavigator: true)
                         .pushNamed(RoutersNames.addNewRealEstateScreen);
-                  }
-                  else {
+                  } else {
                     needToLoginSnackBar();
                   }
                 },
@@ -183,6 +187,7 @@ class _RealStateScreenState extends State<RealStateScreen>
               ),
             ],
           ),
+          ActiveFiltersComponent(),
           TabBar(
             padding: EdgeInsets.symmetric(
               horizontal: context.scale(8),
@@ -290,8 +295,10 @@ class _RealStateScreenState extends State<RealStateScreen>
 
     return RefreshIndicator(
       onRefresh: () async {
+        final filterData = context.read<FilterPropertyCubit>().prepareDataForApi();
         await context.read<RealEstateCubit>().fetchProperties(
           operationType: type,
+          filters: filterData,
           refresh: true,
         );
       },
