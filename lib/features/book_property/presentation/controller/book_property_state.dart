@@ -21,9 +21,7 @@ class BookPropertyState extends Equatable {
   final String userName;
   final String userID;
 
-  final TextEditingController phoneNumberController;
-  final TextEditingController nameController;
-  final TextEditingController iDNumberController;
+
 
   final bool showBirthDatePicker;
   final DateTime? birthDate;
@@ -56,9 +54,7 @@ class BookPropertyState extends Equatable {
     this.showIDExpirationDatePicker = false,
     this.idExpirationDate,
     this.currentPaymentMethod = 'بطاقة الائتمان',
-  })  : phoneNumberController = phoneNumberController ?? TextEditingController(text: '+20'),
-        nameController = nameController ?? TextEditingController(),
-        iDNumberController = iDNumberController ?? TextEditingController();
+  });
 
   BookPropertyState copyWith({
     List<File>? selectedImages,
