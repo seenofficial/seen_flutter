@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/filter_properties_controller/filter_property_cubit.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,12 +31,16 @@ import 'features/wish_list/domain/use_cases/get_properties_wish_list_use_case.da
 import 'features/wish_list/domain/use_cases/remove_property_from_wish_list_use_case.dart';
 import 'features/wish_list/presentation/controller/wish_list_cubit.dart';
 import 'features/wish_list/wish_list_DI.dart';
+import 'firebase_options.dart';
 
 bool isAuth = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Future.wait([
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    ),
     EasyLocalization.ensureInitialized(),
     setupServiceLocator(),
     SystemChrome.setPreferredOrientations(
@@ -52,8 +57,8 @@ void main() async {
   await SharedPreferencesService().init();
 
   final prefs = await SharedPreferences.getInstance();
-  var  token =  prefs.get('access_token');
-  if(token != null){
+  var token = prefs.get('access_token');
+  if (token != null) {
     isAuth = true;
   }
 
@@ -81,8 +86,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key , required this.initialRoute});
-  final String initialRoute ;
+  const MyApp({super.key, required this.initialRoute});
+  final String initialRoute;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -93,16 +98,17 @@ class MyApp extends StatelessWidget {
             create: (context) => FilterPropertyCubit(),
           ),
           BlocProvider(
-            create: (context) => SelectLocationServiceCubit.getOrCreate()..getCountries(),
+            create: (context) =>
+                SelectLocationServiceCubit.getOrCreate()..getCountries(),
           ),
           BlocProvider(
-            create: (context){
+            create: (context) {
               UserAppointmentsDi().setup();
               return UserAppointmentsCubit(
                 ServiceLocator.getIt(),
                 ServiceLocator.getIt(),
                 ServiceLocator.getIt(),
-              ) ;
+              );
             },
           ),
           BlocProvider(

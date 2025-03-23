@@ -40,7 +40,7 @@ class LoginFormFields extends StatelessWidget {
           validator: validatePassword,
         ),
         SizedBox(height: context.scale(12)),
-        _ForgotPasswordText(),
+        //_ForgotPasswordText(),
       ],
     );
   }
