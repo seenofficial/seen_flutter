@@ -14,11 +14,13 @@ class EmptyScreen extends StatelessWidget {
     required this.alertText2,
     this.buttonText,
     this.onTap,
+    this.showActionButtonIcon = true ,
   });
 
   final String alertText1, alertText2;
   final String? buttonText;
   final Function? onTap;
+  final bool showActionButtonIcon ;
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +76,14 @@ class EmptyScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgImageComponent(
-                            iconPath: AppAssets.phoneCallIcon,
-                            color: ColorManager.whiteColor,
-                            width: 16,
-                            height: 16,
+                          Visibility(
+                            visible: showActionButtonIcon,
+                            child: SvgImageComponent(
+                              iconPath: AppAssets.phoneCallIcon,
+                              color: ColorManager.whiteColor,
+                              width: 16,
+                              height: 16,
+                            ),
                           ),
                           SizedBox(width: context.scale(8)),
                           if (buttonText != null)

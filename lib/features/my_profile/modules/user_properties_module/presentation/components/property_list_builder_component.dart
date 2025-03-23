@@ -12,6 +12,7 @@ import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/home_module/presentation/components/real_state_card_component.dart';
 
 
+import '../../../../../../configuration/routers/route_names.dart';
 import 'my_properties_card_actions.dart';
 
 class UserPropertiesListBuilderComponent extends StatelessWidget {
@@ -48,7 +49,7 @@ class UserPropertiesListBuilderComponent extends StatelessWidget {
 
           if (requestState.isError && properties.isEmpty) {
             return ErrorAppScreen(
-              showActionButton: true,
+              showActionButton: false,
               showBackButton: false,
               backgroundColor: Colors.grey.shade100,
             );
@@ -61,8 +62,9 @@ class UserPropertiesListBuilderComponent extends StatelessWidget {
               alertText1: 'لا توجد عقارات ${status.name}',
               alertText2: 'يمكنك إضافة عقاراتك للبدء في عرضها للحجز',
               buttonText: 'إضافة عقار جديد',
+              showActionButtonIcon: false,
               onTap: () {
-                Navigator.pushNamed(context, 'addPropertyScreen');
+                Navigator.pushNamed(context, RoutersNames.addNewRealEstateScreen);
               },
             );
           }

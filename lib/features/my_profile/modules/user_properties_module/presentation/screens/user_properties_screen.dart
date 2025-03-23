@@ -110,7 +110,7 @@ class _MyPropertiesScreenState extends State<MyPropertiesScreen> with TickerProv
                   },
                 ),
               ),
-              SizedBox(width: 8), // Add spacing between the tab bar and button
+              SizedBox(width: 8),
               ButtonAppComponent(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 width: context.scale(117),
@@ -125,7 +125,7 @@ class _MyPropertiesScreenState extends State<MyPropertiesScreen> with TickerProv
 
                 },
                 buttonContent: Row(
-                  mainAxisSize: MainAxisSize.min, // Prevents taking infinite width
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgImageComponent(
