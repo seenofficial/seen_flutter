@@ -7,6 +7,7 @@ import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/services/shared_preferences_service.dart';
 import '../../../../main.dart';
 import '../../../home_module/home_imports.dart';
 
@@ -31,6 +32,7 @@ class LogOutAndContactUsWidget extends StatelessWidget {
               final prefs = await SharedPreferences.getInstance();
               isAuth = false;
               prefs.clear();
+              SharedPreferencesService().setFirstLaunch(false);
               Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
             },
             child: Row(

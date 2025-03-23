@@ -20,7 +20,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'configuration/managers/color_manager.dart';
 import 'core/components/floating_nav_bar.dart';
 import 'core/components/need_to_login_component.dart';
+import 'core/services/firebase_messaging_service.dart';
 import 'core/services/service_locator.dart';
+import 'core/services/shared_preferences_service.dart';
 import 'features/home_module/home_imports.dart';
 import 'features/home_module/presentation/screens/home_screen.dart';
 import 'features/wallet/presentation/controller/wallet_cubit.dart';
@@ -50,9 +52,16 @@ class _LayoutScreenState extends State<LayoutScreen> {
   void initState() {
     super.initState();
     currentIndex = widget.initialIndex;
+    storeFirebaseMessagingToken();
     _pageController = PageController(initialPage: currentIndex);
   }
 
+  Future<void>storeFirebaseMessagingToken() async {
+    print("firebase messaging token is :${SharedPreferencesService().getValue( 'firebaseToken')}");
+    if (SharedPreferencesService().getValue( 'firebaseToken') == null) {
+      await FireBaseMessaging().getToken();
+    }
+  }
   Widget _buildScreen(int index) {
     switch (index) {
       case 0:

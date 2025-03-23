@@ -5,10 +5,12 @@ import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/core/services/select_location_service/presentation/controller/select_location_service_cubit.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/filter_properties_controller/filter_property_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -19,6 +21,7 @@ import 'configuration/routers/route_names.dart';
 import 'core/components/custom_snack_bar.dart';
 import 'core/services/bio_metric_service.dart';
 import 'core/services/bloc_observer.dart';
+import 'core/services/firebase_messaging_service.dart';
 import 'core/services/navigator_observer.dart';
 import 'core/services/service_locator.dart';
 import 'core/services/shared_preferences_service.dart';
@@ -34,6 +37,15 @@ import 'features/wish_list/wish_list_DI.dart';
 import 'firebase_options.dart';
 
 bool isAuth = false;
+Future<void> backgroundHandler(
+    NotificationResponse notificationResponse) async {
+  final payload = notificationResponse.payload;
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -47,6 +59,16 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
     ),
   ]);
+
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await FireBaseMessaging().requestPermission();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await FireBaseMessaging().initInfo();
+
+
+
 
   Bloc.observer = MyBlocObserver();
 

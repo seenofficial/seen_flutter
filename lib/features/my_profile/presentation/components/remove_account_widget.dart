@@ -32,6 +32,7 @@ class RemoveAccountWidget extends StatelessWidget {
 
         if (response.statusCode == 200) {
           SharedPreferencesService().clearAllData();
+          SharedPreferencesService().setFirstLaunch(false);
           Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
         } else {
           throw ServerFailure.fromResponse(
