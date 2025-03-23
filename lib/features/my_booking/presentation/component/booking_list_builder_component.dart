@@ -1,3 +1,5 @@
+import 'package:enmaa/configuration/routers/app_routers.dart';
+import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:enmaa/core/components/card_listing_shimmer.dart';
@@ -42,7 +44,7 @@ class BookingListBuilderComponent extends StatelessWidget {
 
           if (requestState.isError && bookings.isEmpty) {
             return ErrorAppScreen(
-              showActionButton: true,
+              showActionButton: false,
               showBackButton: false,
               backgroundColor: Colors.grey.shade100,
             );
@@ -54,7 +56,7 @@ class BookingListBuilderComponent extends StatelessWidget {
               alertText2: 'استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة',
               buttonText: 'استكشف العروض المتاحة',
               onTap: () {
-                Navigator.pushNamed(context, 'layoutScreen', arguments: 0);
+                Navigator.pushNamed(context, RoutersNames.layoutScreen, arguments: 0);
               },
             );
           }
