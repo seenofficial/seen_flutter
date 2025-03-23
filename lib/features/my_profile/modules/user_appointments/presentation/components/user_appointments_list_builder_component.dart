@@ -42,7 +42,7 @@ class UserAppointmentsListBuilderComponent extends StatelessWidget {
 
           if (requestState.isError && appointments.isEmpty) {
             return ErrorAppScreen(
-              showActionButton: true,
+              showActionButton: false,
               showBackButton: false,
               backgroundColor: Colors.grey.shade100,
             );
@@ -50,12 +50,8 @@ class UserAppointmentsListBuilderComponent extends StatelessWidget {
 
           if (requestState.isLoaded && appointments.isEmpty && !state.isLoadingMore) {
             return EmptyScreen(
-              alertText1: 'لا توجد مواعيد ${status.name}',
-              alertText2: 'يمكنك إضافة مواعيد جديدة للبدء في عرضها',
-              buttonText: 'إضافة موعد جديد',
-              onTap: () {
-                Navigator.pushNamed(context, 'addAppointmentScreen');
-              },
+              alertText1: 'لا توجد مواعيد ${status.toName}',
+              alertText2: 'يمكنك حجز مواعيد خاصه بالعقارات للبدء في عرضها',
             );
           }
 
