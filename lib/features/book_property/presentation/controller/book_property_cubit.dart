@@ -31,7 +31,7 @@ class BookPropertyCubit extends Cubit<BookPropertyState> {
 
     nameController.text = SharedPreferencesService().userName ;
     phoneNumberController.text = SharedPreferencesService().userPhone ;
-    iDNumberController.text = SharedPreferencesService().getValue(LocalKeys.userIdNumber) ;
+    iDNumberController.text = SharedPreferencesService().getValue(LocalKeys.userIdNumber) ?? '';
 
 
     emit(state.copyWith(
