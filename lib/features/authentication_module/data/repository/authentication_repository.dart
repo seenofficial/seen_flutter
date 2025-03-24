@@ -2,6 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:enmaa/features/authentication_module/data/data_source/local_data/authentication_local_data_source.dart';
 import 'package:enmaa/features/authentication_module/data/data_source/remote_data/authentication_remote_data_source.dart';
+import 'package:enmaa/features/authentication_module/data/models/reset_password_request_model.dart';
 import 'package:enmaa/features/authentication_module/domain/entities/login_request_entity.dart';
 import 'package:enmaa/features/authentication_module/domain/repository/base_authentication_repository.dart';
 
@@ -57,6 +58,14 @@ class AuthenticationRepository extends BaseAuthenticationRepository {
   Future<Either<Failure, String>> signUp(SignUpRequestModel signUpBody) async{
     return await HandleRequestService.handleApiCall<String>(() async {
       final result = await baseAuthenticationRemoteDataSource.signUp(signUpBody);
+      return result;
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> resetPassword(ResetPasswordRequestModel resetPasswordBody) {
+    return HandleRequestService.handleApiCall<void>(() async {
+      final result = await baseAuthenticationRemoteDataSource.resetPassword(resetPasswordBody);
       return result;
     });
   }

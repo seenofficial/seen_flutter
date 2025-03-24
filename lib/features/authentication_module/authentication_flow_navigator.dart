@@ -1,4 +1,5 @@
 import 'package:enmaa/features/authentication_module/presentation/screens/create_new_password_screen.dart';
+import 'package:enmaa/features/authentication_module/presentation/screens/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:enmaa/core/services/service_locator.dart';
@@ -24,6 +25,7 @@ class AuthenticationNavigator extends StatelessWidget {
         ServiceLocator.getIt(),
         ServiceLocator.getIt(),
         ServiceLocator.getIt(),
+        ServiceLocator.getIt(),
       ),
       child: Navigator(
         observers: [RouteObserverService()],
@@ -44,9 +46,17 @@ class AuthenticationNavigator extends StatelessWidget {
                 case RoutersNames.signUpScreen:
                   return const SignUpScreen();
                 case RoutersNames.otpScreen:
-                  return const OtpScreen();
+                  final bool isFromResetPassword = settings.arguments as bool? ?? false;
+                  return OtpScreen(
+                    isFromResetPassword: isFromResetPassword,
+                  );
                 case RoutersNames.createNewPasswordScreen:
-                  return const CreateNewPasswordScreen();
+                  final bool isFromResetPassword = settings.arguments as bool? ?? false;
+                  return CreateNewPasswordScreen(
+                    isFromResetPassword:isFromResetPassword ,
+                  );
+                  case RoutersNames.resetPasswordScreen:
+                  return const ResetPasswordScreen();
                 default:
                   return const LoginScreen();
               }

@@ -9,6 +9,7 @@ import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/country_code_picker.dart';
 
 class LoginFormFields extends StatelessWidget {
@@ -40,7 +41,7 @@ class LoginFormFields extends StatelessWidget {
           validator: validatePassword,
         ),
         SizedBox(height: context.scale(12)),
-        //_ForgotPasswordText(),
+        _ForgotPasswordText(),
       ],
     );
   }
@@ -179,6 +180,8 @@ class _ForgotPasswordText extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+
+        Navigator.pushNamed(context, RoutersNames.resetPasswordScreen);
 
       },
       child: Text(

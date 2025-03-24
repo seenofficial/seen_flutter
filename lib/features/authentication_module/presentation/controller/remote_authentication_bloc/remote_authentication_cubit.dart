@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dartz/dartz.dart';
+import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/core/utils/enums.dart';
+import 'package:enmaa/features/authentication_module/data/models/reset_password_request_model.dart';
 import 'package:enmaa/features/authentication_module/data/models/sign_up_request_model.dart';
 import 'package:enmaa/features/authentication_module/domain/use_cases/remote_login_use_case.dart';
 import 'package:enmaa/features/authentication_module/domain/use_cases/send_otp_use_case.dart';
@@ -13,6 +15,7 @@ import '../../../../../core/errors/failure.dart';
 import '../../../data/models/login_request_model.dart';
 import '../../../domain/entities/login_request_entity.dart';
 import '../../../domain/entities/otp_response_entity.dart';
+import '../../../domain/use_cases/reset_password_use_case.dart';
 
 part 'remote_authencation_state.dart';
 
@@ -22,12 +25,14 @@ class RemoteAuthenticationCubit extends Cubit<RemoteAuthenticationState> {
 
   final SendOtpUseCase _sendOtpUseCase;
   final VerifyOtpUseCase _verifyOtpUseCase;
+  final ResetPasswordUseCase _resetPasswordUseCase ;
 
   RemoteAuthenticationCubit(
     this._remoteLoginUseCase,
     this._sendOtpUseCase,
     this._verifyOtpUseCase,
     this._signUpUseCase,
+    this._resetPasswordUseCase,
   ) : super(const RemoteAuthenticationState());
 
   void changeLoginPasswordVisibility() {
@@ -54,6 +59,23 @@ class RemoteAuthenticationCubit extends Cubit<RemoteAuthenticationState> {
   void changeUserPhoneNumber(String phoneNumber) {
     emit(state.copyWith(userPhoneNumber: phoneNumber));
   }
+
+  Future<void>resetPassword(ResetPasswordRequestModel resetPasswordBody) async {
+    emit(state.copyWith(resetPasswordRequestState: RequestState.loading));
+
+    final Either<Failure, void> result = await _resetPasswordUseCase(resetPasswordBody);
+
+    result.fold(
+      (failure) => emit(state.copyWith(
+          resetPasswordRequestState: RequestState.error,
+          resetPasswordErrorMessage: failure.message)),
+      (_) {
+        emit(state.copyWith(
+            resetPasswordRequestState: RequestState.loaded));
+      },
+    );
+  }
+
   Future<void> remoteLogin(LoginRequestModel loginBody) async {
     emit(state.copyWith(loginRequestState: RequestState.loading));
 
@@ -110,6 +132,7 @@ class RemoteAuthenticationCubit extends Cubit<RemoteAuthenticationState> {
           verifyOtpRequestState: RequestState.error,
           verifyOtpErrorMessage: failure.message)),
       (isVerified) => emit(state.copyWith(
+        enteredOTP: otp,
           verifyOtpRequestState: RequestState.loaded,
           isOtpVerified: isVerified)),
     );

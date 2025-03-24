@@ -11,6 +11,7 @@ import '../../core/services/service_locator.dart';
 import 'data/data_source/remote_data/authentication_remote_data_source.dart';
 import 'data/repository/authentication_repository.dart';
 import 'domain/use_cases/login_using_local_authentication.dart';
+import 'domain/use_cases/reset_password_use_case.dart';
 
 class AuthenticationDi {
   final sl = ServiceLocator.getIt;
@@ -61,6 +62,9 @@ class AuthenticationDi {
     sl.registerLazySingleton(
           () => SignUpUseCase(sl()),
     );
+    sl.registerLazySingleton(
+          () => ResetPasswordUseCase(sl()),
+    );
   }
   void _registerBlocs() {
 
@@ -83,6 +87,7 @@ class AuthenticationDi {
         sl<SendOtpUseCase>(),
         sl<VerifyOtpUseCase>(),
         sl<SignUpUseCase>(),
+        sl<ResetPasswordUseCase>(),
       ),
     );
 

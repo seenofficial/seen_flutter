@@ -15,6 +15,7 @@ class ApiConstants {
 
   static const String sendOTP= "${baseUrl}auth/send-otp/";
   static const String verifyOTP= "${baseUrl}auth/verify-otp/";
+  static const String resetPassword= "${baseUrl}auth/reset-password/";
 
 
   /// location

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:enmaa/core/services/dio_service.dart';
 import 'package:enmaa/features/authentication_module/data/models/otp_response_model.dart';
+import 'package:enmaa/features/authentication_module/data/models/reset_password_request_model.dart';
 import 'package:enmaa/features/authentication_module/domain/entities/login_request_entity.dart';
 import 'package:enmaa/features/authentication_module/domain/entities/sign_up_request_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,8 @@ abstract class BaseAuthenticationRemoteDataSource {
   Future<String> signUp(SignUpRequestModel signUpBody);
   Future<OTPResponseModel> sendOtp(String phoneNumber);
   Future<bool> verifyOtp(String otp, String phoneNumber);
+  
+  Future<void> resetPassword(ResetPasswordRequestModel resetPasswordBody);
 }
 
 class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource {
@@ -115,5 +118,15 @@ class AuthenticationRemoteDataSource extends BaseAuthenticationRemoteDataSource 
     isAuth = true ;
 
     return response.data['access_token'];
+  }
+
+  @override
+  Future<void> resetPassword(ResetPasswordRequestModel resetPasswordBody)async {
+    final response = await dioService.post(
+        url: ApiConstants.resetPassword,
+        data: resetPasswordBody.toJson()
+    );
+
+
   }
 }

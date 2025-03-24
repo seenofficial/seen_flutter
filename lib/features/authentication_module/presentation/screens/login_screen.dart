@@ -62,14 +62,18 @@ class _LoginScreenState extends State<LoginScreen> {
         buildWhen: (previous, current) {
 
           /// handle login state
-          if(previous.loginRequestState != current.loginRequestState && current.loginRequestState != RequestState.loading) {
+          if (previous.loginRequestState != current.loginRequestState &&
+              current.loginRequestState != RequestState.loading) {
             if (current.loginRequestState == RequestState.loaded && navigateToNextScreen) {
-              Navigator.of(context, rootNavigator: true).pushReplacementNamed(RoutersNames.layoutScreen);
-            }
-            else {
+              navigateToNextScreen = false ;
+              Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+                RoutersNames.layoutScreen,
+                    (route) => false,
+              );
+            } else if (current.loginRequestState == RequestState.error) {
               CustomSnackBar.show(
                 context: context,
-                message: current.loginErrorMessage ,
+                message: current.loginErrorMessage,
                 type: SnackBarType.error,
               );
             }

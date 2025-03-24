@@ -20,6 +20,9 @@ class RemoteAuthenticationState extends Equatable {
     this.signUpRequestState = RequestState.initial,
     this.signUpErrorMessage = '',
 
+    this.resetPasswordRequestState = RequestState.initial,
+    this.resetPasswordErrorMessage = '',
+    this.enteredOTP = '',
   });
 
   final RequestState loginRequestState;
@@ -45,6 +48,10 @@ class RemoteAuthenticationState extends Equatable {
   final String currentCountryCode;
   final String userName;
 
+  final RequestState resetPasswordRequestState;
+  final String resetPasswordErrorMessage;
+  final String enteredOTP ;
+
   RemoteAuthenticationState copyWith({
     RequestState? loginRequestState,
     String? loginErrorMessage,
@@ -63,6 +70,10 @@ class RemoteAuthenticationState extends Equatable {
     String? userName,
     RequestState? signUpRequestState,
     String? signUpErrorMessage,
+
+    RequestState? resetPasswordRequestState,
+    String? resetPasswordErrorMessage,
+    String? enteredOTP,
   }) {
     return RemoteAuthenticationState(
       loginRequestState: loginRequestState ?? this.loginRequestState,
@@ -83,6 +94,11 @@ class RemoteAuthenticationState extends Equatable {
       userName: userName ?? this.userName,
       signUpRequestState: signUpRequestState ?? this.signUpRequestState,
       signUpErrorMessage: signUpErrorMessage ?? this.signUpErrorMessage,
+
+      resetPasswordRequestState: resetPasswordRequestState ?? this.resetPasswordRequestState,
+      resetPasswordErrorMessage: resetPasswordErrorMessage ?? this.resetPasswordErrorMessage,
+
+      enteredOTP: enteredOTP ?? this.enteredOTP,
     );
   }
 
@@ -105,5 +121,8 @@ class RemoteAuthenticationState extends Equatable {
     userName,
     signUpRequestState,
     signUpErrorMessage,
+    resetPasswordRequestState,
+    resetPasswordErrorMessage,
+    enteredOTP ,
   ];
 }

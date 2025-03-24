@@ -1,6 +1,7 @@
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/request_states_extension.dart';
+import 'package:enmaa/features/authentication_module/data/models/reset_password_request_model.dart';
 import 'package:enmaa/features/authentication_module/data/models/sign_up_request_model.dart';
 import 'package:enmaa/features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +18,8 @@ import '../../../home_module/home_imports.dart';
 import '../components/create_new_password_form_fields_widget.dart';
 
 class CreateNewPasswordScreen extends StatefulWidget {
-  const CreateNewPasswordScreen({super.key});
+  const CreateNewPasswordScreen({super.key, this.isFromResetPassword = false});
+  final bool isFromResetPassword;
 
   @override
   State<CreateNewPasswordScreen> createState() => _CreateNewPasswordScreenState();
@@ -58,109 +60,136 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
             }
           }
 
-          // Rebuild only when signUpRequestState changes
-          return previous.signUpRequestState != current.signUpRequestState;
+          if( previous.resetPasswordRequestState != current.resetPasswordRequestState){
+            if (current.resetPasswordRequestState.isLoaded) {
+              Navigator.of(context).pushReplacementNamed(RoutersNames.loginScreen);
+              CustomSnackBar.show(
+                context: context,
+                message: 'تم تغيير كلمة المرور بنجاح',
+                type: SnackBarType.success,
+              );
+            } else if (current.resetPasswordRequestState.isError) {
+              CustomSnackBar.show(
+                context: context,
+                message: current.resetPasswordErrorMessage,
+                type: SnackBarType.error,
+              );
+            }
+          }
+
+          return previous.signUpRequestState != current.signUpRequestState || previous.resetPasswordRequestState != current.resetPasswordRequestState;
         },
         builder: (context, state) {
-      return Stack(
-        children: [
-          SafeArea(
-            child: Stack(
-              children: [
-                PositionedDirectional(
-                  top: context.scale(24),
-                  start: context.scale(16),
-                  child: CircularIconButton(
-                    iconPath: AppAssets.backIcon,
-                    backgroundColor: ColorManager.greyShade,
-                    containerSize: 40,
-                    iconSize: 16,
-                    padding: const EdgeInsets.all(8),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-                PositionedDirectional(
-                  top: context.scale(24 + 40 + 24),
-                  end: 0,
-                  start: 0,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.scale(16)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'إنشاء كلمة المرور',
-                          style: getBoldStyle(color: ColorManager.blackColor),
-                        ),
-                        SizedBox(height: context.scale(8)),
-
-                        Text('أنشئ كلمة مرور قوية لحماية حسابك',
-                          style: getMediumStyle(color: ColorManager.blackColor , fontSize: FontSize.s12),
-                        ),
-                        SizedBox(height: context.scale(24)),
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'تسجيل الدخول',
-                                style: getBoldStyle(color: ColorManager.blackColor),
-                              ),
-                              SizedBox(height: context.scale(24)),
-                              CreateNewPasswordFormFieldsWidget(
-                                passwordController1: _passwordController1,
-                                passwordController2: _passwordController2,
-                              ),
-                              SizedBox(height: context.scale(24)),
-                              ButtonAppComponent(
-                                width: double.infinity,
-                                padding: EdgeInsets.zero,
-                                buttonContent: Center(
-                                  child: Text(
-                                    'تأكيد ',
-                                    style: getBoldStyle(
-                                      color: ColorManager.whiteColor,
-                                      fontSize: FontSize.s14,
-                                    ),
-                                  ),
-                                ),
-                                decoration: BoxDecoration(
-                                  color: ColorManager.primaryColor,
-                                  borderRadius: BorderRadius.circular(context.scale(20)),
-                                ),
-                                onTap: (){
-                                  if (_formKey.currentState?.validate() ?? false) {
-                                    final authBloc = context.read<RemoteAuthenticationCubit>();
-                                    SignUpRequestModel signUpRequestModel = SignUpRequestModel(
-                                      password: _passwordController1.text, 
-                                      name: authBloc.state.userName, 
-                                      phone: authBloc.state.userPhoneNumber,
-                                    );
-                                    authBloc.signUp(signUpRequestModel);
-                                  }
-                                  
-                                },
-                              )
-
-                            ],
-                          ),
-                        )
-                      ],
+          return Stack(
+            children: [
+              SafeArea(
+                child: Stack(
+                  children: [
+                    PositionedDirectional(
+                      top: context.scale(24),
+                      start: context.scale(16),
+                      child: CircularIconButton(
+                        iconPath: AppAssets.backIcon,
+                        backgroundColor: ColorManager.greyShade,
+                        containerSize: 40,
+                        iconSize: 16,
+                        padding: const EdgeInsets.all(8),
+                        onPressed: () => Navigator.pop(context),
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (state.signUpRequestState.isLoading)
-            const LoadingOverlayComponent(),
-        ],
-      );
-  },
-)
+                    PositionedDirectional(
+                      top: context.scale(24 + 40 + 24),
+                      end: 0,
+                      start: 0,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: context.scale(16)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.isFromResetPassword ? 'إعادة تعيين كلمة المرور' : 'إنشاء كلمة المرور',
+                              style: getBoldStyle(color: ColorManager.blackColor),
+                            ),
+                            SizedBox(height: context.scale(8)),
+                            Text(
+                              widget.isFromResetPassword
+                                  ? 'أنشئ كلمة مرور جديدة لحسابك'
+                                  : 'أنشئ كلمة مرور قوية لحماية حسابك',
+                              style: getMediumStyle(color: ColorManager.blackColor, fontSize: FontSize.s12),
+                            ),
+                            SizedBox(height: context.scale(24)),
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    widget.isFromResetPassword ? 'كلمة المرور الجديدة' : 'تسجيل الدخول',
+                                    style: getBoldStyle(color: ColorManager.blackColor),
+                                  ),
+                                  SizedBox(height: context.scale(24)),
+                                  CreateNewPasswordFormFieldsWidget(
+                                    passwordController1: _passwordController1,
+                                    passwordController2: _passwordController2,
+                                  ),
+                                  SizedBox(height: context.scale(24)),
+                                  ButtonAppComponent(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.zero,
+                                    buttonContent: Center(
+                                      child: Text(
+                                        'تأكيد',
+                                        style: getBoldStyle(
+                                          color: ColorManager.whiteColor,
+                                          fontSize: FontSize.s14,
+                                        ),
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: ColorManager.primaryColor,
+                                      borderRadius: BorderRadius.circular(context.scale(20)),
+                                    ),
+                                    onTap: () {
+                                      if (_formKey.currentState?.validate() ?? false) {
+                                        final authBloc = context.read<RemoteAuthenticationCubit>();
+                                        SignUpRequestModel signUpRequestModel = SignUpRequestModel(
+                                          password: _passwordController1.text,
+                                          name: authBloc.state.userName,
+                                          phone: authBloc.state.userPhoneNumber,
+                                        );
 
+                                        if (widget.isFromResetPassword) {
+                                          ResetPasswordRequestModel resetPasswordRequestModel = ResetPasswordRequestModel(
+                                            password1: _passwordController1.text,
+                                            password2: _passwordController2.text,
+                                            phone: authBloc.state.userPhoneNumber,
+                                            code: state.enteredOTP ,
+                                          );
+
+                                          authBloc.resetPassword(resetPasswordRequestModel);
+                                        } else {
+                                          authBloc.signUp(signUpRequestModel);
+                                        }
+                                      }
+                                    },
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (state.signUpRequestState.isLoading || state.resetPasswordRequestState.isLoading)
+                const LoadingOverlayComponent(),
+            ],
+          );
+        },
+      ),
     );
   }
 }

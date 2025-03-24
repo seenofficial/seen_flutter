@@ -20,8 +20,9 @@ import 'dart:ui' as ui;
 import 'dart:io' show Platform;
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  const OtpScreen({super.key , this.isFromResetPassword = false});
 
+  final bool isFromResetPassword;
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
@@ -93,7 +94,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 current.isOtpVerified &&
                 navigateToHome) {
               Navigator.pushReplacementNamed(
-                  context, RoutersNames.createNewPasswordScreen);
+                  context, RoutersNames.createNewPasswordScreen ,arguments: widget.isFromResetPassword);
             } else {
               otpController.clear();
               CustomSnackBar.show(

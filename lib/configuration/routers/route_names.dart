@@ -26,5 +26,6 @@ class RoutersNames {
   static const String signUpScreen = "/sign-up-screen";
   static const String otpScreen = "/otp-screen";
   static const String createNewPasswordScreen = "/create-new-password-screen";
+  static const String resetPasswordScreen = "/reset-password-screen";
 
 }
