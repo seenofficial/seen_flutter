@@ -3,8 +3,10 @@ import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../core/components/custom_app_switch.dart';
+import '../../../../core/components/custom_snack_bar.dart';
 import '../../../home_module/home_imports.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +38,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                /*Row(
                   children: [
                     SvgImageComponent(
                       width: 20,
@@ -58,29 +60,43 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                       child: const Icon(Icons.arrow_forward_ios),
                     ),
                   ],
-                ),
-                Row(
-                  children: [
-                    SvgImageComponent(
-                      width: 20,
-                      height: 20,
-                      iconPath: AppAssets.privacyIcon,
-                      color: ColorManager.grey,
-                    ),
-                    SizedBox(width: context.scale(8)),
-                    Text(
-                      'الشروط والأحكام',
-                      style: getBoldStyle(
-                        color: ColorManager.blackColor,
-                        fontSize: FontSize.s16,
+                ),*/
+                InkWell(
+                  onTap: ()async {
+                    final Uri url = Uri.parse('https://github.com/AmrAbdElHamed26');
+
+                    if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                    } else {
+                    CustomSnackBar.show(
+                     message: 'حدث خطأ أثناء فتح الرابط',
+                    type: SnackBarType.error,
+                    );
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      SvgImageComponent(
+                        width: 20,
+                        height: 20,
+                        iconPath: AppAssets.privacyIcon,
+                        color: ColorManager.grey,
                       ),
-                    ),
-                    const Spacer(),
-                    InkWell(
-                      onTap: () {},
-                      child: const Icon(Icons.arrow_forward_ios),
-                    ),
-                  ],
+                      SizedBox(width: context.scale(8)),
+                      Text(
+                        'الشروط والأحكام',
+                        style: getBoldStyle(
+                          color: ColorManager.blackColor,
+                          fontSize: FontSize.s16,
+                        ),
+                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {},
+                        child: const Icon(Icons.arrow_forward_ios),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [
