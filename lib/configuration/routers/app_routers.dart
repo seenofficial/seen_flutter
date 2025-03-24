@@ -6,6 +6,7 @@ import 'package:enmaa/features/authentication_module/presentation/screens/sign_u
 import 'package:enmaa/features/book_property/presentation/screens/book_property_main_screen.dart';
 import 'package:enmaa/features/home_module/presentation/controller/home_bloc.dart';
 import 'package:enmaa/features/home_module/presentation/screens/home_screen.dart';
+import 'package:enmaa/features/home_module/presentation/screens/notifications_screen.dart';
 import 'package:enmaa/features/my_profile/modules/user_appointments/presentation/controller/user_appointments_cubit.dart';
 import 'package:enmaa/features/my_profile/modules/user_appointments/presentation/screens/user_appointments_screen.dart';
 import 'package:enmaa/features/my_profile/modules/user_appointments/user_appointments_DI.dart';
@@ -75,7 +76,8 @@ class AppRouters {
                     ServiceLocator.getIt(),
                     ServiceLocator.getIt(),
                     ServiceLocator.getIt(),
-                  )..add(GetUserLocation()),
+                    ServiceLocator.getIt(),
+                  )..add(GetUserLocation())..add(GetNotifications()),
                 );
               }
 
@@ -85,6 +87,13 @@ class AppRouters {
             },
             child: const LayoutScreen(initialIndex: 0),
           ),
+        );
+case RoutersNames.notificationsScreen:
+  final numberOfNotifications = settings.arguments as int;
+
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.notificationsScreen),
+          builder: (_) =>  NotificationsScreen(numberOfNotifications:numberOfNotifications ,),
         );
 
       case RoutersNames.biometricScreen:

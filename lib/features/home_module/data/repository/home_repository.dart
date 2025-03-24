@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:enmaa/features/home_module/data/models/banner_model.dart';
 import 'package:enmaa/features/home_module/domain/entities/app_service_entity.dart';
 import 'package:enmaa/features/home_module/domain/entities/banner_entity.dart';
+import 'package:enmaa/features/home_module/domain/entities/notification_entity.dart';
 
 import '../../../../core/entites/image_entity.dart';
 import '../../../../core/errors/failure.dart';
@@ -40,6 +41,14 @@ class HomeRepository extends BaseHomeRepository {
   Future<Either<Failure, void>> updateUserLocation(String cityID) async{
     return HandleRequestService.handleApiCall<void>(() async {
       await baseHomeRemoteData.updateUserLocation(cityID);
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<NotificationEntity>>> getNotifications() {
+    return HandleRequestService.handleApiCall<List<NotificationEntity>>(() async {
+      final result = await baseHomeRemoteData.getNotifications();
+      return result;
     });
   }
 

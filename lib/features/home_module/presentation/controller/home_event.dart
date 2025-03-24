@@ -72,3 +72,10 @@ class RemoveProperty extends HomeEvent {
   @override
   List<Object?> get props => [propertyId, propertyType];
 }
+class GetNotifications extends HomeEvent {
+
+
+
+  @override
+  List<Object?> get props => [];
+}

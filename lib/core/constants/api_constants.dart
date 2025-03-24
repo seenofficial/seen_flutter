@@ -4,6 +4,7 @@ class ApiConstants {
   static const String baseUrl = "https://rough-mira-seen-app-f74aa423.koyeb.app/api/";
   static const String properties= "${baseUrl}properties/";
   static const String banners= "${baseUrl}banners/";
+  static const String notifications= "${baseUrl}notifications/";
 
   static const String apartment= "${baseUrl}apartments/";
   static const String villa= "${baseUrl}villas/";

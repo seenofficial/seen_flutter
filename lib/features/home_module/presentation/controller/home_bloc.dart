@@ -5,6 +5,7 @@ import 'package:enmaa/core/entites/image_entity.dart';
 import 'package:enmaa/core/extensions/property_type_extension.dart';
 import 'package:enmaa/core/services/service_locator.dart';
 import 'package:enmaa/features/home_module/domain/use_cases/get_app_services_use_case.dart';
+import 'package:enmaa/features/home_module/domain/use_cases/get_notifications_use_case.dart';
 import 'package:enmaa/features/real_estates/domain/use_cases/get_properties_use_case.dart';
 import 'package:enmaa/features/real_estates/real_estates_DI.dart';
 import 'package:equatable/equatable.dart';
@@ -16,6 +17,7 @@ import '../../../../core/utils/enums.dart';
 import '../../../real_estates/domain/entities/base_property_entity.dart';
 import '../../domain/entities/app_service_entity.dart';
 import '../../domain/entities/banner_entity.dart';
+import '../../domain/entities/notification_entity.dart';
 import '../../domain/use_cases/get_banners_use_case.dart';
 import '../../domain/use_cases/update_user_location_use_case.dart';
 
@@ -28,8 +30,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   /// get near by properties for home screen
   final GetPropertiesUseCase getRealEstatesUseCase;
   final UpdateUserLocationUseCase updateUserLocationUseCase;
-
+  final GetNotificationsUseCase getNotificationsUseCase;
   HomeBloc(
+      this.getNotificationsUseCase ,
       this.updateUserLocationUseCase ,
       this.getBannersUseCase, this.getAppServicesUseCase , this.getRealEstatesUseCase)
       : super(const HomeState()) {
@@ -37,6 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<FetchBanners>(_onFetchBanners);
     on<FetchAppServices>(_onFetchAppServices);
     on<FetchNearByProperties>(_onFetchNearByProperties);
+    on<GetNotifications>(_onFetchNotifications);
 
 
     on<AddPropertyToWishlist>(_onAddPropertyToWishlist);
@@ -46,6 +50,30 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<RemoveProperty>(_onRemoveProperty);
 
   }
+
+  Future<void> _onFetchNotifications(
+      GetNotifications event,
+      Emitter<HomeState> emit,
+      ) async {
+    emit(state.copyWith(getNotificationsState: RequestState.loading));
+
+    final Either<Failure, List<NotificationEntity>> result =
+    await getNotificationsUseCase();
+
+    result.fold(
+          (failure) => emit(state.copyWith(
+            getNotificationsState: RequestState.error,
+        errorMessage: failure.message,
+      )),
+          (notifications) {
+        emit(state.copyWith(
+          getNotificationsState: RequestState.loaded,
+          notifications: notifications,
+        ));
+      },
+    );
+  }
+
 
   Future<void> _onRemoveProperty(
       RemoveProperty event,
@@ -86,14 +114,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ) async {
 
     emit(state.copyWith(
-       userLocationState: RequestState.loading,
+      updateUserLocationState: RequestState.loading,
     ));
     SharedPreferences.getInstance().then((pref){
       String cityName = pref.getString('city_name')??'';
 
       emit(state.copyWith(
         selectedCityName: cityName,
-        userLocationState: RequestState.loaded,
+        updateUserLocationState: RequestState.loaded,
       ));
     });
 
@@ -103,12 +131,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       UpdateUserLocation event,
       Emitter<HomeState> emit,
       ) async {
-    emit (state.copyWith(userLocationState: RequestState.loading));
+    emit (state.copyWith(updateUserLocationState: RequestState.loading));
     final Either<Failure, void> result = await updateUserLocationUseCase(event.cityID);
 
     result.fold(
           (failure) => emit(state.copyWith(
-        userLocationState: RequestState.error,
+            updateUserLocationState: RequestState.error,
         errorMessage: failure.message,
       )),
           (_) {
@@ -120,7 +148,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
             });        emit(state.copyWith(
           selectedCityName: event.cityName,
-          userLocationState: RequestState.loaded,
+              updateUserLocationState: RequestState.loaded,
         ));
       },
     );

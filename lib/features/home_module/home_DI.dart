@@ -8,6 +8,7 @@ import 'package:enmaa/features/real_estates/domain/use_cases/get_properties_use_
 import '../../core/services/service_locator.dart';
 import '../real_estates/real_estates_DI.dart';
 import 'data/data_source/remote_data/home_remote_data_source.dart';
+import 'domain/use_cases/get_notifications_use_case.dart';
 import 'domain/use_cases/update_user_location_use_case.dart';
 
 class HomeDi {
@@ -47,6 +48,9 @@ class HomeDi {
     );
     sl.registerLazySingleton(
           () => UpdateUserLocationUseCase(sl()),
+    );
+    sl.registerLazySingleton(
+          () => GetNotificationsUseCase(sl()),
     );
     if(!sl.isRegistered<GetPropertiesUseCase>()){
       RealEstatesDi().setup();

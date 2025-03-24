@@ -49,6 +49,7 @@ class AppAssets {
   static const String activeIcon = '${baseIconFolder}active_icon.svg';
   static const String completedIcon = '${baseIconFolder}completed_icon.svg';
   static const String cancelledIcon = '${baseIconFolder}cancelled_icon.svg';
+  static const String envelopeIcon = '${baseIconFolder}envelope_icon.svg';
 
 
   /// building sub types icons
