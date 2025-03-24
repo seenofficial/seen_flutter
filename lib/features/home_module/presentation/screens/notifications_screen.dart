@@ -38,25 +38,32 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               showBackIcon: true,
             ),
             Expanded(
-              child: BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  switch (state.getNotificationsState) {
-                    case RequestState.loading || RequestState.initial:
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    case RequestState.loaded:
-                      return state.notifications.isEmpty
-                          ? _buildEmptyNotifications()
-                          : _buildNotificationsList(state.notifications);
-                    case RequestState.error:
-                      return ErrorAppScreen(
-                        showActionButton: false,
-                        showBackButton: false,
-                        backgroundColor: Colors.grey.shade100,
-                      );
-                  }
+              child: RefreshIndicator(
+                onRefresh: ()async{
+
+                  ServiceLocator.getIt<HomeBloc>().add(GetNotifications());
+
                 },
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    switch (state.getNotificationsState) {
+                      case RequestState.loading || RequestState.initial:
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      case RequestState.loaded:
+                        return state.notifications.isEmpty
+                            ? _buildEmptyNotifications()
+                            : _buildNotificationsList(state.notifications);
+                      case RequestState.error:
+                        return ErrorAppScreen(
+                          showActionButton: false,
+                          showBackButton: false,
+                          backgroundColor: Colors.grey.shade100,
+                        );
+                    }
+                  },
+                ),
               ),
             ),
           ],
