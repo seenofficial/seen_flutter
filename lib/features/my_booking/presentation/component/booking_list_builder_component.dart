@@ -52,7 +52,7 @@ class BookingListBuilderComponent extends StatelessWidget {
 
           if (requestState.isLoaded && bookings.isEmpty && !state.isLoadingMore) {
             return EmptyScreen(
-              alertText1: 'لا توجد حجوزات ${status.name}',
+              alertText1: 'لا توجد حجوزات ${status.toName}',
               alertText2: 'استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة',
               buttonText: 'استكشف العروض المتاحة',
               onTap: () {

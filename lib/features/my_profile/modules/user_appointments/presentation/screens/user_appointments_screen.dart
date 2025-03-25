@@ -50,6 +50,9 @@ class _UserAppointmentsScreenState extends State<UserAppointmentsScreen> with Ti
         isRefresh: true,
       );
     }
+    setState(() {
+
+    });
   }
 
   void _handleScroll(ScrollController controller, AppointmentStatus status) {
@@ -90,7 +93,7 @@ class _UserAppointmentsScreenState extends State<UserAppointmentsScreen> with Ti
             tabController: _tabController,
             tabStatuses: _tabStatuses,
             onTabChanged: (index) {
-              setState(() {});
+              _tabController.animateTo(index);
             },
           ),
           Expanded(

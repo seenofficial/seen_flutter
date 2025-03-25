@@ -23,33 +23,21 @@ class PreviewPropertyRemoteDataSource extends BasePreviewPropertyDataSource {
 
 
   @override
-  Future<List<DayAndHoursModel>> getPropertyPreviewAvailableHours(String propertyId)async {
+  Future<List<DayAndHoursModel>> getPropertyPreviewAvailableHours(String propertyId) async {
     final response = await dioService.get(
-      url: '${ApiConstants.propertyBusyDays}/$propertyId/' ,
+      url: '${ApiConstants.propertyBusyDays}/$propertyId/',
     );
 
+    List<dynamic> jsonResponse = response.data is List ? response.data : [];
 
-    List<dynamic> jsonResponse = response.data;
+    List<Map<String, dynamic>> busyDays = jsonResponse
+        .map((day) => Map<String, dynamic>.from(day as Map))
+        .toList();
 
-    List<DayAndHoursModel> availableHours = jsonResponse.map((day) {
-      return DayAndHoursModel.fromJson(day);
-    }).toList();
+    List<DayAndHoursModel> availableHours = DayAndHoursModel.generateAvailableHoursFor60Days(busyDays);
 
-    return availableHours ;
-
-
-    /*Map<String, dynamic> jsonData = {
-      "date": "2025-03-17",
-      "busy_hours": ["08:00", "12:00", "15:00"]
-    };
-
-    List<DayAndHoursModel> availableHours = [];
-
-    availableHours.add(DayAndHoursModel.fromJson(jsonData));
-
-    return availableHours ;*/
+    return availableHours;
   }
-
   @override
   Future<String> getInspectionAmountToBePaid(String propertyId)async {
     final response = await dioService.get(

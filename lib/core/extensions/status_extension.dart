@@ -8,7 +8,7 @@ extension StatusExtension on RequestStatus {
   bool get isCompleted => this == RequestStatus.completed;
   bool get isCancelled => this == RequestStatus.cancelled;
 
-  String get name {
+  String get toName {
     switch (this) {
       case RequestStatus.completed:
         return LocaleKeys.completed.tr();

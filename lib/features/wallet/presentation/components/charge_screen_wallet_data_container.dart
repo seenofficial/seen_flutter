@@ -83,48 +83,7 @@ class ChargeScreenWalletDataContainer extends StatelessWidget {
                          style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s14),),
                      ],
                    ),
-                   Column(
-                     crossAxisAlignment: CrossAxisAlignment.center,
-                     children: [
-                       InkWell(
-                         onTap: () {
 
-                          },
-                         child: CircularIconButton(
-                           containerSize: context.scale(60),
-                           iconPath: AppAssets.shareIcon,
-                           iconSize: 30,
-                           backgroundColor: ColorManager.whiteColor,
-                         ),
-                       ),
-                       SizedBox(
-                         height: context.scale(8),
-                       ),
-                       Text('تحويل ',
-                         style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s14),),
-                     ],
-                   ),
-                   Column(
-                     crossAxisAlignment: CrossAxisAlignment.center,
-                     children: [
-                       InkWell(
-                         onTap: () {
-
-                          },
-                         child: CircularIconButton(
-                           containerSize: context.scale(60),
-                           iconPath: AppAssets.withdrawIcon,
-                           iconSize: 30,
-                           backgroundColor: ColorManager.whiteColor,
-                         ),
-                       ),
-                       SizedBox(
-                         height: context.scale(8),
-                       ),
-                       Text('شحن ',
-                         style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s14),),
-                     ],
-                   ),
                   ],
                 )
 

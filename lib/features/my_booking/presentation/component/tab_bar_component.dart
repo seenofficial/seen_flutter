@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
@@ -96,7 +97,7 @@ class CustomTabBar extends StatelessWidget {
                     const SizedBox(width: 8),
                     // Text
                     Text(
-                      status.name,
+                      status.toName,
                       style: TextStyle(
                         fontSize: 14,
                         color: tabController.index == tabStatuses.indexOf(status)

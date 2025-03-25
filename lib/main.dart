@@ -99,7 +99,8 @@ void main() async {
       supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       assetLoader: const CodegenLoader(), // load translation assets files
-      fallbackLocale: Locale('en'),
+      startLocale: const Locale('ar'),
+      fallbackLocale: const Locale('en'),
       child: MyApp(
         initialRoute: initialRoute,
       ),

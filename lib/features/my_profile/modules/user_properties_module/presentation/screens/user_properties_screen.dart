@@ -62,6 +62,8 @@ class _MyPropertiesScreenState extends State<MyPropertiesScreen> with TickerProv
         isRefresh: true,
       );
     }
+    setState(() {
+    });
   }
 
   void _handleScroll(ScrollController controller, BookingStatus status) {
@@ -99,14 +101,14 @@ class _MyPropertiesScreenState extends State<MyPropertiesScreen> with TickerProv
             showBackIcon: true,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Ensures spacing
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: UserPropertiesTabBar(
                   tabController: _tabController,
                   tabStatuses: _tabStatuses,
                   onTabChanged: (index) {
-                    setState(() {});
+                    _tabController.animateTo(index);
                   },
                 ),
               ),

@@ -49,6 +49,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> with TickerProviderSt
         isRefresh: true,
       );
     }
+    setState(() {});
   }
 
   void _handleScroll(ScrollController controller, RequestStatus status) {
@@ -88,7 +89,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> with TickerProviderSt
             tabController: _tabController,
             tabStatuses: _tabStatuses,
             onTabChanged: (index) {
-              setState(() {});
+              _tabController.animateTo(index);
             },
           ),
           Expanded(
