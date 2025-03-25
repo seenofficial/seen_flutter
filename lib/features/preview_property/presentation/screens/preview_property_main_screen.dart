@@ -88,6 +88,8 @@ class _PreviewPropertyScreenState extends State<PreviewPropertyScreen> {
                   ],
                 ),
               ),
+
+              SizedBox(height: context.scale(80)), // Reserve space for buttons
             ],
           ),
           BottomButtons(
