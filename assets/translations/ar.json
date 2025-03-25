@@ -61,5 +61,10 @@
   "coming" : " قادم",
 
   "iAmBuyer": " أنا مشتري",
-  "anotherBuyer": " مشتري آخر"
+  "anotherBuyer": " مشتري آخر",
+  "areaUnit" : "م",
+  "contract" : "عقد"
+
+
+
 }

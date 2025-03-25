@@ -64,7 +64,9 @@
 
 
   "iAmBuyer": "I am a Buyer",
-  "anotherBuyer": "Another Buyer"
+  "anotherBuyer": "Another Buyer",
+  "areaUnit" : "M²",
+  "contract" : "Contract"
 
 
 

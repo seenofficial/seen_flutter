@@ -1,6 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/extensions/property_type_extension.dart';
+import 'package:enmaa/core/services/convert_string_to_enum.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
@@ -13,6 +17,7 @@ import 'package:open_file/open_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'dart:io';
+import '../../../../../../core/services/dateformatter_service.dart';
 import '../../../../../../core/services/get_file_permission.dart';
 
 class ElectronicContractCardComponent extends StatefulWidget {
@@ -156,12 +161,25 @@ class _ElectronicContractCardComponentState extends State<ElectronicContractCard
               child: SvgImageComponent(iconPath: AppAssets.clipIcon),
             ),
             SizedBox(width: context.scale(8)),
-            Text(
-              'عقد رقم: ${widget.contract.id}',
-              style: getBoldStyle(
-                color: ColorManager.blackColor,
-                fontSize: FontSize.s16,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "${LocaleKeys.contract.tr()} ${widget.contract.contractName}",
+                  style: getBoldStyle(
+                    color: ColorManager.blackColor,
+                    fontSize: FontSize.s16,
+                  ),
+                ),
+                Text(
+                DateFormatterService.getFormattedDate(widget.contract.dateCreated),
+                  style: getMediumStyle(
+                    color: ColorManager.blackColor,
+                    fontSize: FontSize.s10,
+                  ),
+                ),
+              ],
             ),
             const Spacer(),
             IconButton(

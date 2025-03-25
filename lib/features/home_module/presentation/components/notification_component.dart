@@ -6,6 +6,7 @@ import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 
+import '../../../../core/services/dateformatter_service.dart';
 import '../../../wish_list/favorite_imports.dart';
 import '../../domain/entities/notification_entity.dart';
 
@@ -20,8 +21,7 @@ class NotificationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final DateTime createdDate = DateTime.parse(notification.createdAt);
-    final String formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(createdDate);
+    final String formattedDate = DateFormatterService.getFormattedDate(notification.createdAt);
 
     return Container(
       height: context.scale(104),
@@ -34,7 +34,8 @@ class NotificationComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+
             children: [
               Container(
                 width: context.scale(32),

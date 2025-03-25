@@ -80,16 +80,18 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Widget _buildNotificationsList(List<NotificationEntity> notifications) {
-    return ListView.separated(
+    return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: notifications.length,
-      separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) {
         final notification = notifications[index];
 
-        return NotificationComponent(
-            notification: notification,
-          isRead: index +1 > widget.numberOfNotifications ? false : true,
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: NotificationComponent(
+              notification: notification,
+            isRead: index +1 > widget.numberOfNotifications ? false : true,
+          ),
         );
       },
     );

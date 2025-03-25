@@ -76,6 +76,10 @@ abstract class LocaleKeys {
   static const String anotherBuyer = "anotherBuyer";
 
 
+  static const String areaUnit = "areaUnit";
+  static const String contract = "contract";
+
+
 
   /// on boarding
 

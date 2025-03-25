@@ -63,7 +63,9 @@ class CodegenLoader extends AssetLoader{
   "available": "Available",
   "coming": "Coming",
   "iAmBuyer": "I am a Buyer",
-  "anotherBuyer": "Another Buyer"
+  "anotherBuyer": "Another Buyer",
+  "areaUnit": "M²",
+  "contract": "Contract"
 };
 static const Map<String,dynamic> _ar = {
   "somethingWentWrong": "حدث خطأ ما",
@@ -114,7 +116,9 @@ static const Map<String,dynamic> _ar = {
   "available": " متاح",
   "coming": " قادم",
   "iAmBuyer": " أنا مشتري",
-  "anotherBuyer": " مشتري آخر"
+  "anotherBuyer": " مشتري آخر",
+  "areaUnit": "م",
+  "contract": "عقد"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "ar": _ar};
 }
