@@ -45,9 +45,9 @@ class ChargeScreenWalletDataContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      walletData.totalBalance.isEmpty
+                      walletData.currentBalance.isEmpty
                           ? '0'
-                          : walletData.totalBalance,
+                          : walletData.currentBalance,
                       style: getBoldStyle(
                           color: ColorManager.whiteColor,
                           fontSize: FontSize.s32),
