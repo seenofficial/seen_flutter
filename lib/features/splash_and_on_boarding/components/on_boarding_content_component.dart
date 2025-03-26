@@ -1,13 +1,15 @@
 import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/constants/app_assets.dart';
+import 'package:enmaa/configuration/managers/color_manager.dart';
+import 'package:enmaa/configuration/managers/font_manager.dart';
+import 'package:enmaa/configuration/managers/style_manager.dart';
+import 'package:enmaa/core/components/button_app_component.dart';
+import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../configuration/managers/color_manager.dart';
-import '../../../configuration/managers/font_manager.dart';
-import '../../../configuration/managers/style_manager.dart';
-import '../../../core/components/button_app_component.dart';
-import '../../../core/components/svg_image_component.dart';
-import '../../../core/constants/app_assets.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../core/translation/locale_keys.dart';
 import '../models/on_boarding_mdoel.dart';
 
 class OnBoardingPageWidget extends StatelessWidget {
@@ -84,16 +86,13 @@ class OnBoardingPageWidget extends StatelessWidget {
                   ),
                   SizedBox(width: context.scale(8)),
                   Text(
-                    'تواصل معانا',
+                    LocaleKeys.contactUs.tr(),
                     style: getBoldStyle(color: ColorManager.yellowColor, fontSize: FontSize.s14),
                   ),
                 ],
               ),
             ),
             onTap: () async {
-              /// TODO: Implement phone call feature
-
-
               final Uri url = Uri.parse('https://github.com/AmrAbdElHamed26');
 
               if (await canLaunchUrl(url)) {
@@ -101,19 +100,14 @@ class OnBoardingPageWidget extends StatelessWidget {
               } else {
                 CustomSnackBar.show(
                   context: context,
-                  message: 'حدث خطأ أثناء فتح الرابط',
+                  message: LocaleKeys.errorOpeningLink.tr(),
                   type: SnackBarType.error,
                 );
               }
-
             },
           ),
-
-
         ],
       ),
     );
   }
-
 }
-

@@ -65,5 +65,21 @@
   "contract": "Contrat",
   "english": "Anglais",
   "arabic": "Arabe",
-  "french": "Français"
+  "french": "Français",
+
+  "contactUs": "Contactez-nous",
+  "errorOpeningLink": "Une erreur s'est produite lors de l'ouverture du lien",
+
+  "onBoardingTitle1": "Bienvenue dans notre application",
+  "onBoardingDesc1": "Profitez de la meilleure expérience d'achat pour les plantes d'intérieur et d'extérieur.",
+  "onBoardingDesc2": "Nous avons une large gamme de plantes adaptées à chaque maison et jardin.",
+  "onBoardingTitle2": "Meilleures offres",
+  "onBoardingDesc3": "Bénéficiez de réductions exclusives sur vos plantes préférées.",
+  "onBoardingDesc4": "Nos offres sont constamment mises à jour pour répondre à tous les besoins.",
+  "onBoardingTitle3": "Achetez facilement",
+  "onBoardingDesc5": "Profitez d'une expérience d'achat fluide et rapide avec notre interface simple.",
+  "onBoardingDesc6": "Ajoutez vos produits au panier et payez en toute simplicité.",
+  "login": "Connexion",
+  "next": "Suivant",
+  "skip": "Passer"
 }

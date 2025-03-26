@@ -68,7 +68,21 @@ class CodegenLoader extends AssetLoader{
   "contract": "Contract",
   "english": "English",
   "arabic": "Arabic",
-  "french": "French"
+  "french": "French",
+  "contactUs": "Contact Us",
+  "errorOpeningLink": "An error occurred while opening the link",
+  "onBoardingTitle1": "Welcome to our app",
+  "onBoardingDesc1": "Enjoy the best shopping experience for indoor and outdoor plants.",
+  "onBoardingDesc2": "We have a wide range of plants suitable for every home and garden.",
+  "onBoardingTitle2": "Best Offers",
+  "onBoardingDesc3": "Get exclusive discounts on your favorite plants.",
+  "onBoardingDesc4": "Our offers are constantly updated to suit all needs.",
+  "onBoardingTitle3": "Shop Easily",
+  "onBoardingDesc5": "Enjoy a smooth and fast shopping experience with our simple interface.",
+  "onBoardingDesc6": "Add your products to the cart and pay with ease.",
+  "login": "Login",
+  "next": "Next",
+  "skip": "Skip"
 };
 static const Map<String,dynamic> _fr = {
   "somethingWentWrong": "Quelque chose s'est mal passé",
@@ -124,7 +138,21 @@ static const Map<String,dynamic> _fr = {
   "contract": "Contrat",
   "english": "Anglais",
   "arabic": "Arabe",
-  "french": "Français"
+  "french": "Français",
+  "contactUs": "Contactez-nous",
+  "errorOpeningLink": "Une erreur s'est produite lors de l'ouverture du lien",
+  "onBoardingTitle1": "Bienvenue dans notre application",
+  "onBoardingDesc1": "Profitez de la meilleure expérience d'achat pour les plantes d'intérieur et d'extérieur.",
+  "onBoardingDesc2": "Nous avons une large gamme de plantes adaptées à chaque maison et jardin.",
+  "onBoardingTitle2": "Meilleures offres",
+  "onBoardingDesc3": "Bénéficiez de réductions exclusives sur vos plantes préférées.",
+  "onBoardingDesc4": "Nos offres sont constamment mises à jour pour répondre à tous les besoins.",
+  "onBoardingTitle3": "Achetez facilement",
+  "onBoardingDesc5": "Profitez d'une expérience d'achat fluide et rapide avec notre interface simple.",
+  "onBoardingDesc6": "Ajoutez vos produits au panier et payez en toute simplicité.",
+  "login": "Connexion",
+  "next": "Suivant",
+  "skip": "Passer"
 };
 static const Map<String,dynamic> _ar = {
   "somethingWentWrong": "حدث خطأ ما",
@@ -180,7 +208,21 @@ static const Map<String,dynamic> _ar = {
   "contract": "عقد",
   "english": "الإنجليزية",
   "arabic": "العربية",
-  "french": "الفرنسية"
+  "french": "الفرنسية",
+  "contactUs": "تواصل معانا",
+  "errorOpeningLink": "حدث خطأ أثناء فتح الرابط",
+  "onBoardingTitle1": "مرحبًا بك في تطبيقنا",
+  "onBoardingDesc1": "استمتع بأفضل تجربة تسوق للنباتات الداخلية والخارجية.",
+  "onBoardingDesc2": "لدينا مجموعة واسعة من النباتات المناسبة لكل منزل وحديقة.",
+  "onBoardingTitle2": "أفضل العروض",
+  "onBoardingDesc3": "احصل على خصومات حصرية على أفضل النباتات المفضلة لديك.",
+  "onBoardingDesc4": "عروضنا محدثة باستمرار لتناسب جميع الاحتياجات.",
+  "onBoardingTitle3": "تسوق بسهولة",
+  "onBoardingDesc5": "استمتع بتجربة تسوق سلسة وسريعة مع واجهتنا البسيطة.",
+  "onBoardingDesc6": "أضف منتجاتك إلى السلة وقم بالدفع بكل سهولة.",
+  "login": "تسجيل الدخول",
+  "next": "التالي",
+  "skip": "تخطي"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "fr": _fr, "ar": _ar};
 }

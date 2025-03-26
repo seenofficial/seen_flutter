@@ -69,7 +69,23 @@
   "contract" : "Contract",
   "english" : "English",
     "arabic" : "Arabic",
-    "french" : "French"
+    "french" : "French",
+
+  "contactUs": "Contact Us",
+  "errorOpeningLink": "An error occurred while opening the link",
+
+  "onBoardingTitle1": "Welcome to our app",
+  "onBoardingDesc1": "Enjoy the best shopping experience for indoor and outdoor plants.",
+  "onBoardingDesc2": "We have a wide range of plants suitable for every home and garden.",
+  "onBoardingTitle2": "Best Offers",
+  "onBoardingDesc3": "Get exclusive discounts on your favorite plants.",
+  "onBoardingDesc4": "Our offers are constantly updated to suit all needs.",
+  "onBoardingTitle3": "Shop Easily",
+  "onBoardingDesc5": "Enjoy a smooth and fast shopping experience with our simple interface.",
+  "onBoardingDesc6": "Add your products to the cart and pay with ease.",
+  "login": "Login",
+  "next": "Next",
+  "skip": "Skip"
 
 
 

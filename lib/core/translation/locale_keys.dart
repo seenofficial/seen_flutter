@@ -82,9 +82,23 @@ abstract class LocaleKeys {
   static const String english = "english";
   static const String french = "french";
 
+  static const contactUs = 'contactUs';
+  static const errorOpeningLink = 'errorOpeningLink';
 
+  static const onBoardingTitle1 = 'onBoardingTitle1';
+  static const onBoardingDesc1 = 'onBoardingDesc1';
+  static const onBoardingDesc2 = 'onBoardingDesc2';
+  static const onBoardingTitle2 = 'onBoardingTitle2';
+  static const onBoardingDesc3 = 'onBoardingDesc3';
+  static const onBoardingDesc4 = 'onBoardingDesc4';
+  static const onBoardingTitle3 = 'onBoardingTitle3';
+  static const onBoardingDesc5 = 'onBoardingDesc5';
+  static const onBoardingDesc6 = 'onBoardingDesc6';
+  static const login = 'login';
+  static const next = 'next';
+  static const skip = 'skip';
 
   /// on boarding
 
-//  static const
+
 }

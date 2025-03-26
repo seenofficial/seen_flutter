@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../configuration/managers/font_manager.dart';
@@ -21,31 +23,31 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<OnBoardingPage> _onBoardingPages = [
+
+  List<OnBoardingPage> _onBoardingPages(BuildContext context) => [
     OnBoardingPage(
       image: AppAssets.onBoarding1,
-      title: 'ليس مجرد عقار.. بل اختيار لحياتك',
-      description1: 'رحلتك للعثور على العقار المثالي تبدأ هنا..',
-      description2: 'حيث نساعدك في كل خطوة لضمان اختيار يلبي تطلعاتك واحتياجاتك.',
+      title: LocaleKeys.onBoardingTitle1.tr(),
+      description1: LocaleKeys.onBoardingDesc1.tr(),
+      description2: LocaleKeys.onBoardingDesc2.tr(),
     ),
     OnBoardingPage(
       image: AppAssets.onBoarding2,
-      title: 'عقد إلكتروني يضمن حقوقك بكل ثقة',
-      description1: 'نوفر لك عقدًا إلكترونيًا موثّقًا يحفظ حقوق جميع الأطراف لتتم عملية التملك أو الإيجار بكل شفافية وأمان.',
-      description2: 'ثقتك هي أولويتنا!',
+      title: LocaleKeys.onBoardingTitle2.tr(),
+      description1: LocaleKeys.onBoardingDesc3.tr(),
+      description2: LocaleKeys.onBoardingDesc4.tr(),
     ),
     OnBoardingPage(
       image: AppAssets.onBoarding3,
-      title: 'معك في كل خطوة!',
-      description1: 'إذا واجهت أي استفسار، فريق إنماء هنا لمساعدتك.',
-      description2: 'عند اختيارك للعقار، نبقى على تواصل لضمان تجربة سلسة وآمنة.',
+      title: LocaleKeys.onBoardingTitle3.tr(),
+      description1: LocaleKeys.onBoardingDesc5.tr(),
+      description2: LocaleKeys.onBoardingDesc6.tr(),
     ),
   ];
 
   void _navigateToNextPage() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('access_token');
-
 
     if (token != null && token.isNotEmpty) {
       Navigator.pushReplacementNamed(context, RoutersNames.layoutScreen);
@@ -56,6 +58,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final pages = _onBoardingPages(context);
+
     return Scaffold(
       backgroundColor: ColorManager.whiteColor,
       body: SafeArea(
@@ -66,32 +70,32 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 Expanded(
                   child: PageView.builder(
                     controller: _pageController,
-                    itemCount: _onBoardingPages.length,
+                    itemCount: pages.length,
                     onPageChanged: (page) => setState(() => _currentPage = page),
                     itemBuilder: (context, index) => OnBoardingPageWidget(
-                      page: _onBoardingPages[index],
+                      page: pages[index],
                       currentPage: _currentPage,
-                      totalPages: _onBoardingPages.length,
+                      totalPages: pages.length,
                     ),
                   ),
                 ),
-                _buildPageIndicator(),
+                _buildPageIndicator(pages.length),
                 const SizedBox(height: 16),
-                _buildNavigationButton(),
+                _buildNavigationButton(pages.length),
               ],
             ),
-            _buildSkipButton(),
+            _buildSkipButton(pages.length),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPageIndicator() {
+  Widget _buildPageIndicator(int totalPages) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        _onBoardingPages.length,
+        totalPages,
             (index) => AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           width: _currentPage == index ? context.scale(10) : context.scale(6),
@@ -106,7 +110,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  Widget _buildNavigationButton() {
+  Widget _buildNavigationButton(int totalPages) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ButtonAppComponent(
@@ -119,7 +123,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         ),
         buttonContent: Center(
           child: Text(
-            _currentPage == _onBoardingPages.length - 1 ? 'تسجيل الدخول' : 'التالي',
+            _currentPage == totalPages - 1
+                ? LocaleKeys.login.tr()
+                : LocaleKeys.next.tr(),
             style: getBoldStyle(
               color: ColorManager.whiteColor,
               fontSize: FontSize.s14,
@@ -127,7 +133,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
         ),
         onTap: () {
-          if (_currentPage == _onBoardingPages.length - 1) {
+          if (_currentPage == totalPages - 1) {
             _navigateToNextPage();
           } else {
             _pageController.nextPage(
@@ -140,16 +146,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  Widget _buildSkipButton() {
+  Widget _buildSkipButton(int totalPages) {
     return PositionedDirectional(
       top: context.scale(16),
       end: context.scale(16),
       child: Visibility(
-        visible: _currentPage != _onBoardingPages.length - 1,
+        visible: _currentPage != totalPages - 1,
         child: GestureDetector(
-          onTap: ()=> _navigateToNextPage(),
+          onTap: _navigateToNextPage,
           child: Text(
-            'تخطي',
+            LocaleKeys.skip.tr(),
             style: getMediumStyle(
               color: ColorManager.blackColor,
               fontSize: FontSize.s12,
