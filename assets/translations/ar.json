@@ -110,7 +110,27 @@
 
   "notificationsScreenTitle": "الإشعارات",
   "notificationsScreenNoNotifications": "لا توجد إشعارات",
-  "notificationsScreenExploreOffers": "استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة"
+  "notificationsScreenExploreOffers": "استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة",
+
+  "emptyScreenNoBookings": "ليس لديك أي حجوزات حالياً",
+  "emptyScreenBrowseOffers": "تصفح العروض المتاحة واحجز ما يناسبك بسهولة!",
+  "emptyScreenExploreOffers": "استكشف العروض المتاحة",
+
+  "emptyScreenNoFavorites": "ليس لديك أي مفضلات حاليًا",
+  "emptyScreenAddFavorites": "استكشف العروض وأضف ما يعجبك إلى المفضلة بسهولة",
+
+  "errorScreenTitle": "حدث خطأ غير متوقع",
+  "errorScreenMessage": "يبدو أن هناك مشكلة، يرجى المحاولة مرة أخرى لاحقًا.",
+  "errorScreenBackToHome": "العودة إلى الصفحة الرئيسية",
+
+    "chargeWalletScreenTitle": "سجل المعاملات المالية",
+    "chargeScreenCurrentBalance": "رصيدك الحالي",
+    "chargeScreenCurrency": "جنية",
+    "chargeScreenWithdraw": "سحب",
+    "transactionHistoryTitle": "سجل المعاملات",
+    "transactionHistoryNoTransactions": "لا توجد معاملات حتى الآن",
+    "transactionHistoryEmptyMessage": "عند إجراء أي معاملة، ستظهر هنا فورًا."
+
 
 
 }

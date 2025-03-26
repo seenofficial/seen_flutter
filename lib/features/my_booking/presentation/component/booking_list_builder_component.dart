@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:enmaa/core/screens/property_empty_screen.dart';
 import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/home_module/presentation/components/real_state_card_component.dart';
 
+import '../../../../core/translation/locale_keys.dart';
 import '../controller/my_booking_cubit.dart';
 
 class BookingListBuilderComponent extends StatelessWidget {
@@ -52,9 +54,10 @@ class BookingListBuilderComponent extends StatelessWidget {
 
           if (requestState.isLoaded && bookings.isEmpty && !state.isLoadingMore) {
             return EmptyScreen(
-              alertText1: 'لا توجد حجوزات ${status.toName}',
-              alertText2: 'استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة',
-              buttonText: 'استكشف العروض المتاحة',
+              alertText1: LocaleKeys.emptyScreenNoBookings.tr(),
+              alertText2: LocaleKeys.emptyScreenBrowseOffers.tr(),
+              buttonText: LocaleKeys.emptyScreenExploreOffers.tr(),
+              showActionButtonIcon: false,
               onTap: () {
                 Navigator.pushNamed(context, RoutersNames.layoutScreen, arguments: 0);
               },

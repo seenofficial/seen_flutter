@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/extensions/status_extension.dart';
 import 'package:enmaa/features/my_booking/presentation/component/booking_list_builder_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:enmaa/core/components/app_bar_component.dart';
 import 'package:enmaa/core/utils/enums.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../component/tab_bar_component.dart';
 import '../controller/my_booking_cubit.dart';
 
@@ -79,8 +81,8 @@ class _MyBookingScreenState extends State<MyBookingScreen> with TickerProviderSt
       backgroundColor: Colors.grey.shade100,
       body: Column(
         children: [
-          const AppBarComponent(
-            appBarTextMessage: 'حجوزاتي',
+            AppBarComponent(
+            appBarTextMessage: LocaleKeys.myBookings.tr(),
             showNotificationIcon: false,
             showLocationIcon: false,
             centerText: true,

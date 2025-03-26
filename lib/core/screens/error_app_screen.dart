@@ -1,6 +1,8 @@
 import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../configuration/managers/color_manager.dart';
 import '../../configuration/managers/font_manager.dart';
 import '../../configuration/managers/style_manager.dart';
@@ -53,12 +55,12 @@ class ErrorAppScreen extends StatelessWidget {
                     children: [
                       SvgImageComponent(
                         iconPath: AppAssets.errorImage,
-                        width: constraints.maxWidth ,
+                        width: constraints.maxWidth,
                         height: constraints.maxHeight * 0.6,
                       ),
                       SizedBox(height: context.scale(24)),
                       Text(
-                        'حدث خطأ غير متوقع',
+                        LocaleKeys.errorScreenTitle.tr(),
                         style: getBoldStyle(
                           color: ColorManager.blackColor,
                           fontSize: FontSize.s18,
@@ -66,7 +68,7 @@ class ErrorAppScreen extends StatelessWidget {
                       ),
                       SizedBox(height: context.scale(8)),
                       Text(
-                        'يبدو أن هناك مشكلة، يرجى المحاولة مرة أخرى لاحقًا.',
+                        LocaleKeys.errorScreenMessage.tr(),
                         style: getMediumStyle(
                           color: ColorManager.grey,
                           fontSize: FontSize.s12,
@@ -93,7 +95,7 @@ class ErrorAppScreen extends StatelessWidget {
                                 ),
                                 SizedBox(width: context.scale(8)),
                                 Text(
-                                  'العودة إلى الصفحة الرئيسية',
+                                  LocaleKeys.errorScreenBackToHome.tr(),
                                   style: getBoldStyle(
                                     color: ColorManager.whiteColor,
                                     fontSize: FontSize.s14,

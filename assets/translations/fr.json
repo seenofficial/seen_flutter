@@ -106,5 +106,24 @@
 
   "notificationsScreenTitle": "Notifications",
   "notificationsScreenNoNotifications": "Aucune notification",
-  "notificationsScreenExploreOffers": "Explorez les offres et ajoutez ce que vous aimez pour créer de nouvelles réservations"
+  "notificationsScreenExploreOffers": "Explorez les offres et ajoutez ce que vous aimez pour créer de nouvelles réservations",
+
+  "emptyScreenNoBookings": "Vous n'avez aucune réservation pour le moment",
+  "emptyScreenBrowseOffers": "Parcourez les offres disponibles et réservez facilement ce qui vous convient !",
+  "emptyScreenExploreOffers": "Découvrez les offres disponibles",
+
+  "emptyScreenNoFavorites": "Vous n'avez aucun favori pour le moment",
+  "emptyScreenAddFavorites": "Explorez les offres et ajoutez facilement ce que vous aimez à vos favoris",
+
+  "errorScreenTitle": "Une erreur inattendue s'est produite",
+  "errorScreenMessage": "Il semble qu'il y ait un problème, veuillez réessayer plus tard.",
+  "errorScreenBackToHome": "Retour à la page d'accueil",
+
+  "chargeWalletScreenTitle": "Historique des transactions financières",
+  "chargeScreenCurrentBalance": "Votre solde actuel",
+  "chargeScreenCurrency": "EGP",
+  "chargeScreenWithdraw": "Retrait",
+  "transactionHistoryTitle": "Historique des transactions",
+  "transactionHistoryNoTransactions": "Aucune transaction pour le moment",
+  "transactionHistoryEmptyMessage": "Une fois que vous effectuez une transaction, elle apparaîtra ici immédiatement."
 }

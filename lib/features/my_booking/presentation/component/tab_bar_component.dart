@@ -85,7 +85,6 @@ class CustomTabBar extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Icon
                     SvgImageComponent(
                       width: 20,
                       height: 20,
@@ -95,14 +94,16 @@ class CustomTabBar extends StatelessWidget {
                           : ColorManager.blackColor,
                     ),
                     const SizedBox(width: 8),
-                    // Text
-                    Text(
-                      status.toName,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: tabController.index == tabStatuses.indexOf(status)
-                            ? ColorManager.whiteColor
-                            : ColorManager.blackColor,
+                    Expanded(
+                      child: Text(
+                        status.toName,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: tabController.index == tabStatuses.indexOf(status)
+                              ? ColorManager.whiteColor
+                              : ColorManager.blackColor,
+                        ),
                       ),
                     ),
                   ],

@@ -27,7 +27,7 @@ abstract class LocaleKeys {
 
   static const home = 'home' ;
   static const myBookings = 'myBookings' ;
-  static const favorites = 'wish_list' ;
+  static const favorites = 'favorites' ;
   static const myProfile = 'myProfile' ;
 
 
@@ -125,5 +125,24 @@ abstract class LocaleKeys {
   static const String notificationsScreenNoNotifications = 'notificationsScreenNoNotifications';
   static const String notificationsScreenExploreOffers = 'notificationsScreenExploreOffers';
 
+  static const String emptyScreenNoBookings = 'emptyScreenNoBookings';
+  static const String emptyScreenBrowseOffers = 'emptyScreenBrowseOffers';
+  static const String emptyScreenExploreOffers = 'emptyScreenExploreOffers';
+
+
+  static const String emptyScreenNoFavorites = 'emptyScreenNoFavorites';
+  static const String emptyScreenAddFavorites = 'emptyScreenAddFavorites';
+
+  static const String errorScreenTitle = 'errorScreenTitle';
+  static const String errorScreenMessage = 'errorScreenMessage';
+  static const String errorScreenBackToHome = 'errorScreenBackToHome';
+
+  static const String chargeWalletScreenTitle = 'chargeWalletScreenTitle';
+  static const String chargeScreenCurrentBalance = 'chargeScreenCurrentBalance';
+  static const String chargeScreenCurrency = 'chargeScreenCurrency';
+  static const String chargeScreenWithdraw = 'chargeScreenWithdraw';
+  static const String transactionHistoryTitle = 'transactionHistoryTitle';
+  static const String transactionHistoryNoTransactions = 'transactionHistoryNoTransactions';
+  static const String transactionHistoryEmptyMessage = 'transactionHistoryEmptyMessage';
 
 }

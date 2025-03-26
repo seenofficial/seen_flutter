@@ -1,5 +1,7 @@
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
@@ -27,7 +29,7 @@ class ChargeWalletScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TransactionHistoryList(
-              title: 'سجل المعاملات المالية',
+              title: LocaleKeys.chargeWalletScreenTitle.tr(),
             ),
           ),
         ],

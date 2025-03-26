@@ -6,6 +6,8 @@ import 'package:enmaa/core/screens/error_app_screen.dart';
 import 'package:enmaa/core/screens/property_empty_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/font_manager.dart';
 import '../../../../core/components/app_bar_component.dart';
@@ -16,7 +18,7 @@ import '../components/wallet_data_container.dart';
 import '../controller/wallet_cubit.dart';
 
 class TransactionHistoryList extends StatelessWidget {
-  const TransactionHistoryList({super.key, this.title = 'سجل المعاملات'});
+  const TransactionHistoryList({super.key, this.title = ''});
 
   final String title;
 
@@ -26,7 +28,7 @@ class TransactionHistoryList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          title.isEmpty ? LocaleKeys.transactionHistoryTitle.tr() : title,
           style: getBoldStyle(
             color: ColorManager.primaryColor,
             fontSize: FontSize.s18,
@@ -35,16 +37,16 @@ class TransactionHistoryList extends StatelessWidget {
         SizedBox(height: context.scale(16)),
         BlocBuilder<WalletCubit, WalletState>(
           builder: (context, state) {
-            if ( state.getTransactionHistoryDataState.isLoading) {
+            if (state.getTransactionHistoryDataState.isLoading) {
               return _buildShimmerList(context);
             } else if (state.getTransactionHistoryDataState.isLoaded) {
               final List<TransactionHistoryEntity> transactionHistory = state.transactions;
-              if ( transactionHistory.isEmpty) {
+              if (transactionHistory.isEmpty) {
                 return SizedBox(
                   height: context.scale(300),
-                  child: const EmptyScreen(
-                    alertText1: 'لا توجد معاملات حتى الآن',
-                    alertText2: 'عند إجراء أي معاملة، ستظهر هنا فورًا.',
+                  child: EmptyScreen(
+                    alertText1: LocaleKeys.transactionHistoryNoTransactions.tr(),
+                    alertText2: LocaleKeys.transactionHistoryEmptyMessage.tr(),
                   ),
                 );
               }

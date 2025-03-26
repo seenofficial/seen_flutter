@@ -110,7 +110,27 @@
 
   "notificationsScreenTitle": "Notifications",
   "notificationsScreenNoNotifications": "No notifications",
-  "notificationsScreenExploreOffers": "Explore offers and add what you like to create new bookings"
+  "notificationsScreenExploreOffers": "Explore offers and add what you like to create new bookings",
+
+  "emptyScreenNoBookings": "You have no bookings at the moment",
+  "emptyScreenBrowseOffers": "Browse available offers and book what suits you easily!",
+  "emptyScreenExploreOffers": "Explore available offers",
+
+  "emptyScreenNoFavorites": "You have no favorites at the moment",
+  "emptyScreenAddFavorites": "Explore offers and add what you like to your favorites easily",
+
+  "errorScreenTitle": "An unexpected error occurred",
+  "errorScreenMessage": "It looks like there is a problem, please try again later.",
+  "errorScreenBackToHome": "Back to home page",
+
+  "chargeWalletScreenTitle": "Financial Transactions History",
+  "chargeScreenCurrentBalance": "Your Current Balance",
+  "chargeScreenCurrency": "EGP",
+  "chargeScreenWithdraw": "Withdraw",
+  "transactionHistoryTitle": "Transaction History",
+  "transactionHistoryNoTransactions": "No transactions yet",
+  "transactionHistoryEmptyMessage": "Once you make a transaction, it will appear here immediately."
+
 
 
 

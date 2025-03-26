@@ -85,7 +85,7 @@ class CodegenLoader extends AssetLoader{
   "skip": "Skip",
   "floor_label": "Floor",
   "floors_label": "Floors",
-  "apartment_per_floor_label": "Apartments per floor",
+  "apartment_per_floor_label": "Apartments/floor",
   "starting_from": "Starting from ",
   "furnished": "Furnished",
   "not_furnished": "Not furnished",
@@ -104,7 +104,22 @@ class CodegenLoader extends AssetLoader{
   "homeErrorOccurred": "An error occurred",
   "notificationsScreenTitle": "Notifications",
   "notificationsScreenNoNotifications": "No notifications",
-  "notificationsScreenExploreOffers": "Explore offers and add what you like to create new bookings"
+  "notificationsScreenExploreOffers": "Explore offers and add what you like to create new bookings",
+  "emptyScreenNoBookings": "You have no bookings at the moment",
+  "emptyScreenBrowseOffers": "Browse available offers and book what suits you easily!",
+  "emptyScreenExploreOffers": "Explore available offers",
+  "emptyScreenNoFavorites": "You have no favorites at the moment",
+  "emptyScreenAddFavorites": "Explore offers and add what you like to your favorites easily",
+  "errorScreenTitle": "An unexpected error occurred",
+  "errorScreenMessage": "It looks like there is a problem, please try again later.",
+  "errorScreenBackToHome": "Back to home page",
+  "chargeWalletScreenTitle": "Financial Transactions History",
+  "chargeScreenCurrentBalance": "Your Current Balance",
+  "chargeScreenCurrency": "EGP",
+  "chargeScreenWithdraw": "Withdraw",
+  "transactionHistoryTitle": "Transaction History",
+  "transactionHistoryNoTransactions": "No transactions yet",
+  "transactionHistoryEmptyMessage": "Once you make a transaction, it will appear here immediately."
 };
 static const Map<String,dynamic> _fr = {
   "somethingWentWrong": "Quelque chose s'est mal passé",
@@ -196,7 +211,22 @@ static const Map<String,dynamic> _fr = {
   "homeErrorOccurred": "Une erreur s'est produite",
   "notificationsScreenTitle": "Notifications",
   "notificationsScreenNoNotifications": "Aucune notification",
-  "notificationsScreenExploreOffers": "Explorez les offres et ajoutez ce que vous aimez pour créer de nouvelles réservations"
+  "notificationsScreenExploreOffers": "Explorez les offres et ajoutez ce que vous aimez pour créer de nouvelles réservations",
+  "emptyScreenNoBookings": "Vous n'avez aucune réservation pour le moment",
+  "emptyScreenBrowseOffers": "Parcourez les offres disponibles et réservez facilement ce qui vous convient !",
+  "emptyScreenExploreOffers": "Découvrez les offres disponibles",
+  "emptyScreenNoFavorites": "Vous n'avez aucun favori pour le moment",
+  "emptyScreenAddFavorites": "Explorez les offres et ajoutez facilement ce que vous aimez à vos favoris",
+  "errorScreenTitle": "Une erreur inattendue s'est produite",
+  "errorScreenMessage": "Il semble qu'il y ait un problème, veuillez réessayer plus tard.",
+  "errorScreenBackToHome": "Retour à la page d'accueil",
+  "chargeWalletScreenTitle": "Historique des transactions financières",
+  "chargeScreenCurrentBalance": "Votre solde actuel",
+  "chargeScreenCurrency": "EGP",
+  "chargeScreenWithdraw": "Retrait",
+  "transactionHistoryTitle": "Historique des transactions",
+  "transactionHistoryNoTransactions": "Aucune transaction pour le moment",
+  "transactionHistoryEmptyMessage": "Une fois que vous effectuez une transaction, elle apparaîtra ici immédiatement."
 };
 static const Map<String,dynamic> _ar = {
   "somethingWentWrong": "حدث خطأ ما",
@@ -288,7 +318,22 @@ static const Map<String,dynamic> _ar = {
   "homeErrorOccurred": "حدث خطأ",
   "notificationsScreenTitle": "الإشعارات",
   "notificationsScreenNoNotifications": "لا توجد إشعارات",
-  "notificationsScreenExploreOffers": "استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة"
+  "notificationsScreenExploreOffers": "استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة",
+  "emptyScreenNoBookings": "ليس لديك أي حجوزات حالياً",
+  "emptyScreenBrowseOffers": "تصفح العروض المتاحة واحجز ما يناسبك بسهولة!",
+  "emptyScreenExploreOffers": "استكشف العروض المتاحة",
+  "emptyScreenNoFavorites": "ليس لديك أي مفضلات حاليًا",
+  "emptyScreenAddFavorites": "استكشف العروض وأضف ما يعجبك إلى المفضلة بسهولة",
+  "errorScreenTitle": "حدث خطأ غير متوقع",
+  "errorScreenMessage": "يبدو أن هناك مشكلة، يرجى المحاولة مرة أخرى لاحقًا.",
+  "errorScreenBackToHome": "العودة إلى الصفحة الرئيسية",
+  "chargeWalletScreenTitle": "سجل المعاملات المالية",
+  "chargeScreenCurrentBalance": "رصيدك الحالي",
+  "chargeScreenCurrency": "جنية",
+  "chargeScreenWithdraw": "سحب",
+  "transactionHistoryTitle": "سجل المعاملات",
+  "transactionHistoryNoTransactions": "لا توجد معاملات حتى الآن",
+  "transactionHistoryEmptyMessage": "عند إجراء أي معاملة، ستظهر هنا فورًا."
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "fr": _fr, "ar": _ar};
 }

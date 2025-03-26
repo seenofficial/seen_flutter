@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/extensions/request_states_extension.dart';
@@ -10,6 +11,7 @@ import '../../../../core/components/app_bar_component.dart';
 import '../../../../core/components/card_listing_shimmer.dart';
 import '../../../../core/screens/error_app_screen.dart';
 import '../../../../core/screens/property_empty_screen.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../../../home_module/presentation/components/real_state_card_component.dart';
 import '../../favorite_imports.dart';
 import '../components/wish_list_property_card.dart';
@@ -23,8 +25,8 @@ class WishListScreen extends StatelessWidget {
       backgroundColor: ColorManager.greyShade,
       body: Column(
         children: [
-          const AppBarComponent(
-            appBarTextMessage: 'المفضله',
+          AppBarComponent(
+            appBarTextMessage: LocaleKeys.favorites.tr(),
             showNotificationIcon: false,
             showLocationIcon: false,
              centerText: true,
@@ -41,14 +43,15 @@ class WishListScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state.getPropertyWishListState.isLoaded) {
                     if (state.propertyWishList.isEmpty) {
-                      return EmptyScreen (
-                        alertText1: 'ليس لديك أي مفضلات حاليًا',
-                        alertText2: 'استكشف العروض وأضف ما يعجبك إلى المفضلة بسهولة',
-                        buttonText: 'استكشف العروض المتاحة',
-                        onTap: (){
+                      return EmptyScreen(
+                        alertText1: LocaleKeys.emptyScreenNoFavorites.tr(),
+                        alertText2: LocaleKeys.emptyScreenAddFavorites.tr(),
+                        buttonText: LocaleKeys.emptyScreenExploreOffers.tr(),
+                        showActionButtonIcon: false,
+                        onTap: () {
                           Navigator.pushNamed(context, RoutersNames.layoutScreen, arguments: 0);
                         },
-                      ) ;
+                      );
                     }
                     return ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 8),
