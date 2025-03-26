@@ -77,6 +77,7 @@ void main() async {
           HydratedStorageDirectory((await getTemporaryDirectory()).path));
 
   await SharedPreferencesService().init();
+  Locale initialLocale = Locale('en'); // Default to English
 
   final prefs = await SharedPreferences.getInstance();
   var token = prefs.get('access_token');
@@ -85,6 +86,29 @@ void main() async {
   }
 
   bool isFirstLaunch = await SharedPreferencesService().isFirstLaunch();
+
+
+  if (isFirstLaunch) {
+    String? deviceLanguageCode = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+    if (['en', 'ar', 'fr'].contains(deviceLanguageCode)) {
+      initialLocale = Locale(deviceLanguageCode);
+      await SharedPreferencesService().setLanguage(deviceLanguageCode);
+    }
+    else {
+      initialLocale = Locale('en');
+      await SharedPreferencesService().setLanguage('en');
+    }
+
+  } else {
+    String storedLanguage = SharedPreferencesService().language;
+
+    if( storedLanguage.isEmpty){
+      storedLanguage ='en';
+      SharedPreferencesService().setLanguage('en');
+    }
+    initialLocale = Locale(storedLanguage);
+  }
+
   String initialRoute;
   if (isFirstLaunch) {
     initialRoute = RoutersNames.onBoardingScreen;
@@ -96,11 +120,9 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('en'), Locale('ar')],
+      supportedLocales: [Locale('en'), Locale('ar') ,Locale('fr')],
       path: 'assets/translations',
       assetLoader: const CodegenLoader(), // load translation assets files
-      startLocale: const Locale('ar'),
-      fallbackLocale: const Locale('en'),
       child: MyApp(
         initialRoute: initialRoute,
       ),
@@ -151,7 +173,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
-          locale: const Locale('ar'),
+          locale: Locale(SharedPreferencesService().language),
           theme: ThemeData(
             fontFamily:
                 context.locale == const Locale('en') ? 'Cairo' : 'Cairo',

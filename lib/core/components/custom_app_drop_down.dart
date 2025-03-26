@@ -5,6 +5,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final List<T> items;
   final T? value;
   final ValueChanged<T?>? onChanged;
+  final Widget Function(T)? itemBuilder;
   final String Function(T)? itemToString;
   final Widget? icon;
   final InputDecoration? decoration;
@@ -12,13 +13,16 @@ class CustomDropdown<T> extends StatelessWidget {
   final double? menuMaxHeight;
   final TextStyle? style;
   final double height;
-  final Widget? hint; // Add a hint parameter
+  final Widget? hint;
+  final Function(bool)? onMenuStateChange;
+
 
   const CustomDropdown({
     super.key,
     required this.items,
     this.value,
     this.onChanged,
+    this.itemBuilder,
     this.itemToString,
     this.icon,
     this.decoration,
@@ -26,7 +30,8 @@ class CustomDropdown<T> extends StatelessWidget {
     this.menuMaxHeight,
     this.style,
     this.height = 40,
-    this.hint, // Initialize the hint parameter
+    this.hint,
+    this.onMenuStateChange,
   });
 
   @override
@@ -37,20 +42,24 @@ class CustomDropdown<T> extends StatelessWidget {
         DropdownButtonHideUnderline(
           child: DropdownButton2<T>(
             isExpanded: true,
+
             value: value,
             onChanged: onChanged,
-            hint: hint, // Add hint here
+            hint: hint,
             items: items.map((T item) {
               return DropdownMenuItem<T>(
                 value: item,
-                child: Text(
-                  itemToString != null ? itemToString!(item) : item.toString(),
+                child: itemBuilder != null
+                    ? itemBuilder!(item)
+                    : Text(
+                  itemToString != null
+                      ? itemToString!(item)
+                      : item.toString(),
                   style: style,
                 ),
               );
             }).toList(),
-
-            /// **Fix: Use `buttonStyleData` instead of `buttonDecoration`**
+            onMenuStateChange: onMenuStateChange,
             buttonStyleData: ButtonStyleData(
               height: height,
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -62,7 +71,6 @@ class CustomDropdown<T> extends StatelessWidget {
                   : null,
             ),
 
-            /// **Fix: Use `dropdownStyleData` instead of `dropdownDecoration`**
             dropdownStyleData: DropdownStyleData(
               maxHeight: menuMaxHeight ?? 200,
               decoration: BoxDecoration(
@@ -70,7 +78,6 @@ class CustomDropdown<T> extends StatelessWidget {
                 color: dropdownColor,
               ),
             ),
-
           ),
         ),
       ],

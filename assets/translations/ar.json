@@ -63,7 +63,12 @@
   "iAmBuyer": " أنا مشتري",
   "anotherBuyer": " مشتري آخر",
   "areaUnit" : "م",
-  "contract" : "عقد"
+  "contract" : "عقد",
+
+  "english" : "الإنجليزية",
+    "arabic" : "العربية",
+  "french" : "الفرنسية"
+
 
 
 

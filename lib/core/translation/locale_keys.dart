@@ -78,6 +78,9 @@ abstract class LocaleKeys {
 
   static const String areaUnit = "areaUnit";
   static const String contract = "contract";
+  static const String arabic = "arabic";
+  static const String english = "english";
+  static const String french = "french";
 
 
 

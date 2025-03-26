@@ -1,0 +1,69 @@
+{
+  "somethingWentWrong": "Quelque chose s'est mal passé",
+  "badGateway": "Mauvaise Passerelle",
+  "internalServerError": "Erreur Interne du Serveur",
+  "notFound": "Non Trouvé",
+  "forbidden": "Interdit",
+  "unauthorized": "Non Autorisé",
+  "badRequest": "Mauvaise Requête",
+  "sendTimeout": "Délai d'Envoi Dépassé",
+  "receiveTimeout": "Délai de Réception Dépassé",
+  "connectionTimeout": "Délai de Connexion Dépassé",
+  "requestCancelled": "Demande Annulée",
+  "noInternet": "Pas de Connexion Internet",
+
+  "realEstate": "Immobilier",
+  "cars": "Voitures",
+  "halls": "Salles",
+  "hotels": "Hôtels",
+  "addYourRealState": "Ajouter Votre Bien",
+
+  "authenticateToAccessTheApp": "Veuillez vous authentifier pour accéder à l'application",
+
+  "home": "Accueil",
+  "myBookings": "Mes Réservations",
+  "favorites": "Favoris",
+  "myProfile": "Mon Profil",
+
+  "chooseYourIdealPropertyEasily": "Choisissez facilement votre propriété idéale",
+
+  "forSale": "À Vendre",
+  "forRent": "À Louer",
+
+  "apartment": "Appartement",
+  "villa": "Villa",
+  "land": "Terrain",
+  "building": "Bâtiment",
+
+  "studio": "Studio",
+  "duplex": "Duplex",
+  "penthouse": "Penthouse",
+
+  "residential": "Résidentiel",
+  "commercial": "Commercial",
+  "mixedUse": "Mixte",
+
+  "freehold": "Propriété Libre",
+  "agricultural": "Agricole",
+  "industrial": "Industriel",
+
+  "standalone": "Indépendant",
+  "twinHouse": "Maison Jumelée",
+  "townHouse": "Maison de Ville",
+
+  "active": "Actif",
+  "completed": "Terminé",
+  "cancelled": "Annulé",
+
+  "reserved": "Réservé",
+  "available": "Disponible",
+  "coming": "À Venir",
+
+  "iAmBuyer": "Je suis Acheteur",
+  "anotherBuyer": "Autre Acheteur",
+  "areaUnit": "M²",
+  "contract": "Contrat",
+  "english": "Anglais",
+  "arabic": "Arabe",
+  "french": "Français"
+}
