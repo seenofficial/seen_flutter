@@ -129,8 +129,33 @@
     "chargeScreenWithdraw": "سحب",
     "transactionHistoryTitle": "سجل المعاملات",
     "transactionHistoryNoTransactions": "لا توجد معاملات حتى الآن",
-    "transactionHistoryEmptyMessage": "عند إجراء أي معاملة، ستظهر هنا فورًا."
+    "transactionHistoryEmptyMessage": "عند إجراء أي معاملة، ستظهر هنا فورًا.",
 
+  "appControlsLanguage": "اللغة",
+  "appControlsTerms": "الشروط والأحكام",
+  "appControlsDarkMode": "تفعيل الوضع الليلي",
+  "appControlsNotifications": "الإشعارات",
+  "appControlsLinkError": "حدث خطأ أثناء فتح الرابط",
 
+  "languageSheetTitle": "اختر اللغة التي تريدها",
+  "languageSheetCancel": "إلغاء",
+  "languageSheetConfirm": "تأكيد",
 
+  "logOutAndContactUsLogOut": "تسجيل الخروج",
+  "logOutAndContactUsContactUs": "تواصل معنا",
+
+  "managePropertiesTitle": "إدارة عقاراتي",
+  "managePropertiesDescription": "يمكنك إدارة عقاراتك بكل سهولة.",
+
+  "nameAndPhoneGuestName": "مرحباً بك،",
+  "nameAndPhoneCreateAccount": "أنشئ حساباً لتحصل علي المميزات",
+
+  "removeAccountTitle": "حذف الحساب",
+  "removeAccountConfirmation": "هل أنت متأكد من حذف حسابك؟",
+  "removeAccountWarning": "سيتم حذف بياناتك نهائيًا دون إمكانية استعادتها.",
+  "removeAccountCancel": "إلغاء",
+  "removeAccountSuccessMessage": "تم حذف الحساب بنجاح",
+
+  "userScreensAppointments": "مواعيدي",
+  "userScreensElectronicContracts": "عقودي الإلكترونية"
 }

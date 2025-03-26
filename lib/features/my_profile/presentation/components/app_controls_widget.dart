@@ -6,6 +6,8 @@ import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/services/shared_preferences_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../core/components/custom_app_switch.dart';
 import '../../../../core/components/custom_bottom_sheet.dart';
@@ -16,7 +18,6 @@ import '../../../../core/services/handle_api_request_service.dart';
 import '../../../../core/services/service_locator.dart';
 import '../../../home_module/home_imports.dart';
 import 'package:flutter/material.dart';
-
 import 'language_bottom_sheet_component.dart';
 
 class AppControlsWidget extends StatefulWidget {
@@ -48,7 +49,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     showModalBottomSheet(
                       context: context,
                       backgroundColor: ColorManager.greyShade,
@@ -63,7 +64,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                           widget: LanguageBottomSheetComponent(),
                           padding: EdgeInsets.zero,
                           iconPath: AppAssets.localizationIcon,
-                          headerText: 'اللغة',
+                          headerText: LocaleKeys.appControlsLanguage.tr(),
                         );
                       },
                     );
@@ -78,31 +79,27 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                       ),
                       SizedBox(width: context.scale(8)),
                       Text(
-                        'اللغة',
+                        LocaleKeys.appControlsLanguage.tr(),
                         style: getBoldStyle(
                           color: ColorManager.blackColor,
                           fontSize: FontSize.s16,
                         ),
                       ),
                       const Spacer(),
-                      InkWell(
-                        onTap: () {},
-                        child: const Icon(Icons.arrow_forward_ios),
-                      ),
+                      const Icon(Icons.arrow_forward_ios),
                     ],
                   ),
                 ),
                 InkWell(
-                  onTap: ()async {
+                  onTap: () async {
                     final Uri url = Uri.parse('https://github.com/AmrAbdElHamed26');
-
                     if (await canLaunchUrl(url)) {
-                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                      await launchUrl(url, mode: LaunchMode.externalApplication);
                     } else {
-                    CustomSnackBar.show(
-                     message: 'حدث خطأ أثناء فتح الرابط',
-                    type: SnackBarType.error,
-                    );
+                      CustomSnackBar.show(
+                        message: LocaleKeys.appControlsLinkError.tr(),
+                        type: SnackBarType.error,
+                      );
                     }
                   },
                   child: Row(
@@ -115,21 +112,18 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                       ),
                       SizedBox(width: context.scale(8)),
                       Text(
-                        'الشروط والأحكام',
+                        LocaleKeys.appControlsTerms.tr(),
                         style: getBoldStyle(
                           color: ColorManager.blackColor,
                           fontSize: FontSize.s16,
                         ),
                       ),
                       const Spacer(),
-                      InkWell(
-                        onTap: () {},
-                        child: const Icon(Icons.arrow_forward_ios),
-                      ),
+                      const Icon(Icons.arrow_forward_ios),
                     ],
                   ),
                 ),
-               /* Row(
+                /* Row(
                   children: [
                     SvgImageComponent(
                       width: 20,
@@ -139,7 +133,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                     ),
                     SizedBox(width: context.scale(8)),
                     Text(
-                      ' تفعيل الوضع الليلي',
+                      LocaleKeys.appControlsDarkMode.tr(),
                       style: getBoldStyle(
                         color: ColorManager.blackColor,
                         fontSize: FontSize.s16,
@@ -155,7 +149,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                       },
                     ),
                   ],
-                ),*/
+                ), */
                 Row(
                   children: [
                     SvgImageComponent(
@@ -166,7 +160,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                     ),
                     SizedBox(width: context.scale(8)),
                     Text(
-                      'الإشعارات',
+                      LocaleKeys.appControlsNotifications.tr(),
                       style: getBoldStyle(
                         color: ColorManager.blackColor,
                         fontSize: FontSize.s16,
@@ -179,7 +173,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                         setState(() {
                           areNotificationsEnabled = value;
                         });
-                        _updateNotificationAvailability(context , value);
+                        _updateNotificationAvailability(context, value);
                       },
                     ),
                   ],
@@ -192,41 +186,34 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
     );
   }
 
-  Future<void> _updateNotificationAvailability(BuildContext context , bool notificationAvailability) async {
+  Future<void> _updateNotificationAvailability(BuildContext context, bool notificationAvailability) async {
     SharedPreferencesService().storeValue('notifications_enabled', notificationAvailability);
 
     final dio = ServiceLocator.getIt<DioService>();
 
     final result = await HandleRequestService.handleApiCall<void>(
           () async {
-            final response = await dio.patch(
-              url: ApiConstants.user,
-              data:FormData.fromMap( {
-                "notifications_enabled": notificationAvailability ,
-              }),
-              options: Options(contentType: 'multipart/form-data'),
-            );
-
+        final response = await dio.patch(
+          url: ApiConstants.user,
+          data: FormData.fromMap({
+            "notifications_enabled": notificationAvailability,
+          }),
+          options: Options(contentType: 'multipart/form-data'),
+        );
       },
     );
 
-    // Handle the result
     result.fold(
           (failure) {
-            SharedPreferencesService().storeValue('notifications_enabled', false);
-            areNotificationsEnabled = false ;
-            setState(() {
-
-            });
-            CustomSnackBar.show(
+        SharedPreferencesService().storeValue('notifications_enabled', false);
+        areNotificationsEnabled = false;
+        setState(() {});
+        CustomSnackBar.show(
           message: failure.message,
           type: SnackBarType.error,
         );
       },
-          (_) {
-
-      },
+          (_) {},
     );
   }
-
 }

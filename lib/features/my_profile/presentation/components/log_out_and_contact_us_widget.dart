@@ -1,7 +1,8 @@
 import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
@@ -28,7 +29,7 @@ class LogOutAndContactUsWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
-            onTap: ()async{
+            onTap: () async {
               final prefs = await SharedPreferences.getInstance();
               isAuth = false;
               prefs.clear();
@@ -43,7 +44,7 @@ class LogOutAndContactUsWidget extends StatelessWidget {
                   width: context.scale(8),
                 ),
                 Text(
-                  'تسجيل الخروج',
+                  LocaleKeys.logOutAndContactUsLogOut.tr(),
                   style: getSemiBoldStyle(
                       color: ColorManager.blackColor, fontSize: FontSize.s16),
                 ),
@@ -64,7 +65,7 @@ class LogOutAndContactUsWidget extends StatelessWidget {
                   width: context.scale(8),
                 ),
                 Text(
-                  'تواصل معنا',
+                  LocaleKeys.logOutAndContactUsContactUs.tr(),
                   style: getSemiBoldStyle(
                       color: ColorManager.blackColor, fontSize: FontSize.s16),
                 ),

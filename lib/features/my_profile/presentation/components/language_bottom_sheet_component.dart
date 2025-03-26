@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
@@ -46,7 +45,7 @@ class _LanguageBottomSheetComponentState extends State<LanguageBottomSheetCompon
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'اختر اللغة التي تريدها',
+                LocaleKeys.languageSheetTitle.tr(),
                 style: getBoldStyle(color: ColorManager.blackColor, fontSize: FontSize.s16),
               ),
               SizedBox(height: context.scale(8)),
@@ -118,7 +117,7 @@ class _LanguageBottomSheetComponentState extends State<LanguageBottomSheetCompon
                 ),
                 buttonContent: Center(
                   child: Text(
-                    'إلغاء',
+                    LocaleKeys.languageSheetCancel.tr(),
                     style: getMediumStyle(
                       color: ColorManager.blackColor,
                       fontSize: FontSize.s14,
@@ -139,7 +138,7 @@ class _LanguageBottomSheetComponentState extends State<LanguageBottomSheetCompon
                 ),
                 buttonContent: Center(
                   child: Text(
-                    'تأكيد',
+                    LocaleKeys.languageSheetConfirm.tr(),
                     style: getBoldStyle(
                       color: ColorManager.whiteColor,
                       fontSize: FontSize.s14,

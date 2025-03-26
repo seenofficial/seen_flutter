@@ -4,6 +4,8 @@ import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/main.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/need_to_login_component.dart';
@@ -21,24 +23,20 @@ class UserScreensWidget extends StatelessWidget {
         color: ColorManager.whiteColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding:  const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-            
                 InkWell(
-                  onTap: (){
-                    if(isAuth) {
+                  onTap: () {
+                    if (isAuth) {
                       Navigator.pushNamed(context, RoutersNames.userAppointmentsScreen);
-                    }
-                    else {
+                    } else {
                       needToLoginSnackBar();
-
                     }
                   },
                   child: Row(
@@ -46,22 +44,26 @@ class UserScreensWidget extends StatelessWidget {
                       SvgImageComponent(
                         width: 20,
                         height: 20,
-                        iconPath: AppAssets.myAppointmentIcon , color: ColorManager.grey,) ,
-                      SizedBox(width: context.scale(8),),
-                      Text('مواعيدي' , style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s16),),
+                        iconPath: AppAssets.myAppointmentIcon,
+                        color: ColorManager.grey,
+                      ),
+                      SizedBox(width: context.scale(8)),
+                      Text(
+                        LocaleKeys.userScreensAppointments.tr(),
+                        style: getBoldStyle(
+                            color: ColorManager.blackColor, fontSize: FontSize.s16),
+                      ),
                       Spacer(),
                       Icon(Icons.arrow_forward_ios)
                     ],
                   ),
                 ),
                 InkWell(
-                  onTap: (){
-                    if(isAuth) {
+                  onTap: () {
+                    if (isAuth) {
                       Navigator.pushNamed(context, RoutersNames.userElectronicContracts);
-                    }
-                    else {
+                    } else {
                       needToLoginSnackBar();
-
                     }
                   },
                   child: Row(
@@ -69,32 +71,25 @@ class UserScreensWidget extends StatelessWidget {
                       SvgImageComponent(
                         width: 20,
                         height: 20,
-                        iconPath: AppAssets.electronicContractIcon , color: ColorManager.grey,) ,
-                      SizedBox(width: context.scale(8),),
-                      Text('عقودي الإلكترونية' , style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s16),),
+                        iconPath: AppAssets.electronicContractIcon,
+                        color: ColorManager.grey,
+                      ),
+                      SizedBox(width: context.scale(8)),
+                      Text(
+                        LocaleKeys.userScreensElectronicContracts.tr(),
+                        style: getBoldStyle(
+                            color: ColorManager.blackColor, fontSize: FontSize.s16),
+                      ),
                       Spacer(),
-                      InkWell(
-                          onTap: (){
-                            if(isAuth) {
-
-                             }
-                            else {
-                              needToLoginSnackBar();
-                            }
-                          },
-                          child: Icon(Icons.arrow_forward_ios)
-                      )
+                      Icon(Icons.arrow_forward_ios)
                     ],
                   ),
                 ),
               ],
             ),
           ),
-
-
         ],
       ),
     );
-
   }
 }

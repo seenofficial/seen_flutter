@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../core/components/app_bar_component.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../../../home_module/home_imports.dart';
 import '../components/app_controls_widget.dart';
 import '../components/log_out_and_contact_us_widget.dart';
@@ -19,8 +21,8 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: ColorManager.greyShade,
       body: Column(
         children: [
-          const AppBarComponent(
-            appBarTextMessage: 'حسابي',
+            AppBarComponent(
+            appBarTextMessage: LocaleKeys.myProfile.tr(),
             showNotificationIcon: false,
             showLocationIcon: false,
             centerText: true,

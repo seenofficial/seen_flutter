@@ -129,7 +129,35 @@
   "chargeScreenWithdraw": "Withdraw",
   "transactionHistoryTitle": "Transaction History",
   "transactionHistoryNoTransactions": "No transactions yet",
-  "transactionHistoryEmptyMessage": "Once you make a transaction, it will appear here immediately."
+  "transactionHistoryEmptyMessage": "Once you make a transaction, it will appear here immediately.",
+
+  "appControlsLanguage": "Language",
+  "appControlsTerms": "Terms & Conditions",
+  "appControlsDarkMode": "Enable Dark Mode",
+  "appControlsNotifications": "Notifications",
+  "appControlsLinkError": "An error occurred while opening the link",
+
+  "languageSheetTitle": "Choose your preferred language",
+  "languageSheetCancel": "Cancel",
+  "languageSheetConfirm": "Confirm",
+
+  "logOutAndContactUsLogOut": "Log Out",
+  "logOutAndContactUsContactUs": "Contact Us",
+
+  "managePropertiesTitle": "Manage My Properties",
+  "managePropertiesDescription": "You can easily manage your properties.",
+
+  "nameAndPhoneGuestName": "Welcome,",
+  "nameAndPhoneCreateAccount": "Create an account to access exclusive features",
+
+  "removeAccountTitle": "Delete Account",
+  "removeAccountConfirmation": "Are you sure you want to delete your account?",
+  "removeAccountWarning": "Your data will be permanently deleted and cannot be recovered.",
+  "removeAccountCancel": "Cancel",
+  "removeAccountSuccessMessage": "Account successfully deleted",
+
+  "userScreensAppointments": "My Appointments",
+  "userScreensElectronicContracts": "My Electronic Contracts"
 
 
 

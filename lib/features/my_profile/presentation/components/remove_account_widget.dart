@@ -2,6 +2,8 @@ import 'package:enmaa/core/constants/api_constants.dart';
 import 'package:enmaa/core/services/service_locator.dart';
 import 'package:enmaa/core/services/shared_preferences_service.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import 'package:enmaa/core/components/custom_bottom_sheet.dart';
 import 'package:enmaa/core/components/need_to_login_component.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
@@ -44,7 +46,6 @@ class RemoveAccountWidget extends StatelessWidget {
       },
     );
 
-    // Handle the result
     result.fold(
           (failure) {
         CustomSnackBar.show(
@@ -54,7 +55,7 @@ class RemoveAccountWidget extends StatelessWidget {
       },
           (_) {
         CustomSnackBar.show(
-          message: 'تم حذف الحساب بنجاح',
+          message: LocaleKeys.removeAccountSuccessMessage.tr(),
           type: SnackBarType.success,
         );
       },
@@ -107,7 +108,7 @@ class RemoveAccountWidget extends StatelessWidget {
               width: context.scale(8),
             ),
             Text(
-              'حذف الحساب',
+              LocaleKeys.removeAccountTitle.tr(),
               style: getSemiBoldStyle(
                 color: ColorManager.redColor,
                 fontSize: FontSize.s16,
@@ -140,7 +141,7 @@ class DeleteAccountComponent extends StatelessWidget {
           height: context.scale(20),
         ),
         Text(
-          'هل أنت متأكد من حذف حسابك؟',
+          LocaleKeys.removeAccountConfirmation.tr(),
           style: getBoldStyle(
             color: ColorManager.blackColor,
             fontSize: FontSize.s18,
@@ -150,7 +151,7 @@ class DeleteAccountComponent extends StatelessWidget {
           height: context.scale(4),
         ),
         Text(
-          'سيتم حذف بياناتك نهائيًا دون إمكانية استعادتها.',
+          LocaleKeys.removeAccountWarning.tr(),
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
           textAlign: TextAlign.center,
@@ -174,7 +175,7 @@ class DeleteAccountComponent extends StatelessWidget {
                 ),
                 buttonContent: Center(
                   child: Text(
-                    'إلغاء',
+                    LocaleKeys.removeAccountCancel.tr(),
                     style: getMediumStyle(
                       color: ColorManager.blackColor,
                       fontSize: FontSize.s14,
@@ -195,7 +196,7 @@ class DeleteAccountComponent extends StatelessWidget {
                 ),
                 buttonContent: Center(
                   child: Text(
-                    'حذف الحساب',
+                    LocaleKeys.removeAccountTitle.tr(),
                     style: getBoldStyle(
                       color: ColorManager.whiteColor,
                       fontSize: FontSize.s14,

@@ -3,6 +3,8 @@ import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/services/shared_preferences_service.dart';
 import 'package:enmaa/main.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../home_module/home_imports.dart';
@@ -15,14 +17,19 @@ class NameAndPhoneWidget extends StatefulWidget {
 }
 
 class _NameAndPhoneWidgetState extends State<NameAndPhoneWidget> {
-  String name='' , phoneNumber= '';
+  String name = '', phoneNumber = '';
 
   @override
   void initState() {
-    name = SharedPreferencesService().userName.isNotEmpty ? SharedPreferencesService().userName : 'مرحباً بك،';
-    phoneNumber = SharedPreferencesService().userPhone.isNotEmpty ? SharedPreferencesService().userPhone : 'أنشئ حساباً لتحصل علي المميزات';
+    name = SharedPreferencesService().userName.isNotEmpty
+        ? SharedPreferencesService().userName
+        : LocaleKeys.nameAndPhoneGuestName.tr();
+    phoneNumber = SharedPreferencesService().userPhone.isNotEmpty
+        ? SharedPreferencesService().userPhone
+        : LocaleKeys.nameAndPhoneCreateAccount.tr();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,16 +39,14 @@ class _NameAndPhoneWidgetState extends State<NameAndPhoneWidget> {
         color: ColorManager.whiteColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding:  const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: InkWell(
-        onTap: (){
-          if(isAuth){
+        onTap: () {
+          if (isAuth) {
             Navigator.of(context).pushNamed(RoutersNames.editUserDataScreen);
-          }
-          else{
+          } else {
             Navigator.of(context).pushNamed(RoutersNames.authenticationFlow);
           }
-
         },
         child: Row(
           children: [
@@ -50,9 +55,14 @@ class _NameAndPhoneWidgetState extends State<NameAndPhoneWidget> {
               height: context.scale(50),
               decoration: BoxDecoration(
                 color: ColorManager.primaryColor,
-                shape:  BoxShape.circle,
+                shape: BoxShape.circle,
               ),
-              child: Center(child: Text(name[0] , style: getBoldStyle(color: ColorManager.whiteColor , fontSize: FontSize.s18),)),
+              child: Center(
+                  child: Text(
+                    name[0],
+                    style: getBoldStyle(
+                        color: ColorManager.whiteColor, fontSize: FontSize.s18),
+                  )),
             ),
             SizedBox(
               width: context.scale(8),
@@ -61,19 +71,23 @@ class _NameAndPhoneWidgetState extends State<NameAndPhoneWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(name , style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s16),),
-                Text(phoneNumber , style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s14),)
+                Text(
+                  name,
+                  style: getBoldStyle(
+                      color: ColorManager.blackColor, fontSize: FontSize.s16),
+                ),
+                Text(
+                  phoneNumber,
+                  style: getBoldStyle(
+                      color: ColorManager.blackColor, fontSize: FontSize.s14),
+                )
               ],
             ),
-
             Spacer(),
-
             Icon(Icons.arrow_forward_ios)
-
           ],
         ),
       ),
     );
-
   }
 }

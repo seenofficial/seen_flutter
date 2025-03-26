@@ -125,5 +125,33 @@
   "chargeScreenWithdraw": "Retrait",
   "transactionHistoryTitle": "Historique des transactions",
   "transactionHistoryNoTransactions": "Aucune transaction pour le moment",
-  "transactionHistoryEmptyMessage": "Une fois que vous effectuez une transaction, elle apparaîtra ici immédiatement."
+  "transactionHistoryEmptyMessage": "Une fois que vous effectuez une transaction, elle apparaîtra ici immédiatement.",
+
+  "appControlsLanguage": "Langue",
+  "appControlsTerms": "Conditions générales",
+  "appControlsDarkMode": "Activer le mode sombre",
+  "appControlsNotifications": "Notifications",
+  "appControlsLinkError": "Une erreur est survenue lors de l'ouverture du lien",
+
+  "languageSheetTitle": "Choisissez votre langue préférée",
+  "languageSheetCancel": "Annuler",
+  "languageSheetConfirm": "Confirmer",
+
+  "logOutAndContactUsLogOut": "Se déconnecter",
+  "logOutAndContactUsContactUs": "Contactez-nous",
+
+  "managePropertiesTitle": "Gérer mes propriétés",
+  "managePropertiesDescription": "Vous pouvez gérer vos propriétés facilement.",
+
+  "nameAndPhoneGuestName": "Bienvenue,",
+  "nameAndPhoneCreateAccount": "Créez un compte pour accéder aux fonctionnalités exclusives",
+
+  "removeAccountTitle": "Supprimer le compte",
+  "removeAccountConfirmation": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+  "removeAccountWarning": "Vos données seront supprimées définitivement et ne pourront pas être récupérées.",
+  "removeAccountCancel": "Annuler",
+  "removeAccountSuccessMessage": "Compte supprimé avec succès",
+
+  "userScreensAppointments": "Mes rendez-vous",
+  "userScreensElectronicContracts": "Mes contrats électroniques"
 }

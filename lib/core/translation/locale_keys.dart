@@ -145,4 +145,33 @@ abstract class LocaleKeys {
   static const String transactionHistoryNoTransactions = 'transactionHistoryNoTransactions';
   static const String transactionHistoryEmptyMessage = 'transactionHistoryEmptyMessage';
 
+
+  static const String appControlsLanguage = 'appControlsLanguage';
+  static const String appControlsTerms = 'appControlsTerms';
+  static const String appControlsDarkMode = 'appControlsDarkMode';
+  static const String appControlsNotifications = 'appControlsNotifications';
+  static const String appControlsLinkError = 'appControlsLinkError';
+
+  static const String languageSheetTitle = 'languageSheetTitle';
+  static const String languageSheetCancel = 'languageSheetCancel';
+  static const String languageSheetConfirm = 'languageSheetConfirm';
+
+
+  static const String logOutAndContactUsLogOut = 'logOutAndContactUsLogOut';
+  static const String logOutAndContactUsContactUs = 'logOutAndContactUsContactUs';
+
+  static const String managePropertiesTitle = 'managePropertiesTitle';
+  static const String managePropertiesDescription = 'managePropertiesDescription';
+
+  static const String nameAndPhoneGuestName = 'nameAndPhoneGuestName';
+  static const String nameAndPhoneCreateAccount = 'nameAndPhoneCreateAccount';
+
+  static const String removeAccountTitle = 'removeAccountTitle';
+  static const String removeAccountConfirmation = 'removeAccountConfirmation';
+  static const String removeAccountWarning = 'removeAccountWarning';
+  static const String removeAccountCancel = 'removeAccountCancel';
+  static const String removeAccountSuccessMessage = 'removeAccountSuccessMessage';
+
+  static const String userScreensAppointments = 'userScreensAppointments';
+  static const String userScreensElectronicContracts = 'userScreensElectronicContracts';
 }

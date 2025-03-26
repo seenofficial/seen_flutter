@@ -3,6 +3,8 @@ import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/main.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/need_to_login_component.dart';
@@ -17,12 +19,10 @@ class ManageMyPropertiesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if(isAuth) {
+        if (isAuth) {
           Navigator.pushNamed(context, RoutersNames.myPropertiesScreen);
-        }
-        else {
+        } else {
           needToLoginSnackBar();
-
         }
       },
       child: Container(
@@ -40,12 +40,12 @@ class ManageMyPropertiesWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'إدارة عقاراتي',
+                  LocaleKeys.managePropertiesTitle.tr(),
                   style: getBoldStyle(
                       color: ColorManager.primaryColor, fontSize: FontSize.s18),
                 ),
                 Text(
-                  'يمكنك إدارة عقاراتك بكل سهولة.',
+                  LocaleKeys.managePropertiesDescription.tr(),
                   style: getSemiBoldStyle(
                       color: ColorManager.blackColor, fontSize: FontSize.s14),
                 )
