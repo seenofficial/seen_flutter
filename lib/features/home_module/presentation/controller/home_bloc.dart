@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/entites/image_entity.dart';
 import 'package:enmaa/core/extensions/property_type_extension.dart';
@@ -13,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/constants/json_keys.dart';
 import '../../../../core/errors/failure.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../real_estates/domain/entities/base_property_entity.dart';
 import '../../domain/entities/app_service_entity.dart';
@@ -200,30 +202,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         List<AppServiceEntity> appServicessList = [
           AppServiceEntity(
-            text: 'عقارات',
+            text: LocaleKeys.realEstate.tr(),
             image: AppAssets.aqarIcon,
           ),
           AppServiceEntity(
-            text: 'السيارات',
+            text: LocaleKeys.cars.tr() ,
             image: AppAssets.carIcon,
           ),
           AppServiceEntity(
-            text: 'القاعات',
+            text:  LocaleKeys.halls.tr()   ,
             image: AppAssets.hallIcon,
           ),
           AppServiceEntity(
-            text: ' الفنادق',
+            text: LocaleKeys.hotels.tr() ,
             image: AppAssets.hotelIcon,
           ),
-          AppServiceEntity(
-            text: ' الفنادق',
-            image: AppAssets.hotelIcon,
-          ),
+
 
         ];
-        // Add the new entity to the list
 
-        // Emit the new state
+
         emit(state.copyWith(
           appServicesState: RequestState.loaded,
           appServices: appServicessList,
