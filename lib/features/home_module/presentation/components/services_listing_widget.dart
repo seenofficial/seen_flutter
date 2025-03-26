@@ -1,9 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/configuration/managers/value_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
-import 'package:enmaa/features/home_module/presentation/components/real_state_card_component.dart';
-
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../home_imports.dart';
 
 class ServicesListingWidget extends StatelessWidget {
@@ -35,7 +35,7 @@ class ServicesListingWidget extends StatelessWidget {
               InkWell(
                 onTap: seeMoreAction,
                 child: Text(
-                  'عرض الكل',
+                  LocaleKeys.servicesSeeAll.tr(),
                   style: getUnderlineRegularStyle(color: ColorManager.blackColor),
                 ),
               ),
@@ -43,7 +43,6 @@ class ServicesListingWidget extends StatelessWidget {
           ),
         ),
 
-        // list cards
         SizedBox(height: context.scale(12)),
 
         listingWidget,

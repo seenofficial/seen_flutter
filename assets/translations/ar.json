@@ -80,10 +80,37 @@
   "onBoardingDesc4": "عروضنا محدثة باستمرار لتناسب جميع الاحتياجات.",
   "onBoardingTitle3": "تسوق بسهولة",
   "onBoardingDesc5": "استمتع بتجربة تسوق سلسة وسريعة مع واجهتنا البسيطة.",
-  "onBoardingDesc6": "أضف منتجاتك إلى السلة وقم بالدفع بكل سهولة.",
+    "onBoardingDesc6": "أضف منتجاتك إلى السلة وقم بالدفع بكل سهولة.",
   "login": "تسجيل الدخول",
   "next": "التالي",
-  "skip": "تخطي"
+  "skip": "تخطي",
+
+  "floor_label": "طابق",
+  "floors_label": "طوابق",
+  "apartment_per_floor_label": "شقق لكل طابق",
+  "starting_from": "تبدأ من ",
+  "furnished": "مفروش",
+  "not_furnished": "غير مفروش",
+  "licensed": "مرخص",
+  "not_licensed": "غير مرخص",
+  "servicesSeeAll": "عرض الكل",
+
+
+  "homeAppBarMessage": "كل الخيارات بين يديك",
+  "homeSearchHint": "ابحث عن كل ما تريد معرفته ...",
+  "homeServiceNotAvailable": "غير متاحة الآن ويتم العمل عليها",
+  "homeApartments": "شقق",
+  "homeLands": "أراضي",
+  "homeBuildings": "مباني",
+  "homeVillas": "فلل",
+  "homeNoAvailable": "لا توجد",
+  "homeNearby": "بالقرب منك",
+  "homeErrorOccurred": "حدث خطأ",
+
+
+  "notificationsScreenTitle": "الإشعارات",
+  "notificationsScreenNoNotifications": "لا توجد إشعارات",
+  "notificationsScreenExploreOffers": "استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة"
 
 
 }

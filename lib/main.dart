@@ -110,7 +110,7 @@ void main() async {
   }
 
   String initialRoute;
-  if (!isFirstLaunch) {
+  if (isFirstLaunch) {
     initialRoute = RoutersNames.onBoardingScreen;
   } else if (token != null) {
     initialRoute = RoutersNames.biometricScreen;

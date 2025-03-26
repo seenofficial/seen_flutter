@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/components/need_to_login_component.dart';
 import 'package:enmaa/core/extensions/furnished_status_extension.dart';
 import 'package:enmaa/core/extensions/land_license_status_extension.dart';
@@ -24,6 +25,7 @@ import '../../../../core/components/reserved_component.dart';
 import '../../../../core/components/svg_image_component.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/services/service_locator.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../real_estates/domain/entities/building_entity.dart';
 import '../../../real_estates/domain/entities/land_entity.dart';
@@ -37,20 +39,19 @@ import '../screens/home_screen.dart';
 class RealStateCardComponent extends StatelessWidget {
   final double width;
   final double height;
-
-  final Function? onTap ;
+  final Function? onTap;
   final PropertyEntity currentProperty;
-
-  final bool showWishlistButton ;
+  final bool showWishlistButton;
   final Widget? cardActions;
+
   const RealStateCardComponent({
     super.key,
     required this.width,
     required this.height,
     required this.currentProperty,
     this.onTap,
-    this.showWishlistButton = true ,
-    this.cardActions ,
+    this.showWishlistButton = true,
+    this.cardActions,
   });
 
   @override
@@ -102,11 +103,11 @@ class RealStateCardComponent extends StatelessWidget {
                               fontSize: FontSize.s12,
                             ),
                           ),
-                          if(isScreenWidth)
-                          Visibility(
-                            visible: currentProperty.status != 'available',
-                            child: ReservedComponent(),
-                          )
+                          if (isScreenWidth)
+                            Visibility(
+                              visible: currentProperty.status != 'available',
+                              child: ReservedComponent(),
+                            )
                         ],
                       ),
                       SizedBox(height: context.scale(8)),
@@ -121,117 +122,101 @@ class RealStateCardComponent extends StatelessWidget {
               ],
             ),
           ),
-          if(showWishlistButton)
-          PositionedDirectional(
-            top: context.scale(8),
-            end: context.scale(8),
-            child: Builder(
-              builder: (context) {
-                bool isInWishlist = currentProperty.isInWishlist;
+          if (showWishlistButton)
+            PositionedDirectional(
+              top: context.scale(8),
+              end: context.scale(8),
+              child: Builder(
+                builder: (context) {
+                  bool isInWishlist = currentProperty.isInWishlist;
+                  final bool isHomeScreen = context.findAncestorWidgetOfExactType<HomeScreen>() != null;
 
-                final bool isHomeScreen = context.findAncestorWidgetOfExactType<HomeScreen>() != null;
+                  return CircularIconButton(
+                    iconPath: isInWishlist
+                        ? AppAssets.selectedHeartIcon
+                        : AppAssets.heartIcon,
+                    containerSize: context.scale(40),
+                    iconSize: context.scale(20),
+                    onPressed: () {
+                      if (isAuth) {
+                        String propertyId = currentProperty.id.toString();
 
-                return CircularIconButton(
-                  iconPath: isInWishlist
-                      ? AppAssets.selectedHeartIcon
-                      : AppAssets.heartIcon,
-                  containerSize: context.scale(40),
-                  iconSize: context.scale(20),
-                  onPressed: () {
-                    if(isAuth){
-                      String propertyId = currentProperty.id.toString();
-
-
-
-                      /// todo :refactor this code to be more readable
-                      if (isHomeScreen) {
-                        if (isInWishlist) {
-                          context.read<HomeBloc>().add(
+                        if (isHomeScreen) {
+                          if (isInWishlist) {
+                            context.read<HomeBloc>().add(
                               RemovePropertyFromWishlist(
                                 propertyId: propertyId,
                                 propertyType: getPropertyType(currentProperty.propertyType),
-                              )
-                          );
-
-
-                          context.read<WishListCubit>().removePropertyFromWishList(propertyId);
-                        } else {
-                          context.read<HomeBloc>().add(
+                              ),
+                            );
+                            context.read<WishListCubit>().removePropertyFromWishList(propertyId);
+                          } else {
+                            context.read<HomeBloc>().add(
                               AddPropertyToWishlist(
                                 propertyId: propertyId,
                                 propertyType: getPropertyType(currentProperty.propertyType),
-                              )
-                          );
-
-                          context.read<WishListCubit>().addPropertyToWishList(propertyId);
-                        }
-                      } else {
-                        final realEstateState = context.read<RealEstateCubit>().state;
-                        final PropertyOperationType operationType = currentProperty.operation == 'for_sale'
-                            ? PropertyOperationType.forSale
-                            : PropertyOperationType.forRent;
-
-                        final bool isLoaded = operationType == PropertyOperationType.forSale
-                            ? realEstateState.getPropertiesSaleState == RequestState.loaded
-                            : realEstateState.getPropertiesRentState == RequestState.loaded;
-
-                        if (isLoaded) {
-                          if (isInWishlist) {
-                            context.read<RealEstateCubit>().removePropertyFromWishList(propertyId);
-                            context.read<WishListCubit>().removePropertyFromWishList(propertyId);
-                          } else {
-                            context.read<RealEstateCubit>().addPropertyToWishList(propertyId);
+                              ),
+                            );
                             context.read<WishListCubit>().addPropertyToWishList(propertyId);
                           }
-                        }
-                        else {
+                        } else {
+                          final realEstateState = context.read<RealEstateCubit>().state;
+                          final PropertyOperationType operationType =
+                          currentProperty.operation == 'for_sale'
+                              ? PropertyOperationType.forSale
+                              : PropertyOperationType.forRent;
 
-                          if (isInWishlist) {
-                            context.read<HomeBloc>().add(
+                          final bool isLoaded = operationType == PropertyOperationType.forSale
+                              ? realEstateState.getPropertiesSaleState == RequestState.loaded
+                              : realEstateState.getPropertiesRentState == RequestState.loaded;
+
+                          if (isLoaded) {
+                            if (isInWishlist) {
+                              context.read<RealEstateCubit>().removePropertyFromWishList(propertyId);
+                              context.read<WishListCubit>().removePropertyFromWishList(propertyId);
+                            } else {
+                              context.read<RealEstateCubit>().addPropertyToWishList(propertyId);
+                              context.read<WishListCubit>().addPropertyToWishList(propertyId);
+                            }
+                          } else {
+                            if (isInWishlist) {
+                              context.read<HomeBloc>().add(
                                 RemovePropertyFromWishlist(
                                   propertyId: propertyId,
                                   propertyType: getPropertyType(currentProperty.propertyType),
-                                )
-                            );
-
-
-                            context.read<WishListCubit>().removePropertyFromWishList(propertyId);
-                          } else {
-                            context.read<HomeBloc>().add(
+                                ),
+                              );
+                              context.read<WishListCubit>().removePropertyFromWishList(propertyId);
+                            } else {
+                              context.read<HomeBloc>().add(
                                 AddPropertyToWishlist(
                                   propertyId: propertyId,
                                   propertyType: getPropertyType(currentProperty.propertyType),
-                                )
-                            );
-
-                            context.read<WishListCubit>().addPropertyToWishList(propertyId);
+                                ),
+                              );
+                              context.read<WishListCubit>().addPropertyToWishList(propertyId);
+                            }
                           }
                         }
+                      } else {
+                        needToLoginSnackBar();
                       }
-                    }
-                    else {
-                      needToLoginSnackBar();
-                    }
-                  },
-                );
-
+                    },
+                  );
                 },
+              ),
             ),
-          ),
-
-          if(!showWishlistButton && cardActions != null)
-          PositionedDirectional(
-            top: context.scale(8),
-            end: context.scale(8),
-            child: cardActions! ,
-          ),
-
+          if (!showWishlistButton && cardActions != null)
+            PositionedDirectional(
+              top: context.scale(8),
+              end: context.scale(8),
+              child: cardActions!,
+            ),
         ],
       ),
     );
   }
 
-  // Reusable method for building the location row
   Widget _buildLocationRow(BuildContext context) {
     return Row(
       children: [
@@ -244,125 +229,95 @@ class RealStateCardComponent extends StatelessWidget {
         Expanded(
           child: Text(
             '${currentProperty.state.name} - ${currentProperty.city.name}',
-            overflow:  TextOverflow.ellipsis,
+            overflow: TextOverflow.ellipsis,
             style: getLightStyle(
-                color: ColorManager.blackColor, fontSize: FontSize.s11),
+              color: ColorManager.blackColor,
+              fontSize: FontSize.s11,
+            ),
           ),
         ),
       ],
     );
   }
 
-  // Reusable method for building the details row
   Widget _buildDetailsRow(BuildContext context) {
     bool isScreenWidth = width == MediaQuery.of(context).size.width;
 
-
-    if(currentProperty.propertyType == 'apartment'){
+    if (currentProperty.propertyType == 'apartment') {
       var floor = (currentProperty as ApartmentEntity).floor;
       var rooms = (currentProperty as ApartmentEntity).rooms;
       var bathrooms = (currentProperty as ApartmentEntity).bathrooms;
-      FurnishingStatus isFurnishing = (currentProperty as ApartmentEntity).isFurnished == true ? FurnishingStatus.furnished : FurnishingStatus.notFurnished;
+      FurnishingStatus isFurnishing = (currentProperty as ApartmentEntity).isFurnished == true
+          ? FurnishingStatus.furnished
+          : FurnishingStatus.notFurnished;
 
       return Row(
         children: [
-          _buildDetailItem(
-              context, AppAssets.areaIcon, currentProperty.area.toString()),
+          _buildDetailItem(context, AppAssets.areaIcon, currentProperty.area.toString()),
           _buildVerticalDivider(context),
-
           if (isScreenWidth)
-            _buildDetailItem(context, isFurnishing.isFurnished? AppAssets.furnishedIcon : AppAssets.emptyIcon, isFurnishing.toArabic),
+            _buildDetailItem(context, isFurnishing.isFurnished ? AppAssets.furnishedIcon : AppAssets.emptyIcon, isFurnishing.toArabic.tr()),
           if (isScreenWidth) _buildVerticalDivider(context),
-
-
-          if(isScreenWidth)
+          if (isScreenWidth)
             _buildDetailItem(
-                context, AppAssets.landIcon, 'الدور $floor'),
-
+              context,
+              AppAssets.landIcon,
+              '${LocaleKeys.floorLabel.tr()} $floor',
+            ),
           if (isScreenWidth) _buildVerticalDivider(context),
-
-          _buildDetailItem(
-              context, AppAssets.bedIcon, rooms.toString()),
+          _buildDetailItem(context, AppAssets.bedIcon, rooms.toString()),
           _buildVerticalDivider(context),
-          _buildDetailItem(
-              context, AppAssets.bathIcon,  bathrooms.toString()),
+          _buildDetailItem(context, AppAssets.bathIcon, bathrooms.toString()),
         ],
       );
-
-    }
-    else if(currentProperty.propertyType == 'land'){
-
-      LandLicenseStatus landLicenseStatus = (currentProperty as LandEntity).isLicensed == true ? LandLicenseStatus.licensed : LandLicenseStatus.notLicensed;
+    } else if (currentProperty.propertyType == 'land') {
+      LandLicenseStatus landLicenseStatus = (currentProperty as LandEntity).isLicensed == true
+          ? LandLicenseStatus.licensed
+          : LandLicenseStatus.notLicensed;
       return Row(
         children: [
-          _buildDetailItem(
-              context, AppAssets.areaIcon, currentProperty.area.toString()),
+          _buildDetailItem(context, AppAssets.areaIcon, currentProperty.area.toString()),
           _buildVerticalDivider(context),
-
-
-
-          _buildDetailItem(
-              context, AppAssets.readyForBuilding, landLicenseStatus.toArabic),
-
-
+          _buildDetailItem(context, AppAssets.readyForBuilding, landLicenseStatus.toName()),
         ],
       );
-
-    }
-    if(currentProperty.propertyType == 'villa'){
+    } else if (currentProperty.propertyType == 'villa') {
       var floor = (currentProperty as VillaEntity).floors;
       var rooms = (currentProperty as VillaEntity).rooms;
       var bathrooms = (currentProperty as VillaEntity).bathrooms;
-      FurnishingStatus isFurnishing = (currentProperty as VillaEntity).isFurnished == true ? FurnishingStatus.furnished : FurnishingStatus.notFurnished;
+      FurnishingStatus isFurnishing = (currentProperty as VillaEntity).isFurnished == true
+          ? FurnishingStatus.furnished
+          : FurnishingStatus.notFurnished;
 
       return Row(
         children: [
-          _buildDetailItem(
-              context, AppAssets.areaIcon, currentProperty.area.toString()),
+          _buildDetailItem(context, AppAssets.areaIcon, currentProperty.area.toString()),
           _buildVerticalDivider(context),
-
           if (isScreenWidth)
-            _buildDetailItem(context, isFurnishing.isFurnished? AppAssets.furnishedIcon : AppAssets.emptyIcon, isFurnishing.toArabic),
+            _buildDetailItem(context, isFurnishing.isFurnished ? AppAssets.furnishedIcon : AppAssets.emptyIcon, isFurnishing.toArabic.tr()),
           if (isScreenWidth) _buildVerticalDivider(context),
-
-
-          if(isScreenWidth)
-            _buildDetailItem(
-                context, AppAssets.landIcon, 'طوابق $floor'),
-
+          if (isScreenWidth)
+            _buildDetailItem(context, AppAssets.landIcon, '${LocaleKeys.floorsLabel.tr()} $floor'),
           if (isScreenWidth) _buildVerticalDivider(context),
-
-          _buildDetailItem(
-              context, AppAssets.bedIcon, rooms.toString()),
+          _buildDetailItem(context, AppAssets.bedIcon, rooms.toString()),
           _buildVerticalDivider(context),
-          _buildDetailItem(
-              context, AppAssets.bathIcon,  bathrooms.toString()),
+          _buildDetailItem(context, AppAssets.bathIcon, bathrooms.toString()),
         ],
       );
-
-    }
-    else {
+    } else {
       var numberOfFloors = (currentProperty as BuildingEntity).totalFloors;
       var apartmentPerFloor = (currentProperty as BuildingEntity).apartmentPerFloor;
       return Row(
         children: [
-          _buildDetailItem(
-              context, AppAssets.areaIcon, currentProperty.area.toString()),
+          _buildDetailItem(context, AppAssets.areaIcon, currentProperty.area.toString()),
           _buildVerticalDivider(context),
-
           if (isScreenWidth)
-            _buildDetailItem(context, AppAssets.landIcon, ' $numberOfFloors طوابق '),
+            _buildDetailItem(context, AppAssets.landIcon, '${LocaleKeys.floorsLabel.tr()} $numberOfFloors'),
           if (isScreenWidth) _buildVerticalDivider(context),
-
-          _buildDetailItem(
-              context, AppAssets.apartmentIcon, ' $apartmentPerFloor  / طابق '),
-
+          _buildDetailItem(context, AppAssets.apartmentIcon, '${LocaleKeys.apartmentPerFloorLabel.tr()} $apartmentPerFloor'),
         ],
       );
-
     }
-
-
   }
 
   Widget _buildDetailItem(BuildContext context, String iconPath, String text) {
@@ -376,8 +331,8 @@ class RealStateCardComponent extends StatelessWidget {
         SizedBox(width: context.scale(4)),
         Text(
           text,
-          style: getBoldStyle(
-              color: ColorManager.blackColor, fontSize: FontSize.s10),
+          overflow: TextOverflow.ellipsis,
+          style: getBoldStyle(color: ColorManager.blackColor, fontSize: FontSize.s10),
         ),
         SizedBox(width: context.scale(5)),
       ],
@@ -398,83 +353,84 @@ class RealStateCardComponent extends StatelessWidget {
   Widget _buildPriceRow(BuildContext context) {
     bool isScreenWidth = MediaQuery.of(context).size.width == width;
 
-    String currentSubType ='' ;
-
-    if(currentProperty.propertyType == 'apartment'){
+    String currentSubType = '';
+    if (currentProperty.propertyType == 'apartment') {
       currentSubType = getApartmentType(currentProperty.propertySubType).toName;
-    }
-    else if(currentProperty.propertyType == 'villa'){
-      currentSubType =  getVillaType(currentProperty.propertySubType).toName;
-    }
-    else if(currentProperty.propertyType == 'building'){
-      currentSubType =  getBuildingType(currentProperty.propertySubType).toName;
-    }
-    else if(currentProperty.propertyType == 'land'){
-      currentSubType =  getLandType(currentProperty.propertySubType).toName;
+    } else if (currentProperty.propertyType == 'villa') {
+      currentSubType = getVillaType(currentProperty.propertySubType).toName;
+    } else if (currentProperty.propertyType == 'building') {
+      currentSubType = getBuildingType(currentProperty.propertySubType).toName;
+    } else if (currentProperty.propertyType == 'land') {
+      currentSubType = getLandType(currentProperty.propertySubType).toName;
     }
 
     return isScreenWidth
         ? Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: context.scale(8),
-                    height: context.scale(8),
-                    decoration: BoxDecoration(
-                      color: ColorManager.yellowColor,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  SizedBox(
-                    width: context.scale(4),
-                  ),
-                  Text(
-                      currentSubType,
-                      style: getBoldStyle(
-                          color: ColorManager.yellowColor,
-                          fontSize: FontSize.s12)),
-                ],
+      children: [
+        Row(
+          children: [
+            Container(
+              width: context.scale(8),
+              height: context.scale(8),
+              decoration: BoxDecoration(
+                color: ColorManager.yellowColor,
+                shape: BoxShape.circle,
               ),
-
-              RichText(
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: ' تبدأ من  ',
-                      style: getRegularStyle(
-                          color: ColorManager.primaryColor,
-                          fontSize: FontSize.s10),
-                    ),
-                    TextSpan(
-                      text: currentProperty.price,
-                      style: getBoldStyle(
-                          color: ColorManager.primaryColor,
-                          fontSize: FontSize.s12),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )
-        : RichText(
-            overflow: TextOverflow.ellipsis,
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: ' تبدأ من  ',
-                  style: getRegularStyle(
-                      color: ColorManager.primaryColor, fontSize: FontSize.s10),
-                ),
-                TextSpan(
-                  text: currentProperty.price,
-                  style: getBoldStyle(
-                      color: ColorManager.primaryColor, fontSize: FontSize.s12),
-                ),
-              ],
             ),
-          );
+            SizedBox(width: context.scale(4)),
+            Text(
+              currentSubType,
+              style: getBoldStyle(
+                color: ColorManager.yellowColor,
+                fontSize: FontSize.s12,
+              ),
+            ),
+          ],
+        ),
+        RichText(
+          overflow: TextOverflow.ellipsis,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: LocaleKeys.startingFrom.tr(),
+                style: getRegularStyle(
+                  color: ColorManager.primaryColor,
+                  fontSize: FontSize.s10,
+                ),
+              ),
+              TextSpan(
+                text: currentProperty.price,
+                style: getBoldStyle(
+                  color: ColorManager.primaryColor,
+                  fontSize: FontSize.s12,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    )
+        : RichText(
+      overflow: TextOverflow.ellipsis,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: LocaleKeys.startingFrom.tr(),
+            style: getRegularStyle(
+              color: ColorManager.primaryColor,
+              fontSize: FontSize.s10,
+            ),
+          ),
+          TextSpan(
+            text: currentProperty.price,
+            style: getBoldStyle(
+              color: ColorManager.primaryColor,
+              fontSize: FontSize.s12,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

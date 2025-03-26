@@ -81,5 +81,30 @@
   "onBoardingDesc6": "Ajoutez vos produits au panier et payez en toute simplicité.",
   "login": "Connexion",
   "next": "Suivant",
-  "skip": "Passer"
+  "skip": "Passer",
+
+  "floor_label": "Étage",
+  "floors_label": "Étages",
+  "apartment_per_floor_label": "Appartements par étage",
+  "starting_from": "À partir de ",
+  "furnished": "Meublé",
+  "not_furnished": "Non meublé",
+  "licensed": "Licencié",
+  "not_licensed": "Non licencié",
+  "servicesSeeAll": "Voir tout",
+
+  "homeAppBarMessage": "Toutes les options à portée de main",
+  "homeSearchHint": "Recherchez tout ce que vous voulez savoir ...",
+  "homeServiceNotAvailable": "Non disponible pour le moment, en cours de développement",
+  "homeApartments": "Appartements",
+  "homeLands": "Terrains",
+  "homeBuildings": "Bâtiments",
+  "homeVillas": "Villas",
+  "homeNoAvailable": "Non disponible",
+  "homeNearby": "Près de chez vous",
+  "homeErrorOccurred": "Une erreur s'est produite",
+
+  "notificationsScreenTitle": "Notifications",
+  "notificationsScreenNoNotifications": "Aucune notification",
+  "notificationsScreenExploreOffers": "Explorez les offres et ajoutez ce que vous aimez pour créer de nouvelles réservations"
 }

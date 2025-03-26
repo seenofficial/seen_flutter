@@ -1,7 +1,5 @@
 import 'package:enmaa/core/components/custom_snack_bar.dart';
-import 'package:enmaa/core/extensions/property_type_extension.dart';
-import 'package:enmaa/features/real_estates/domain/entities/base_property_entity.dart';
-import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
+import 'package:enmaa/core/services/shared_preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
@@ -10,17 +8,16 @@ import 'package:enmaa/features/home_module/presentation/controller/home_bloc.dar
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/core/components/app_bar_component.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
-import 'package:enmaa/core/services/service_locator.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/value_manager.dart';
 import '../../../../core/components/card_listing_shimmer.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../main_services_layout/app_services.dart';
 import '../../../main_services_layout/main_service_layout_screen.dart';
-import '../../domain/entities/app_service_entity.dart';
 import '../../home_imports.dart';
 import '../components/real_state_card_component.dart';
-import '../components/services_list_shimmer.dart';
 import '../components/services_listing_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -34,12 +31,12 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: ColorManager.greyShade,
           body: Column(
             children: [
-                AppBarComponent(
-                appBarTextMessage: 'كل الخيارات بين يديك',
+              AppBarComponent(
+                appBarTextMessage: LocaleKeys.homeAppBarMessage.tr(),
                 homeBloc: context.read<HomeBloc>(),
               ),
               AppTextField(
-                hintText: 'ابحث عن كل ما تريد معرفته ...',
+                hintText: LocaleKeys.homeSearchHint.tr(),
                 prefixIcon: Icon(Icons.search, color: ColorManager.blackColor),
               ),
               Expanded(
@@ -48,10 +45,10 @@ class HomeScreen extends StatelessWidget {
                     state.properties.forEach((propertyType, propertyData) {
                       if (propertyData.state != RequestState.initial) {
                         context.read<HomeBloc>().add(
-                            FetchNearByProperties(
-                                propertyType: propertyType,
-                                location: '1'
-                            )
+                          FetchNearByProperties(
+                            propertyType: propertyType,
+                            location: SharedPreferencesService().getValue('city_id') ?? '',
+                          ),
                         );
                       }
                     });
@@ -70,7 +67,11 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               );
                             } else {
-                              CustomSnackBar.show(context: context, message: '$serviceName غير متاحه الان ويتم العمل عليها', type: SnackBarType.error);
+                              CustomSnackBar.show(
+                                context: context,
+                                message: '$serviceName ${LocaleKeys.homeServiceNotAvailable.tr()}',
+                                type: SnackBarType.error,
+                              );
                             }
                           },
                         ),
@@ -80,8 +81,18 @@ class HomeScreen extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: 4,
                           itemBuilder: (context, index) {
-                            final List<PropertyType> propertyTypes = [PropertyType.apartment, PropertyType.land, PropertyType.building, PropertyType.villa];
-                            final List<String> propertyTypeTitles = ['شقق', 'اراضي', 'مباني', 'فلل'];
+                            final List<PropertyType> propertyTypes = [
+                              PropertyType.apartment,
+                              PropertyType.land,
+                              PropertyType.building,
+                              PropertyType.villa,
+                            ];
+                            final List<String> propertyTypeKeys = [
+                              LocaleKeys.homeApartments.tr(),
+                              LocaleKeys.homeLands.tr(),
+                              LocaleKeys.homeBuildings.tr(),
+                              LocaleKeys.homeVillas.tr(),
+                            ];
                             final PropertyType propertyType = propertyTypes[index];
 
                             return Padding(
@@ -95,10 +106,10 @@ class HomeScreen extends StatelessWidget {
                                         (propertyData.state != RequestState.loaded &&
                                             propertyData.state != RequestState.loading)) {
                                       context.read<HomeBloc>().add(
-                                          FetchNearByProperties(
-                                              propertyType: propertyType,
-                                              location: '1'
-                                          )
+                                        FetchNearByProperties(
+                                          propertyType: propertyType,
+                                          location: SharedPreferencesService().getValue('city_id') ?? '',
+                                        ),
                                       );
                                     }
                                   }
@@ -107,7 +118,6 @@ class HomeScreen extends StatelessWidget {
                                   buildWhen: (previous, current) {
                                     final previousData = previous.properties[propertyType];
                                     final currentData = current.properties[propertyType];
-
                                     return previousData != currentData;
                                   },
                                   builder: (context, state) {
@@ -132,15 +142,14 @@ class HomeScreen extends StatelessWidget {
                                         if (properties.isEmpty) {
                                           return Center(
                                             child: Text(
-                                              'لا توجد ${propertyTypeTitles[index]} متاحة',
+                                              '${LocaleKeys.homeNoAvailable.tr()} ${propertyTypeKeys[index]}',
                                               style: TextStyle(color: ColorManager.blackColor),
                                             ),
                                           );
                                         }
 
                                         return ServicesListingWidget(
-                                          seeMoreAction: () {
-                                          },
+                                          seeMoreAction: () {},
                                           listingWidget: SizedBox(
                                             height: context.scale(241),
                                             child: ListView.builder(
@@ -159,13 +168,13 @@ class HomeScreen extends StatelessWidget {
                                               },
                                             ),
                                           ),
-                                          title: '  ${propertyTypeTitles[index]} بالقرب منك',
+                                          title: '${propertyTypeKeys[index]} ${LocaleKeys.homeNearby.tr()}', // Translated
                                         );
 
                                       case RequestState.error:
                                         return Center(
                                           child: Text(
-                                            propertyData?.errorMessage ?? 'حدث خطأ',
+                                            propertyData?.errorMessage ?? LocaleKeys.homeErrorOccurred.tr(), // Translated
                                             style: TextStyle(color: Colors.red),
                                           ),
                                         );

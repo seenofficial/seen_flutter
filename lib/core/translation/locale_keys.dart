@@ -98,7 +98,32 @@ abstract class LocaleKeys {
   static const next = 'next';
   static const skip = 'skip';
 
-  /// on boarding
+  static const String floorLabel = 'floor_label';
+  static const String floorsLabel = 'floors_label';
+  static const String apartmentPerFloorLabel = 'apartment_per_floor_label';
+  static const String startingFrom = 'starting_from';
+  static const String furnished = 'furnished';
+  static const String notFurnished = 'not_furnished';
+  static const String licensed = 'licensed';
+  static const String notLicensed = 'not_licensed';
+
+  static const String servicesSeeAll = 'servicesSeeAll';
+
+  // New keys for HomeScreen
+  static const String homeAppBarMessage = 'homeAppBarMessage';
+  static const String homeSearchHint = 'homeSearchHint';
+  static const String homeServiceNotAvailable = 'homeServiceNotAvailable';
+  static const String homeApartments = 'homeApartments';
+  static const String homeLands = 'homeLands';
+  static const String homeBuildings = 'homeBuildings';
+  static const String homeVillas = 'homeVillas';
+  static const String homeNoAvailable = 'homeNoAvailable';
+  static const String homeNearby = 'homeNearby';
+  static const String homeErrorOccurred = 'homeErrorOccurred';
+
+  static const String notificationsScreenTitle = 'notificationsScreenTitle';
+  static const String notificationsScreenNoNotifications = 'notificationsScreenNoNotifications';
+  static const String notificationsScreenExploreOffers = 'notificationsScreenExploreOffers';
 
 
 }

@@ -85,7 +85,32 @@
   "onBoardingDesc6": "Add your products to the cart and pay with ease.",
   "login": "Login",
   "next": "Next",
-  "skip": "Skip"
+  "skip": "Skip",
+
+  "floor_label": "Floor",
+  "floors_label": "Floors",
+  "apartment_per_floor_label": "Apartments/floor",
+  "starting_from": "Starting from ",
+  "furnished": "Furnished",
+  "not_furnished": "Not furnished",
+  "licensed": "Licensed",
+  "not_licensed": "Not licensed",
+  "servicesSeeAll": "See all",
+
+  "homeAppBarMessage": "All options at your fingertips",
+  "homeSearchHint": "Search for everything you want to know ...",
+  "homeServiceNotAvailable": "Not available now, work in progress",
+  "homeApartments": "Apartments",
+  "homeLands": "Lands",
+  "homeBuildings": "Buildings",
+  "homeVillas": "Villas",
+  "homeNoAvailable": "Not available",
+  "homeNearby": "Nearby",
+  "homeErrorOccurred": "An error occurred",
+
+  "notificationsScreenTitle": "Notifications",
+  "notificationsScreenNoNotifications": "No notifications",
+  "notificationsScreenExploreOffers": "Explore offers and add what you like to create new bookings"
 
 
 

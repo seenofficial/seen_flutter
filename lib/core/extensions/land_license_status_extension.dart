@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
+
 import '../utils/enums.dart';
 
 extension LandLicenseStatusExtension on LandLicenseStatus {
@@ -18,6 +21,15 @@ extension LandLicenseStatusExtension on LandLicenseStatus {
         return 'Ready for construction';
       case LandLicenseStatus.notLicensed:
         return 'Requires permit';
+    }
+  }
+
+  String toName() {
+    switch (this) {
+      case LandLicenseStatus.licensed:
+        return LocaleKeys.licensed.tr();
+      case LandLicenseStatus.notLicensed:
+        return LocaleKeys.notLicensed.tr();
     }
   }
 

@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:enmaa/core/services/shared_preferences_service.dart';
 
 class DateFormatterService {
-  static String locale = 'ar';
   static String getFormattedDate(String date) {
+    String locale = SharedPreferencesService().language;
     final dateTime = DateTime.parse(date);
     final formatter = DateFormat(' dd MMMM , yyyy , hh:mm a', locale);
     String formattedDate = formatter.format(dateTime);
