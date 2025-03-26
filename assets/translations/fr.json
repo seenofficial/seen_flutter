@@ -11,54 +11,41 @@
   "connectionTimeout": "Délai de Connexion Dépassé",
   "requestCancelled": "Demande Annulée",
   "noInternet": "Pas de Connexion Internet",
-
   "realEstate": "Immobilier",
   "cars": "Voitures",
   "halls": "Salles",
   "hotels": "Hôtels",
   "addYourRealState": "Ajouter Votre Bien",
-
   "authenticateToAccessTheApp": "Veuillez vous authentifier pour accéder à l'application",
-
   "home": "Accueil",
   "myBookings": "Mes Réservations",
   "favorites": "Favoris",
   "myProfile": "Mon Profil",
-
   "chooseYourIdealPropertyEasily": "Choisissez facilement votre propriété idéale",
-
   "forSale": "À Vendre",
   "forRent": "À Louer",
-
   "apartment": "Appartement",
   "villa": "Villa",
   "land": "Terrain",
   "building": "Bâtiment",
-
   "studio": "Studio",
   "duplex": "Duplex",
   "penthouse": "Penthouse",
-
   "residential": "Résidentiel",
   "commercial": "Commercial",
   "mixedUse": "Mixte",
-
   "freehold": "Propriété Libre",
   "agricultural": "Agricole",
   "industrial": "Industriel",
-
   "standalone": "Indépendant",
   "twinHouse": "Maison Jumelée",
   "townHouse": "Maison de Ville",
-
   "active": "Actif",
   "completed": "Terminé",
   "cancelled": "Annulé",
-
   "reserved": "Réservé",
   "available": "Disponible",
   "coming": "À Venir",
-
   "iAmBuyer": "Je suis Acheteur",
   "anotherBuyer": "Autre Acheteur",
   "areaUnit": "M²",
@@ -66,10 +53,8 @@
   "english": "Anglais",
   "arabic": "Arabe",
   "french": "Français",
-
   "contactUs": "Contactez-nous",
   "errorOpeningLink": "Une erreur s'est produite lors de l'ouverture du lien",
-
   "onBoardingTitle1": "Bienvenue dans notre application",
   "onBoardingDesc1": "Profitez de la meilleure expérience d'achat pour les plantes d'intérieur et d'extérieur.",
   "onBoardingDesc2": "Nous avons une large gamme de plantes adaptées à chaque maison et jardin.",
@@ -82,7 +67,6 @@
   "login": "Connexion",
   "next": "Suivant",
   "skip": "Passer",
-
   "floor_label": "Étage",
   "floors_label": "Étages",
   "apartment_per_floor_label": "Appartements par étage",
@@ -92,7 +76,6 @@
   "licensed": "Licencié",
   "not_licensed": "Non licencié",
   "servicesSeeAll": "Voir tout",
-
   "homeAppBarMessage": "Toutes les options à portée de main",
   "homeSearchHint": "Recherchez tout ce que vous voulez savoir ...",
   "homeServiceNotAvailable": "Non disponible pour le moment, en cours de développement",
@@ -103,22 +86,17 @@
   "homeNoAvailable": "Non disponible",
   "homeNearby": "Près de chez vous",
   "homeErrorOccurred": "Une erreur s'est produite",
-
   "notificationsScreenTitle": "Notifications",
   "notificationsScreenNoNotifications": "Aucune notification",
   "notificationsScreenExploreOffers": "Explorez les offres et ajoutez ce que vous aimez pour créer de nouvelles réservations",
-
   "emptyScreenNoBookings": "Vous n'avez aucune réservation pour le moment",
   "emptyScreenBrowseOffers": "Parcourez les offres disponibles et réservez facilement ce qui vous convient !",
   "emptyScreenExploreOffers": "Découvrez les offres disponibles",
-
   "emptyScreenNoFavorites": "Vous n'avez aucun favori pour le moment",
   "emptyScreenAddFavorites": "Explorez les offres et ajoutez facilement ce que vous aimez à vos favoris",
-
   "errorScreenTitle": "Une erreur inattendue s'est produite",
   "errorScreenMessage": "Il semble qu'il y ait un problème, veuillez réessayer plus tard.",
   "errorScreenBackToHome": "Retour à la page d'accueil",
-
   "chargeWalletScreenTitle": "Historique des transactions financières",
   "chargeScreenCurrentBalance": "Votre solde actuel",
   "chargeScreenCurrency": "EGP",
@@ -126,32 +104,25 @@
   "transactionHistoryTitle": "Historique des transactions",
   "transactionHistoryNoTransactions": "Aucune transaction pour le moment",
   "transactionHistoryEmptyMessage": "Une fois que vous effectuez une transaction, elle apparaîtra ici immédiatement.",
-
   "appControlsLanguage": "Langue",
   "appControlsTerms": "Conditions générales",
   "appControlsDarkMode": "Activer le mode sombre",
   "appControlsNotifications": "Notifications",
   "appControlsLinkError": "Une erreur est survenue lors de l'ouverture du lien",
-
   "languageSheetTitle": "Choisissez votre langue préférée",
   "languageSheetCancel": "Annuler",
   "languageSheetConfirm": "Confirmer",
-
   "logOutAndContactUsLogOut": "Se déconnecter",
   "logOutAndContactUsContactUs": "Contactez-nous",
-
   "managePropertiesTitle": "Gérer mes propriétés",
   "managePropertiesDescription": "Vous pouvez gérer vos propriétés facilement.",
-
   "nameAndPhoneGuestName": "Bienvenue,",
   "nameAndPhoneCreateAccount": "Créez un compte pour accéder aux fonctionnalités exclusives",
-
   "removeAccountTitle": "Supprimer le compte",
   "removeAccountConfirmation": "Êtes-vous sûr de vouloir supprimer votre compte ?",
   "removeAccountWarning": "Vos données seront supprimées définitivement et ne pourront pas être récupérées.",
   "removeAccountCancel": "Annuler",
   "removeAccountSuccessMessage": "Compte supprimé avec succès",
-
   "userScreensAppointments": "Mes rendez-vous",
   "userScreensElectronicContracts": "Mes contrats électroniques"
 }

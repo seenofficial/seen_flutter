@@ -11,67 +11,50 @@
   "connectionTimeout": "انتهى وقت الاتصال",
   "requestCancelled": "تم إلغاء الطلب",
   "noInternet": "لا يوجد اتصال بالإنترنت",
-
-
   "realEstate": "العقارات",
   "cars": "السيارات",
   "halls": "القاعات",
   "hotels": "الفنادق",
   "addYourRealState": "أضف عقارك",
-
-  "authenticateToAccessTheApp" : "الرجاء تسجيل الدخول للوصول إلى التطبيق",
-
+  "authenticateToAccessTheApp": "الرجاء تسجيل الدخول للوصول إلى التطبيق",
   "home": "الرئيسية",
   "myBookings": "حجوزاتي",
   "favorites": "المفضلة",
   "myProfile": "حسابي",
-
-  "chooseYourIdealPropertyEasily" : "اختر العقار المثالي لك بسهولة",
-
+  "chooseYourIdealPropertyEasily": "اختر العقار المثالي لك بسهولة",
   "forSale": "للبيع",
   "forRent": "للإيجار",
-
   "apartment": "شقة",
   "villa": "فيلا",
   "land": "أرض",
   "building": "عماره",
-
   "studio": "ستوديو",
   "duplex": "دوبلكس",
   "penthouse": "بنتهاوس",
-
   "residential": "سكنية",
   "commercial": "تجارية",
   "mixedUse": "مختلطة",
-
   "freehold": "حر",
   "agricultural": "زراعي",
   "industrial": "صناعي",
-
   "standalone": "مستقلة",
   "twinHouse": "توين هاوس",
   "townHouse": "تاون هاوس",
-
-  "active" : " نشط",
-    "completed" : "مكتمل",
-  "cancelled" : " ملغي",
-
-  "reserved" : " محجوز",
-  "available" : " متاح",
-  "coming" : " قادم",
-
-  "iAmBuyer": " أنا مشتري",
-  "anotherBuyer": " مشتري آخر",
-  "areaUnit" : "م",
-  "contract" : "عقد",
-
-  "english" : "الإنجليزية",
-    "arabic" : "العربية",
-  "french" : "الفرنسية",
-
+  "active": "نشط",
+  "completed": "مكتمل",
+  "cancelled": "ملغي",
+  "reserved": "محجوز",
+  "available": "متاح",
+  "coming": "قادم",
+  "iAmBuyer": "أنا مشتري",
+  "anotherBuyer": "مشتري آخر",
+  "areaUnit": "م",
+  "contract": "عقد",
+  "english": "الإنجليزية",
+  "arabic": "العربية",
+  "french": "الفرنسية",
   "contactUs": "تواصل معانا",
   "errorOpeningLink": "حدث خطأ أثناء فتح الرابط",
-
   "onBoardingTitle1": "مرحبًا بك في تطبيقنا",
   "onBoardingDesc1": "استمتع بأفضل تجربة تسوق للنباتات الداخلية والخارجية.",
   "onBoardingDesc2": "لدينا مجموعة واسعة من النباتات المناسبة لكل منزل وحديقة.",
@@ -80,11 +63,10 @@
   "onBoardingDesc4": "عروضنا محدثة باستمرار لتناسب جميع الاحتياجات.",
   "onBoardingTitle3": "تسوق بسهولة",
   "onBoardingDesc5": "استمتع بتجربة تسوق سلسة وسريعة مع واجهتنا البسيطة.",
-    "onBoardingDesc6": "أضف منتجاتك إلى السلة وقم بالدفع بكل سهولة.",
+  "onBoardingDesc6": "أضف منتجاتك إلى السلة وقم بالدفع بكل سهولة.",
   "login": "تسجيل الدخول",
   "next": "التالي",
   "skip": "تخطي",
-
   "floor_label": "طابق",
   "floors_label": "طوابق",
   "apartment_per_floor_label": "شقق لكل طابق",
@@ -94,8 +76,6 @@
   "licensed": "مرخص",
   "not_licensed": "غير مرخص",
   "servicesSeeAll": "عرض الكل",
-
-
   "homeAppBarMessage": "كل الخيارات بين يديك",
   "homeSearchHint": "ابحث عن كل ما تريد معرفته ...",
   "homeServiceNotAvailable": "غير متاحة الآن ويتم العمل عليها",
@@ -106,56 +86,43 @@
   "homeNoAvailable": "لا توجد",
   "homeNearby": "بالقرب منك",
   "homeErrorOccurred": "حدث خطأ",
-
-
   "notificationsScreenTitle": "الإشعارات",
   "notificationsScreenNoNotifications": "لا توجد إشعارات",
   "notificationsScreenExploreOffers": "استكشف العروض وأضف ما يعجبك لإنشاء حجوزات جديدة",
-
   "emptyScreenNoBookings": "ليس لديك أي حجوزات حالياً",
   "emptyScreenBrowseOffers": "تصفح العروض المتاحة واحجز ما يناسبك بسهولة!",
   "emptyScreenExploreOffers": "استكشف العروض المتاحة",
-
   "emptyScreenNoFavorites": "ليس لديك أي مفضلات حاليًا",
   "emptyScreenAddFavorites": "استكشف العروض وأضف ما يعجبك إلى المفضلة بسهولة",
-
   "errorScreenTitle": "حدث خطأ غير متوقع",
   "errorScreenMessage": "يبدو أن هناك مشكلة، يرجى المحاولة مرة أخرى لاحقًا.",
   "errorScreenBackToHome": "العودة إلى الصفحة الرئيسية",
-
-    "chargeWalletScreenTitle": "سجل المعاملات المالية",
-    "chargeScreenCurrentBalance": "رصيدك الحالي",
-    "chargeScreenCurrency": "جنية",
-    "chargeScreenWithdraw": "سحب",
-    "transactionHistoryTitle": "سجل المعاملات",
-    "transactionHistoryNoTransactions": "لا توجد معاملات حتى الآن",
-    "transactionHistoryEmptyMessage": "عند إجراء أي معاملة، ستظهر هنا فورًا.",
-
+  "chargeWalletScreenTitle": "سجل المعاملات المالية",
+  "chargeScreenCurrentBalance": "رصيدك الحالي",
+  "chargeScreenCurrency": "جنية",
+  "chargeScreenWithdraw": "سحب",
+  "transactionHistoryTitle": "سجل المعاملات",
+  "transactionHistoryNoTransactions": "لا توجد معاملات حتى الآن",
+  "transactionHistoryEmptyMessage": "عند إجراء أي معاملة، ستظهر هنا فورًا.",
   "appControlsLanguage": "اللغة",
   "appControlsTerms": "الشروط والأحكام",
   "appControlsDarkMode": "تفعيل الوضع الليلي",
   "appControlsNotifications": "الإشعارات",
   "appControlsLinkError": "حدث خطأ أثناء فتح الرابط",
-
   "languageSheetTitle": "اختر اللغة التي تريدها",
   "languageSheetCancel": "إلغاء",
   "languageSheetConfirm": "تأكيد",
-
   "logOutAndContactUsLogOut": "تسجيل الخروج",
   "logOutAndContactUsContactUs": "تواصل معنا",
-
   "managePropertiesTitle": "إدارة عقاراتي",
   "managePropertiesDescription": "يمكنك إدارة عقاراتك بكل سهولة.",
-
   "nameAndPhoneGuestName": "مرحباً بك،",
   "nameAndPhoneCreateAccount": "أنشئ حساباً لتحصل علي المميزات",
-
   "removeAccountTitle": "حذف الحساب",
   "removeAccountConfirmation": "هل أنت متأكد من حذف حسابك؟",
   "removeAccountWarning": "سيتم حذف بياناتك نهائيًا دون إمكانية استعادتها.",
   "removeAccountCancel": "إلغاء",
   "removeAccountSuccessMessage": "تم حذف الحساب بنجاح",
-
   "userScreensAppointments": "مواعيدي",
   "userScreensElectronicContracts": "عقودي الإلكترونية"
 }

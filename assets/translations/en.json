@@ -1,5 +1,4 @@
 {
-
   "somethingWentWrong": "Something went wrong",
   "badGateway": "Bad Gateway",
   "internalServerError": "Internal Server Error",
@@ -12,68 +11,50 @@
   "connectionTimeout": "Connection Timeout",
   "requestCancelled": "Request Cancelled",
   "noInternet": "No Internet Connection",
-
   "realEstate": "Real Estate",
   "cars": "Cars",
   "halls": "Halls",
   "hotels": "Hotels",
   "addYourRealState": "Add Your Property",
-
-  "authenticateToAccessTheApp" : "Please authenticate to access the app",
-
+  "authenticateToAccessTheApp": "Please authenticate to access the app",
   "home": "Home",
   "myBookings": "My Bookings",
   "favorites": "Favorites",
   "myProfile": "My Profile",
-
-  "chooseYourIdealPropertyEasily" : "Choose your ideal property easily",
-
+  "chooseYourIdealPropertyEasily": "Choose your ideal property easily",
   "forSale": "For Sale",
   "forRent": "For Rent",
-
   "apartment": "Apartment",
   "villa": "Villa",
   "land": "Land",
   "building": "Building",
-
   "studio": "Studio",
   "duplex": "Duplex",
   "penthouse": "Penthouse",
-
   "residential": "Residential",
   "commercial": "Commercial",
   "mixedUse": "Mixed",
-
   "freehold": "Freehold",
   "agricultural": "Agricultural",
   "industrial": "Industrial",
-
   "standalone": "Standalone",
   "twinHouse": "Twin House",
   "townHouse": "Town House",
-
-
-
-  "active" : "Active",
-  "completed" : "Completed",
-  "cancelled" : "Cancelled",
-
-  "reserved" : "Reserved",
-  "available" : "Available",
-  "coming" : "Coming",
-
-
+  "active": "Active",
+  "completed": "Completed",
+  "cancelled": "Cancelled",
+  "reserved": "Reserved",
+  "available": "Available",
+  "coming": "Coming",
   "iAmBuyer": "I am a Buyer",
   "anotherBuyer": "Another Buyer",
-  "areaUnit" : "M²",
-  "contract" : "Contract",
-  "english" : "English",
-    "arabic" : "Arabic",
-    "french" : "French",
-
+  "areaUnit": "M²",
+  "contract": "Contract",
+  "english": "English",
+  "arabic": "Arabic",
+  "french": "French",
   "contactUs": "Contact Us",
   "errorOpeningLink": "An error occurred while opening the link",
-
   "onBoardingTitle1": "Welcome to our app",
   "onBoardingDesc1": "Enjoy the best shopping experience for indoor and outdoor plants.",
   "onBoardingDesc2": "We have a wide range of plants suitable for every home and garden.",
@@ -86,7 +67,6 @@
   "login": "Login",
   "next": "Next",
   "skip": "Skip",
-
   "floor_label": "Floor",
   "floors_label": "Floors",
   "apartment_per_floor_label": "Apartments/floor",
@@ -96,7 +76,6 @@
   "licensed": "Licensed",
   "not_licensed": "Not licensed",
   "servicesSeeAll": "See all",
-
   "homeAppBarMessage": "All options at your fingertips",
   "homeSearchHint": "Search for everything you want to know ...",
   "homeServiceNotAvailable": "Not available now, work in progress",
@@ -107,22 +86,17 @@
   "homeNoAvailable": "Not available",
   "homeNearby": "Nearby",
   "homeErrorOccurred": "An error occurred",
-
   "notificationsScreenTitle": "Notifications",
   "notificationsScreenNoNotifications": "No notifications",
   "notificationsScreenExploreOffers": "Explore offers and add what you like to create new bookings",
-
   "emptyScreenNoBookings": "You have no bookings at the moment",
   "emptyScreenBrowseOffers": "Browse available offers and book what suits you easily!",
   "emptyScreenExploreOffers": "Explore available offers",
-
   "emptyScreenNoFavorites": "You have no favorites at the moment",
   "emptyScreenAddFavorites": "Explore offers and add what you like to your favorites easily",
-
   "errorScreenTitle": "An unexpected error occurred",
   "errorScreenMessage": "It looks like there is a problem, please try again later.",
   "errorScreenBackToHome": "Back to home page",
-
   "chargeWalletScreenTitle": "Financial Transactions History",
   "chargeScreenCurrentBalance": "Your Current Balance",
   "chargeScreenCurrency": "EGP",
@@ -130,36 +104,25 @@
   "transactionHistoryTitle": "Transaction History",
   "transactionHistoryNoTransactions": "No transactions yet",
   "transactionHistoryEmptyMessage": "Once you make a transaction, it will appear here immediately.",
-
   "appControlsLanguage": "Language",
   "appControlsTerms": "Terms & Conditions",
   "appControlsDarkMode": "Enable Dark Mode",
   "appControlsNotifications": "Notifications",
   "appControlsLinkError": "An error occurred while opening the link",
-
   "languageSheetTitle": "Choose your preferred language",
   "languageSheetCancel": "Cancel",
   "languageSheetConfirm": "Confirm",
-
   "logOutAndContactUsLogOut": "Log Out",
   "logOutAndContactUsContactUs": "Contact Us",
-
   "managePropertiesTitle": "Manage My Properties",
   "managePropertiesDescription": "You can easily manage your properties.",
-
   "nameAndPhoneGuestName": "Welcome,",
   "nameAndPhoneCreateAccount": "Create an account to access exclusive features",
-
   "removeAccountTitle": "Delete Account",
   "removeAccountConfirmation": "Are you sure you want to delete your account?",
   "removeAccountWarning": "Your data will be permanently deleted and cannot be recovered.",
   "removeAccountCancel": "Cancel",
   "removeAccountSuccessMessage": "Account successfully deleted",
-
   "userScreensAppointments": "My Appointments",
   "userScreensElectronicContracts": "My Electronic Contracts"
-
-
-
-
 }

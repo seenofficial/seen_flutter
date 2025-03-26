@@ -34,24 +34,26 @@ class ManageMyPropertiesWidget extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(16),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  LocaleKeys.managePropertiesTitle.tr(),
-                  style: getBoldStyle(
-                      color: ColorManager.primaryColor, fontSize: FontSize.s18),
-                ),
-                Text(
-                  LocaleKeys.managePropertiesDescription.tr(),
-                  style: getSemiBoldStyle(
-                      color: ColorManager.blackColor, fontSize: FontSize.s14),
-                )
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    LocaleKeys.managePropertiesTitle.tr(),
+                    style: getBoldStyle(
+                        color: ColorManager.primaryColor, fontSize: FontSize.s18),
+                  ),
+                  Text(
+                    LocaleKeys.managePropertiesDescription.tr(),
+                    style: getSemiBoldStyle(
+                        color: ColorManager.blackColor, fontSize: FontSize.s14),
+                  )
+                ],
+              ),
             ),
-            Spacer(),
             SvgImageComponent(
               iconPath: AppAssets.myPropertiesIcon,
               width: context.scale(90),
