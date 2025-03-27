@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                             } else {
                               CustomSnackBar.show(
                                 context: context,
-                                message: '$serviceName ${LocaleKeys.homeServiceNotAvailable.tr()}',
+                                message: '${serviceName.tr()} ${LocaleKeys.homeServiceNotAvailable.tr()}',
                                 type: SnackBarType.error,
                               );
                             }
