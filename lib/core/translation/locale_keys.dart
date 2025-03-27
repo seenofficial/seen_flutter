@@ -211,4 +211,17 @@ abstract class LocaleKeys {
 
   static const String passwordMustContainLetter = 'passwordMustContainLetter';
   static const String fieldMustContainLetter = 'fieldMustContainLetter';
+
+  static const String withdrawTitle = 'withdrawTitle';
+  static const String withdrawNameLabel = 'withdrawNameLabel';
+  static const String withdrawNameHint = 'withdrawNameHint';
+  static const String withdrawIbanLabel = 'withdrawIbanLabel';
+  static const String withdrawIbanHint = 'withdrawIbanHint';
+  static const String withdrawBankLabel = 'withdrawBankLabel';
+  static const String withdrawBankHint = 'withdrawBankHint';
+  static const String withdrawButton = 'withdrawButton';
+  static const String withdrawSuccess = 'withdrawSuccess';
+  static const String selectCountryHint = 'selectCountryHint';
+  static const String country = 'country';
+  static const String countryRequired = 'countryRequired';
 }

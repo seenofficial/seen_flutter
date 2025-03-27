@@ -3,6 +3,7 @@ import 'package:enmaa/features/wallet/data/repository/wallet_repository.dart';
 import 'package:enmaa/features/wallet/domain/repository/base_wallet_repository.dart';
 import 'package:enmaa/features/wallet/domain/use_cases/get_transaction_history_data_use_case.dart';
 import 'package:enmaa/features/wallet/domain/use_cases/get_wallet_data_use_case.dart';
+import 'package:enmaa/features/wallet/domain/use_cases/withdraw_request_use_case.dart';
   import '../../core/services/service_locator.dart';
 
 class WalletDi {
@@ -40,6 +41,10 @@ class WalletDi {
     );
     sl.registerLazySingleton(
           () => GetTransactionHistoryDataUseCase(sl()),
+    );
+
+    sl.registerLazySingleton(
+          () => WithdrawRequestUseCase(sl()),
     );
 
   }

@@ -159,5 +159,18 @@
   "fieldMustContainNumber": "يجب أن تحتوي {fieldName} على رقم واحد على الأقل",
 
   "passwordMustContainLetter": "يجب أن تحتوي كلمة المرور على حرف واحد على الأقل",
-  "fieldMustContainLetter": "يجب أن تحتوي {fieldName} على حرف واحد على الأقل"
+  "fieldMustContainLetter": "يجب أن تحتوي {fieldName} على حرف واحد على الأقل",
+
+  "withdrawTitle": "سحب الأموال",
+  "withdrawNameLabel": "الاسم الكامل",
+  "withdrawNameHint": "أدخل اسمك",
+  "withdrawIbanLabel": "رقم IBAN",
+  "withdrawIbanHint": "أدخل رقم IBAN",
+  "withdrawBankLabel": "نوع البنك",
+  "withdrawBankHint": "أدخل نوع البنك",
+  "withdrawButton": "سحب",
+  "withdrawSuccess": "تم تقديم طلب السحب وجاري المراجعه",
+  "selectCountryHint": "اختر الدولة",
+  "country" : "الدولة",
+  "countryRequired": "الدولة مطلوبة"
 }

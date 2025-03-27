@@ -4,6 +4,7 @@ import 'package:enmaa/features/wallet/data/models/transaction_history_model.dart
 import 'package:enmaa/features/wallet/data/models/wallet_data_model.dart';
 
 import '../../../../core/constants/api_constants.dart';
+import '../models/withdraw_request_model.dart';
 
 
 
@@ -14,6 +15,8 @@ abstract class BaseWalletRemoteDataSource {
 
   Future<WalletDataModel> getWalletData( );
   Future<List<TransactionHistoryModel>> getTransactionHistoryData( );
+
+  Future<void> withdrawRequest(WithDrawRequestModel withDrawRequestModel );
 
 }
 
@@ -46,6 +49,13 @@ class WalletRemoteDataSource extends BaseWalletRemoteDataSource {
       return TransactionHistoryModel.fromJson(json);
     }).toList();
     return transactions;
+  }
+
+  @override
+  Future<void> withdrawRequest(WithDrawRequestModel withDrawRequestModel) async{
+
+    await Future.delayed(Duration(seconds: 2));
+
   }
 
 

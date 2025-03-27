@@ -19,6 +19,7 @@ import 'package:enmaa/features/preview_property/preview_property_DI.dart';
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_details_screen.dart';
 import 'package:enmaa/features/splash_and_on_boarding/screens/on_boarding_screen.dart';
 import 'package:enmaa/features/wallet/presentation/controller/wallet_cubit.dart';
+import 'package:enmaa/features/wallet/presentation/screens/withdraw_screen.dart';
 import 'package:enmaa/layout_screen.dart';
 import 'package:enmaa/main.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,9 @@ class AppRouters {
                     ServiceLocator.getIt(),
                     ServiceLocator.getIt(),
                     ServiceLocator.getIt(),
-                  )..add(GetUserLocation())..add(GetNotifications()),
+                  )
+                    ..add(GetUserLocation())
+                    ..add(GetNotifications()),
                 );
               }
 
@@ -90,12 +93,14 @@ class AppRouters {
             child: const LayoutScreen(initialIndex: 0),
           ),
         );
-case RoutersNames.notificationsScreen:
-  final numberOfNotifications = settings.arguments as int;
+      case RoutersNames.notificationsScreen:
+        final numberOfNotifications = settings.arguments as int;
 
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.notificationsScreen),
-          builder: (_) =>  NotificationsScreen(numberOfNotifications:numberOfNotifications ,),
+          builder: (_) => NotificationsScreen(
+            numberOfNotifications: numberOfNotifications,
+          ),
         );
 
       case RoutersNames.biometricScreen:
@@ -129,13 +134,22 @@ case RoutersNames.notificationsScreen:
           settings: RouteSettings(name: RoutersNames.userAppointmentsScreen),
           builder: (_) => const UserAppointmentsScreen(),
         );
-        case RoutersNames.changePasswordScreen:
+      case RoutersNames.withdrawScreen:
+        final walletCubit = settings.arguments as WalletCubit;
+
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.withdrawScreen),
+          builder: (_) => WithdrawScreen(
+            walletCubit: walletCubit,
+          ),
+        );
+      case RoutersNames.changePasswordScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.changePasswordScreen),
-          builder: (_) =>  BlocProvider(
-  create: (context) => ChangePasswordCubit(),
-  child: ChangePasswordScreen(),
-),
+          builder: (_) => BlocProvider(
+            create: (context) => ChangePasswordCubit(),
+            child: ChangePasswordScreen(),
+          ),
         );
       case RoutersNames.userElectronicContracts:
         return MaterialPageRoute(

@@ -159,5 +159,22 @@
   "fieldMustContainNumber": "{fieldName} doit contenir au moins un chiffre",
 
   "passwordMustContainLetter": "Le mot de passe doit contenir au moins une lettre",
-  "fieldMustContainLetter": "{fieldName} doit contenir au moins une lettre"
+  "fieldMustContainLetter": "{fieldName} doit contenir au moins une lettre",
+
+  "withdrawTitle": "Retirer des fonds",
+  "withdrawNameLabel": "Nom complet",
+  "withdrawNameHint": "Entrez votre nom",
+  "withdrawIbanLabel": "Numéro IBAN",
+  "withdrawIbanHint": "Entrez le numéro IBAN",
+  "withdrawBankLabel": "Type de banque",
+  "withdrawBankHint": "Entrez le type de banque",
+  "withdrawButton": "Retirer",
+  "withdrawSuccess": "Demande de retrait soumise et en cours de révision",
+  "selectCountryHint": "Sélectionnez le pays",
+  "country" : "Pays",
+  "countryRequired": "Le pays est requis"
+
+
+
+
 }

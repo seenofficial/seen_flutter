@@ -159,6 +159,23 @@
   "fieldMustContainNumber": "{fieldName} must contain at least one number",
 
   "passwordMustContainLetter": "Password must contain at least one letter",
-  "fieldMustContainLetter": "{fieldName} must contain at least one letter"
+  "fieldMustContainLetter": "{fieldName} must contain at least one letter",
+
+  "withdrawTitle": "Withdraw Funds",
+  "withdrawNameLabel": "Full Name",
+  "withdrawNameHint": "Enter your name",
+  "withdrawIbanLabel": "IBAN Number",
+  "withdrawIbanHint": "Enter IBAN number",
+  "withdrawBankLabel": "Bank Type",
+  "withdrawBankHint": "Enter bank type",
+  "withdrawButton": "Withdraw",
+  "withdrawSuccess": "Withdrawal request submitted and under review",
+  "selectCountryHint": "Select Country",
+  "country" : "Country",
+  "countryRequired": "Country is required"
+
+
+
+
 
 }

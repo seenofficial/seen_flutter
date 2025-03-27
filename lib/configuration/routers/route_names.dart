@@ -10,6 +10,7 @@ class RoutersNames {
   static const String onBoardingScreen = "/on-boarding-screen";
   static const String previewPropertyScreen = "/preview-property-screen";
   static const String chargeWalletScreen = "/charge-wallet-screen";
+  static const String withdrawScreen = "/withdraw-screen";
 
 
   static const String myPropertiesScreen = "/my-properties-screen";

@@ -171,7 +171,19 @@ class CodegenLoader extends AssetLoader{
   "passwordMustContainNumber": "Password must contain at least one number",
   "fieldMustContainNumber": "{fieldName} must contain at least one number",
   "passwordMustContainLetter": "Password must contain at least one letter",
-  "fieldMustContainLetter": "{fieldName} must contain at least one letter"
+  "fieldMustContainLetter": "{fieldName} must contain at least one letter",
+  "withdrawTitle": "Withdraw Funds",
+  "withdrawNameLabel": "Full Name",
+  "withdrawNameHint": "Enter your name",
+  "withdrawIbanLabel": "IBAN Number",
+  "withdrawIbanHint": "Enter IBAN number",
+  "withdrawBankLabel": "Bank Type",
+  "withdrawBankHint": "Enter bank type",
+  "withdrawButton": "Withdraw",
+  "withdrawSuccess": "Withdrawal request submitted and under review",
+  "selectCountryHint": "Select Country",
+  "country": "Country",
+  "countryRequired": "Country is required"
 };
 static const Map<String,dynamic> _fr = {
   "somethingWentWrong": "Quelque chose s'est mal passé",
@@ -330,7 +342,19 @@ static const Map<String,dynamic> _fr = {
   "passwordMustContainNumber": "Le mot de passe doit contenir au moins un chiffre",
   "fieldMustContainNumber": "{fieldName} doit contenir au moins un chiffre",
   "passwordMustContainLetter": "Le mot de passe doit contenir au moins une lettre",
-  "fieldMustContainLetter": "{fieldName} doit contenir au moins une lettre"
+  "fieldMustContainLetter": "{fieldName} doit contenir au moins une lettre",
+  "withdrawTitle": "Retirer des fonds",
+  "withdrawNameLabel": "Nom complet",
+  "withdrawNameHint": "Entrez votre nom",
+  "withdrawIbanLabel": "Numéro IBAN",
+  "withdrawIbanHint": "Entrez le numéro IBAN",
+  "withdrawBankLabel": "Type de banque",
+  "withdrawBankHint": "Entrez le type de banque",
+  "withdrawButton": "Retirer",
+  "withdrawSuccess": "Demande de retrait soumise et en cours de révision",
+  "selectCountryHint": "Sélectionnez le pays",
+  "country": "Pays",
+  "countryRequired": "Le pays est requis"
 };
 static const Map<String,dynamic> _ar = {
   "somethingWentWrong": "حدث خطأ ما",
@@ -489,7 +513,19 @@ static const Map<String,dynamic> _ar = {
   "passwordMustContainNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
   "fieldMustContainNumber": "يجب أن تحتوي {fieldName} على رقم واحد على الأقل",
   "passwordMustContainLetter": "يجب أن تحتوي كلمة المرور على حرف واحد على الأقل",
-  "fieldMustContainLetter": "يجب أن تحتوي {fieldName} على حرف واحد على الأقل"
+  "fieldMustContainLetter": "يجب أن تحتوي {fieldName} على حرف واحد على الأقل",
+  "withdrawTitle": "سحب الأموال",
+  "withdrawNameLabel": "الاسم الكامل",
+  "withdrawNameHint": "أدخل اسمك",
+  "withdrawIbanLabel": "رقم IBAN",
+  "withdrawIbanHint": "أدخل رقم IBAN",
+  "withdrawBankLabel": "نوع البنك",
+  "withdrawBankHint": "أدخل نوع البنك",
+  "withdrawButton": "سحب",
+  "withdrawSuccess": "تم تقديم طلب السحب وجاري المراجعه",
+  "selectCountryHint": "اختر الدولة",
+  "country": "الدولة",
+  "countryRequired": "الدولة مطلوبة"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "fr": _fr, "ar": _ar};
 }

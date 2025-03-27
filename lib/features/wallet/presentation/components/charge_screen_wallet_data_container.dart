@@ -1,3 +1,4 @@
+import 'package:enmaa/configuration/routers/route_names.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
@@ -73,7 +74,10 @@ class ChargeScreenWalletDataContainer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, RoutersNames.withdrawScreen
+                            , arguments:  context.read<WalletCubit>());
+                          },
                           child: CircularIconButton(
                             containerSize: context.scale(60),
                             iconPath: AppAssets.chargeWallerIcon,

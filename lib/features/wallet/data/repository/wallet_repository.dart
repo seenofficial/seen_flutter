@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:enmaa/features/wallet/data/data_source/wallet_remote_data_source.dart';
+import 'package:enmaa/features/wallet/data/models/withdraw_request_model.dart';
 import 'package:enmaa/features/wallet/domain/entities/transaction_history_entity.dart';
 import 'package:enmaa/features/wallet/domain/entities/wallet_data_entity.dart';
 import 'package:enmaa/features/wallet/domain/repository/base_wallet_repository.dart';
@@ -28,6 +29,13 @@ class WalletRepository extends BaseWalletRepository {
   Future<Either<Failure, List<TransactionHistoryEntity>>> getTransactionHistoryData()async {
     return  await HandleRequestService.handleApiCall<List<TransactionHistoryEntity>>(() async {
       return await baseWalletRemoteDataSource.getTransactionHistoryData(  );
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> withdrawRequest(WithDrawRequestModel withDrawRequestModel) async{
+    return HandleRequestService.handleApiCall<void>(() async {
+      return await baseWalletRemoteDataSource.withdrawRequest(withDrawRequestModel);
     });
   }
 }

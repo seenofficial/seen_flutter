@@ -80,6 +80,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
             return WalletCubit(
                 ServiceLocator.getIt(),
                 ServiceLocator.getIt(),
+                ServiceLocator.getIt(),
             )
               ..getWalletData() ..getTransactionHistoryData();
           },
