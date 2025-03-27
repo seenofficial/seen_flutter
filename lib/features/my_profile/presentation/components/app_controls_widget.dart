@@ -38,20 +38,21 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: context.scale(262),
+      height: context.scale(280),
       decoration: BoxDecoration(
         color: ColorManager.whiteColor,
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.all(16),
-      child: Row(
+      child: Column(
         children: [
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
+                _buildItem(
+                  iconPath: AppAssets.localizationIcon,
+                  text: LocaleKeys.appControlsLanguage.tr(),
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
@@ -72,28 +73,10 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                       },
                     );
                   },
-                  child: Row(
-                    children: [
-                      SvgImageComponent(
-                        width: 20,
-                        height: 20,
-                        iconPath: AppAssets.localizationIcon,
-                        color: ColorManager.grey,
-                      ),
-                      SizedBox(width: context.scale(8)),
-                      Text(
-                        LocaleKeys.appControlsLanguage.tr(),
-                        style: getBoldStyle(
-                          color: ColorManager.blackColor,
-                          fontSize: FontSize.s16,
-                        ),
-                      ),
-                      const Spacer(),
-                      const Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
                 ),
-                InkWell(
+                _buildItem(
+                  iconPath: AppAssets.keyIcon,
+                  text: LocaleKeys.changePassword.tr(),
                   onTap: () async {
                     if (isAuth) {
                       Navigator.pushNamed(context, RoutersNames.changePasswordScreen);
@@ -101,28 +84,10 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                       needToLoginSnackBar();
                     }
                   },
-                  child: Row(
-                    children: [
-                      SvgImageComponent(
-                        width: 20,
-                        height: 20,
-                        iconPath: AppAssets.keyIcon,
-                        color: ColorManager.grey,
-                      ),
-                      SizedBox(width: context.scale(8)),
-                      Text(
-                        LocaleKeys.changePassword.tr(),
-                        style: getBoldStyle(
-                          color: ColorManager.blackColor,
-                          fontSize: FontSize.s16,
-                        ),
-                      ),
-                      const Spacer(),
-                      const Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
                 ),
-                InkWell(
+                _buildItem(
+                  iconPath: AppAssets.privacyIcon,
+                  text: LocaleKeys.appControlsTerms.tr(),
                   onTap: () async {
                     final Uri url = Uri.parse('https://github.com/AmrAbdElHamed26');
                     if (await canLaunchUrl(url)) {
@@ -134,84 +99,99 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                       );
                     }
                   },
-                  child: Row(
-                    children: [
-                      SvgImageComponent(
-                        width: 20,
-                        height: 20,
-                        iconPath: AppAssets.privacyIcon,
-                        color: ColorManager.grey,
-                      ),
-                      SizedBox(width: context.scale(8)),
-                      Text(
-                        LocaleKeys.appControlsTerms.tr(),
-                        style: getBoldStyle(
-                          color: ColorManager.blackColor,
-                          fontSize: FontSize.s16,
-                        ),
-                      ),
-                      const Spacer(),
-                      const Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
                 ),
-                 Row(
-                  children: [
-                    SvgImageComponent(
-                      width: 20,
-                      height: 20,
-                      iconPath: AppAssets.themeIcon,
-                      color: ColorManager.grey,
-                    ),
-                    SizedBox(width: context.scale(8)),
-                    Text(
-                      LocaleKeys.appControlsDarkMode.tr(),
-                      style: getBoldStyle(
-                        color: ColorManager.blackColor,
-                        fontSize: FontSize.s16,
-                      ),
-                    ),
-                    const Spacer(),
-                    CustomAppSwitch(
-                      value: isDarkModeEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          isDarkModeEnabled = value;
-                        });
-                      },
-                    ),
-                  ],
+                _buildSwitchItem(
+                  iconPath: AppAssets.themeIcon,
+                  text: LocaleKeys.appControlsDarkMode.tr(),
+                  value: isDarkModeEnabled,
+                  onChanged: (value) {
+                    // setState(() {
+                    //   isDarkModeEnabled = value;
+                    // });
+                  },
                 ),
-                Row(
-                  children: [
-                    SvgImageComponent(
-                      width: 20,
-                      height: 20,
-                      iconPath: AppAssets.notificationIcon,
-                      color: ColorManager.grey,
-                    ),
-                    SizedBox(width: context.scale(8)),
-                    Text(
-                      LocaleKeys.appControlsNotifications.tr(),
-                      style: getBoldStyle(
-                        color: ColorManager.blackColor,
-                        fontSize: FontSize.s16,
-                      ),
-                    ),
-                    const Spacer(),
-                    CustomAppSwitch(
-                      value: areNotificationsEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          areNotificationsEnabled = value;
-                        });
-                        _updateNotificationAvailability(context, value);
-                      },
-                    ),
-                  ],
+                _buildSwitchItem(
+                  iconPath: AppAssets.notificationIcon,
+                  text: LocaleKeys.appControlsNotifications.tr(),
+                  value: areNotificationsEnabled,
+                  onChanged: (value) {
+                    setState(() {
+                      areNotificationsEnabled = value;
+                    });
+                    _updateNotificationAvailability(context, value);
+                  },
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildItem({
+    required String iconPath,
+    required String text,
+    required VoidCallback onTap,
+  }) {
+    return SizedBox(
+      height: context.scale(48),
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
+          children: [
+            SvgImageComponent(
+              width: 20,
+              height: 20,
+              iconPath: iconPath,
+              color: ColorManager.grey,
+            ),
+            SizedBox(width: context.scale(8)),
+            Expanded(
+              child: Text(
+                text,
+                style: getBoldStyle(
+                  color: ColorManager.blackColor,
+                  fontSize: FontSize.s16,
+                ),
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSwitchItem({
+    required String iconPath,
+    required String text,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return SizedBox(
+      height: context.scale(48),
+      child: Row(
+        children: [
+          SvgImageComponent(
+            width: 20,
+            height: 20,
+            iconPath: iconPath,
+            color: ColorManager.grey,
+          ),
+          SizedBox(width: context.scale(8)),
+          Expanded(
+            child: Text(
+              text,
+              style: getBoldStyle(
+                color: ColorManager.blackColor,
+                fontSize: FontSize.s16,
+              ),
+            ),
+          ),
+          CustomAppSwitch(
+            value: value,
+            onChanged: onChanged,
           ),
         ],
       ),
