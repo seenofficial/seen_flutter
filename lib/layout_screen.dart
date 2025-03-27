@@ -53,6 +53,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
   }
 
   Future<void>storeFirebaseMessagingToken() async {
+    if(SharedPreferencesService().accessToken.isEmpty) {
+      return ;
+    }
+
     if (SharedPreferencesService().getValue( 'firebaseToken') == null) {
       await FireBaseMessaging().getToken();
     }

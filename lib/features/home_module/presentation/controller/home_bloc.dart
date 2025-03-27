@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/constants/json_keys.dart';
 import '../../../../core/errors/failure.dart';
+import '../../../../core/services/shared_preferences_service.dart';
 import '../../../../core/translation/locale_keys.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../real_estates/domain/entities/base_property_entity.dart';
@@ -59,6 +60,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ) async {
     emit(state.copyWith(getNotificationsState: RequestState.loading));
 
+    if(SharedPreferencesService().accessToken.isEmpty){
+      emit(state.copyWith(
+        getNotificationsState: RequestState.loaded,
+        notifications: [],
+      ));
+      return;
+    }
     final Either<Failure, List<NotificationEntity>> result =
     await getNotificationsUseCase();
 

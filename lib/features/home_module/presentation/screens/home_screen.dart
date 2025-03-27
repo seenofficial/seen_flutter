@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                         context.read<HomeBloc>().add(
                           FetchNearByProperties(
                             propertyType: propertyType,
-                            location: SharedPreferencesService().getValue('city_id').toString() ?? '',
+                            location: SharedPreferencesService().getValue('city_id')?? '',
                           ),
                         );
                       }
@@ -108,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                                       context.read<HomeBloc>().add(
                                         FetchNearByProperties(
                                           propertyType: propertyType,
-                                          location: SharedPreferencesService().getValue('city_id').toString() ?? '',
+                                          location: SharedPreferencesService().getValue('city_id') ?? '',
                                         ),
                                       );
                                     }
