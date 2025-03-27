@@ -20,19 +20,16 @@ class NameAndPhoneWidget extends StatefulWidget {
 class _NameAndPhoneWidgetState extends State<NameAndPhoneWidget> {
   String name = '', phoneNumber = '';
 
+
+
   @override
-  void initState() {
+  Widget build(BuildContext context) {
     name = SharedPreferencesService().userName.isNotEmpty
         ? SharedPreferencesService().userName
         : LocaleKeys.nameAndPhoneGuestName.tr();
     phoneNumber = SharedPreferencesService().userPhone.isNotEmpty
         ? SharedPreferencesService().userPhone
         : LocaleKeys.nameAndPhoneCreateAccount.tr();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: context.scale(82),
@@ -68,23 +65,24 @@ class _NameAndPhoneWidgetState extends State<NameAndPhoneWidget> {
             SizedBox(
               width: context.scale(8),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  name,
-                  style: getBoldStyle(
-                      color: ColorManager.blackColor, fontSize: FontSize.s16),
-                ),
-                Text(
-                  NumbersServices.relocatePlusInNumber(phoneNumber , context.locale.languageCode),
-                  style: getBoldStyle(
-                      color: ColorManager.blackColor, fontSize: FontSize.s14),
-                )
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    name,
+                    style: getBoldStyle(
+                        color: ColorManager.blackColor, fontSize: FontSize.s16),
+                  ),
+                  Text(
+                    NumbersServices.relocatePlusInNumber(phoneNumber , context.locale.languageCode),
+                    style: getBoldStyle(
+                        color: ColorManager.blackColor, fontSize: FontSize.s14),
+                  )
+                ],
+              ),
             ),
-            Spacer(),
             Icon(Icons.arrow_forward_ios)
           ],
         ),
