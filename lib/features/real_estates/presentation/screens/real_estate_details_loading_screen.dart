@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/components/shimmer_component.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -5,6 +6,7 @@ import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../core/extensions/context_extension.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../components/real_estate_details_header_actions_component.dart';
 import '../components/real_estate_details_screen_components/real_estate_details_screen_footer.dart';
 
@@ -34,16 +36,16 @@ class RealEstateDetailsLoadingScreen extends StatelessWidget {
                           children: [
                             const _TitleShimmer(),
                             SizedBox(height: context.scale(20)),
-                            _SectionTitle("الوصف :", context),
+                            _SectionTitle(LocaleKeys.descriptionLabel.tr(), context),
                             const _ContentShimmer(),
                             SizedBox(height: context.scale(20)),
-                            _SectionTitle("بيانات العقار :", context),
+                            _SectionTitle(LocaleKeys.propertyDetailsLabel.tr(), context),
                             const _ContentShimmer(),
                             SizedBox(height: context.scale(20)),
-                            _SectionTitle("الموقع والمناطق القريبة :", context),
+                            _SectionTitle(LocaleKeys.locationAndNearbyAreas.tr(), context),
                             const _MapShimmer(),
                             SizedBox(height: context.scale(20)),
-                            _SectionTitle("وسائل الراحة :", context),
+                            _SectionTitle(LocaleKeys.amenitiesLabel.tr(), context),
                             const _AmenitiesShimmer(),
                             SizedBox(height: context.scale(20)),
                           ],
