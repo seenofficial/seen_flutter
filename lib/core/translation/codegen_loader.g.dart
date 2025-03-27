@@ -199,7 +199,23 @@ class CodegenLoader extends AssetLoader{
   "bookNow": "Book Now",
   "previewConfirmed": "Your property viewing appointment has been confirmed. You will be contacted soon to finalize the details.",
   "readMore": "Read More",
-  "readLess": "Read Less"
+  "readLess": "Read Less",
+  "profilePage": "Profile Page",
+  "fullName": "Full Name",
+  "enterFullName": "Enter Full Name",
+  "fullNameRequired": "Please enter full name",
+  "phoneNumber": "Phone Number",
+  "enterPhoneNumber": "Enter Phone Number",
+  "phoneNumberRequired": "Please enter phone number",
+  "idNumber": "ID Number",
+  "enterIdNumber": "Enter ID Number",
+  "idNumberRequired": "Please enter ID number",
+  "dateOfBirth": "Date of Birth",
+  "idExpirationDate": "ID Expiration Date",
+  "updatingData": "Updating data...",
+  "dataFetchError": "An error occurred while fetching data",
+  "cancel": "Cancel",
+  "saveChanges": "Save Changes"
 };
 static const Map<String,dynamic> _fr = {
   "somethingWentWrong": "Quelque chose s'est mal passé",
@@ -386,7 +402,23 @@ static const Map<String,dynamic> _fr = {
   "bookNow": "Réserver maintenant",
   "previewConfirmed": "Votre rendez-vous pour la visite du bien a été confirmé. Vous serez contacté sous peu pour finaliser les détails.",
   "readMore": "Lire plus",
-  "readLess": "Lire moins"
+  "readLess": "Lire moins",
+  "profilePage": "Page de profil",
+  "fullName": "Nom complet",
+  "enterFullName": "Entrez le nom complet",
+  "fullNameRequired": "Veuillez entrer le nom complet",
+  "phoneNumber": "Numéro de téléphone",
+  "enterPhoneNumber": "Entrez le numéro de téléphone",
+  "phoneNumberRequired": "Veuillez entrer le numéro de téléphone",
+  "idNumber": "Numéro d'identification",
+  "enterIdNumber": "Entrez le numéro d'identification",
+  "idNumberRequired": "Veuillez entrer le numéro d'identification",
+  "dateOfBirth": "Date de naissance",
+  "idExpirationDate": "Date d'expiration de l'ID",
+  "updatingData": "Mise à jour des données...",
+  "dataFetchError": "Une erreur s'est produite lors de la récupération des données",
+  "cancel": "Annuler",
+  "saveChanges": "Enregistrer les modifications"
 };
 static const Map<String,dynamic> _ar = {
   "somethingWentWrong": "حدث خطأ ما",
@@ -573,7 +605,23 @@ static const Map<String,dynamic> _ar = {
   "bookNow": "احجز الآن",
   "previewConfirmed": "تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.",
   "readMore": "اقرأ المزيد",
-  "readLess": "اقرأ أقل"
+  "readLess": "اقرأ أقل",
+  "profilePage": "الصفحة الشخصية",
+  "fullName": "الاسم الكامل",
+  "enterFullName": "أدخل الاسم الكامل",
+  "fullNameRequired": "الرجاء إدخال الاسم الكامل",
+  "phoneNumber": "رقم الهاتف",
+  "enterPhoneNumber": "أدخل رقم الهاتف",
+  "phoneNumberRequired": "الرجاء إدخال رقم الهاتف",
+  "idNumber": "رقم الهوية",
+  "enterIdNumber": "أدخل رقم الهوية",
+  "idNumberRequired": "الرجاء إدخال رقم الهوية",
+  "dateOfBirth": "تاريخ الميلاد",
+  "idExpirationDate": "تاريخ انتهاء الهوية",
+  "updatingData": "جاري تحديث البيانات",
+  "dataFetchError": "حدث خطأ أثناء جلب البيانات",
+  "cancel": "إلغاء",
+  "saveChanges": "حفظ التغييرات"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "fr": _fr, "ar": _ar};
 }

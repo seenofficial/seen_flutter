@@ -1,17 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
-
 import '../../../../../../configuration/managers/color_manager.dart';
 import '../../../../../../configuration/managers/font_manager.dart';
 import '../../../../../../configuration/managers/style_manager.dart';
+import '../../../../../../core/translation/locale_keys.dart';
 import '../../../../../home_module/home_imports.dart';
 
 class UserDataScreenButtons extends StatelessWidget {
-  const UserDataScreenButtons({super.key , required this.onSavePressed});
+  const UserDataScreenButtons({super.key, required this.onSavePressed});
 
-  final Function onSavePressed ;
+  final Function onSavePressed;
+
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: context.scale(16), vertical: context.scale(25)),
       child: Row(
@@ -31,7 +33,7 @@ class UserDataScreenButtons extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24)),
               ),
               child: Text(
-                'إلغاء',
+                LocaleKeys.cancel.tr(),
                 style: getMediumStyle(
                     color: ColorManager.blackColor, fontSize: FontSize.s14),
               ),
@@ -41,7 +43,7 @@ class UserDataScreenButtons extends StatelessWidget {
             width: 170,
             height: 48,
             child: ElevatedButton(
-              onPressed: (){
+              onPressed: () {
                 onSavePressed();
               },
               style: ElevatedButton.styleFrom(
@@ -51,7 +53,7 @@ class UserDataScreenButtons extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24)),
               ),
               child: Text(
-                'حفظ التغييرات',
+                LocaleKeys.saveChanges.tr(),
                 style: getBoldStyle(
                     color: ColorManager.whiteColor, fontSize: FontSize.s14),
               ),
@@ -60,6 +62,5 @@ class UserDataScreenButtons extends StatelessWidget {
         ],
       ),
     );
-
   }
 }

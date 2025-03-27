@@ -246,4 +246,21 @@ abstract class LocaleKeys {
 
   static const String readMore = 'readMore';
   static const String readLess = 'readLess';
+
+  static const String profilePage = 'profilePage';
+  static const String fullName = 'fullName';
+  static const String enterFullName = 'enterFullName';
+  static const String fullNameRequired = 'fullNameRequired';
+  static const String phoneNumber = 'phoneNumber';
+  static const String enterPhoneNumber = 'enterPhoneNumber';
+  static const String phoneNumberRequired = 'phoneNumberRequired';
+  static const String idNumber = 'idNumber';
+  static const String enterIdNumber = 'enterIdNumber';
+  static const String idNumberRequired = 'idNumberRequired';
+  static const String dateOfBirth = 'dateOfBirth';
+  static const String idExpirationDate = 'idExpirationDate';
+  static const String updatingData = 'updatingData';
+  static const String dataFetchError = 'dataFetchError';
+  static const String cancel = 'cancel';
+  static const String saveChanges = 'saveChanges';
 }

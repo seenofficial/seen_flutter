@@ -193,5 +193,22 @@
   "previewConfirmed": "تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.",
 
   "readMore": "اقرأ المزيد",
-  "readLess": "اقرأ أقل"
+  "readLess": "اقرأ أقل",
+
+  "profilePage": "الصفحة الشخصية",
+  "fullName": "الاسم الكامل",
+  "enterFullName": "أدخل الاسم الكامل",
+  "fullNameRequired": "الرجاء إدخال الاسم الكامل",
+  "phoneNumber": "رقم الهاتف",
+  "enterPhoneNumber": "أدخل رقم الهاتف",
+  "phoneNumberRequired": "الرجاء إدخال رقم الهاتف",
+  "idNumber": "رقم الهوية",
+  "enterIdNumber": "أدخل رقم الهوية",
+  "idNumberRequired": "الرجاء إدخال رقم الهوية",
+  "dateOfBirth": "تاريخ الميلاد",
+  "idExpirationDate": "تاريخ انتهاء الهوية",
+  "updatingData": "جاري تحديث البيانات",
+  "dataFetchError": "حدث خطأ أثناء جلب البيانات",
+  "cancel": "إلغاء",
+  "saveChanges": "حفظ التغييرات"
 }

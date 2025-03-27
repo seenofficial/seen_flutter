@@ -2,7 +2,6 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/services/shared_preferences_service.dart';
 import 'package:flutter/material.dart';
-
 import '../../configuration/managers/color_manager.dart';
 import '../../configuration/managers/font_manager.dart';
 import '../../configuration/managers/style_manager.dart';
@@ -13,8 +12,10 @@ class CustomCountryCodePicker extends StatelessWidget {
   final String initialSelection;
   final List<String> favoriteCountries;
 
+  final bool disableSelection;
   const CustomCountryCodePicker({
     super.key,
+    this.disableSelection = false ,
     required this.onChanged,
     this.initialSelection = 'EG',
     this.favoriteCountries = const [
@@ -34,6 +35,7 @@ class CustomCountryCodePicker extends StatelessWidget {
       favorite: favoriteCountries,
       showCountryOnly: false,
       showOnlyCountryWhenClosed: false,
+      enabled: disableSelection,
       alignLeft: false,
       showFlag: true,
       dialogSize: Size(
@@ -50,11 +52,14 @@ class CustomCountryCodePicker extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.arrow_drop_down,
-              color: ColorManager.grey,
-            ),
-            SizedBox(width: context.scale(8)),
+            if(!disableSelection)...[
+              Icon(
+                Icons.arrow_drop_down,
+                color: ColorManager.grey,
+              ),
+              SizedBox(width: context.scale(8)),
+            ],
+
             if (countryCode != null)
               Image.asset(
                 countryCode.flagUri!,

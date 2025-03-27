@@ -1,6 +1,7 @@
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/services/convert_numbers.dart';
 import 'package:enmaa/core/services/shared_preferences_service.dart';
 import 'package:enmaa/main.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -77,7 +78,7 @@ class _NameAndPhoneWidgetState extends State<NameAndPhoneWidget> {
                       color: ColorManager.blackColor, fontSize: FontSize.s16),
                 ),
                 Text(
-                  phoneNumber,
+                  NumbersServices.relocatePlusInNumber(phoneNumber , context.locale.languageCode),
                   style: getBoldStyle(
                       color: ColorManager.blackColor, fontSize: FontSize.s14),
                 )

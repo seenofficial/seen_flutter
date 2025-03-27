@@ -195,8 +195,23 @@
   "previewConfirmed": "Votre rendez-vous pour la visite du bien a été confirmé. Vous serez contacté sous peu pour finaliser les détails.",
 
   "readMore": "Lire plus",
-  "readLess": "Lire moins"
+  "readLess": "Lire moins",
 
-
+  "profilePage": "Page de profil",
+  "fullName": "Nom complet",
+  "enterFullName": "Entrez le nom complet",
+  "fullNameRequired": "Veuillez entrer le nom complet",
+  "phoneNumber": "Numéro de téléphone",
+  "enterPhoneNumber": "Entrez le numéro de téléphone",
+  "phoneNumberRequired": "Veuillez entrer le numéro de téléphone",
+  "idNumber": "Numéro d'identification",
+  "enterIdNumber": "Entrez le numéro d'identification",
+  "idNumberRequired": "Veuillez entrer le numéro d'identification",
+  "dateOfBirth": "Date de naissance",
+  "idExpirationDate": "Date d'expiration de l'ID",
+  "updatingData": "Mise à jour des données...",
+  "dataFetchError": "Une erreur s'est produite lors de la récupération des données",
+  "cancel": "Annuler",
+  "saveChanges": "Enregistrer les modifications"
 
 }
