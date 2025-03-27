@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dartz/dartz.dart';
-import 'package:enmaa/core/components/custom_snack_bar.dart';
+import 'package:enmaa/core/constants/local_keys.dart';
+import 'package:enmaa/core/services/shared_preferences_service.dart';
 import 'package:enmaa/core/utils/enums.dart';
 import 'package:enmaa/features/authentication_module/data/models/reset_password_request_model.dart';
 import 'package:enmaa/features/authentication_module/data/models/sign_up_request_model.dart';
@@ -13,7 +13,6 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../../core/errors/failure.dart';
 import '../../../data/models/login_request_model.dart';
-import '../../../domain/entities/login_request_entity.dart';
 import '../../../domain/entities/otp_response_entity.dart';
 import '../../../domain/use_cases/reset_password_use_case.dart';
 
@@ -85,8 +84,11 @@ class RemoteAuthenticationCubit extends Cubit<RemoteAuthenticationState> {
       (failure) => emit(state.copyWith(
           loginRequestState: RequestState.error,
           loginErrorMessage: failure.message)),
-      (token) => emit(state.copyWith(
-          loginRequestState: RequestState.loaded, loginToken: token)),
+      (token){
+        SharedPreferencesService().storeValue(LocalKeys.countryCodeNumber, state.currentCountryCode);
+        emit(state.copyWith(
+            loginRequestState: RequestState.loaded, loginToken: token));
+      },
     );
   }
 
@@ -99,8 +101,12 @@ class RemoteAuthenticationCubit extends Cubit<RemoteAuthenticationState> {
       (failure) => emit(state.copyWith(
           signUpRequestState: RequestState.error,
           signUpErrorMessage: failure.message)),
-      (token) => emit(state.copyWith(
-          signUpRequestState: RequestState.loaded, loginToken: token)),
+      (token)
+      {
+        SharedPreferencesService().storeValue(LocalKeys.countryCodeNumber, state.currentCountryCode);
+        emit(state.copyWith(
+            signUpRequestState: RequestState.loaded, loginToken: token)) ;
+      },
     );
   }
 

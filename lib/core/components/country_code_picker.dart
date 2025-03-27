@@ -1,10 +1,12 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/services/shared_preferences_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../configuration/managers/color_manager.dart';
 import '../../configuration/managers/font_manager.dart';
 import '../../configuration/managers/style_manager.dart';
+import '../constants/local_keys.dart';
 
 class CustomCountryCodePicker extends StatelessWidget {
   final Function(CountryCode countryCode) onChanged;
@@ -27,8 +29,8 @@ class CustomCountryCodePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountryCodePicker(
-      onChanged: onChanged, // Use the provided callback
-      initialSelection: initialSelection,
+      onChanged: onChanged,
+      initialSelection: SharedPreferencesService().getValue(LocalKeys.countryCodeNumber) ?? '+20',
       favorite: favoriteCountries,
       showCountryOnly: false,
       showOnlyCountryWhenClosed: false,

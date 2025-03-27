@@ -20,7 +20,8 @@ part 'book_property_state.dart';
 
 class BookPropertyCubit extends Cubit<BookPropertyState> {
 
-  final TextEditingController phoneNumberController = TextEditingController(text: '+20');
+  final String currentCountryCode = SharedPreferencesService().getValue(LocalKeys.countryCodeNumber) ?? '+20' ;
+  final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController iDNumberController = TextEditingController();
 
@@ -34,12 +35,14 @@ class BookPropertyCubit extends Cubit<BookPropertyState> {
     iDNumberController.text = SharedPreferencesService().getValue(LocalKeys.userIdNumber) ?? '';
 
 
+    print('currentCountryCode: $currentCountryCode');
     emit(state.copyWith(
       userName: SharedPreferencesService().userName,
       phoneNumber: SharedPreferencesService().userPhone,
       userID: SharedPreferencesService().getValue(LocalKeys.userIdNumber) ?? '',
       birthDate: SharedPreferencesService().getValue(LocalKeys.userDateOfBirth) != null ? DateTime.parse(SharedPreferencesService().getValue(LocalKeys.userDateOfBirth)) : null,
       idExpirationDate: SharedPreferencesService().getValue(LocalKeys.userIdExpirationDate) != null ? DateTime.parse(SharedPreferencesService().getValue(LocalKeys.userIdExpirationDate)) : null,
+      countryCode: currentCountryCode ,
     ));
   }
 

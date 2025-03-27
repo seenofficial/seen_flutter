@@ -42,4 +42,6 @@ class LocalKeys {
   static String userDateOfBirth = 'user_date_of_birth';
   static String userIdExpirationDate = 'user_id_expiration_date';
 
+  static String countryCodeNumber = "country_code_number";
+
 }
