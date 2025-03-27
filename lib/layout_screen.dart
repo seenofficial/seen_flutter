@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import 'package:enmaa/features/my_booking/my_booking_DI.dart';
 import 'package:enmaa/features/my_booking/presentation/controller/my_booking_cubit.dart';
 import 'package:enmaa/features/my_booking/presentation/screens/my_booking_screen.dart';
@@ -10,10 +12,6 @@ import 'package:enmaa/features/my_profile/presentation/screens/my_profile_screen
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:enmaa/features/real_estates/real_estates_DI.dart';
 import 'package:enmaa/features/wallet/wallet_DI.dart';
-import 'package:enmaa/features/wish_list/domain/use_cases/get_properties_wish_list_use_case.dart';
-import 'package:enmaa/features/wish_list/domain/use_cases/remove_property_from_wish_list_use_case.dart';
-import 'package:enmaa/features/wish_list/presentation/controller/wish_list_cubit.dart';
-import 'package:enmaa/features/wish_list/wish_list_DI.dart';
 import 'package:enmaa/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,8 +25,6 @@ import 'features/home_module/home_imports.dart';
 import 'features/home_module/presentation/screens/home_screen.dart';
 import 'features/wallet/presentation/controller/wallet_cubit.dart';
 import 'features/wallet/presentation/screens/charge_wallet_screen.dart';
-import 'features/wallet/presentation/screens/wallet_screen.dart';
-import 'features/wish_list/domain/use_cases/add_new_property_to_wish_list_use_case.dart';
 import 'features/wish_list/presentation/screens/wish_list_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -57,7 +53,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
   }
 
   Future<void>storeFirebaseMessagingToken() async {
-    print("firebase messaging token is :${SharedPreferencesService().getValue( 'firebaseToken')}");
     if (SharedPreferencesService().getValue( 'firebaseToken') == null) {
       await FireBaseMessaging().getToken();
     }
@@ -120,17 +115,17 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   List<FloatingNavBarItem> get items =>
       [
-        FloatingNavBarItem(icon: AppAssets.homeIcon, text: 'الرئيسيه'),
+        FloatingNavBarItem(icon: AppAssets.homeIcon, text: LocaleKeys.home.tr()),
         FloatingNavBarItem(
-            icon: AppAssets.bookingIcon, text: 'حجوزاتي'),
+            icon: AppAssets.bookingIcon, text: LocaleKeys.myBookings.tr()),
         FloatingNavBarItem(
             icon: AppAssets.heartIcon,
-            text: 'المفضله'),
+            text: LocaleKeys.favorites.tr()),
         FloatingNavBarItem(
             icon: AppAssets.walletIcon,
-            text: 'معاملاتي'),
+            text: LocaleKeys.transactions.tr()),
         FloatingNavBarItem(
-            icon: AppAssets.personIcon, text: 'حسابي'),
+            icon: AppAssets.personIcon, text: LocaleKeys.myProfile.tr()),
       ];
 
   Widget _buildBottomNavBar() {

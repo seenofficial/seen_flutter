@@ -144,6 +144,7 @@ abstract class LocaleKeys {
   static const String transactionHistoryTitle = 'transactionHistoryTitle';
   static const String transactionHistoryNoTransactions = 'transactionHistoryNoTransactions';
   static const String transactionHistoryEmptyMessage = 'transactionHistoryEmptyMessage';
+  static const String transactions = 'transactions';
 
 
   static const String appControlsLanguage = 'appControlsLanguage';

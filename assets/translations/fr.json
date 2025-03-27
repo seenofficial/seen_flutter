@@ -104,6 +104,7 @@
   "transactionHistoryTitle": "Historique des transactions",
   "transactionHistoryNoTransactions": "Aucune transaction pour le moment",
   "transactionHistoryEmptyMessage": "Une fois que vous effectuez une transaction, elle apparaîtra ici immédiatement.",
+  "transactions": "Transactions",
   "appControlsLanguage": "Langue",
   "appControlsTerms": "Conditions générales",
   "appControlsDarkMode": "Activer le mode sombre",

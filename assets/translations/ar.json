@@ -104,6 +104,7 @@
   "transactionHistoryTitle": "سجل المعاملات",
   "transactionHistoryNoTransactions": "لا توجد معاملات حتى الآن",
   "transactionHistoryEmptyMessage": "عند إجراء أي معاملة، ستظهر هنا فورًا.",
+  "transactions": "المعاملات",
   "appControlsLanguage": "اللغة",
   "appControlsTerms": "الشروط والأحكام",
   "appControlsDarkMode": "تفعيل الوضع الليلي",

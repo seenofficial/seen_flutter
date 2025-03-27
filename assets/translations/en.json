@@ -104,6 +104,7 @@
   "transactionHistoryTitle": "Transaction History",
   "transactionHistoryNoTransactions": "No transactions yet",
   "transactionHistoryEmptyMessage": "Once you make a transaction, it will appear here immediately.",
+  "transactions": "Transactions",
   "appControlsLanguage": "Language",
   "appControlsTerms": "Terms & Conditions",
   "appControlsDarkMode": "Enable Dark Mode",
