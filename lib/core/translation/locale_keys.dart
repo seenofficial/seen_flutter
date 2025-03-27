@@ -224,4 +224,26 @@ abstract class LocaleKeys {
   static const String selectCountryHint = 'selectCountryHint';
   static const String country = 'country';
   static const String countryRequired = 'countryRequired';
+
+  static const String descriptionLabel = 'descriptionLabel';
+
+  static const String propertyDetailsLabel = 'propertyDetailsLabel';
+  static const String unfurnished = 'unfurnished';
+  static const String months = 'months';
+  static const String floors = 'floors';
+  static const String floor = 'floor';
+  static const String readyForBuilding = 'readyForBuilding';
+  static const String notReadyForBuilding = 'notReadyForBuilding';
+
+  static const String locationAndNearbyAreas = 'locationAndNearbyAreas';
+  static const String amenitiesLabel = 'amenitiesLabel';
+
+  static const String cannotOpenDialer = 'cannotOpenDialer';
+  static const String preview = 'preview';
+  static const String bookNow = 'bookNow';
+  static const String previewConfirmed = 'previewConfirmed';
+
+
+  static const String readMore = 'readMore';
+  static const String readLess = 'readLess';
 }

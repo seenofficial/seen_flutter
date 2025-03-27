@@ -31,7 +31,7 @@ import '../../../../core/entites/image_entity.dart';
      required this.isFurnished,
      required this.numberOfFloors,
      required this.rooms,
-     required this.bathrooms,
+     required this.bathrooms, required super.officePhoneNumber,
    });
 
    @override
@@ -66,6 +66,8 @@ import '../../../../core/entites/image_entity.dart';
      int? numberOfFloors,
      int? rooms,
      int? bathrooms,
+     String?officePhoneNumber ,
+
    }) {
      return VillaDetailsEntity(
        id: id ?? this.id,
@@ -90,6 +92,7 @@ import '../../../../core/entites/image_entity.dart';
        numberOfFloors: numberOfFloors ?? this.numberOfFloors,
        rooms: rooms ?? this.rooms,
        bathrooms: bathrooms ?? this.bathrooms,
+        officePhoneNumber: officePhoneNumber ?? this.officePhoneNumber,
      );
    }
  }

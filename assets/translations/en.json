@@ -172,7 +172,31 @@
   "withdrawSuccess": "Withdrawal request submitted and under review",
   "selectCountryHint": "Select Country",
   "country" : "Country",
-  "countryRequired": "Country is required"
+  "countryRequired": "Country is required",
+
+  "countryRequired": "Country is required",
+
+  "descriptionLabel": "Description:",
+
+  "propertyDetailsLabel": "Property Details:",
+  "unfurnished": "Unfurnished",
+  "months": "Months",
+  "floors": "Floors",
+  "floor": "Floor",
+  "readyForBuilding": "Ready for building",
+  "notReadyForBuilding": "Not ready for building",
+
+  "locationAndNearbyAreas": "Location and Nearby Areas:",
+  "amenitiesLabel": "Amenities:",
+
+  "cannotOpenDialer": "Cannot open dialer",
+  "preview": "Preview",
+  "bookNow": "Book Now",
+  "previewConfirmed": "Your property viewing appointment has been confirmed. You will be contacted soon to finalize the details.",
+
+  "readMore": "Read More",
+  "readLess": "Read Less"
+
 
 
 

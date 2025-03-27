@@ -172,8 +172,30 @@
   "withdrawSuccess": "Demande de retrait soumise et en cours de révision",
   "selectCountryHint": "Sélectionnez le pays",
   "country" : "Pays",
-  "countryRequired": "Le pays est requis"
+  "countryRequired": "Le pays est requis",
 
+  "countryRequired": "Le pays est requis",
+
+  "descriptionLabel": "Description :",
+
+  "propertyDetailsLabel": "Détails de la propriété :",
+  "unfurnished": "Non meublé",
+  "months": "Mois",
+  "floors": "Étages",
+  "floor": "Étage",
+  "readyForBuilding": "Prêt pour la construction",
+  "notReadyForBuilding": "Non prêt pour la construction",
+
+  "locationAndNearbyAreas": "Emplacement et zones à proximité :",
+  "amenitiesLabel": "Commodités :",
+
+  "cannotOpenDialer": "Impossible d'ouvrir le composeur",
+  "preview": "Aperçu",
+  "bookNow": "Réserver maintenant",
+  "previewConfirmed": "Votre rendez-vous pour la visite du bien a été confirmé. Vous serez contacté sous peu pour finaliser les détails.",
+
+  "readMore": "Lire plus",
+  "readLess": "Lire moins"
 
 
 

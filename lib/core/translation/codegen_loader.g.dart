@@ -183,7 +183,23 @@ class CodegenLoader extends AssetLoader{
   "withdrawSuccess": "Withdrawal request submitted and under review",
   "selectCountryHint": "Select Country",
   "country": "Country",
-  "countryRequired": "Country is required"
+  "countryRequired": "Country is required",
+  "descriptionLabel": "Description:",
+  "propertyDetailsLabel": "Property Details:",
+  "unfurnished": "Unfurnished",
+  "months": "Months",
+  "floors": "Floors",
+  "floor": "Floor",
+  "readyForBuilding": "Ready for building",
+  "notReadyForBuilding": "Not ready for building",
+  "locationAndNearbyAreas": "Location and Nearby Areas:",
+  "amenitiesLabel": "Amenities:",
+  "cannotOpenDialer": "Cannot open dialer",
+  "preview": "Preview",
+  "bookNow": "Book Now",
+  "previewConfirmed": "Your property viewing appointment has been confirmed. You will be contacted soon to finalize the details.",
+  "readMore": "Read More",
+  "readLess": "Read Less"
 };
 static const Map<String,dynamic> _fr = {
   "somethingWentWrong": "Quelque chose s'est mal passé",
@@ -354,7 +370,23 @@ static const Map<String,dynamic> _fr = {
   "withdrawSuccess": "Demande de retrait soumise et en cours de révision",
   "selectCountryHint": "Sélectionnez le pays",
   "country": "Pays",
-  "countryRequired": "Le pays est requis"
+  "countryRequired": "Le pays est requis",
+  "descriptionLabel": "Description :",
+  "propertyDetailsLabel": "Détails de la propriété :",
+  "unfurnished": "Non meublé",
+  "months": "Mois",
+  "floors": "Étages",
+  "floor": "Étage",
+  "readyForBuilding": "Prêt pour la construction",
+  "notReadyForBuilding": "Non prêt pour la construction",
+  "locationAndNearbyAreas": "Emplacement et zones à proximité :",
+  "amenitiesLabel": "Commodités :",
+  "cannotOpenDialer": "Impossible d'ouvrir le composeur",
+  "preview": "Aperçu",
+  "bookNow": "Réserver maintenant",
+  "previewConfirmed": "Votre rendez-vous pour la visite du bien a été confirmé. Vous serez contacté sous peu pour finaliser les détails.",
+  "readMore": "Lire plus",
+  "readLess": "Lire moins"
 };
 static const Map<String,dynamic> _ar = {
   "somethingWentWrong": "حدث خطأ ما",
@@ -525,7 +557,23 @@ static const Map<String,dynamic> _ar = {
   "withdrawSuccess": "تم تقديم طلب السحب وجاري المراجعه",
   "selectCountryHint": "اختر الدولة",
   "country": "الدولة",
-  "countryRequired": "الدولة مطلوبة"
+  "countryRequired": "الدولة مطلوبة",
+  "descriptionLabel": "الوصف :",
+  "propertyDetailsLabel": "بيانات العقار :",
+  "unfurnished": "غير مفروش",
+  "months": "شهور",
+  "floors": "طوابق",
+  "floor": "الدور",
+  "readyForBuilding": "جاهزة للبناء",
+  "notReadyForBuilding": "غير جاهزة للبناء",
+  "locationAndNearbyAreas": "الموقع والمناطق القريبة :",
+  "amenitiesLabel": "وسائل الراحة :",
+  "cannotOpenDialer": "لا يمكن فتح تطبيق الاتصال",
+  "preview": "معاينة",
+  "bookNow": "احجز الآن",
+  "previewConfirmed": "تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.",
+  "readMore": "اقرأ المزيد",
+  "readLess": "اقرأ أقل"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "fr": _fr, "ar": _ar};
 }

@@ -172,5 +172,26 @@
   "withdrawSuccess": "تم تقديم طلب السحب وجاري المراجعه",
   "selectCountryHint": "اختر الدولة",
   "country" : "الدولة",
-  "countryRequired": "الدولة مطلوبة"
+  "countryRequired": "الدولة مطلوبة",
+
+  "descriptionLabel": "الوصف :",
+
+  "propertyDetailsLabel": "بيانات العقار :",
+  "unfurnished": "غير مفروش",
+  "months": "شهور",
+  "floors": "طوابق",
+  "floor": "الدور",
+  "readyForBuilding": "جاهزة للبناء",
+  "notReadyForBuilding": "غير جاهزة للبناء",
+
+  "locationAndNearbyAreas": "الموقع والمناطق القريبة :",
+  "amenitiesLabel": "وسائل الراحة :",
+
+  "cannotOpenDialer": "لا يمكن فتح تطبيق الاتصال",
+  "preview": "معاينة",
+  "bookNow": "احجز الآن",
+  "previewConfirmed": "تم تأكيد موعد معاينتك للعقار، وسيتم التواصل معك في أقرب وقت لتأكيد التفاصيل النهائية.",
+
+  "readMore": "اقرأ المزيد",
+  "readLess": "اقرأ أقل"
 }

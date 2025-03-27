@@ -3,6 +3,8 @@ import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
+import 'package:easy_localization/easy_localization.dart'; // Add this import
+import 'package:enmaa/core/translation/locale_keys.dart'; // Add this import
 
 class ExpandableDescriptionBox extends StatefulWidget {
   final String description;
@@ -14,7 +16,7 @@ class ExpandableDescriptionBox extends StatefulWidget {
 }
 
 class _ExpandableDescriptionBoxState extends State<ExpandableDescriptionBox> {
-  bool _isExpanded = false; // Initially collapsed
+  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class _ExpandableDescriptionBoxState extends State<ExpandableDescriptionBox> {
                   });
                 },
                 child: Text(
-                  _isExpanded ? 'اقرأ أقل' : 'اقرأ المزيد',
+                  _isExpanded ? LocaleKeys.readLess.tr() : LocaleKeys.readMore.tr(),
                   style: TextStyle(
                     color: ColorManager.yellowColor,
                     fontSize: 12,

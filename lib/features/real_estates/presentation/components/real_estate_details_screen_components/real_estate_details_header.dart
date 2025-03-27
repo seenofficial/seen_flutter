@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
+import 'package:enmaa/core/translation/locale_keys.dart';
 import 'package:enmaa/features/real_estates/presentation/controller/real_estate_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -87,7 +89,7 @@ class RealEstateDetailsHeader extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: ' تبدأ من  ',
+                        text: LocaleKeys.startingFrom.tr(),
                         style: getRegularStyle(
                           color: ColorManager.primaryColor,
                           fontSize: FontSize.s10,

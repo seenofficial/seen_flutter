@@ -32,7 +32,7 @@ class ApartmentDetailsEntity extends BasePropertyDetailsEntity {
     required this.rooms,
     required this.bathrooms,
     required this.isFurnished,
-    required this.usageType,
+    required this.usageType, required super.officePhoneNumber,
   });
 
   @override
@@ -70,6 +70,7 @@ class ApartmentDetailsEntity extends BasePropertyDetailsEntity {
     int? bathrooms,
     bool? isFurnished,
     String? usageType,
+    String ? officePhoneNumber,
   }) {
     return ApartmentDetailsEntity(
       id: id ?? this.id,
@@ -95,6 +96,7 @@ class ApartmentDetailsEntity extends BasePropertyDetailsEntity {
       bathrooms: bathrooms ?? this.bathrooms,
       isFurnished: isFurnished ?? this.isFurnished,
       usageType: usageType ?? this.usageType,
+      officePhoneNumber: officePhoneNumber ?? this.officePhoneNumber,
     );
   }
 }

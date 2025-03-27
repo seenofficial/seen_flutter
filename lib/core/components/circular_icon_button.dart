@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
 import 'package:flutter/material.dart';
 import '../../features/home_module/home_imports.dart';
@@ -34,10 +35,18 @@ class CircularIconButton extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: Center(
-          child: SvgImageComponent(
-            iconPath: iconPath,
-            width: iconSize,
-            height: iconSize,
+          child: Transform(
+            transform: Matrix4.identity()
+              ..scale(
+                context.locale.languageCode != 'ar' ? -1.0 : 1.0,
+                1.0,
+              ),
+            alignment: Alignment.center,
+            child: SvgImageComponent(
+              iconPath: iconPath,
+              width: iconSize,
+              height: iconSize,
+            ),
           ),
         ),
       ),

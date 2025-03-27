@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/entites/amenity_entity.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 
@@ -5,6 +6,7 @@ import '../../../../../configuration/managers/color_manager.dart';
 import '../../../../../configuration/managers/font_manager.dart';
 import '../../../../../configuration/managers/style_manager.dart';
 import '../../../../../core/components/chip_component.dart';
+import '../../../../../core/translation/locale_keys.dart';
 import '../../../../home_module/home_imports.dart';
 
 class RealEstateDetailsAmenities extends StatelessWidget {
@@ -18,7 +20,7 @@ class RealEstateDetailsAmenities extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "وسائل الراحة :",
+          LocaleKeys.amenitiesLabel.tr(),
           style: getBoldStyle(
             color: ColorManager.blackColor,
             fontSize: FontSize.s12,

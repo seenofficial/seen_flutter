@@ -21,7 +21,7 @@ class LandDetailsModel extends LandDetailsEntity {
     required super.country,
     required super.isInWishlist,
     required super.isLicensed,
-    required super.usageType, required super.rentIsRenewable, required super.monthlyRentPeriod,
+    required super.usageType, required super.rentIsRenewable, required super.monthlyRentPeriod, required super.officePhoneNumber,
   });
 
   factory LandDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -56,6 +56,8 @@ class LandDetailsModel extends LandDetailsEntity {
       isLicensed: propertyData['is_licensed'] ?? false,
       usageType: propertyData['usage_type'] ?? '',
       rentIsRenewable: propertyData['is_renewable'] ?? '', monthlyRentPeriod: propertyData['monthly_rent_period'].toString() ?? '',
+      officePhoneNumber: propertyData['partner_info']['phone_number'].toString() ?? '',
+
 
     );
   }

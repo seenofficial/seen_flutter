@@ -23,7 +23,7 @@ class VillaDetailsModel extends VillaDetailsEntity {
     required super.isFurnished,
     required super.numberOfFloors,
     required super.rooms,
-    required super.bathrooms, required super.rentIsRenewable, required super.monthlyRentPeriod,
+    required super.bathrooms, required super.rentIsRenewable, required super.monthlyRentPeriod, required super.officePhoneNumber,
   });
 
   factory VillaDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -60,6 +60,8 @@ class VillaDetailsModel extends VillaDetailsEntity {
       rooms: propertyData['rooms'] ?? 0,
       bathrooms: propertyData['bathrooms'] ?? 0,
       rentIsRenewable: propertyData['is_renewable'] ?? '', monthlyRentPeriod: propertyData['monthly_rent_period'].toString() ?? '',
+      officePhoneNumber: propertyData['partner_info']['phone_number'].toString() ?? '',
+
 
     );
   }

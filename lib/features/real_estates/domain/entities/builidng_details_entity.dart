@@ -28,7 +28,7 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
     required super.monthlyRentPeriod,
     required this.numberOfFloors,
     required this.usageType,
-    required this.numberOfApartmentsPerFloor,
+    required this.numberOfApartmentsPerFloor, required super.officePhoneNumber,
   });
 
   @override
@@ -61,6 +61,7 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
     int? numberOfFloors,
     int? numberOfApartmentsPerFloor,
     String? usageType,
+    String?officePhoneNumber ,
   }) {
     return BuildingDetailsEntity(
       id: id ?? this.id,
@@ -84,6 +85,7 @@ class BuildingDetailsEntity extends BasePropertyDetailsEntity {
       numberOfFloors: numberOfFloors ?? this.numberOfFloors,
       usageType: usageType ?? this.usageType,
       numberOfApartmentsPerFloor: numberOfApartmentsPerFloor ?? this.numberOfApartmentsPerFloor,
+      officePhoneNumber: officePhoneNumber ?? this.officePhoneNumber,
     );
   }
 }

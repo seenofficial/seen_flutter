@@ -27,7 +27,7 @@ import '../../../../core/entites/image_entity.dart';
        required super.rentIsRenewable,
        required super.monthlyRentPeriod,
        required this.isLicensed,
-       required this.usageType,
+       required this.usageType, required super.officePhoneNumber,
      });
 
      @override
@@ -58,6 +58,8 @@ import '../../../../core/entites/image_entity.dart';
        bool? rentIsRenewable,
        bool? isLicensed,
        String? usageType,
+       String?officePhoneNumber ,
+
      }) {
        return LandDetailsEntity(
          id: id ?? this.id,
@@ -80,6 +82,7 @@ import '../../../../core/entites/image_entity.dart';
          rentIsRenewable: rentIsRenewable ?? this.rentIsRenewable,
          isLicensed: isLicensed ?? this.isLicensed,
          usageType: usageType ?? this.usageType,
+          officePhoneNumber: officePhoneNumber ?? this.officePhoneNumber,
        );
      }
    }

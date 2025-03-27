@@ -21,6 +21,7 @@ abstract class BasePropertyDetailsEntity extends Equatable {
   final bool isInWishlist;
   final String? monthlyRentPeriod;
   final bool? rentIsRenewable;
+  final String officePhoneNumber ;
 
   const BasePropertyDetailsEntity({
     required this.id,
@@ -41,6 +42,7 @@ abstract class BasePropertyDetailsEntity extends Equatable {
     required this.isInWishlist,
     required this.rentIsRenewable,
     required this.monthlyRentPeriod,
+    required this.officePhoneNumber,
   });
 
   BasePropertyDetailsEntity copyWith({
@@ -62,6 +64,7 @@ abstract class BasePropertyDetailsEntity extends Equatable {
     bool? isInWishlist,
     String? monthlyRentPeriod,
     bool? rentIsRenewable,
+    String? officePhoneNumber,
   });
 
   @override
@@ -84,5 +87,6 @@ abstract class BasePropertyDetailsEntity extends Equatable {
     isInWishlist,
     monthlyRentPeriod,
     rentIsRenewable,
+    officePhoneNumber,
   ];
 }
