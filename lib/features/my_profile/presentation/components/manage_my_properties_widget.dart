@@ -33,33 +33,38 @@ class ManageMyPropertiesWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    LocaleKeys.managePropertiesTitle.tr(),
-                    style: getBoldStyle(
-                        color: ColorManager.primaryColor, fontSize: FontSize.s18),
+        child: Builder(
+          builder: (BuildContext context) {
+            final locale = context.locale;
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        LocaleKeys.managePropertiesTitle.tr(),
+                        style: getBoldStyle(
+                            color: ColorManager.primaryColor, fontSize: FontSize.s18),
+                      ),
+                      Text(
+                        LocaleKeys.managePropertiesDescription.tr(),
+                        style: getSemiBoldStyle(
+                            color: ColorManager.blackColor, fontSize: FontSize.s14),
+                      ),
+                    ],
                   ),
-                  Text(
-                    LocaleKeys.managePropertiesDescription.tr(),
-                    style: getSemiBoldStyle(
-                        color: ColorManager.blackColor, fontSize: FontSize.s14),
-                  )
-                ],
-              ),
-            ),
-            SvgImageComponent(
-              iconPath: AppAssets.myPropertiesIcon,
-              width: context.scale(90),
-              height: context.scale(64),
-            )
-          ],
+                ),
+                SvgImageComponent(
+                  iconPath: AppAssets.myPropertiesIcon,
+                  width: context.scale(90),
+                  height: context.scale(64),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

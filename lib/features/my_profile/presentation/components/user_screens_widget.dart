@@ -24,71 +24,76 @@ class UserScreensWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () {
-                    if (isAuth) {
-                      Navigator.pushNamed(context, RoutersNames.userAppointmentsScreen);
-                    } else {
-                      needToLoginSnackBar();
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      SvgImageComponent(
-                        width: 20,
-                        height: 20,
-                        iconPath: AppAssets.myAppointmentIcon,
-                        color: ColorManager.grey,
+      child: Builder(
+        builder: (context) {
+          final locale = context.locale; // This line forces reactivity
+          return Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        if (isAuth) {
+                          Navigator.pushNamed(context, RoutersNames.userAppointmentsScreen);
+                        } else {
+                          needToLoginSnackBar();
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          SvgImageComponent(
+                            width: 20,
+                            height: 20,
+                            iconPath: AppAssets.myAppointmentIcon,
+                            color: ColorManager.grey,
+                          ),
+                          SizedBox(width: context.scale(8)),
+                          Text(
+                            LocaleKeys.userScreensAppointments.tr(),
+                            style: getBoldStyle(
+                                color: ColorManager.blackColor, fontSize: FontSize.s16),
+                          ),
+                          Spacer(),
+                          Icon(Icons.arrow_forward_ios),
+                        ],
                       ),
-                      SizedBox(width: context.scale(8)),
-                      Text(
-                        LocaleKeys.userScreensAppointments.tr(),
-                        style: getBoldStyle(
-                            color: ColorManager.blackColor, fontSize: FontSize.s16),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (isAuth) {
+                          Navigator.pushNamed(context, RoutersNames.userElectronicContracts);
+                        } else {
+                          needToLoginSnackBar();
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          SvgImageComponent(
+                            width: 20,
+                            height: 20,
+                            iconPath: AppAssets.electronicContractIcon,
+                            color: ColorManager.grey,
+                          ),
+                          SizedBox(width: context.scale(8)),
+                          Text(
+                            LocaleKeys.userScreensElectronicContracts.tr(),
+                            style: getBoldStyle(
+                                color: ColorManager.blackColor, fontSize: FontSize.s16),
+                          ),
+                          Spacer(),
+                          Icon(Icons.arrow_forward_ios),
+                        ],
                       ),
-                      Spacer(),
-                      Icon(Icons.arrow_forward_ios)
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                InkWell(
-                  onTap: () {
-                    if (isAuth) {
-                      Navigator.pushNamed(context, RoutersNames.userElectronicContracts);
-                    } else {
-                      needToLoginSnackBar();
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      SvgImageComponent(
-                        width: 20,
-                        height: 20,
-                        iconPath: AppAssets.electronicContractIcon,
-                        color: ColorManager.grey,
-                      ),
-                      SizedBox(width: context.scale(8)),
-                      Text(
-                        LocaleKeys.userScreensElectronicContracts.tr(),
-                        style: getBoldStyle(
-                            color: ColorManager.blackColor, fontSize: FontSize.s16),
-                      ),
-                      Spacer(),
-                      Icon(Icons.arrow_forward_ios)
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }

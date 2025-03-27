@@ -97,26 +97,31 @@ class RemoveAccountWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            SvgImageComponent(
-              width: 20,
-              height: 20,
-              iconPath: AppAssets.trashIcon,
-            ),
-            SizedBox(
-              width: context.scale(8),
-            ),
-            Text(
-              LocaleKeys.removeAccountTitle.tr(),
-              style: getSemiBoldStyle(
-                color: ColorManager.redColor,
-                fontSize: FontSize.s16,
-              ),
-            ),
-            const Spacer(),
-            const Icon(Icons.arrow_forward_ios),
-          ],
+        child: Builder(
+          builder: (BuildContext context) {
+            final locale = context.locale;
+            return Row(
+              children: [
+                SvgImageComponent(
+                  width: 20,
+                  height: 20,
+                  iconPath: AppAssets.trashIcon,
+                ),
+                SizedBox(
+                  width: context.scale(8),
+                ),
+                Text(
+                  LocaleKeys.removeAccountTitle.tr(),
+                  style: getSemiBoldStyle(
+                    color: ColorManager.redColor,
+                    fontSize: FontSize.s16,
+                  ),
+                ),
+                const Spacer(),
+                const Icon(Icons.arrow_forward_ios),
+              ],
+            );
+          },
         ),
       ),
     );

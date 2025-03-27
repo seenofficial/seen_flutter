@@ -25,56 +25,61 @@ class LogOutAndContactUsWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          InkWell(
-            onTap: () async {
-              final prefs = await SharedPreferences.getInstance();
-              isAuth = false;
-              prefs.clear();
-              SharedPreferencesService().setFirstLaunch(false);
-              Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
-            },
-            child: Row(
-              children: [
-                SvgImageComponent(
-                    width: 20, height: 20, iconPath: AppAssets.logOutIcon),
-                SizedBox(
-                  width: context.scale(8),
+      child: Builder(
+        builder: (BuildContext context) {
+          final locale = context.locale;
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  isAuth = false;
+                  prefs.clear();
+                  SharedPreferencesService().setFirstLaunch(false);
+                  Navigator.pushReplacementNamed(context, RoutersNames.authenticationFlow);
+                },
+                child: Row(
+                  children: [
+                    SvgImageComponent(
+                        width: 20, height: 20, iconPath: AppAssets.logOutIcon),
+                    SizedBox(
+                      width: context.scale(8),
+                    ),
+                    Text(
+                      LocaleKeys.logOutAndContactUsLogOut.tr(),
+                      style: getSemiBoldStyle(
+                          color: ColorManager.blackColor, fontSize: FontSize.s16),
+                    ),
+                    Spacer(),
+                    Icon(Icons.arrow_forward_ios),
+                  ],
                 ),
-                Text(
-                  LocaleKeys.logOutAndContactUsLogOut.tr(),
-                  style: getSemiBoldStyle(
-                      color: ColorManager.blackColor, fontSize: FontSize.s16),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, RoutersNames.contactUsScreen);
+                },
+                child: Row(
+                  children: [
+                    SvgImageComponent(
+                        width: 20, height: 20, iconPath: AppAssets.phoneIcon),
+                    SizedBox(
+                      width: context.scale(8),
+                    ),
+                    Text(
+                      LocaleKeys.logOutAndContactUsContactUs.tr(),
+                      style: getSemiBoldStyle(
+                          color: ColorManager.blackColor, fontSize: FontSize.s16),
+                    ),
+                    Spacer(),
+                    Icon(Icons.arrow_forward_ios),
+                  ],
                 ),
-                Spacer(),
-                Icon(Icons.arrow_forward_ios)
-              ],
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, RoutersNames.contactUsScreen);
-            },
-            child: Row(
-              children: [
-                SvgImageComponent(
-                    width: 20, height: 20, iconPath: AppAssets.phoneIcon),
-                SizedBox(
-                  width: context.scale(8),
-                ),
-                Text(
-                  LocaleKeys.logOutAndContactUsContactUs.tr(),
-                  style: getSemiBoldStyle(
-                      color: ColorManager.blackColor, fontSize: FontSize.s16),
-                ),
-                Spacer(),
-                Icon(Icons.arrow_forward_ios)
-              ],
-            ),
-          ),
-        ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }
