@@ -34,7 +34,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   void initState() {
     super.initState();
 
-    // Initialize the controllers with values from the ContactUsCubit state
     final contactUsCubit = context.read<ContactUsCubit>();
     nameController.text = contactUsCubit.state.name;
     phoneController.text = contactUsCubit.state.phoneNumber;

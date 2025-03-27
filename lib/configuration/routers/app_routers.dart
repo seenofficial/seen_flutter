@@ -13,6 +13,7 @@ import 'package:enmaa/features/my_profile/modules/user_appointments/user_appoint
 import 'package:enmaa/features/my_profile/modules/user_data_module/user_data_DI.dart';
 import 'package:enmaa/features/my_profile/modules/user_properties_module/presentation/screens/user_properties_screen.dart';
 import 'package:enmaa/features/my_profile/modules/user_properties_module/user_properties_DI.dart';
+import 'package:enmaa/features/my_profile/presentation/screens/change_password_screen.dart';
 import 'package:enmaa/features/preview_property/presentation/screens/preview_property_main_screen.dart';
 import 'package:enmaa/features/preview_property/preview_property_DI.dart';
 import 'package:enmaa/features/real_estates/presentation/screens/real_estate_details_screen.dart';
@@ -38,6 +39,7 @@ import '../../features/my_profile/modules/user_electronic_contracts_module/prese
 import '../../features/my_profile/modules/user_electronic_contracts_module/presentation/screens/user_electronic_contracts_screen.dart';
 import '../../features/my_profile/modules/user_electronic_contracts_module/user_electronic_contracts_DI.dart';
 import '../../features/my_profile/modules/user_properties_module/presentation/controller/user_properties_cubit.dart';
+import '../../features/my_profile/presentation/controller/change_password_controller/change_password_cubit.dart';
 import '../../features/preview_property/presentation/controller/preview_property_cubit.dart';
 import '../../features/wallet/presentation/screens/charge_wallet_screen.dart';
 import 'route_names.dart';
@@ -126,6 +128,14 @@ case RoutersNames.notificationsScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: RoutersNames.userAppointmentsScreen),
           builder: (_) => const UserAppointmentsScreen(),
+        );
+        case RoutersNames.changePasswordScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RoutersNames.changePasswordScreen),
+          builder: (_) =>  BlocProvider(
+  create: (context) => ChangePasswordCubit(),
+  child: ChangePasswordScreen(),
+),
         );
       case RoutersNames.userElectronicContracts:
         return MaterialPageRoute(

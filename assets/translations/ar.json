@@ -125,5 +125,39 @@
   "removeAccountCancel": "إلغاء",
   "removeAccountSuccessMessage": "تم حذف الحساب بنجاح",
   "userScreensAppointments": "مواعيدي",
-  "userScreensElectronicContracts": "عقودي الإلكترونية"
+  "userScreensElectronicContracts": "عقودي الإلكترونية",
+
+  "changePassword": "تغيير كلمة المرور",
+
+  "changePasswordTitle": "تغيير كلمة المرور",
+  "currentPasswordLabel": "كلمة المرور الحالية",
+  "currentPasswordHint": "أدخل كلمة المرور الحالية",
+  "newPasswordLabel": "كلمة المرور الجديدة",
+  "newPasswordHint": "أدخل كلمة المرور الجديدة",
+  "confirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
+  "confirmNewPasswordHint": "أعد إدخال كلمة المرور الجديدة",
+  "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
+  "changePasswordWarning": "يرجى التأكد من إدخال كلمة المرور الحالية بشكل صحيح وأن تكون كلمة المرور الجديدة قوية",
+  "cancelButton": "إلغاء",
+  "saveButton": "حفظ",
+  "changePasswordSuccess": "تم تغيير كلمة المرور بنجاح",
+
+  "thisFieldIsRequired": "هذا الحقل مطلوب",
+  "enterField": "قم بادخال {fieldName}",
+  "enterValidNumber": "يرجى إدخال رقم صحيح",
+  "enterValidNumberInField": "يرجى إدخال رقم صحيح في {fieldName}",
+  "numberMustBeGreaterThanZero": "يجب أن يكون الرقم أكبر من صفر",
+  "fieldMustBeGreaterThanZero": "يجب أن يكون {fieldName} أكبر من صفر",
+  "numberMustBeGreaterThan": "يجب أن يكون الرقم أكبر من {min}",
+  "fieldMustBeGreaterThan": "يجب أن يكون {fieldName} أكبر من {min}",
+  "numberMustBeLessThan": "يجب أن يكون الرقم أقل من {max}",
+  "fieldMustBeLessThan": "يجب أن يكون {fieldName} أقل من {max}",
+  "password": "كلمة المرور",
+  "passwordMustBeAtLeast8Chars": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+  "fieldMustBeAtLeast8Chars": "يجب أن تكون {fieldName} 8 أحرف على الأقل",
+  "passwordMustContainNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+  "fieldMustContainNumber": "يجب أن تحتوي {fieldName} على رقم واحد على الأقل",
+
+  "passwordMustContainLetter": "يجب أن تحتوي كلمة المرور على حرف واحد على الأقل",
+  "fieldMustContainLetter": "يجب أن تحتوي {fieldName} على حرف واحد على الأقل"
 }

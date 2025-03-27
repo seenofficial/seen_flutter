@@ -26,7 +26,7 @@ class UserScreensWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Builder(
         builder: (context) {
-          final locale = context.locale; // This line forces reactivity
+          final locale = context.locale;
           return Row(
             children: [
               Expanded(

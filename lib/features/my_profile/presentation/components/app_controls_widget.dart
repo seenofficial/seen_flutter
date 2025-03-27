@@ -9,13 +9,16 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/core/translation/locale_keys.dart';
 import '../../../../configuration/managers/color_manager.dart';
+import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/custom_app_switch.dart';
 import '../../../../core/components/custom_bottom_sheet.dart';
 import '../../../../core/components/custom_snack_bar.dart';
+import '../../../../core/components/need_to_login_component.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/services/dio_service.dart';
 import '../../../../core/services/handle_api_request_service.dart';
 import '../../../../core/services/service_locator.dart';
+import '../../../../main.dart';
 import '../../../home_module/home_imports.dart';
 import 'package:flutter/material.dart';
 import 'language_bottom_sheet_component.dart';
@@ -35,7 +38,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: context.scale(212),
+      height: context.scale(262),
       decoration: BoxDecoration(
         color: ColorManager.whiteColor,
         borderRadius: BorderRadius.circular(20),
@@ -92,6 +95,35 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                 ),
                 InkWell(
                   onTap: () async {
+                    if (isAuth) {
+                      Navigator.pushNamed(context, RoutersNames.changePasswordScreen);
+                    } else {
+                      needToLoginSnackBar();
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      SvgImageComponent(
+                        width: 20,
+                        height: 20,
+                        iconPath: AppAssets.keyIcon,
+                        color: ColorManager.grey,
+                      ),
+                      SizedBox(width: context.scale(8)),
+                      Text(
+                        LocaleKeys.changePassword.tr(),
+                        style: getBoldStyle(
+                          color: ColorManager.blackColor,
+                          fontSize: FontSize.s16,
+                        ),
+                      ),
+                      const Spacer(),
+                      const Icon(Icons.arrow_forward_ios),
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
                     final Uri url = Uri.parse('https://github.com/AmrAbdElHamed26');
                     if (await canLaunchUrl(url)) {
                       await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -123,7 +155,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                     ],
                   ),
                 ),
-                /* Row(
+                 Row(
                   children: [
                     SvgImageComponent(
                       width: 20,
@@ -149,7 +181,7 @@ class _AppControlsWidgetState extends State<AppControlsWidget> {
                       },
                     ),
                   ],
-                ), */
+                ),
                 Row(
                   children: [
                     SvgImageComponent(

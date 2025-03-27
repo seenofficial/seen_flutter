@@ -125,5 +125,40 @@
   "removeAccountCancel": "Cancel",
   "removeAccountSuccessMessage": "Account successfully deleted",
   "userScreensAppointments": "My Appointments",
-  "userScreensElectronicContracts": "My Electronic Contracts"
+  "userScreensElectronicContracts": "My Electronic Contracts",
+
+  "changePassword": "Change Password",
+
+  "changePasswordTitle": "Change Password",
+  "currentPasswordLabel": "Current Password",
+  "currentPasswordHint": "Enter your current password",
+  "newPasswordLabel": "New Password",
+  "newPasswordHint": "Enter your new password",
+  "confirmNewPasswordLabel": "Confirm New Password",
+  "confirmNewPasswordHint": "Re-enter your new password",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "changePasswordWarning": "Please make sure you enter your current password correctly and choose a strong new password",
+  "cancelButton": "Cancel",
+  "saveButton": "Save",
+  "changePasswordSuccess": "Password changed successfully",
+
+  "thisFieldIsRequired": "This field is required",
+  "enterField": "Please enter {fieldName}",
+  "enterValidNumber": "Please enter a valid number",
+  "enterValidNumberInField": "Please enter a valid number in {fieldName}",
+  "numberMustBeGreaterThanZero": "The number must be greater than zero",
+  "fieldMustBeGreaterThanZero": "{fieldName} must be greater than zero",
+  "numberMustBeGreaterThan": "The number must be greater than {min}",
+  "fieldMustBeGreaterThan": "{fieldName} must be greater than {min}",
+  "numberMustBeLessThan": "The number must be less than {max}",
+  "fieldMustBeLessThan": "{fieldName} must be less than {max}",
+  "password": "Password",
+  "passwordMustBeAtLeast8Chars": "Password must be at least 8 characters",
+  "fieldMustBeAtLeast8Chars": "{fieldName} must be at least 8 characters",
+  "passwordMustContainNumber": "Password must contain at least one number",
+  "fieldMustContainNumber": "{fieldName} must contain at least one number",
+
+  "passwordMustContainLetter": "Password must contain at least one letter",
+  "fieldMustContainLetter": "{fieldName} must contain at least one letter"
+
 }

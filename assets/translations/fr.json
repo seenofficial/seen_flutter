@@ -125,5 +125,39 @@
   "removeAccountCancel": "Annuler",
   "removeAccountSuccessMessage": "Compte supprimé avec succès",
   "userScreensAppointments": "Mes rendez-vous",
-  "userScreensElectronicContracts": "Mes contrats électroniques"
+  "userScreensElectronicContracts": "Mes contrats électroniques",
+
+  "changePassword": "Changer le mot de passe",
+
+  "changePasswordTitle": "Changer le mot de passe",
+  "currentPasswordLabel": "Mot de passe actuel",
+  "currentPasswordHint": "Entrez votre mot de passe actuel",
+  "newPasswordLabel": "Nouveau mot de passe",
+  "newPasswordHint": "Entrez votre nouveau mot de passe",
+  "confirmNewPasswordLabel": "Confirmer le nouveau mot de passe",
+  "confirmNewPasswordHint": "Saisissez à nouveau votre nouveau mot de passe",
+  "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+  "changePasswordWarning": "Veuillez vous assurer que vous avez saisi correctement votre mot de passe actuel et choisissez un mot de passe fort",
+  "cancelButton": "Annuler",
+  "saveButton": "Enregistrer",
+  "changePasswordSuccess": "Le mot de passe a été changé avec succès",
+
+  "thisFieldIsRequired": "Ce champ est requis",
+  "enterField": "Veuillez entrer {fieldName}",
+  "enterValidNumber": "Veuillez entrer un nombre valide",
+  "enterValidNumberInField": "Veuillez entrer un nombre valide dans {fieldName}",
+  "numberMustBeGreaterThanZero": "Le nombre doit être supérieur à zéro",
+  "fieldMustBeGreaterThanZero": "{fieldName} doit être supérieur à zéro",
+  "numberMustBeGreaterThan": "Le nombre doit être supérieur à {min}",
+  "fieldMustBeGreaterThan": "{fieldName} doit être supérieur à {min}",
+  "numberMustBeLessThan": "Le nombre doit être inférieur à {max}",
+  "fieldMustBeLessThan": "{fieldName} doit être inférieur à {max}",
+  "password": "Mot de passe",
+  "passwordMustBeAtLeast8Chars": "Le mot de passe doit comporter au moins 8 caractères",
+  "fieldMustBeAtLeast8Chars": "{fieldName} doit comporter au moins 8 caractères",
+  "passwordMustContainNumber": "Le mot de passe doit contenir au moins un chiffre",
+  "fieldMustContainNumber": "{fieldName} doit contenir au moins un chiffre",
+
+  "passwordMustContainLetter": "Le mot de passe doit contenir au moins une lettre",
+  "fieldMustContainLetter": "{fieldName} doit contenir au moins une lettre"
 }

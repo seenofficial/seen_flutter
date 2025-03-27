@@ -50,6 +50,7 @@ class AppAssets {
   static const String completedIcon = '${baseIconFolder}completed_icon.svg';
   static const String cancelledIcon = '${baseIconFolder}cancelled_icon.svg';
   static const String envelopeIcon = '${baseIconFolder}envelope_icon.svg';
+  static const String keyIcon = '${baseIconFolder}key_icon.svg';
 
 
   /// building sub types icons

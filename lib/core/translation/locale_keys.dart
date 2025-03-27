@@ -175,4 +175,40 @@ abstract class LocaleKeys {
 
   static const String userScreensAppointments = 'userScreensAppointments';
   static const String userScreensElectronicContracts = 'userScreensElectronicContracts';
+
+  static const String changePassword = 'changePassword';
+
+  static const String changePasswordTitle = 'changePasswordTitle';
+  static const String currentPasswordLabel = 'currentPasswordLabel';
+  static const String currentPasswordHint = 'currentPasswordHint';
+  static const String newPasswordLabel = 'newPasswordLabel';
+  static const String newPasswordHint = 'newPasswordHint';
+  static const String confirmNewPasswordLabel = 'confirmNewPasswordLabel';
+  static const String confirmNewPasswordHint = 'confirmNewPasswordHint';
+  static const String passwordsDoNotMatch = 'passwordsDoNotMatch';
+  static const String changePasswordWarning = 'changePasswordWarning';
+  static const String cancelButton = 'cancelButton';
+  static const String saveButton = 'saveButton';
+  static const String changePasswordSuccess = 'changePasswordSuccess';
+
+
+  // New keys for FormValidator
+  static const String thisFieldIsRequired = 'thisFieldIsRequired';
+  static const String enterField = 'enterField';
+  static const String enterValidNumber = 'enterValidNumber';
+  static const String enterValidNumberInField = 'enterValidNumberInField';
+  static const String numberMustBeGreaterThanZero = 'numberMustBeGreaterThanZero';
+  static const String fieldMustBeGreaterThanZero = 'fieldMustBeGreaterThanZero';
+  static const String numberMustBeGreaterThan = 'numberMustBeGreaterThan';
+  static const String fieldMustBeGreaterThan = 'fieldMustBeGreaterThan';
+  static const String numberMustBeLessThan = 'numberMustBeLessThan';
+  static const String fieldMustBeLessThan = 'fieldMustBeLessThan';
+  static const String password = 'password';
+  static const String passwordMustBeAtLeast8Chars = 'passwordMustBeAtLeast8Chars';
+  static const String fieldMustBeAtLeast8Chars = 'fieldMustBeAtLeast8Chars';
+  static const String passwordMustContainNumber = 'passwordMustContainNumber';
+  static const String fieldMustContainNumber = 'fieldMustContainNumber';
+
+  static const String passwordMustContainLetter = 'passwordMustContainLetter';
+  static const String fieldMustContainLetter = 'fieldMustContainLetter';
 }
