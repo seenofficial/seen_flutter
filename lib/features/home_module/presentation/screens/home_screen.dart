@@ -158,7 +158,7 @@ class HomeScreen extends StatelessWidget {
                                               itemBuilder: (context, index) {
                                                 final property = properties[index];
                                                 return Padding(
-                                                  padding: EdgeInsets.only(right: context.scale(AppPadding.p16)),
+                                                  padding: EdgeInsets.symmetric(horizontal: context.scale(AppPadding.p8)),
                                                   child: RealStateCardComponent(
                                                     width: context.scale(209),
                                                     height: context.scale(241),

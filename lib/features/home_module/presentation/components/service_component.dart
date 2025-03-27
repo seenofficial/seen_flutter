@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/components/custom_image.dart';
 import 'package:enmaa/core/components/svg_image_component.dart';
@@ -48,7 +49,7 @@ class ServiceComponent extends StatelessWidget {
           ),
           SizedBox(height: context.scale(8)),
           Text(
-            category.text,
+            category.text.tr(),
             style: getSemiBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s14),
           ),
         ],

@@ -202,19 +202,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         List<AppServiceEntity> appServicessList = [
           AppServiceEntity(
-            text: LocaleKeys.realEstate.tr(),
+            text: LocaleKeys.realEstate,
             image: AppAssets.aqarIcon,
           ),
           AppServiceEntity(
-            text: LocaleKeys.cars.tr() ,
+            text: LocaleKeys.cars,
             image: AppAssets.carIcon,
           ),
           AppServiceEntity(
-            text:  LocaleKeys.halls.tr()   ,
+            text:  LocaleKeys.halls   ,
             image: AppAssets.hallIcon,
           ),
           AppServiceEntity(
-            text: LocaleKeys.hotels.tr() ,
+            text: LocaleKeys.hotels ,
             image: AppAssets.hotelIcon,
           ),
 
@@ -235,7 +235,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       FetchNearByProperties event, Emitter<HomeState> emit) async {
     final propertyType = event.propertyType;
 
-    print("prorororo ${propertyType}");
 
 
     emit(state.copyWith(
@@ -255,7 +254,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
     );
 
-    print("Fetched properties: $result");
     result.fold(
           (failure) {
         emit(state.copyWith(
