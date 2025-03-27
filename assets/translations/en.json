@@ -212,12 +212,48 @@
   "updatingData": "Updating data...",
   "dataFetchError": "An error occurred while fetching data",
   "cancel": "Cancel",
-  "saveChanges": "Save Changes"
+  "saveChanges": "Save Changes",
 
+  "authenticationFailed": "Authentication failed. Please try again.",
+  "retryAuthentication": "Retry Authentication",
+  "authenticationSuccessful": "Authentication Successful",
 
+  "resetPassword": "Reset Password",
+  "createPassword": "Create Password",
+  "createNewPasswordHint": "Create a new password for your account",
+  "createStrongPasswordHint": "Create a strong password to protect your account",
+  "newPassword": "New Password",
+  "signUp": "Sign Up",
+  "confirm": "Confirm",
+  "accountCreatedSuccessfully": "Your account has been created successfully",
+  "passwordChangedSuccessfully": "Password changed successfully",
 
+  "phoneRequired": "Phone number is required",
+  "passwordRequired": "Password is required",
 
+  "enterSecurityCode": "Enter the security code sent to your phone",
+  "codeSentTo": "The code was sent to your registered number ",
+  "didNotReceiveCode": "  Didn’t receive the code?  ",
+  "resend": "Resend",
 
+  "recoverPassword": "Recover Password",
+  "recoverPasswordHint": "Enter your phone number linked to your account to reset your password and easily regain access.",
+  "mobileNumber": "Mobile Number",
+  "nameRequired": "Name is required",
+  "createAccount": "Create Account",
 
+  "confirmPassword": "Confirm Password",
+  "confirmPasswordRequired": "Confirm password is required",
+  "minEightChars": "Must consist of at least 8 characters",
+  "minOneNumber": "Must contain at least one number",
+  "minOneLetter": "Must contain at least one letter",
 
+  "enterAsGuest": "Enter as Guest",
+
+  "noAccount": "Don’t have an account?",
+  "createOneNow": "Create one now",
+
+  "forgotPassword": "Forgot Password?",
+  "alreadyHaveAccount": "Already have an account?",
+  "enterYourName": "Enter your name"
 }

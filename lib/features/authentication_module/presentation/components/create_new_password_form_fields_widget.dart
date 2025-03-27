@@ -5,7 +5,8 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 
 class CreateNewPasswordFormFieldsWidget extends StatelessWidget {
@@ -18,15 +19,13 @@ class CreateNewPasswordFormFieldsWidget extends StatelessWidget {
     required this.passwordController2,
   });
 
-
-
   String? validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'تأكيد كلمة المرور مطلوب';
+      return LocaleKeys.confirmPasswordRequired.tr();
     }
 
     if (value != passwordController1.text) {
-      return 'كلمات المرور غير متطابقة';
+      return LocaleKeys.passwordsDoNotMatch.tr();
     }
 
     return null;
@@ -88,7 +87,7 @@ class _PasswordField1State extends State<_PasswordField1> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'كلمة المرور الجديدة',
+          LocaleKeys.newPassword.tr(),
           style: getBoldStyle(
             color: ColorManager.blackColor,
             fontSize: FontSize.s12,
@@ -103,23 +102,19 @@ class _PasswordField1State extends State<_PasswordField1> {
             return AppTextField(
               hintText: '',
               borderRadius: 20,
-
               backgroundColor: ColorManager.greyShade,
               padding: EdgeInsets.zero,
               controller: widget.controller,
               obscureText: showPassword,
               suffixIcon: IconButton(
                 icon: Icon(
-                  !showPassword ? Icons.visibility_off_outlined : Icons
-                      .visibility_outlined,
+                  !showPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                   color: ColorManager.grey,
                 ),
                 onPressed: () {
-                  context.read<RemoteAuthenticationCubit>()
-                      .changeCreateNewPasswordVisibility1();
+                  context.read<RemoteAuthenticationCubit>().changeCreateNewPasswordVisibility1();
                 },
               ),
-
             );
           },
         ),
@@ -133,7 +128,7 @@ class _PasswordField1State extends State<_PasswordField1> {
             ),
             SizedBox(width: 8),
             Text(
-              'يجب أن تتكون من 8 أحرف على الأقل',
+              LocaleKeys.minEightChars.tr(),
               style: getRegularStyle(
                 color: hasEightChars ? Colors.green : Colors.grey,
                 fontSize: FontSize.s12,
@@ -151,7 +146,7 @@ class _PasswordField1State extends State<_PasswordField1> {
             ),
             SizedBox(width: 8),
             Text(
-              'يجب أن تحتوي على رقم واحد على الأقل',
+              LocaleKeys.minOneNumber.tr(),
               style: getRegularStyle(
                 color: hasOneNumber ? Colors.green : Colors.grey,
                 fontSize: FontSize.s12,
@@ -169,7 +164,7 @@ class _PasswordField1State extends State<_PasswordField1> {
             ),
             SizedBox(width: 8),
             Text(
-              'يجب أن تحتوي على حرف واحد على الأقل',
+              LocaleKeys.minOneLetter.tr(),
               style: getRegularStyle(
                 color: hasOneLetter ? Colors.green : Colors.grey,
                 fontSize: FontSize.s12,
@@ -197,7 +192,7 @@ class _PasswordField2 extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'تأكيد كلمة المرور',
+          LocaleKeys.confirmPassword.tr(),
           style: getBoldStyle(
             color: ColorManager.blackColor,
             fontSize: FontSize.s12,
@@ -210,7 +205,7 @@ class _PasswordField2 extends StatelessWidget {
           builder: (context, state) {
             final bool showPassword = state.createNewPasswordPasswordVisibility2;
             return AppTextField(
-              hintText: 'كلمة المرور',
+              hintText: LocaleKeys.password.tr(),
               keyboardType: TextInputType.text,
               borderRadius: 20,
               backgroundColor: ColorManager.greyShade,
@@ -220,13 +215,11 @@ class _PasswordField2 extends StatelessWidget {
               validator: validator,
               suffixIcon: IconButton(
                 icon: Icon(
-                  !showPassword ? Icons.visibility_off_outlined : Icons
-                      .visibility_outlined,
+                  !showPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                   color: ColorManager.grey,
                 ),
                 onPressed: () {
-                  context.read<RemoteAuthenticationCubit>()
-                      .changeCreateNewPasswordVisibility2();
+                  context.read<RemoteAuthenticationCubit>().changeCreateNewPasswordVisibility2();
                 },
               ),
             );

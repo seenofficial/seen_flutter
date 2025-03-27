@@ -210,5 +210,50 @@
   "updatingData": "جاري تحديث البيانات",
   "dataFetchError": "حدث خطأ أثناء جلب البيانات",
   "cancel": "إلغاء",
-  "saveChanges": "حفظ التغييرات"
+  "saveChanges": "حفظ التغييرات",
+
+  "authenticationFailed": "فشل المصادقة. الرجاء المحاولة مرة أخرى.",
+  "retryAuthentication": "إعادة محاولة المصادقة",
+  "authenticationSuccessful": "نجحت المصادقة",
+
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "createPassword": "إنشاء كلمة المرور",
+  "createNewPasswordHint": "أنشئ كلمة مرور جديدة لحسابك",
+  "createStrongPasswordHint": "أنشئ كلمة مرور قوية لحماية حسابك",
+  "newPassword": "كلمة المرور الجديدة",
+  "signUp": "تسجيل الدخول",
+  "confirm": "تأكيد",
+  "accountCreatedSuccessfully": "تم إنشاء حسابك بنجاح",
+  "passwordChangedSuccessfully": "تم تغيير كلمة المرور بنجاح",
+
+
+  "phoneRequired": "رقم الموبايل مطلوب",
+  "passwordRequired": "كلمة المرور مطلوبة",
+
+  "enterSecurityCode": "أدخل رمز الأمان المرسل إلى هاتفك",
+  "codeSentTo": "تم إرسال الكود إلى رقمك المسجل ",
+  "didNotReceiveCode": "  لم تستلم الرمز؟  ",
+  "resend": "إعادة الإرسال",
+
+  "recoverPassword": "استعادة كلمة المرور",
+  "recoverPasswordHint": "أدخل رقم هاتفك المرتبط بحسابك لإعادة تعيين كلمة المرور واستعادة الوصول إلى حسابك بسهولة.",
+  "mobileNumber": "رقم الموبايل",
+  "nameRequired": "الاسم مطلوب",
+  "createAccount": "إنشاء حساب",
+
+  "confirmPassword": "تأكيد كلمة المرور",
+  "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+  "minEightChars": "يجب أن تتكون من 8 أحرف على الأقل",
+  "minOneNumber": "يجب أن تحتوي على رقم واحد على الأقل",
+  "minOneLetter": "يجب أن تحتوي على حرف واحد على الأقل",
+
+  "enterAsGuest": "الدخول كزائر",
+
+  "noAccount": "ليس لديك حساب؟",
+  "createOneNow": "أنشئ واحدًا الآن",
+
+  "forgotPassword": "نسيت كلمة المرور؟",
+
+  "alreadyHaveAccount": "لديك حساب بالفعل؟",
+  "enterYourName": "قم بادخال اسمك"
 }

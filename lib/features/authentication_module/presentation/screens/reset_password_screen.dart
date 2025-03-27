@@ -1,5 +1,4 @@
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
@@ -7,11 +6,9 @@ import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/constants/app_assets.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/circular_icon_button.dart';
-import 'package:enmaa/core/components/loading_overlay_component.dart';
-import 'package:enmaa/core/utils/enums.dart';
-import 'package:enmaa/features/authentication_module/domain/entities/login_request_entity.dart';
+import 'dart:ui' as ui;
 import 'package:enmaa/features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../configuration/managers/font_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/app_text_field.dart';
@@ -19,6 +16,7 @@ import '../../../../core/components/button_app_component.dart';
 import '../../../../core/components/country_code_picker.dart';
 import '../../../../core/components/custom_snack_bar.dart';
 import '../../../../core/services/service_locator.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../../data/models/login_request_model.dart';
 import '../components/login_buttons_widget.dart';
 import '../components/login_form_fields_widget.dart';
@@ -37,29 +35,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String? _validatePhone(String? value) {
-    if (value == null || value.isEmpty ) {
-      return 'رقم الموبايل مطلوب';
+    if (value == null || value.isEmpty) {
+      return LocaleKeys.phoneRequired.tr();
     }
     return null;
   }
 
-  String? _validateName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'الاسم مطلوب';
-    }
-    return null;
-  }
 
   @override
   void dispose() {
     nameController.dispose();
     phoneController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +76,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   end: 0,
                   start: 0,
                   child: Padding(
-                    padding:
-                    EdgeInsets.symmetric(horizontal: context.scale(16)),
+                    padding: EdgeInsets.symmetric(horizontal: context.scale(16)),
                     child: Form(
                       key: formKey,
                       child: Column(
@@ -96,19 +84,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'استعادة كلمة المرور',
-                            style: getBoldStyle(color: ColorManager.blackColor , fontSize: FontSize.s20),
+                            LocaleKeys.recoverPassword.tr(),
+                            style: getBoldStyle(color: ColorManager.blackColor, fontSize: FontSize.s20),
                           ),
                           SizedBox(height: context.scale(8)),
                           Text(
-                            'أدخل رقم هاتفك المرتبط بحسابك لإعادة تعيين كلمة المرور واستعادة الوصول إلى حسابك بسهولة.',
+                            LocaleKeys.recoverPasswordHint.tr(),
                             textAlign: TextAlign.start,
                             maxLines: 2,
-                            style: getSemiBoldStyle(color: ColorManager.grey2 , fontSize: FontSize.s14),
+                            style: getSemiBoldStyle(color: ColorManager.grey2, fontSize: FontSize.s14),
                           ),
                           SizedBox(height: context.scale(8)),
                           Text(
-                            'رقم الموبايل',
+                            LocaleKeys.mobileNumber.tr(),
                             style: getBoldStyle(
                               color: ColorManager.blackColor,
                               fontSize: FontSize.s12,
@@ -119,13 +107,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
-                                buildWhen: (previous, current) =>
-                                previous.currentCountryCode != current.currentCountryCode,
+                                buildWhen: (previous, current) => previous.currentCountryCode != current.currentCountryCode,
                                 builder: (context, state) {
-
                                   return Expanded(
                                     child: AppTextField(
-                                      textDirection: TextDirection.ltr,
+                                      textDirection: ui.TextDirection.ltr,
                                       hintText: '0100000000000',
                                       keyboardType: TextInputType.phone,
                                       borderRadius: 20,
@@ -134,8 +120,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                       controller: phoneController,
                                       validator: _validatePhone,
                                       onChanged: (value) {
-                                        BlocProvider.of<RemoteAuthenticationCubit>(context)
-                                            .changeUserPhoneNumber(value);
+                                        BlocProvider.of<RemoteAuthenticationCubit>(context).changeUserPhoneNumber(value);
                                         if (!value.startsWith(state.currentCountryCode)) {
                                           phoneController.clear();
                                           phoneController.text = state.currentCountryCode;
@@ -147,26 +132,23 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               ),
                               SizedBox(width: context.scale(8)),
                               Container(
-                                  width: context.scale(88),
-                                  height: context.scale(44),
-                                  decoration: BoxDecoration(
-                                    color: ColorManager.greyShade,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: CustomCountryCodePicker(
-                                    onChanged: (CountryCode countryCode) {
-                                      phoneController.clear();
-                                      phoneController.text = countryCode.dialCode!;
-                                      BlocProvider.of<RemoteAuthenticationCubit>(context)
-                                          .setCountryCode(countryCode.dialCode!);
-                                    },
-                                  )
+                                width: context.scale(88),
+                                height: context.scale(44),
+                                decoration: BoxDecoration(
+                                  color: ColorManager.greyShade,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: CustomCountryCodePicker(
+                                  onChanged: (CountryCode countryCode) {
+                                    phoneController.clear();
+                                    phoneController.text = countryCode.dialCode!;
+                                    BlocProvider.of<RemoteAuthenticationCubit>(context).setCountryCode(countryCode.dialCode!);
+                                  },
+                                ),
                               ),
                             ],
                           ),
-
                           SizedBox(height: context.scale(24)),
-
                           BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
                             buildWhen: (previous, current) {
                               return previous.sendOtpRequestState != current.sendOtpRequestState;
@@ -177,7 +159,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 padding: EdgeInsets.zero,
                                 buttonContent: Center(
                                   child: Text(
-                                    'التالي',
+                                    LocaleKeys.next.tr(),
                                     style: getBoldStyle(
                                       color: ColorManager.whiteColor,
                                       fontSize: FontSize.s14,
@@ -188,27 +170,21 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                   color: ColorManager.primaryColor,
                                   borderRadius: BorderRadius.circular(context.scale(20)),
                                 ),
-                                onTap: (){
+                                onTap: () {
                                   if (formKey.currentState?.validate() ?? false) {
-                                    final authenticationCubit =
-                                    context.read<RemoteAuthenticationCubit>();
-
-                                    authenticationCubit
-                                        .sendOtp(phoneController.text);
-                                    authenticationCubit
-                                        .changeUserName(nameController.text);
+                                    final authenticationCubit = context.read<RemoteAuthenticationCubit>();
+                                    authenticationCubit.sendOtp(phoneController.text);
+                                    authenticationCubit.changeUserName(nameController.text);
                                     Navigator.pushNamed(
                                       context,
                                       RoutersNames.otpScreen,
-                                      arguments: true
+                                      arguments: true,
                                     );
                                   }
-
                                 },
                               );
                             },
                           )
-
                         ],
                       ),
                     ),
@@ -221,7 +197,4 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       ),
     );
   }
-
-
-
 }

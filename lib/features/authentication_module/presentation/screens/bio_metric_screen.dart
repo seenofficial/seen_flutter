@@ -3,10 +3,12 @@ import 'package:enmaa/core/components/custom_snack_bar.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/button_app_component.dart';
 import '../../../../core/services/shared_preferences_service.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../controller/biometric_bloc.dart';
 import '../controller/biometric_event.dart';
 import '../controller/biometric_state.dart';
@@ -74,7 +76,7 @@ class _BioMetricScreenState extends State<BioMetricScreen> with SingleTickerProv
           if (state is BiometricSuccess) {
             _handleSuccess();
           } else if (state is BiometricFailure) {
-            CustomSnackBar.show(message: 'Authentication failed. Please try again.');
+            CustomSnackBar.show(message: LocaleKeys.authenticationFailed.tr());
           }
         },
         child: BlocBuilder<BiometricBloc, BiometricState>(
@@ -82,7 +84,6 @@ class _BioMetricScreenState extends State<BioMetricScreen> with SingleTickerProv
             if (_showSuccessUI) {
               return _buildSuccessUI();
             } else {
-
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -95,19 +96,21 @@ class _BioMetricScreenState extends State<BioMetricScreen> with SingleTickerProv
                     const SizedBox(height: 16),
                     ButtonAppComponent(
                       width: context.scale(150),
-
                       onTap: () {
                         context.read<BiometricBloc>().add(AuthenticateWithBiometrics());
                       },
-                      buttonContent: Center(child: Text("Retry Authentication" , style: getBoldStyle(
-                        color: ColorManager.whiteColor,
-                      ),)),
-
+                      buttonContent: Center(
+                        child: Text(
+                          LocaleKeys.retryAuthentication.tr(),
+                          style: getBoldStyle(
+                            color: ColorManager.whiteColor,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               );
-
             }
           },
         ),
@@ -147,7 +150,6 @@ class _BioMetricScreenState extends State<BioMetricScreen> with SingleTickerProv
             ),
           ),
           const SizedBox(height: 20),
-
           AnimatedBuilder(
             animation: _lineAnimation,
             builder: (context, child) {
@@ -158,12 +160,10 @@ class _BioMetricScreenState extends State<BioMetricScreen> with SingleTickerProv
               );
             },
           ),
-
           const SizedBox(height: 15),
-
-          const Text(
-            "Authentication Successful",
-            style: TextStyle(
+          Text(
+            LocaleKeys.authenticationSuccessful.tr(),
+            style: const TextStyle(
               color: Colors.green,
               fontWeight: FontWeight.bold,
               fontSize: 16,

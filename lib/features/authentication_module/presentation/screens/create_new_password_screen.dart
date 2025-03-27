@@ -5,7 +5,7 @@ import 'package:enmaa/features/authentication_module/data/models/reset_password_
 import 'package:enmaa/features/authentication_module/data/models/sign_up_request_model.dart';
 import 'package:enmaa/features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../configuration/managers/color_manager.dart';
 import '../../../../configuration/managers/style_manager.dart';
 import '../../../../configuration/routers/route_names.dart';
@@ -14,6 +14,7 @@ import '../../../../core/components/circular_icon_button.dart';
 import '../../../../core/components/custom_snack_bar.dart';
 import '../../../../core/components/loading_overlay_component.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../../../home_module/home_imports.dart';
 import '../components/create_new_password_form_fields_widget.dart';
 
@@ -44,11 +45,11 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
       body: BlocBuilder<RemoteAuthenticationCubit, RemoteAuthenticationState>(
         buildWhen: (previous, current) {
           if (previous.signUpRequestState != current.signUpRequestState) {
-             if (current.signUpRequestState.isLoaded) {
-              Navigator.of(context ,rootNavigator: true).pushReplacementNamed(RoutersNames.layoutScreen);
+            if (current.signUpRequestState.isLoaded) {
+              Navigator.of(context, rootNavigator: true).pushReplacementNamed(RoutersNames.layoutScreen);
               CustomSnackBar.show(
                 context: context,
-                message: 'تم إنشاء حسابك بنجاح',
+                message: LocaleKeys.accountCreatedSuccessfully.tr(),
                 type: SnackBarType.success,
               );
             } else if (current.signUpRequestState.isError) {
@@ -60,12 +61,12 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
             }
           }
 
-          if( previous.resetPasswordRequestState != current.resetPasswordRequestState){
+          if (previous.resetPasswordRequestState != current.resetPasswordRequestState) {
             if (current.resetPasswordRequestState.isLoaded) {
               Navigator.of(context).pushReplacementNamed(RoutersNames.loginScreen);
               CustomSnackBar.show(
                 context: context,
-                message: 'تم تغيير كلمة المرور بنجاح',
+                message: LocaleKeys.passwordChangedSuccessfully.tr(),
                 type: SnackBarType.success,
               );
             } else if (current.resetPasswordRequestState.isError) {
@@ -77,7 +78,8 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
             }
           }
 
-          return previous.signUpRequestState != current.signUpRequestState || previous.resetPasswordRequestState != current.resetPasswordRequestState;
+          return previous.signUpRequestState != current.signUpRequestState ||
+              previous.resetPasswordRequestState != current.resetPasswordRequestState;
         },
         builder: (context, state) {
           return Stack(
@@ -107,14 +109,16 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.isFromResetPassword ? 'إعادة تعيين كلمة المرور' : 'إنشاء كلمة المرور',
+                              widget.isFromResetPassword
+                                  ? LocaleKeys.resetPassword.tr()
+                                  : LocaleKeys.createPassword.tr(),
                               style: getBoldStyle(color: ColorManager.blackColor),
                             ),
                             SizedBox(height: context.scale(8)),
                             Text(
                               widget.isFromResetPassword
-                                  ? 'أنشئ كلمة مرور جديدة لحسابك'
-                                  : 'أنشئ كلمة مرور قوية لحماية حسابك',
+                                  ? LocaleKeys.createNewPasswordHint.tr()
+                                  : LocaleKeys.createStrongPasswordHint.tr(),
                               style: getMediumStyle(color: ColorManager.blackColor, fontSize: FontSize.s12),
                             ),
                             SizedBox(height: context.scale(24)),
@@ -125,7 +129,9 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    widget.isFromResetPassword ? 'كلمة المرور الجديدة' : 'تسجيل الدخول',
+                                    widget.isFromResetPassword
+                                        ? LocaleKeys.newPassword.tr()
+                                        : LocaleKeys.signUp.tr(),
                                     style: getBoldStyle(color: ColorManager.blackColor),
                                   ),
                                   SizedBox(height: context.scale(24)),
@@ -139,7 +145,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                                     padding: EdgeInsets.zero,
                                     buttonContent: Center(
                                       child: Text(
-                                        'تأكيد',
+                                        LocaleKeys.confirm.tr(),
                                         style: getBoldStyle(
                                           color: ColorManager.whiteColor,
                                           fontSize: FontSize.s14,
@@ -160,13 +166,13 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                                         );
 
                                         if (widget.isFromResetPassword) {
-                                          ResetPasswordRequestModel resetPasswordRequestModel = ResetPasswordRequestModel(
+                                          ResetPasswordRequestModel resetPasswordRequestModel =
+                                          ResetPasswordRequestModel(
                                             password1: _passwordController1.text,
                                             password2: _passwordController2.text,
                                             phone: authBloc.state.userPhoneNumber,
-                                            code: state.enteredOTP ,
+                                            code: state.enteredOTP,
                                           );
-
                                           authBloc.resetPassword(resetPasswordRequestModel);
                                         } else {
                                           authBloc.signUp(signUpRequestModel);

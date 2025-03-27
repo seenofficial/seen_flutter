@@ -1,4 +1,3 @@
-
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:enmaa/features/authentication_module/presentation/controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,11 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:easy_localization/easy_localization.dart';
+import 'dart:ui' as ui;
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/country_code_picker.dart';
+import '../../../../core/translation/locale_keys.dart';
 
 class LoginFormFields extends StatelessWidget {
   final TextEditingController phoneController;
@@ -62,7 +63,7 @@ class _PhoneField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'رقم الموبايل',
+          LocaleKeys.mobileNumber.tr(),
           style: getBoldStyle(
             color: ColorManager.blackColor,
             fontSize: FontSize.s12,
@@ -78,7 +79,7 @@ class _PhoneField extends StatelessWidget {
               builder: (context, state) {
                 return Expanded(
                   child: AppTextField(
-                    textDirection: TextDirection.ltr,
+                    textDirection: ui.TextDirection.ltr,
                     hintText: '0100000000000',
                     keyboardType: TextInputType.phone,
                     borderRadius: 20,
@@ -137,7 +138,7 @@ class _PasswordField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'كلمة المرور',
+          LocaleKeys.password.tr(),
           style: getBoldStyle(
             color: ColorManager.blackColor,
             fontSize: FontSize.s12,
@@ -149,7 +150,7 @@ class _PasswordField extends StatelessWidget {
           builder: (context, state) {
             final bool showPassword = state.loginPasswordVisibility;
             return AppTextField(
-              hintText: 'كلمة المرور',
+              hintText: LocaleKeys.password.tr(),
               keyboardType: TextInputType.text,
               borderRadius: 20,
               backgroundColor: ColorManager.greyShade,
@@ -162,7 +163,7 @@ class _PasswordField extends StatelessWidget {
                   !showPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                   color: ColorManager.grey,
                 ),
-                onPressed: (){
+                onPressed: () {
                   context.read<RemoteAuthenticationCubit>().changeLoginPasswordVisibility();
                 },
               ),
@@ -175,17 +176,14 @@ class _PasswordField extends StatelessWidget {
 }
 
 class _ForgotPasswordText extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-
         Navigator.pushNamed(context, RoutersNames.resetPasswordScreen);
-
       },
       child: Text(
-        'نسيت كلمة المرور؟',
+        LocaleKeys.forgotPassword.tr(),
         style: getUnderlineBoldStyle(
           color: ColorManager.redColor,
           fontSize: FontSize.s12,

@@ -1,4 +1,3 @@
-import 'package:enmaa/configuration/routers/app_routers.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
@@ -6,10 +5,8 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/button_app_component.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../configuration/routers/route_names.dart';
-import '../../../../core/components/custom_snack_bar.dart';
-import '../../../../core/utils/enums.dart';
-import '../../domain/entities/sign_up_request_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../controller/remote_authentication_bloc/remote_authentication_cubit.dart';
 import 'guest_button_component.dart';
 
@@ -28,7 +25,7 @@ class SignUpButtonsWidget extends StatelessWidget {
     return Column(
       children: [
         /// sign up button sends otp to the number
-        _SignUpButton(formKey: formKey, signUpOnTap:signUpOnTap),
+        _SignUpButton(formKey: formKey, signUpOnTap: signUpOnTap),
         SizedBox(height: context.scale(16)),
         GuestButtonComponent(),
         SizedBox(height: context.scale(24)),
@@ -41,12 +38,11 @@ class SignUpButtonsWidget extends StatelessWidget {
 /// sends otp
 class _SignUpButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final Function() signUpOnTap ;
+  final Function() signUpOnTap;
   const _SignUpButton({
     required this.formKey,
     required this.signUpOnTap,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +56,7 @@ class _SignUpButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           buttonContent: Center(
             child: Text(
-              'التالي',
+              LocaleKeys.next.tr(),
               style: getBoldStyle(
                 color: ColorManager.whiteColor,
                 fontSize: FontSize.s14,
@@ -71,7 +67,7 @@ class _SignUpButton extends StatelessWidget {
             color: ColorManager.primaryColor,
             borderRadius: BorderRadius.circular(context.scale(20)),
           ),
-          onTap: (){
+          onTap: () {
             signUpOnTap();
           },
         );
@@ -93,7 +89,7 @@ class _LoginSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'لديك حساب بالفعل؟',
+          LocaleKeys.alreadyHaveAccount.tr(),
           style: getMediumStyle(
             color: ColorManager.grey,
             fontSize: FontSize.s14,
@@ -103,7 +99,7 @@ class _LoginSection extends StatelessWidget {
         InkWell(
           onTap: () => _onLogIn(context),
           child: Text(
-            'تسجيل الدخول',
+            LocaleKeys.login.tr(),
             style: getUnderlineBoldStyle(
               color: ColorManager.primaryColor,
               fontSize: FontSize.s14,

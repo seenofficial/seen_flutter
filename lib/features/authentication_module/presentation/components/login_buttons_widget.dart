@@ -4,11 +4,9 @@ import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/button_app_component.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../configuration/routers/route_names.dart';
-import '../../domain/entities/login_request_entity.dart';
-import '../controller/remote_authentication_bloc/remote_authentication_cubit.dart';
+import '../../../../core/translation/locale_keys.dart';
 import 'guest_button_component.dart';
 
 class LoginButtons extends StatelessWidget {
@@ -44,8 +42,6 @@ class _LoginButton extends StatelessWidget {
     required this.onLoginPressed,
   });
 
-
-
   @override
   Widget build(BuildContext context) {
     return ButtonAppComponent(
@@ -53,7 +49,7 @@ class _LoginButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       buttonContent: Center(
         child: Text(
-          'تسجيل الدخول',
+          LocaleKeys.login.tr(),
           style: getBoldStyle(
             color: ColorManager.whiteColor,
             fontSize: FontSize.s14,
@@ -64,13 +60,12 @@ class _LoginButton extends StatelessWidget {
         color: ColorManager.primaryColor,
         borderRadius: BorderRadius.circular(context.scale(20)),
       ),
-      onTap: (){
+      onTap: () {
         onLoginPressed();
       },
     );
   }
 }
-
 
 class _SignUpSection extends StatelessWidget {
   const _SignUpSection();
@@ -85,7 +80,7 @@ class _SignUpSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'ليس لديك حساب؟',
+          LocaleKeys.noAccount.tr(),
           style: getMediumStyle(
             color: ColorManager.grey,
             fontSize: FontSize.s14,
@@ -95,7 +90,7 @@ class _SignUpSection extends StatelessWidget {
         InkWell(
           onTap: () => _onSignUp(context),
           child: Text(
-            'أنشئ واحدًا الآن',
+            LocaleKeys.createOneNow.tr(),
             style: getUnderlineBoldStyle(
               color: ColorManager.primaryColor,
               fontSize: FontSize.s14,

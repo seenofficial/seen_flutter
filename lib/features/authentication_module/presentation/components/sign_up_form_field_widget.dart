@@ -7,8 +7,10 @@ import 'package:enmaa/configuration/managers/font_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:enmaa/core/components/app_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:easy_localization/easy_localization.dart';
+import 'dart:ui' as ui;
 import '../../../../core/components/country_code_picker.dart';
+import '../../../../core/translation/locale_keys.dart';
 
 class SignUpFormFieldWidget extends StatelessWidget {
   final TextEditingController nameController;
@@ -60,7 +62,7 @@ class _PhoneField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'رقم الموبايل',
+          LocaleKeys.mobileNumber.tr(),
           style: getBoldStyle(
             color: ColorManager.blackColor,
             fontSize: FontSize.s12,
@@ -74,10 +76,9 @@ class _PhoneField extends StatelessWidget {
               buildWhen: (previous, current) =>
               previous.currentCountryCode != current.currentCountryCode,
               builder: (context, state) {
-
                 return Expanded(
                   child: AppTextField(
-                    textDirection: TextDirection.ltr,
+                    textDirection: ui.TextDirection.ltr,
                     hintText: '0100000000000',
                     keyboardType: TextInputType.phone,
                     borderRadius: 20,
@@ -98,22 +99,21 @@ class _PhoneField extends StatelessWidget {
               },
             ),
             SizedBox(width: context.scale(8)),
-
             Container(
-                width: context.scale(88),
-                height: context.scale(44),
-                decoration: BoxDecoration(
-                  color: ColorManager.greyShade,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: CustomCountryCodePicker(
-                  onChanged: (CountryCode countryCode) {
-                    controller.clear();
-                    controller.text = countryCode.dialCode!;
-                    BlocProvider.of<RemoteAuthenticationCubit>(context)
-                        .setCountryCode(countryCode.dialCode!);
-                  },
-                )
+              width: context.scale(88),
+              height: context.scale(44),
+              decoration: BoxDecoration(
+                color: ColorManager.greyShade,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: CustomCountryCodePicker(
+                onChanged: (CountryCode countryCode) {
+                  controller.clear();
+                  controller.text = countryCode.dialCode!;
+                  BlocProvider.of<RemoteAuthenticationCubit>(context)
+                      .setCountryCode(countryCode.dialCode!);
+                },
+              ),
             ),
           ],
         ),
@@ -137,7 +137,7 @@ class _NameField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'الاسم الكامل',
+          LocaleKeys.fullName.tr(),
           style: getBoldStyle(
             color: ColorManager.blackColor,
             fontSize: FontSize.s12,
@@ -145,14 +145,14 @@ class _NameField extends StatelessWidget {
         ),
         SizedBox(height: context.scale(16)),
         AppTextField(
-          hintText: 'قم بادخال اسمك',
+          hintText: LocaleKeys.enterYourName.tr(),
           keyboardType: TextInputType.text,
           borderRadius: 20,
           backgroundColor: ColorManager.greyShade,
           padding: EdgeInsets.zero,
           controller: controller,
           validator: validator,
-        )
+        ),
       ],
     );
   }

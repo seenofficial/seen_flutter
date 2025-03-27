@@ -1,12 +1,13 @@
-import 'package:enmaa/features/authentication_module/domain/entities/sign_up_request_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:enmaa/configuration/managers/color_manager.dart';
 import 'package:enmaa/configuration/managers/style_manager.dart';
 import 'package:enmaa/core/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../configuration/routers/route_names.dart';
 import '../../../../core/components/circular_icon_button.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/translation/locale_keys.dart';
 import '../components/sign_up_buttons_widget.dart';
 import '../components/sign_up_form_field_widget.dart';
 import '../controller/remote_authentication_bloc/remote_authentication_cubit.dart';
@@ -25,15 +26,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String? _validatePhone(String? value) {
-    if (value == null || value.isEmpty ) {
-      return 'رقم الموبايل مطلوب';
+    if (value == null || value.isEmpty) {
+      return LocaleKeys.phoneRequired.tr();
     }
     return null;
   }
 
   String? _validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'الاسم مطلوب';
+      return LocaleKeys.nameRequired.tr();
     }
     return null;
   }
@@ -43,7 +44,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     nameController.dispose();
     phoneController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
 
@@ -73,8 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   end: 0,
                   start: 0,
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: context.scale(16)),
+                    padding: EdgeInsets.symmetric(horizontal: context.scale(16)),
                     child: Form(
                       key: formKey,
                       child: Column(
@@ -82,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'إنشاء حساب',
+                            LocaleKeys.createAccount.tr(),
                             style: getBoldStyle(color: ColorManager.blackColor),
                           ),
                           SizedBox(height: context.scale(24)),
@@ -97,13 +96,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             formKey: formKey,
                             signUpOnTap: () {
                               if (formKey.currentState?.validate() ?? false) {
-                                final authenticationCubit =
-                                    context.read<RemoteAuthenticationCubit>();
-
-                                authenticationCubit
-                                    .sendOtp(phoneController.text);
-                                authenticationCubit
-                                    .changeUserName(nameController.text);
+                                final authenticationCubit = context.read<RemoteAuthenticationCubit>();
+                                authenticationCubit.sendOtp(phoneController.text);
+                                authenticationCubit.changeUserName(nameController.text);
                                 Navigator.pushNamed(
                                   context,
                                   RoutersNames.otpScreen,

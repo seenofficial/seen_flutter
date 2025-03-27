@@ -263,4 +263,49 @@ abstract class LocaleKeys {
   static const String dataFetchError = 'dataFetchError';
   static const String cancel = 'cancel';
   static const String saveChanges = 'saveChanges';
+  static const String authenticationFailed = 'authenticationFailed';
+  static const String retryAuthentication = 'retryAuthentication';
+  static const String authenticationSuccessful = 'authenticationSuccessful';
+
+  static const String resetPassword = 'resetPassword';
+  static const String createPassword = 'createPassword';
+  static const String createNewPasswordHint = 'createNewPasswordHint';
+  static const String createStrongPasswordHint = 'createStrongPasswordHint';
+  static const String newPassword = 'newPassword';
+  static const String signUp = 'signUp';
+  static const String confirm = 'confirm';
+  static const String accountCreatedSuccessfully = 'accountCreatedSuccessfully';
+  static const String passwordChangedSuccessfully = 'passwordChangedSuccessfully';
+
+  static const String phoneRequired = 'phoneRequired';
+  static const String passwordRequired = 'passwordRequired';
+
+  static const String enterSecurityCode = 'enterSecurityCode';
+  static const String codeSentTo = 'codeSentTo';
+  static const String didNotReceiveCode = 'didNotReceiveCode';
+  static const String resend = 'resend';
+
+  static const String recoverPassword = 'recoverPassword';
+  static const String recoverPasswordHint = 'recoverPasswordHint';
+  static const String mobileNumber = 'mobileNumber';
+  static const String nameRequired = 'nameRequired';
+
+  static const String createAccount = 'createAccount';
+
+  static const String confirmPassword = 'confirmPassword';
+  static const String confirmPasswordRequired = 'confirmPasswordRequired';
+  static const String minEightChars = 'minEightChars';
+  static const String minOneNumber = 'minOneNumber';
+  static const String minOneLetter = 'minOneLetter';
+
+  static const String enterAsGuest = 'enterAsGuest';
+
+  static const String noAccount = 'noAccount';
+  static const String createOneNow = 'createOneNow';
+  static const String forgotPassword = 'forgotPassword';
+
+  static const String alreadyHaveAccount = 'alreadyHaveAccount';
+
+
+  static const String enterYourName = 'enterYourName';
 }

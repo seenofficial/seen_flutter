@@ -212,6 +212,46 @@
   "updatingData": "Mise à jour des données...",
   "dataFetchError": "Une erreur s'est produite lors de la récupération des données",
   "cancel": "Annuler",
-  "saveChanges": "Enregistrer les modifications"
+  "saveChanges": "Enregistrer les modifications",
+  "authenticationFailed": "Échec de l'authentification. Veuillez réessayer.",
+  "retryAuthentication": "Réessayer l'authentification",
+  "authenticationSuccessful": "Authentification réussie",
 
+  "resetPassword": "Réinitialiser le mot de passe",
+  "createPassword": "Créer un mot de passe",
+  "createNewPasswordHint": "Créez un nouveau mot de passe pour votre compte",
+  "createStrongPasswordHint": "Créez un mot de passe fort pour protéger votre compte",
+  "newPassword": "Nouveau mot de passe",
+  "signUp": "S'inscrire",
+  "confirm": "Confirmer",
+  "accountCreatedSuccessfully": "Votre compte a été créé avec succès",
+  "passwordChangedSuccessfully": "Mot de passe changé avec succès",
+
+  "phoneRequired": "Le numéro de téléphone est requis",
+  "passwordRequired": "Le mot de passe est requis",
+
+  "enterSecurityCode": "Entrez le code de sécurité envoyé à votre téléphone",
+  "codeSentTo": "Le code a été envoyé à votre numéro enregistré ",
+  "didNotReceiveCode": "  Vous n’avez pas reçu le code ?  ",
+  "resend": "Renvoyer",
+
+  "recoverPassword": "Récupérer le mot de passe",
+  "recoverPasswordHint": "Entrez votre numéro de téléphone lié à votre compte pour réinitialiser votre mot de passe et retrouver facilement l'accès.",
+  "mobileNumber": "Numéro de mobile",
+  "nameRequired": "Le nom est requis",
+  "createAccount": "Créer un compte",
+
+  "confirmPassword": "Confirmer le mot de passe",
+  "confirmPasswordRequired": "La confirmation du mot de passe est requise",
+  "minEightChars": "Doit comporter au moins 8 caractères",
+  "minOneNumber": "Doit contenir au moins un chiffre",
+  "minOneLetter": "Doit contenir au moins une lettre",
+  "enterAsGuest": "Entrer en tant qu'invité",
+
+  "noAccount": "Vous n’avez pas de compte ?",
+  "createOneNow": "Créez-en un maintenant",
+
+  "forgotPassword": "Mot de passe oublié ?",
+  "alreadyHaveAccount": "Vous avez déjà un compte ?",
+  "enterYourName": "Entrez votre nom"
 }
